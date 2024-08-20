@@ -1,0 +1,25 @@
+<div id="<%= dom_id project %>">
+  <p>
+    <strong>Uid:</strong>
+    <%= project.uid %>
+  </p>
+  <p>
+    <strong>Client:</strong>
+    <%= project.client_id %>
+  </p>
+  <p>
+    <strong>Status:</strong>
+    <%= project.status %>
+  </p>
+  <p>
+    <%= link_to project.client_po, rails_blob_path(project.client_po, disposition: 'attachment') %>
+  </p>
+  <p>
+    <strong>Amount:</strong>
+    <%= project.amount %>
+  </p>
+  <p>
+    <strong>Payment:</strong>
+    <%= project.payment %>
+  </p>
+</div>
