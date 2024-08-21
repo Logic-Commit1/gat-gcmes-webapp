@@ -1,0 +1,77 @@
+<%= form_with(model: quotation, data: {
+  controller: "nested-form",
+  nested_form_wrapper_selector_value: '.nested-form-wrapper'
+}) do |form| %>
+  <% if quotation.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(quotation.errors.count, "error") %> prohibited this quotation from being saved:</h2>
+      <ul>
+        <% quotation.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+    <%= form.label :company, style: "display: block" %>
+    <%= form.radio_button :company, "GAT" %> GAT
+    <%= form.radio_button :company, "GCMES" %> GCMES
+  </div>
+  <div>
+    <%= form.label :client_id, style: "display: block" %>
+    <%= form.collection_select :client_id, Client.all, :id, :name, { prompt: "Select Client" }, { style: "display: block" } %>
+  </div>
+  <div>
+    <%= form.label :attention, style: "display: block" %>
+    <%= form.text_field :attention %>
+  </div>
+  <div>
+    <%= form.label :vessel, style: "display: block" %>
+    <%= form.text_field :vessel %>
+  </div>
+  <div>
+    <%= form.label :subject, style: "display: block" %>
+    <%= form.text_field :subject %>
+  </div>
+  <template data-nested-form-target="template">
+    <%= form.fields_for :products, Product.new, child_index: 'NEW_RECORD' do |product_fields| %>
+      <%= render "quotations/quotation_product_form", f: product_fields %>
+    <% end %>
+  </template>
+  <%= form.fields_for :products do |product_fields| %>
+    <%= render "quotations/quotation_product_form", f: product_fields %>
+  <% end %>
+  <div data-nested-form-target="target"></div>
+  <button type="button" data-action="nested-form#add">Add Item</button>
+  <div>
+    <%= form.label :lead_time, style: "display: block" %>
+    <%= form.text_area :lead_time %>
+  </div>
+  <div>
+    <%= form.label :warranty, style: "display: block" %>
+    <%= form.text_area :warranty %>
+  </div>
+  <div>
+    <%= form.label :payment, 'Terms of Payment', style: "display: block" %>
+    <%= form.text_field :payment %>
+  </div>
+  <div>
+    <%= form.label :sub_total, style: "display: block" %>
+    <%= form.text_field :sub_total %>
+  </div>
+  <div>
+    <%= form.label :total, style: "display: block" %>
+    <%= form.text_field :total %>
+  </div>
+  <div>
+    <%= form.label :vat, style: "display: block" %>
+    <%= form.text_field :vat %>
+  </div>
+  <div>
+    <%= form.label :additional_conditions, style: "display: block" %>
+    <%= form.text_area :additional_conditions %>
+  </div>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

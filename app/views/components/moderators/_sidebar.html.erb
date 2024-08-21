@@ -1,0 +1,45 @@
+<aside id="moderators-sidebar">
+
+  <!-- Header -->
+  <%# <header id="brand"> %>
+    <%#= link_to moderators_dashboard_path, class: 'no-underline' do %>
+      <!-- Logo -->
+      <%# <img class="bloop" src="/brand/logo.png" alt="logo"/> %>
+    <%# end %>
+  <%# </header> %>
+
+  <!-- Main: Navigation -->
+  <main id="navigation">
+
+    <!-- Link to Home -->
+    <%= link_to clients_path, class: 'in-text no-underline' do %>
+      <p class="nav-btn <%= 'active' if current_page?(clients_path) %>">
+        <span class="icon">👷🏻</span>
+        Clients
+      </p>
+    <% end %>
+
+    <!-- Link to Articles -->
+    <%= link_to quotations_path, class: 'in-text no-underline' do %>
+      <p class="nav-btn <%= 'active' if current_page?(quotations_path) %>">
+        <span class="icon">📋</span>
+        Quotaions
+      </p>
+    <% end %>
+
+    
+    <!-- Link to Stations -->
+    <%= link_to projects_path, class: 'in-text no-underline' do %>
+      <p class="nav-btn <%= 'active' if current_page?(projects_path) %>">
+        <span class="icon">⛴️</span>
+        Projects
+      </p>
+    <% end %>
+  </main>
+
+  <!-- Footer -->
+  <%# <footer id="actions"> %>
+      <%#= link_to "<i class='fal fa-sign-out'></i> Sign Out".html_safe, moderators_signout_path, id: 'signout-btn', class: 'sub-cta' %>
+  <%# </footer> %>
+
+</aside>

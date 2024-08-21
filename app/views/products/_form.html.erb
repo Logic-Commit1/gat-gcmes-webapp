@@ -1,0 +1,87 @@
+<%= form_with(model: product) do |form| %>
+  <% if product.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+        <% product.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :quantity, style: "display: block" %>
+    <%= form.number_field :quantity %>
+  </div>
+
+  <div>
+    <%= form.label :unit, style: "display: block" %>
+    <%= form.text_field :unit %>
+  </div>
+
+  <div>
+    <%= form.label :price, style: "display: block" %>
+    <%= form.text_field :price %>
+  </div>
+
+  <div>
+    <%= form.label :brand, style: "display: block" %>
+    <%= form.text_field :brand %>
+  </div>
+
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :specs, style: "display: block" %>
+    <%= form.text_area :specs %>
+  </div>
+
+  <div>
+    <%= form.label :terms, style: "display: block" %>
+    <%= form.text_area :terms %>
+  </div>
+
+  <div>
+    <%= form.label :remarks, style: "display: block" %>
+    <%= form.text_area :remarks %>
+  </div>
+
+  <div>
+    <%= form.label :image, style: "display: block" %>
+    <%= form.text_field :image %>
+  </div>
+
+  <div>
+    <%= form.label :quotation_id, style: "display: block" %>
+    <%= form.text_field :quotation_id %>
+  </div>
+
+  <div>
+    <%= form.label :canvass_id, style: "display: block" %>
+    <%= form.text_field :canvass_id %>
+  </div>
+
+  <div>
+    <%= form.label :request_form_id, style: "display: block" %>
+    <%= form.text_field :request_form_id %>
+  </div>
+
+  <div>
+    <%= form.label :purchase_order_id, style: "display: block" %>
+    <%= form.text_field :purchase_order_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

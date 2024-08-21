@@ -1,0 +1,5 @@
+<% # render 'components/pop', active: true, title: "", content: "" %>
+<div class="card pop <%= 'active' if active %>" data-controller='pop' data-action="click->pop#toggle"  data-pop-target='pop'>
+  <p class="title"><span class="icon primary" data-pop-target='icon'><i class="far fa-plus"></i></span> <%= title.html_safe %></p>
+  <p class="content"><%= content.html_safe %></p>
+</div>

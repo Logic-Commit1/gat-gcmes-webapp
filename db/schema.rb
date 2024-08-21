@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_20_110204) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_21_052329) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,6 +53,23 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_20_110204) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.integer "quantity"
+    t.string "unit"
+    t.decimal "price"
+    t.string "brand"
+    t.text "description"
+    t.text "specs"
+    t.text "terms"
+    t.text "remarks"
+    t.string "image"
+    t.bigint "quotation_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quotation_id"], name: "index_products_on_quotation_id"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string "uid"
     t.bigint "client_id", null: false
@@ -61,11 +78,35 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_20_110204) do
     t.integer "payment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "company"
+    t.integer "company"
     t.index ["client_id"], name: "index_projects_on_client_id"
+  end
+
+  create_table "quotations", force: :cascade do |t|
+    t.string "uid"
+    t.bigint "client_id", null: false
+    t.string "attention"
+    t.string "vessel"
+    t.string "subject"
+    t.text "remarks"
+    t.string "payment"
+    t.text "lead_time"
+    t.text "warranty"
+    t.decimal "sub_total"
+    t.decimal "total"
+    t.decimal "vat"
+    t.text "additional_conditions"
+    t.string "preparer"
+    t.string "approver"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "company"
+    t.index ["client_id"], name: "index_quotations_on_client_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "products", "quotations"
   add_foreign_key "projects", "clients"
+  add_foreign_key "quotations", "clients"
 end

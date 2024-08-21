@@ -1,0 +1,74 @@
+<div id="<%= dom_id quotation %>">
+  <p>
+    <strong>Uid:</strong>
+    <%= quotation.uid %>
+  </p>
+  <p>
+    <strong>Client:</strong>
+    <%= quotation.client.name %>
+  </p>
+  <p>
+    <strong>Attention:</strong>
+    <%= quotation.attention %>
+  </p>
+  <p>
+    <strong>Vessel:</strong>
+    <%= quotation.vessel %>
+  </p>
+  <p>
+    <strong>Subject:</strong>
+    <%= quotation.subject %>
+  </p>
+  <%# <p> %>
+  <%# <strong>User:</strong> %>
+  <%#= quotation.user_id %>
+  <%# </p> %>
+  <strong>Items</strong>
+  <ul>
+    <% quotation.products.each do |p| %>
+      <li>
+        <%= p.name %>
+        <%= p.quantity %>
+        <%= p.unit %>
+        <%= p.price %>
+        <%= p.brand %>
+        <%= p.description %>
+        <%= p.specs %>
+        <%= p.terms %>
+        <%= p.remarks %>
+      </li>
+    <% end %>
+  </ul>
+  <p>
+    <strong>Lead time:</strong>
+    <%= quotation.lead_time %>
+  </p>
+  <p>
+    <strong>Warranty:</strong>
+    <%= quotation.warranty %>
+  </p>
+  <p>
+    <strong>Sub total:</strong>
+    <%= quotation.sub_total %>
+  </p>
+  <p>
+    <strong>Total:</strong>
+    <%= quotation.total %>
+  </p>
+  <p>
+    <strong>Vat:</strong>
+    <%= quotation.vat %>
+  </p>
+  <p>
+    <strong>Additional conditions:</strong>
+    <%= quotation.additional_conditions %>
+  </p>
+  <p>
+    <strong>Preparer:</strong>
+    <%= quotation.preparer %>
+  </p>
+  <p>
+    <strong>Approver:</strong>
+    <%= quotation.approver %>
+  </p>
+</div>

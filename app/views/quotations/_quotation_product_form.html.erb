@@ -1,0 +1,24 @@
+<div class="nested-form-wrapper" data-new-record="<%= f.object.new_record? %>">
+  <%= f.label :name, "Item", style: "display: block" %>
+  <%= f.text_field :name %>
+  <%= f.label :brand, style: "display: block" %>
+  <%= f.text_field :brand %>
+  <%= f.label :quantity, style: "display: block" %>
+  <%= f.number_field :quantity %>
+  <%= f.label :unit, "U/M", style: "display: block" %>
+  <%= f.text_field :unit %>
+  <%= f.label :price, "Unit Price", style: "display: block" %>
+  <%= f.text_field :price %>
+  <%= f.label :image, style: "display: block" %>
+  <%= f.file_field :image %>
+  <%= f.label :description, style: "display: block" %>
+  <%= f.text_area :description %>
+  <%= f.label :specs, style: "display: block" %>
+  <%= f.text_area :specs %>
+  <%= f.label :terms, style: "display: block" %>
+  <%= f.text_area :terms %>
+  <%= f.label :remarks, style: "display: block" %>
+  <%= f.text_area :remarks %>
+  <button type="button" data-action="nested-form#remove">Remove Item</button>
+  <%= f.hidden_field :_destroy %>
+</div>

@@ -1,0 +1,12 @@
+<% content_for :title, "Editing quotation" %>
+
+<h1>Editing quotation</h1>
+
+<%= render "form", quotation: @quotation %>
+
+<br>
+
+<div>
+  <%= link_to "Show this quotation", @quotation %> |
+  <%= link_to "Back to quotations", quotations_path %>
+</div>

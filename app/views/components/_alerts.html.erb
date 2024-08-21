@@ -1,0 +1,6 @@
+<!-- Alerts -->
+<% if flash.present? %>
+  <% flash.each do |key, value| %>
+    <p class="alert"><%= value %></p>
+  <% end %>
+<% end %>
