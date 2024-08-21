@@ -1,9 +1,7 @@
 <p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Quotations" %>
-
 <h1>Quotations</h1>
-
+<%= link_to "New quotation", new_quotation_path %>
 <div id="quotations">
   <% @quotations.each do |quotation| %>
     <%= render quotation %>
@@ -12,5 +10,3 @@
     </p>
   <% end %>
 </div>
-
-<%= link_to "New quotation", new_quotation_path %>
