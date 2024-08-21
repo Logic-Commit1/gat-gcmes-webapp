@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_21_052329) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_21_064027) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,6 +51,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_21_052329) do
     t.bigint "tin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "company_id"
+    t.index ["company_id"], name: "index_clients_on_company_id"
+  end
+
+  create_table "companies", force: :cascade do |t|
+    t.string "name"
+    t.string "code"
+    t.text "address"
+    t.bigint "tin"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "products", force: :cascade do |t|
@@ -78,8 +89,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_21_052329) do
     t.integer "payment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "company"
+    t.bigint "company_id"
     t.index ["client_id"], name: "index_projects_on_client_id"
+    t.index ["company_id"], name: "index_projects_on_company_id"
   end
 
   create_table "quotations", force: :cascade do |t|
@@ -100,13 +112,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_21_052329) do
     t.string "approver"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "company"
+    t.bigint "company_id"
     t.index ["client_id"], name: "index_quotations_on_client_id"
+    t.index ["company_id"], name: "index_quotations_on_company_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "clients", "companies"
   add_foreign_key "products", "quotations"
   add_foreign_key "projects", "clients"
+  add_foreign_key "projects", "companies"
   add_foreign_key "quotations", "clients"
+  add_foreign_key "quotations", "companies"
 end

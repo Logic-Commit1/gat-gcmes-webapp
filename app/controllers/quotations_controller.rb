@@ -12,7 +12,7 @@ class QuotationsController < ApplicationController
 
   # GET /quotations/new
   def new
-    @quotation = Quotation.new
+    @quotation = Quotation.new(quotation_params)
     @quotation.products.build
   end
 
@@ -67,10 +67,12 @@ class QuotationsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def quotation_params
       params.require(:quotation).permit(
-        :uid, :company, :client_id, :attention, :vessel, :subject, :user_id, 
-        :remarks, :payment, :lead_time, :warranty, :sub_total, 
-        :total, :vat, :additional_conditions, :preparer, :approver, 
-        products_attributes: [:name, :quantity, :unit, :price, :brand, :description, :specs, :terms, :remarks, :image, :quotation_id, :canvass_id, :request_form_id, :purchase_order_id, :_destroy]
+        :uid, :company_id, :client_id, :attention, :vessel, :subject, :user_id,
+        :remarks, :payment, :lead_time, :warranty, :sub_total,
+        :total, :vat, :additional_conditions, :preparer, :approver,
+        products_attributes: [ :name, :quantity, :unit, :price, :brand, :description, :specs, :terms, :remarks, :image, :quotation_id, :canvass_id, :request_form_id, :purchase_order_id, :_destroy ]
         )
+      rescue
+        {}
     end
 end

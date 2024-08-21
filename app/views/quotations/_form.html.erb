@@ -12,14 +12,13 @@
       </ul>
     </div>
   <% end %>
-  <div>
+  <div data-controller="company-select">
     <%= form.label :company, style: "display: block" %>
-    <%= form.radio_button :company, "GAT" %> GAT
-    <%= form.radio_button :company, "GCMES" %> GCMES
-  </div>
-  <div>
+    <% Company.all.each do |company| %>
+      <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompany" } %> <%= company.code %>
+    <% end %>
     <%= form.label :client_id, style: "display: block" %>
-    <%= form.collection_select :client_id, Client.all, :id, :name, { prompt: "Select Client" }, { style: "display: block" } %>
+    <%= form.collection_select :client_id, [], :id, :name, { prompt: "Select Client" }, { style: "display: block", data: { company_select_target: "clientSelect" } } %>
   </div>
   <div>
     <%= form.label :attention, style: "display: block" %>
@@ -52,20 +51,8 @@
     <%= form.text_area :warranty %>
   </div>
   <div>
-    <%= form.label :payment, 'Terms of Payment', style: "display: block" %>
-    <%= form.text_field :payment %>
-  </div>
-  <div>
-    <%= form.label :sub_total, style: "display: block" %>
-    <%= form.text_field :sub_total %>
-  </div>
-  <div>
-    <%= form.label :total, style: "display: block" %>
-    <%= form.text_field :total %>
-  </div>
-  <div>
-    <%= form.label :vat, style: "display: block" %>
-    <%= form.text_field :vat %>
+    <%= form.label :payment, 'Payment', style: "display: block" %>
+    <%= form.collection_select :payment, Quotation.payments.keys, :to_s, :to_s, { prompt: "Select Payment Terms" }, { style: "display: block" } %>
   </div>
   <div>
     <%= form.label :additional_conditions, style: "display: block" %>

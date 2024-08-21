@@ -21,7 +21,7 @@ gem "jbuilder"
 gem "prawn", "~> 2.5"
 
 # Code Formatter
-gem 'htmlbeautifier'
+gem "htmlbeautifier"
 
 
 # Use Redis adapter to run Action Cable in production
@@ -51,9 +51,9 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
-  
+
   # DEBUG
-  gem 'pry', '~> 0.14.2'
+  gem "pry", "~> 0.14.2"
 end
 
 group :development do
@@ -66,4 +66,3 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
-
