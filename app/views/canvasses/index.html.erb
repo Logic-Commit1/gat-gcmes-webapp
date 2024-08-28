@@ -1,9 +1,9 @@
 <p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Canvasses" %>
-
 <h1>Canvasses</h1>
-
+<%= link_to "New canvass", new_canvass_path %>
+<br>
+<br>
 <div id="canvasses">
   <% @canvasses.each do |canvass| %>
     <%= render canvass %>
@@ -12,5 +12,3 @@
     </p>
   <% end %>
 </div>
-
-<%= link_to "New canvass", new_canvass_path %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_28_060711) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_28_085943) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -145,8 +145,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_28_060711) do
     t.bigint "company_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "canvass_id"
-    t.index ["canvass_id"], name: "index_suppliers_on_canvass_id"
     t.index ["company_id"], name: "index_suppliers_on_company_id"
   end
 
@@ -163,6 +161,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_28_060711) do
   add_foreign_key "quotations", "clients"
   add_foreign_key "quotations", "companies"
   add_foreign_key "quotations", "projects"
-  add_foreign_key "suppliers", "canvasses"
   add_foreign_key "suppliers", "companies"
 end

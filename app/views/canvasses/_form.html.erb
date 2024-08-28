@@ -9,19 +9,28 @@
       </ul>
     </div>
   <% end %>
+  <!-- Company Selection -->
   <%= form.label :company, style: "display: block" %>
   <% Company.all.each do |company| %>
     <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompany" } %> <%= company.code %>
   <% end %>
-  <div style="display: flex;">
-    <% 3.times do |i| %>
-      <%= form.fields_for :products, Product.new, child_index: i do |product_fields| %>
-        <%= render "canvasses/canvass_product_form", f: product_fields %>
+  <!-- Shared Fields for Description, Quantity, and Unit -->
+  <div data-controller="shared-fields">
+    <%= form.label :description, "Item Description", style: "display: block" %>
+    <%= text_area_tag :shared_description, nil, data: { action: "input->shared-fields#sync", shared_fields_target: "descriptionField" }, style: "width: 100%;" %>
+    <%= form.label :quantity, style: "display: block" %>
+    <%= number_field_tag :shared_quantity, nil, data: { action: "input->shared-fields#sync", shared_fields_target: "quantityField" }, style: "width: 100%;" %>
+    <%= form.label :unit, "Unit", style: "display: block" %>
+    <%= text_field_tag :shared_unit, nil, data: { action: "input->shared-fields#sync", shared_fields_target: "unitField" }, style: "width: 100%;" %>
+    <div style="display: flex;">
+      <% 3.times do |i| %>
+        <%= form.fields_for :products, Product.new, child_index: i do |product_fields| %>
+          <%= render "canvasses/canvass_product_form", f: product_fields %>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
   <div data-nested-form-target="target"></div>
-  <button type="button" data-action="nested-form#add">Add Item</button>
   <div>
     <%= form.submit %>
   </div>

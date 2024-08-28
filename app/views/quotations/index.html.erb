@@ -2,6 +2,8 @@
 <% content_for :title, "Quotations" %>
 <h1>Quotations</h1>
 <%= link_to "New quotation", new_quotation_path %>
+<br>
+<br>
 <div id="quotations">
   <% @quotations.each do |quotation| %>
     <%= render quotation %>

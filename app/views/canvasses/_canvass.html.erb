@@ -1,6 +1,33 @@
 <div id="<%= dom_id canvass %>">
-  <p>
-    <strong>Uid:</strong>
-    <%= canvass.uid %>
-  </p>
+  <p><strong>Company:</strong> <%= canvass.company.name %></p>
+  <% canvass.suppliers.each do |product_info| %>
+    <% product_info.each do |description, suppliers| %>
+      <p><strong>Product Description:</strong> <%= description %></p>
+      <table border="1" style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr>
+            <th>Supplier Name</th>
+            <th>Price</th>
+            <th>Terms</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% suppliers.each do |supplier_info| %>
+            <% supplier_info.each do |supplier_name, details| %>
+              <tr>
+                <td><%= supplier_name %></td>
+                <td><%= details[0] %></td>
+                <!-- Price -->
+                <td><%= details[1] %></td>
+                <!-- Terms -->
+                <td><%= details[2] %></td>
+                <!-- Remarks -->
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
 </div>
