@@ -70,7 +70,7 @@ class QuotationsController < ApplicationController
         :uid, :company_id, :client_id, :attention, :vessel, :subject, :user_id,
         :remarks, :payment, :lead_time, :warranty, :sub_total,
         :total, :vat, :additional_conditions, :preparer, :approver,
-        products_attributes: [ :name, :quantity, :unit, :price, :brand, :description, :specs, :terms, :remarks, :image, :quotation_id, :canvass_id, :request_form_id, :purchase_order_id, :_destroy ]
+        products_attributes: [ :id, :name, :quantity, :unit, :price, :discount, :brand, :description, :specs, :terms, :remarks, :image, :quotation_id, :canvass_id, :request_form_id, :purchase_order_id, :_destroy ]
         )
       rescue
         {}

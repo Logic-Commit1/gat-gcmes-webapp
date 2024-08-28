@@ -5,14 +5,16 @@
   </p>
   <p>
     <strong>Client:</strong>
-    <%= project.client_id %>
+    <%= project.client.name %>
   </p>
   <p>
     <strong>Status:</strong>
     <%= project.status %>
   </p>
   <p>
-    <%= link_to project.client_po, rails_blob_path(project.client_po, disposition: 'attachment') %>
+    <% if project.client_po.attached? %>
+      <%= link_to project.client_po, rails_blob_path(project.client_po, disposition: 'attachment') %>
+    <% end %>
   </p>
   <p>
     <strong>Amount:</strong>

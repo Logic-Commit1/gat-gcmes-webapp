@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :canvasses
+  resources :suppliers
   resources :products
   resources :quotations
   resources :projects

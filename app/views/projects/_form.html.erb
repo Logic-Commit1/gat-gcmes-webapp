@@ -13,21 +13,22 @@
   <%#= form.label :uid, style: "display: block" %>
   <%#= form.text_field :uid %>
   <%# </div> %>
-  <div>
+  <div data-controller="company-select">
     <%= form.label :company, style: "display: block" %>
-    <%= form.radio_button :company, "GAT" %> GAT
-    <%= form.radio_button :company, "GCMES" %> GCMES
-  </div>
-  <div>
+    <% Company.all.each do |company| %>
+      <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompany" } %> <%= company.code %>
+    <% end %>
     <%= form.label :client_id, style: "display: block" %>
-    <%= form.collection_select :client_id, Client.all, :id, :name, { prompt: "Select Client" }, { style: "display: block" } %>
+    <%= form.collection_select :client_id, [], :id, :name, { prompt: "Select Client" }, { style: "display: block", data: { company_select_target: "clientSelect" } } %>
   </div>
-  <br>
   <div>
     <%= form.label :client_po, "Client's P.O.", style: "display: block" %>
     <%= form.file_field :client_po %>
   </div>
-  <br>
+  <div>
+    <%= form.label :quotation_id, style: "display: block" %>
+    <%= form.collection_select :quotation_id, Quotation.all, :id, :uid, { prompt: "Select Client" }, { style: "display: block", data: { company_select_target: "clientSelect" } } %>
+  </div>
   <div>
     <%= form.label :amount, style: "display: block" %>
     <%= form.text_field :amount %>

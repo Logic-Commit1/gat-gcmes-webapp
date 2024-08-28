@@ -1,10 +1,10 @@
 <div id="<%= dom_id quotation %>">
   <!--
+-->
   <p>
     <strong>Uid:</strong>
     <%= quotation.uid %>
   </p>
--->
   <p>
     <strong>Company</strong>
     <%= quotation.company.code %>
@@ -30,21 +30,38 @@
   <%#= quotation.user_id %>
   <%# </p> %>
   <strong>Items</strong>
-  <ul>
-    <% quotation.products.each do |p| %>
-      <li>
-        <%= p.name %>
-        <%= p.quantity %>
-        <%= p.unit %>
-        <%= p.price %>
-        <%= p.brand %>
-        <%= p.description %>
-        <%= p.specs %>
-        <%= p.terms %>
-        <%= p.remarks %>
-      </li>
-    <% end %>
-  </ul>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Unit</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Discount</th>
+        <th>Brand</th>
+        <th>Description</th>
+        <th>Specs</th>
+        <th>Remarks</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% quotation.products.each do |p| %>
+        <tr>
+          <td><%= p.name %></td>
+          <td><%= p.unit %></td>
+          <td><%= p.quantity %></td>
+          <td><%= p.price %></td>
+          <td><%= p.discount %></td>
+          <td><%= p.brand %></td>
+          <td><%= p.description %></td>
+          <td><%= p.specs %></td>
+          <td><%= p.remarks %></td>
+          <td><%= p.total %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
   <p>
     <strong>Lead time:</strong>
     <%= quotation.lead_time %>
@@ -58,23 +75,15 @@
     <%= quotation.sub_total %>
   </p>
   <p>
-    <strong>Total:</strong>
-    <%= quotation.total %>
-  </p>
-  <p>
     <strong>Vat:</strong>
     <%= quotation.vat %>
   </p>
   <p>
+    <strong>Total:</strong>
+    <%= quotation.total %>
+  </p>
+  <p>
     <strong>Additional conditions:</strong>
     <%= quotation.additional_conditions %>
-  </p>
-  <p>
-    <strong>Preparer:</strong>
-    <%= quotation.preparer %>
-  </p>
-  <p>
-    <strong>Approver:</strong>
-    <%= quotation.approver %>
   </p>
 </div>

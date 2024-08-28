@@ -1,0 +1,12 @@
+<% content_for :title, "Editing canvass" %>
+
+<h1>Editing canvass</h1>
+
+<%= render "form", canvass: @canvass %>
+
+<br>
+
+<div>
+  <%= link_to "Show this canvass", @canvass %> |
+  <%= link_to "Back to canvasses", canvasses_path %>
+</div>

@@ -19,11 +19,19 @@
       </p>
     <% end %>
 
+    <!-- Link to Home -->
+    <%= link_to suppliers_path, class: 'in-text no-underline' do %>
+      <p class="nav-btn <%= 'active' if current_page?(suppliers_path) %>">
+        <span class="icon">👷🏻</span>
+        Suppliers
+      </p>
+    <% end %>
+
     <!-- Link to Articles -->
     <%= link_to quotations_path, class: 'in-text no-underline' do %>
       <p class="nav-btn <%= 'active' if current_page?(quotations_path) %>">
         <span class="icon">📋</span>
-        Quotaions
+        Quotations
       </p>
     <% end %>
 
@@ -33,6 +41,14 @@
       <p class="nav-btn <%= 'active' if current_page?(projects_path) %>">
         <span class="icon">⛴️</span>
         Projects
+      </p>
+    <% end %>
+
+    <!-- Link to Stations -->
+    <%= link_to canvasses_path, class: 'in-text no-underline' do %>
+      <p class="nav-btn <%= 'active' if current_page?(canvasses_path) %>">
+        <span class="icon">📋</span>
+        Canvasses
       </p>
     <% end %>
   </main>

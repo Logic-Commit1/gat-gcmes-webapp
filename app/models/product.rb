@@ -1,6 +1,11 @@
 class Product < ApplicationRecord
-  belongs_to :quotation
-  # belongs_to :canvass
-  # belongs_to :purchase_order
-  # belongs_to :request_form
+  belongs_to :quotation, optional: true
+  belongs_to :canvass, optional: true
+  belongs_to :supplier, optional: true
+
+  before_save :compute_total_amount
+
+  def compute_total_amount
+    self.total = self.price * self.quantity * (1 - self.discount)
+  end
 end

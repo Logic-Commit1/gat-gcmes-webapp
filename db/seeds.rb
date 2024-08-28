@@ -1,9 +1,26 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+Quotation.destroy_all
+
+q = Quotation.new(
+  company_id: Company.first.id,
+  client_id: Client.second.id,
+  attention: 'Ms. Christine Mahinay',
+  vessel: 'SL KAMAGONG',
+  subject: 'SUPPLY OF AIR COMPRESSOR',
+  additional_conditions: 'Additional conditions here',
+  lead_time: 'EX-WORKS,SUBJECT TO PRIOR SALES AFTER RECEIPT OF P.O.',
+  warranty: 'THREE (3) MONTHS AGAINST FACTORY DEFECT',
+  payment: '30 days'
+)
+
+product = q.products.build(
+  name: 'AIR COMPRESSOR',
+  brand: 'Vespa',
+  quantity: 1,
+  unit: 'Unit',
+  price: 196000.00,
+  description: 'Working pressure: 12kg/cm^',
+  specs: 'Voltage: 220 Volts',
+  remarks: 'Sample Remarks here'
+)
+
+q.save

@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @canvass %>
+
+<div>
+  <%= link_to "Edit this canvass", edit_canvass_path(@canvass) %> |
+  <%= link_to "Back to canvasses", canvasses_path %>
+
+  <%= button_to "Destroy this canvass", @canvass, method: :delete %>
+</div>

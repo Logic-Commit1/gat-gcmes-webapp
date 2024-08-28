@@ -1,0 +1,28 @@
+<%= form_with(model: canvass) do |form| %>
+  <% if canvass.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(canvass.errors.count, "error") %> prohibited this canvass from being saved:</h2>
+      <ul>
+        <% canvass.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form.label :company, style: "display: block" %>
+  <% Company.all.each do |company| %>
+    <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompany" } %> <%= company.code %>
+  <% end %>
+  <div style="display: flex;">
+    <% 3.times do |i| %>
+      <%= form.fields_for :products, Product.new, child_index: i do |product_fields| %>
+        <%= render "canvasses/canvass_product_form", f: product_fields %>
+      <% end %>
+    <% end %>
+  </div>
+  <div data-nested-form-target="target"></div>
+  <button type="button" data-action="nested-form#add">Add Item</button>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
