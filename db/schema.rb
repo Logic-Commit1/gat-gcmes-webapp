@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_28_085943) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_05_152705) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -73,6 +73,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_28_085943) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "particulars", force: :cascade do |t|
+    t.string "name"
+    t.decimal "allowance"
+    t.bigint "request_form_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["request_form_id"], name: "index_particulars_on_request_form_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.integer "quantity"
@@ -91,8 +100,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_28_085943) do
     t.decimal "total", default: "0.0"
     t.bigint "canvass_id"
     t.bigint "supplier_id"
+    t.bigint "request_form_id"
     t.index ["canvass_id"], name: "index_products_on_canvass_id"
     t.index ["quotation_id"], name: "index_products_on_quotation_id"
+    t.index ["request_form_id"], name: "index_products_on_request_form_id"
     t.index ["supplier_id"], name: "index_products_on_supplier_id"
   end
 
@@ -136,6 +147,34 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_28_085943) do
     t.index ["project_id"], name: "index_quotations_on_project_id"
   end
 
+  create_table "request_forms", force: :cascade do |t|
+    t.string "uid"
+    t.integer "request_type"
+    t.string "vehicle"
+    t.date "travel_date"
+    t.string "destination"
+    t.decimal "total"
+    t.text "remarks"
+    t.string "fuel_gauge"
+    t.decimal "easy_trip_balance"
+    t.decimal "sweep_balance"
+    t.string "requester"
+    t.string "checker"
+    t.string "procurer"
+    t.string "pre_approver"
+    t.string "approver"
+    t.bigint "canvass_id", null: false
+    t.bigint "quotation_id", null: false
+    t.bigint "company_id", null: false
+    t.bigint "project_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["canvass_id"], name: "index_request_forms_on_canvass_id"
+    t.index ["company_id"], name: "index_request_forms_on_company_id"
+    t.index ["project_id"], name: "index_request_forms_on_project_id"
+    t.index ["quotation_id"], name: "index_request_forms_on_quotation_id"
+  end
+
   create_table "suppliers", force: :cascade do |t|
     t.string "name"
     t.string "code"
@@ -152,8 +191,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_28_085943) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "canvasses", "companies"
   add_foreign_key "clients", "companies"
+  add_foreign_key "particulars", "request_forms"
   add_foreign_key "products", "canvasses"
   add_foreign_key "products", "quotations"
+  add_foreign_key "products", "request_forms"
   add_foreign_key "products", "suppliers"
   add_foreign_key "projects", "clients"
   add_foreign_key "projects", "companies"
@@ -161,5 +202,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_28_085943) do
   add_foreign_key "quotations", "clients"
   add_foreign_key "quotations", "companies"
   add_foreign_key "quotations", "projects"
+  add_foreign_key "request_forms", "canvasses"
+  add_foreign_key "request_forms", "companies"
+  add_foreign_key "request_forms", "projects"
+  add_foreign_key "request_forms", "quotations"
   add_foreign_key "suppliers", "companies"
 end

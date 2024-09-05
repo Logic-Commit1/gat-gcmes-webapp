@@ -1,0 +1,64 @@
+<div>
+  <%= form.label :vehicle, style: "display: block" %>
+  <%= form.text_field :vehicle %>
+</div>
+<template data-nested-form-target="template">
+  <%= form.fields_for :particulars, Particular.new, child_index: 'NEW_RECORD' do |particular_fields| %>
+    <%= render "request_forms/request_form_particular_form", f: particular_fields %>
+  <% end %>
+</template>
+<%= form.fields_for :particulars do |particular_fields| %>
+  <%= render "request_forms/request_form_particular_form", f: particular_fields %>
+<% end %>
+<div data-nested-form-target="target"></div>
+<button type="button" data-action="nested-form#add">Add Particular</button>
+<div>
+  <%= form.label :travel_date, style: "display: block" %>
+  <%= form.date_field :travel_date %>
+</div>
+<div>
+  <%= form.label :destination, style: "display: block" %>
+  <%= form.text_field :destination %>
+</div>
+<div>
+  <%= form.label :total, style: "display: block" %>
+  <%= form.text_field :total %>
+</div>
+<div>
+  <%= form.label :remarks, style: "display: block" %>
+  <%= form.text_area :remarks %>
+</div>
+<div>
+  <%= form.label :fuel_gauge, style: "display: block" %>
+  <%= form.text_field :fuel_gauge %>
+</div>
+<div>
+  <%= form.label :easy_trip_balance, style: "display: block" %>
+  <%= form.text_field :easy_trip_balance %>
+</div>
+<div>
+  <%= form.label :sweep_balance, style: "display: block" %>
+  <%= form.text_field :sweep_balance %>
+</div>
+<!--
+<div>
+  <%= form.label :requester, style: "display: block" %>
+  <%= form.text_field :requester %>
+</div>
+<div>
+  <%= form.label :checker, style: "display: block" %>
+  <%= form.text_field :checker %>
+</div>
+<div>
+  <%= form.label :procurer, style: "display: block" %>
+  <%= form.text_field :procurer %>
+</div>
+<div>
+  <%= form.label :pre_approver, style: "display: block" %>
+  <%= form.text_field :pre_approver %>
+</div>
+<div>
+  <%= form.label :approver, style: "display: block" %>
+  <%= form.text_field :approver %>
+</div>
+-->

@@ -15,7 +15,7 @@
   <div data-controller="company-select">
     <%= form.label :company, style: "display: block" %>
     <% Company.all.each do |company| %>
-      <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompany" } %> <%= company.code %>
+      <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForClient" } %> <%= company.code %>
     <% end %>
     <%= form.label :client_id, style: "display: block" %>
     <%= form.collection_select :client_id, [], :id, :name, { prompt: "Select Client" }, { style: "display: block", data: { company_select_target: "clientSelect" } } %>

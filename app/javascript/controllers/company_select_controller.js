@@ -4,7 +4,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["clientSelect"]
 
-  selectCompany(event) {
+  selectCompanyForClient(event) {
     const companyId = event.target.value
 
     fetch(`/companies/${companyId}/clients`, {

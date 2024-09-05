@@ -2,6 +2,7 @@ class Product < ApplicationRecord
   belongs_to :quotation, optional: true
   belongs_to :canvass, optional: true
   belongs_to :supplier, optional: true
+  belongs_to :request_form, optional: true
 
   before_save :compute_total_amount
 

@@ -1,0 +1,12 @@
+<% content_for :title, "Editing particular" %>
+
+<h1>Editing particular</h1>
+
+<%= render "form", particular: @particular %>
+
+<br>
+
+<div>
+  <%= link_to "Show this particular", @particular %> |
+  <%= link_to "Back to particulars", particulars_path %>
+</div>

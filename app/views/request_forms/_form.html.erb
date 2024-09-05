@@ -1,0 +1,57 @@
+<%= form_with(model: request_form, data: {
+  controller: "nested-form",
+  nested_form_wrapper_selector_value: '.nested-form-wrapper'
+}) do |form| %>
+  <% if request_form.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(request_form.errors.count, "error") %> prohibited this request_form from being saved:</h2>
+      <ul>
+        <% request_form.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <!---
+  <div>
+    <%= form.label :uid, style: "display: block" %>
+    <%= form.text_field :uid %>
+  </div>
+-->
+  <%= turbo_frame_tag "request_form_types", data: {controller: 'navigate'} do %>
+    <div data-controller="company-select">
+      <%= form.label :company, style: "display: block" %>
+      <% Company.all.each do |company| %>
+        <%= form.radio_button :company_id, company.id %> <%= company.code %>
+      <% end %>
+    </div>
+    <div>
+      <%= form.label :request_type, style: "display: block" %>
+      <div>
+        <%= form.radio_button :request_type, "Allowance", data: { action: "change->navigate#to", url: new_request_form_path({request_form: {request_type: 'Allowance'}}) } %>
+        <%= form.label :request_type_allowance, "Allowance" %>
+        <%= form.radio_button :request_type, "Order", data: { action: "change->navigate#to", url: new_request_form_path({request_form: {request_type: 'Order'}}) } %>
+        <%= form.label :request_type_order, "Order" %>
+      </div>
+    </div>
+    <%# binding.pry %>
+    <div class="project-section" style="display: none">
+      <%= form.label :project_id %>
+      <%= form.collection_select :project_id, Project.all, :id, :uid, { prompt: "Select Project"} %>
+    </div>
+    <div class="canvass-section" style="display: none">
+      <%= form.label :canvass_id, style: "display: hidden" %>
+      <%= form.collection_select :canvass_id, Canvass.all, :id, :uid, { prompt: "Select Canvass"} %>
+    </div>
+    <%#binding.pry%>
+    <% if @request_form.Allowance? %>
+      <%= render 'allowance_form', form: form %>
+    <% elsif @request_form.Order? %>
+      <%= render 'order_form', form: form %>
+    <% else %>
+    <% end %>
+  <%end %>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -3,6 +3,8 @@ class Project < ApplicationRecord
   belongs_to :company
 
   has_many :quotations
+  has_many :request_forms
+  
   has_one_attached :client_po
 
   enum :payment, [ "50% downpayment", "30 days", "Paid" ]

@@ -23,6 +23,8 @@ gem "prawn", "~> 2.5"
 # Code Formatter
 gem "htmlbeautifier"
 
+# SASS
+gem "sass-rails"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"

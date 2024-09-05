@@ -1,0 +1,45 @@
+  
+<div>
+  <%= form.label :quotation_id, style: "display: block" %>
+  <%= form.collection_select :quotation_id, Quotation.all, :id, :uid, { prompt: "Select Quotation"} %>
+</div>
+<template data-nested-form-target="template">
+  <%= form.fields_for :products, Product.new, child_index: 'NEW_RECORD' do |product_fields| %>
+    <%= render "request_forms/request_form_product_form", f: product_fields %>
+  <% end %>
+</template>
+<%= form.fields_for :products do |product_fields| %>
+  <%= render "request_forms/request_form_product_form", f: product_fields %>
+<% end %>
+<div data-nested-form-target="target"></div>
+<button type="button" data-action="nested-form#add">Add Item</button>
+<div>
+  <%= form.label :total, style: "display: block" %>
+  <%= form.text_field :total %>
+</div>
+<!--
+<div>
+  <%= form.label :remarks, style: "display: block" %>
+  <%= form.text_area :remarks %>
+</div>
+<div>
+  <%= form.label :requester, style: "display: block" %>
+  <%= form.text_field :requester %>
+</div>
+<div>
+  <%= form.label :checker, style: "display: block" %>
+  <%= form.text_field :checker %>
+</div>
+<div>
+  <%= form.label :procurer, style: "display: block" %>
+  <%= form.text_field :procurer %>
+</div>
+<div>
+  <%= form.label :pre_approver, style: "display: block" %>
+  <%= form.text_field :pre_approver %>
+</div>
+<div>
+  <%= form.label :approver, style: "display: block" %>
+  <%= form.text_field :approver %>
+</div>
+-->

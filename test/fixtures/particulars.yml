@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  allowance: 9.99
+  request_form: one
+
+two:
+  name: MyString
+  allowance: 9.99
+  request_form: two

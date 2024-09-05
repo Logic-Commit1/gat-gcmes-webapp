@@ -51,6 +51,14 @@
         Canvasses
       </p>
     <% end %>
+
+     <!-- Link to Stations -->
+    <%= link_to request_forms_path, class: 'in-text no-underline' do %>
+      <p class="nav-btn <%= 'active' if current_page?(canvasses_path) %>">
+        <span class="icon">📋</span>
+        Request Forms
+      </p>
+    <% end %>
   </main>
 
   <!-- Footer -->

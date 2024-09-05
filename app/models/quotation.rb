@@ -4,6 +4,7 @@ class Quotation < ApplicationRecord
   belongs_to :project, optional: true
   
   has_many :products, dependent: :destroy, inverse_of: :quotation
+  has_many :request_forms
   accepts_nested_attributes_for :products, allow_destroy: true, reject_if: :all_blank
 
   enum :payment, [ "50% downpayment", "30 days", "Paid" ]

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :particulars
+  resources :request_forms
   resources :canvasses
   resources :suppliers
   resources :products

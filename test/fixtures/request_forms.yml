@@ -1,0 +1,43 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uid: MyString
+  type: 
+  vehicle: MyString
+  travel_date: 2024-08-28
+  destination: MyString
+  total: 9.99
+  remarks: MyText
+  fuel_gauge: MyString
+  easy_trip_balance: 9.99
+  sweep_balance: 9.99
+  requester: MyString
+  checker: MyString
+  procurer: MyString
+  pre_approver: MyString
+  approver: MyString
+  canvass: one
+  quotation: one
+  company: one
+  project: one
+
+two:
+  uid: MyString
+  type: 
+  vehicle: MyString
+  travel_date: 2024-08-28
+  destination: MyString
+  total: 9.99
+  remarks: MyText
+  fuel_gauge: MyString
+  easy_trip_balance: 9.99
+  sweep_balance: 9.99
+  requester: MyString
+  checker: MyString
+  procurer: MyString
+  pre_approver: MyString
+  approver: MyString
+  canvass: two
+  quotation: two
+  company: two
+  project: two
