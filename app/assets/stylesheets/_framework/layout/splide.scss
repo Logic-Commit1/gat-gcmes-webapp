@@ -1,0 +1,16 @@
+.splide__pagination {
+  bottom: -2em !important;
+}
+
+.splide__arrow--prev {
+  left: -1em !important;
+}
+
+.splide__arrow--next {
+  right: -1em !important;
+}
+
+.splide__pagination__page.is-active {
+  transform: scale(1.32) !important;
+  background: var(--primary-color) !important;
+}

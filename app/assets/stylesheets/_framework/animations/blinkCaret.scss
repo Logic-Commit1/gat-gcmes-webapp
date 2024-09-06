@@ -1,0 +1,16 @@
+.blink-caret {
+  border-right: 3px solid var(--tertiary-color);
+  padding-right: 4px;
+  margin-right: -4px;
+  animation: blink-caret .86s step-end infinite;
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+      border-color: transparent
+  }
+  50% {
+      border-color: var(--tertiary-color);
+  }
+}

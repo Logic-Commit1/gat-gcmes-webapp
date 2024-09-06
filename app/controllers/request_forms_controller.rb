@@ -59,11 +59,6 @@ class RequestFormsController < ApplicationController
     end
   end
 
-  def new_type
-    @request_form = RequestForm.new(request_form_params)
-    render partial: "form_fields", locals: { form: @form }
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_request_form

@@ -1,0 +1,19 @@
+// HTML
+html {
+    scroll-behavior: smooth;
+}
+
+//Body
+body {
+    margin: 0;
+    overflow-x: hidden;
+}
+
+main,
+section {
+    position: relative;
+}
+
+strong {
+    font-weight: 600;
+}

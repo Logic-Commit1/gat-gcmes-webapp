@@ -1,8 +1,3 @@
-  
-<div>
-  <%= form.label :quotation_id, style: "display: block" %>
-  <%= form.collection_select :quotation_id, Quotation.all, :id, :uid, { prompt: "Select Quotation"} %>
-</div>
 <template data-nested-form-target="template">
   <%= form.fields_for :products, Product.new, child_index: 'NEW_RECORD' do |product_fields| %>
     <%= render "request_forms/request_form_product_form", f: product_fields %>

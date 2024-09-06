@@ -1,0 +1,30 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  &.with-2-columns {
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 24px;
+  }
+  &.with-3-columns {
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-column-gap: 24px;
+  }
+  &.with-4-columns {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-column-gap: 24px;
+  }
+  &.with-5-columns {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+      grid-column-gap: 24px;
+  }
+  div.field {
+      margin: 16px 0 0;
+  }
+}
+
+.grid-header {
+  font-size: 10pt;
+  font-weight: 600;
+  margin: 6px 0;
+  text-transform: uppercase;
+}

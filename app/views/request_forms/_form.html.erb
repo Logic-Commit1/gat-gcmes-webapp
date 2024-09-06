@@ -12,12 +12,6 @@
       </ul>
     </div>
   <% end %>
-  <!---
-  <div>
-    <%= form.label :uid, style: "display: block" %>
-    <%= form.text_field :uid %>
-  </div>
--->
   <%= turbo_frame_tag "request_form_types", data: {controller: 'navigate'} do %>
     <div data-controller="company-select">
       <%= form.label :company, style: "display: block" %>
@@ -34,16 +28,18 @@
         <%= form.label :request_type_order, "Order" %>
       </div>
     </div>
-    <%# binding.pry %>
-    <div class="project-section" style="display: none">
+    <div class="project-section" style="display: <%= @request_form.request_type? ? 'block' : 'none' %>">
       <%= form.label :project_id %>
       <%= form.collection_select :project_id, Project.all, :id, :uid, { prompt: "Select Project"} %>
     </div>
-    <div class="canvass-section" style="display: none">
-      <%= form.label :canvass_id, style: "display: hidden" %>
+    <div class="canvass-section" style="display: <%= @request_form.request_type? ? 'block' : 'none' %>">
+      <%= form.label :canvass_id %>
       <%= form.collection_select :canvass_id, Canvass.all, :id, :uid, { prompt: "Select Canvass"} %>
     </div>
-    <%#binding.pry%>
+    <div class="canvass-section" style="display: <%= @request_form.request_type? ? 'block' : 'none' %>">
+      <%= form.label :quotation_id, style: "display: block" %>
+      <%= form.collection_select :quotation_id, Quotation.all, :id, :uid, { prompt: "Select Quotation"} %>
+    </div>
     <% if @request_form.Allowance? %>
       <%= render 'allowance_form', form: form %>
     <% elsif @request_form.Order? %>

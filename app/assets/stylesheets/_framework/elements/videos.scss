@@ -1,0 +1,16 @@
+.video {
+  width: fit-content;
+  border-radius: 24px;
+  overflow: hidden;
+  padding: 16px;
+  background: #ffffff;
+  margin: auto;
+  max-width: 100%;
+  box-shadow: none;
+}
+
+.video iframe {
+  display: inherit;
+  border-radius: 24px;
+  max-width: 100%;
+}

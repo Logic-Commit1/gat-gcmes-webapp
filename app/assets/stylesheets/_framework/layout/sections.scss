@@ -1,0 +1,54 @@
+// SECTIONS
+.section-header-accent {
+    position: absolute;
+    top: 0;
+    font-family: 'Roboto';
+    font-size: 86pt;
+    color: var(--secondary-color);
+    margin: 24px 0 0;
+    opacity: 0.042;
+    z-index: -10;
+}
+
+.section-header {
+    position: relative;
+    font-weight: 350;
+    font-size: 20pt;
+    margin: 16px 0 12px;
+}
+
+// SECTION CARDS
+.section-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 24px;
+    grid-row-gap: 16px;
+}
+
+.section-cards .card {
+    display: inline-block;
+    width: calc(100% - 48px);
+    margin: auto;
+    padding: var(--card-padding);
+}
+
+// SECTION ACCENT
+.section-content-accent {
+    position: relative;
+    left: 0;
+    width: 100%;
+    height: 166px;
+    border-radius: var(--card-border-radius);
+    overflow: hidden;
+}
+
+.section-content-accent img {
+    position: absolute;
+    top: -214px;
+    right: 0;
+    width: 420px;
+}
+
+.section-content-accent img.left {
+    left: 0;
+}

@@ -1,0 +1,192 @@
+// fonts.scss
+* {
+    font-family: "Poppins", Helvetica, Arial, sans-serif;
+    color: var(--black-color);
+}
+
+i,
+span {
+    color: inherit;
+}
+
+// Imported Fonts
+// Poppins
+@font-face {
+    font-family: 'Poppins';
+    src: font-url('Poppins/Poppins-Bold.woff2') format('woff2'), font-url('Poppins/Poppins-Bold.woff') format('woff'), font-url('Poppins/Poppins-Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: font-url('Poppins/Poppins-Black.woff2') format('woff2'), font-url('Poppins/Poppins-Black.woff') format('woff'), font-url('Poppins/Poppins-Black.otf') format('opentype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: font-url('Poppins/Poppins-BlackItalic.woff2') format('woff2'), font-url('Poppins/Poppins-BlackItalic.woff') format('woff'), font-url('Poppins/Poppins-BlackItalic.otf') format('opentype');
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: font-url('Poppins/Poppins-ExtraLight.woff2') format('woff2'), font-url('Poppins/Poppins-ExtraLight.woff') format('woff'), font-url('Poppins/Poppins-ExtraLight.otf') format('opentype');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: font-url('Poppins/Poppins-Italic.woff2') format('woff2'), font-url('Poppins/Poppins-Italic.woff') format('woff'), font-url('Poppins/Poppins-Italic.otf') format('opentype');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: font-url('Poppins/Poppins-ExtraBold.woff2') format('woff2'), font-url('Poppins/Poppins-ExtraBold.woff') format('woff'), font-url('Poppins/Poppins-ExtraBold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: font-url('Poppins/Poppins-ExtraBoldItalic.woff2') format('woff2'), font-url('Poppins/Poppins-ExtraBoldItalic.woff') format('woff'), font-url('Poppins/Poppins-ExtraBoldItalic.otf') format('opentype');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: font-url('Poppins/Poppins-BoldItalic.woff2') format('woff2'), font-url('Poppins/Poppins-BoldItalic.woff') format('woff'), font-url('Poppins/Poppins-BoldItalic.otf') format('opentype');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: font-url('Poppins/Poppins-ExtraLightItalic.woff2') format('woff2'), font-url('Poppins/Poppins-ExtraLightItalic.woff') format('woff'), font-url('Poppins/Poppins-ExtraLightItalic.otf') format('opentype');
+    font-weight: 200;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: font-url('Poppins/Poppins-MediumItalic.woff2') format('woff2'), font-url('Poppins/Poppins-MediumItalic.woff') format('woff'), font-url('Poppins/Poppins-MediumItalic.otf') format('opentype');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: font-url('Poppins/Poppins-Regular.woff2') format('woff2'), font-url('Poppins/Poppins-Regular.woff') format('woff'), font-url('Poppins/Poppins-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: font-url('Poppins/Poppins-SemiBold.woff2') format('woff2'), font-url('Poppins/Poppins-SemiBold.woff') format('woff'), font-url('Poppins/Poppins-SemiBold.otf') format('opentype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: font-url('Poppins/Poppins-Light.woff2') format('woff2'), font-url('Poppins/Poppins-Light.woff') format('woff'), font-url('Poppins/Poppins-Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: font-url('Poppins/Poppins-LightItalic.woff2') format('woff2'), font-url('Poppins/Poppins-LightItalic.woff') format('woff'), font-url('Poppins/Poppins-LightItalic.otf') format('opentype');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: font-url('Poppins/Poppins-Medium.woff2') format('woff2'), font-url('Poppins/Poppins-Medium.woff') format('woff'), font-url('Poppins/Poppins-Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: font-url('Poppins/Poppins-Thin.woff2') format('woff2'), font-url('Poppins/Poppins-Thin.woff') format('woff'), font-url('Poppins/Poppins-Thin.otf') format('opentype');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: font-url('Poppins/Poppins-SemiBoldItalic.woff2') format('woff2'), font-url('Poppins/Poppins-SemiBoldItalic.woff') format('woff'), font-url('Poppins/Poppins-SemiBoldItalic.otf') format('opentype');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: font-url('Poppins/Poppins-ThinItalic.woff2') format('woff2'), font-url('Poppins/Poppins-ThinItalic.woff') format('woff'), font-url('Poppins/Poppins-ThinItalic.otf') format('opentype');
+    font-weight: 100;
+    font-style: italic;
+    font-display: swap;
+}
+
+// Bold
+.bold {
+    font-weight: bold;
+}
+
+// Bolder
+.bolder {
+    font-weight: 800;
+}
+
+// Presets
+.gradient-text {
+    background: var(--gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+}
+
+// Text shadow can be set to 0 4px 0 #e1e1e1 for stronger effect
+.shadow-text {
+    text-shadow: 0 2.4px 0 #e1e1e1;
+}
+
+.white-text {
+    background: #fafafa;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.translucent-text {
+    opacity: 0.8;
+    color: inherit;
+}

@@ -1,0 +1,78 @@
+<table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Quantity</th>
+      <th>Unit</th>
+      <th>Estimated Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% request_form&.products.each do |p| %>
+      <tr>
+        <td><%= p.name %></td>
+        <td><%= p.quantity %></td>
+        <td><%= p.unit %></td>
+        <td><%= p.price %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<p>
+  <strong>Travel date:</strong>
+  <%= request_form.travel_date %>
+</p>
+<p>
+  <strong>Destination:</strong>
+  <%= request_form.destination %>
+</p>
+<p>
+  <strong>Total:</strong>
+  <%= request_form.total %>
+</p>
+<p>
+  <strong>Remarks:</strong>
+  <%= request_form.remarks %>
+</p>
+<!--
+  <p>
+    <strong>Requester:</strong>
+    <%= request_form.requester %>
+  </p>
+  <p>
+    <strong>Checker:</strong>
+    <%= request_form.checker %>
+  </p>
+  <p>
+    <strong>Procurer:</strong>
+    <%= request_form.procurer %>
+  </p>
+  <p>
+    <strong>Pre approver:</strong>
+    <%= request_form.pre_approver %>
+  </p>
+  <p>
+    <strong>Approver:</strong>
+    <%= request_form.approver %>
+  </p>
+  -->
+<p>
+  <strong>Canvass:</strong>
+  <%= request_form.canvass.uid %>
+</p>
+<p>
+  <strong>Quotation:</strong>
+  <%= request_form.quotation.uid %>
+</p>
+<p>
+  <strong>Company:</strong>
+  <%= request_form.company.code %>
+</p>
+<p>
+  <strong>Project:</strong>
+  <%= request_form.project.uid %>
+</p>
+<p>
+  <strong>Client:</strong>
+  <%= request_form.project.client.name %>
+</p>

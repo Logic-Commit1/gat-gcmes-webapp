@@ -1,0 +1,11 @@
+.width-limit {
+    position: relative;
+    max-width: var(--max-width);
+    margin: auto;
+}
+
+.section-width-limit {
+    position: relative;
+    max-width: var(--section-max-width);
+    margin: auto;
+}
