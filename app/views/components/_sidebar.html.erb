@@ -54,9 +54,17 @@
 
      <!-- Link to Stations -->
     <%= link_to request_forms_path, class: 'in-text no-underline' do %>
-      <p class="nav-btn <%= 'active' if current_page?(canvasses_path) %>">
+      <p class="nav-btn <%= 'active' if current_page?(request_forms_path) %>">
         <span class="icon">📋</span>
         Request Forms
+      </p>
+    <% end %>
+    
+    <!-- Link to Stations -->
+    <%= link_to purchase_orders_path, class: 'in-text no-underline' do %>
+      <p class="nav-btn <%= 'active' if current_page?(purchase_orders_path) %>">
+        <span class="icon">📋</span>
+        Purchase Orders
       </p>
     <% end %>
   </main>

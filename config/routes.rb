@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :purchase_orders
   resources :particulars
   resources :request_forms
   resources :canvasses

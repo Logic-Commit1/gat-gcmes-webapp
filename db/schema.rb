@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_06_005719) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_06_024804) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -122,6 +122,32 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_06_005719) do
     t.index ["quotation_id"], name: "index_projects_on_quotation_id"
   end
 
+  create_table "purchase_orders", force: :cascade do |t|
+    t.string "uid"
+    t.string "preparer"
+    t.integer "terms"
+    t.decimal "total"
+    t.decimal "discount"
+    t.string "requester"
+    t.string "checker"
+    t.string "pre_approver"
+    t.string "approver"
+    t.bigint "company_id", null: false
+    t.bigint "supplier_id", null: false
+    t.bigint "project_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "products_id"
+    t.bigint "particulars_id"
+    t.bigint "request_forms_id", null: false
+    t.index ["company_id"], name: "index_purchase_orders_on_company_id"
+    t.index ["particulars_id"], name: "index_purchase_orders_on_particulars_id"
+    t.index ["products_id"], name: "index_purchase_orders_on_products_id"
+    t.index ["project_id"], name: "index_purchase_orders_on_project_id"
+    t.index ["request_forms_id"], name: "index_purchase_orders_on_request_forms_id"
+    t.index ["supplier_id"], name: "index_purchase_orders_on_supplier_id"
+  end
+
   create_table "quotations", force: :cascade do |t|
     t.string "uid"
     t.bigint "client_id", null: false
@@ -200,6 +226,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_06_005719) do
   add_foreign_key "projects", "clients"
   add_foreign_key "projects", "companies"
   add_foreign_key "projects", "quotations"
+  add_foreign_key "purchase_orders", "companies"
+  add_foreign_key "purchase_orders", "particulars", column: "particulars_id"
+  add_foreign_key "purchase_orders", "products", column: "products_id"
+  add_foreign_key "purchase_orders", "projects"
+  add_foreign_key "purchase_orders", "request_forms", column: "request_forms_id"
+  add_foreign_key "purchase_orders", "suppliers"
   add_foreign_key "quotations", "clients"
   add_foreign_key "quotations", "companies"
   add_foreign_key "quotations", "projects"

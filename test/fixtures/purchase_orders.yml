@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uid: MyString
+  preparer: MyString
+  terms: 1
+  total: 9.99
+  discount: 9.99
+  requester: MyString
+  checker: MyString
+  pre_approver: MyString
+  approver: MyString
+  company: one
+  supplier: one
+  project: one
+
+two:
+  uid: MyString
+  preparer: MyString
+  terms: 1
+  total: 9.99
+  discount: 9.99
+  requester: MyString
+  checker: MyString
+  pre_approver: MyString
+  approver: MyString
+  company: two
+  supplier: two
+  project: two
