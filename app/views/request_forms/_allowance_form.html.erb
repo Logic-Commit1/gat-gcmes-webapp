@@ -12,9 +12,15 @@
 <% end %>
 <div data-nested-form-target="target"></div>
 <button type="button" data-action="nested-form#add">Add Particular</button>
-<div>
-  <%= form.label :travel_date, style: "display: block" %>
-  <%= form.date_field :travel_date %>
+<div data-controller="flatpickr">
+  <div>
+    <%= form.label :start_travel_date, style: "display: block" %>
+    <%= form.datetime_field :start_travel_date, class: "start_travel_date" %>
+  </div>
+  <div>
+    <%= form.label :end_travel_date, style: "display: block" %>
+    <%= form.datetime_field :end_travel_date, class: "end_travel_date" %>
+  </div>
 </div>
 <div>
   <%= form.label :destination, style: "display: block" %>

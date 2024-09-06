@@ -1,3 +1,7 @@
+<p>
+  <strong>Vehicle:</strong>
+  <%= request_form.vehicle %>
+</p>
 <table>
   <thead>
     <tr>
@@ -13,16 +17,16 @@
         <td><%= p.allowance %></td>
         <td></td>
       </tr>
-    <% end %>
-  </tbody>
+    </tbody>
+  <% end %>
 </table>
 <p>
-  <strong>Vehicle:</strong>
-  <%= request_form.vehicle %>
+  <strong>Travel Date Start:</strong>
+  <%= request_form.start_travel_date&.strftime("%B %d, %Y") %>
 </p>
 <p>
-  <strong>Travel date:</strong>
-  <%= request_form.travel_date %>
+  <strong>Travel Date End:</strong>
+  <%= request_form.end_travel_date&.strftime("%B %d, %Y") %>
 </p>
 <p>
   <strong>Destination:</strong>

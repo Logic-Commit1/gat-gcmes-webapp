@@ -12,13 +12,13 @@
       </ul>
     </div>
   <% end %>
+  <div data-controller="company-select">
+    <%= form.label :company, style: "display: block" %>
+    <% Company.all.each do |company| %>
+      <%= form.radio_button :company_id, company.id %> <%= company.code %>
+    <% end %>
+  </div>
   <%= turbo_frame_tag "request_form_types", data: {controller: 'navigate'} do %>
-    <div data-controller="company-select">
-      <%= form.label :company, style: "display: block" %>
-      <% Company.all.each do |company| %>
-        <%= form.radio_button :company_id, company.id %> <%= company.code %>
-      <% end %>
-    </div>
     <div>
       <%= form.label :request_type, style: "display: block" %>
       <div>

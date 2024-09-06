@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_05_152705) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_06_005719) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -151,7 +151,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_05_152705) do
     t.string "uid"
     t.integer "request_type"
     t.string "vehicle"
-    t.date "travel_date"
     t.string "destination"
     t.decimal "total"
     t.text "remarks"
@@ -169,6 +168,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_05_152705) do
     t.bigint "project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "start_travel_date"
+    t.datetime "end_travel_date"
     t.index ["canvass_id"], name: "index_request_forms_on_canvass_id"
     t.index ["company_id"], name: "index_request_forms_on_company_id"
     t.index ["project_id"], name: "index_request_forms_on_project_id"

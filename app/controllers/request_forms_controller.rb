@@ -68,7 +68,7 @@ class RequestFormsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def request_form_params
       params.require(:request_form).permit(
-        :uid, :request_type, :vehicle, :travel_date, :destination, :total,
+        :uid, :request_type, :vehicle, :start_travel_date, :end_travel_date, :destination, :total,
         :remarks, :fuel_gauge, :easy_trip_balance, :sweep_balance,
         :requester, :checker, :procurer, :pre_approver, :approver,
         :canvass_id, :quotation_id, :company_id, :project_id,
