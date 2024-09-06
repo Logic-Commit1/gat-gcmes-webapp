@@ -1,0 +1,3 @@
+class Allowance < RequestForm
+
+end

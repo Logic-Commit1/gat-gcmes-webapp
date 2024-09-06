@@ -14,6 +14,8 @@ class RequestForm < ApplicationRecord
   enum :request_type, ['Allowance', 'Order']
 
   before_save :compute_totals_request_form
+  before_save :set_sequence_id
+  before_save :set_uid
 
   def compute_totals_request_form
     if products.present?
@@ -23,8 +25,18 @@ class RequestForm < ApplicationRecord
     compute_total
   end
 
-  private
+  def set_uid 
+    return if self.uid.present?
+    form_type = self.Allowance? ? "A" : "O"
+    self.uid = "RFN-#{form_type}F-#{self.sequence_id.to_s.rjust(6, '0')}"
+  end
 
+  private
+  def set_sequence_id
+    sequence_record = RequestFormSequence.find_or_create_by(request_type: request_type)
+    self.sequence_id = sequence_record.last_sequence.to_i + 1
+    sequence_record.update(last_sequence: self.sequence_id)
+  end
   def compute_total
     if products.present?
       self.total = products.sum { |product| product.total }

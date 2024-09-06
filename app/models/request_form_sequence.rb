@@ -1,0 +1,2 @@
+class RequestFormSequence < ApplicationRecord
+end

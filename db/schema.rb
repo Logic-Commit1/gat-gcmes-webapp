@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_06_024804) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_06_043154) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -173,6 +173,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_06_024804) do
     t.index ["project_id"], name: "index_quotations_on_project_id"
   end
 
+  create_table "request_form_sequences", force: :cascade do |t|
+    t.string "request_type"
+    t.integer "last_sequence"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "request_forms", force: :cascade do |t|
     t.string "uid"
     t.integer "request_type"
@@ -196,6 +203,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_06_024804) do
     t.datetime "updated_at", null: false
     t.datetime "start_travel_date"
     t.datetime "end_travel_date"
+    t.integer "sequence_id"
     t.index ["canvass_id"], name: "index_request_forms_on_canvass_id"
     t.index ["company_id"], name: "index_request_forms_on_company_id"
     t.index ["project_id"], name: "index_request_forms_on_project_id"
