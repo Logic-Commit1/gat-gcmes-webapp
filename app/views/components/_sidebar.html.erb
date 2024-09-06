@@ -67,6 +67,14 @@
         Purchase Orders
       </p>
     <% end %>
+
+    <!-- Link to Stations -->
+    <%= link_to employees_path, class: 'in-text no-underline' do %>
+      <p class="nav-btn <%= 'active' if current_page?(employees_path) %>">
+        <span class="icon">📋</span>
+        Employees
+      </p>
+    <% end %>
   </main>
 
   <!-- Footer -->
