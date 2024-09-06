@@ -19,6 +19,11 @@
       </tr>
     </tbody>
   <% end %>
+  <tr>
+    <td>Total</td>
+    <td><%= request_form.total %></td>
+    <td></td>
+  </tr>
 </table>
 <p>
   <strong>Travel Date Start:</strong>
@@ -31,10 +36,6 @@
 <p>
   <strong>Destination:</strong>
   <%= request_form.destination %>
-</p>
-<p>
-  <strong>Total:</strong>
-  <%= request_form.total %>
 </p>
 <p>
   <strong>Remarks:</strong>

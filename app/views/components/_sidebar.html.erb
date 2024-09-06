@@ -10,24 +10,7 @@
 
   <!-- Main: Navigation -->
   <main id="navigation">
-
-    <!-- Link to Home -->
-    <%= link_to clients_path, class: 'in-text no-underline' do %>
-      <p class="nav-btn <%= 'active' if current_page?(clients_path) %>">
-        <span class="icon">👷🏻</span>
-        Clients
-      </p>
-    <% end %>
-
-    <!-- Link to Home -->
-    <%= link_to suppliers_path, class: 'in-text no-underline' do %>
-      <p class="nav-btn <%= 'active' if current_page?(suppliers_path) %>">
-        <span class="icon">👷🏻</span>
-        Suppliers
-      </p>
-    <% end %>
-
-    <!-- Link to Articles -->
+    <!-- Link to Quotations -->
     <%= link_to quotations_path, class: 'in-text no-underline' do %>
       <p class="nav-btn <%= 'active' if current_page?(quotations_path) %>">
         <span class="icon">📋</span>
@@ -36,7 +19,7 @@
     <% end %>
 
     
-    <!-- Link to Stations -->
+    <!-- Link to Projects -->
     <%= link_to projects_path, class: 'in-text no-underline' do %>
       <p class="nav-btn <%= 'active' if current_page?(projects_path) %>">
         <span class="icon">⛴️</span>
@@ -44,7 +27,7 @@
       </p>
     <% end %>
 
-    <!-- Link to Stations -->
+    <!-- Link to Canvasses -->
     <%= link_to canvasses_path, class: 'in-text no-underline' do %>
       <p class="nav-btn <%= 'active' if current_page?(canvasses_path) %>">
         <span class="icon">📋</span>
@@ -52,7 +35,7 @@
       </p>
     <% end %>
 
-     <!-- Link to Stations -->
+     <!-- Link to Request Forms -->
     <%= link_to request_forms_path, class: 'in-text no-underline' do %>
       <p class="nav-btn <%= 'active' if current_page?(request_forms_path) %>">
         <span class="icon">📋</span>
@@ -60,19 +43,35 @@
       </p>
     <% end %>
     
-    <!-- Link to Stations -->
+    <!-- Link to Purchase Orders -->
     <%= link_to purchase_orders_path, class: 'in-text no-underline' do %>
       <p class="nav-btn <%= 'active' if current_page?(purchase_orders_path) %>">
-        <span class="icon">📋</span>
+        <span class="icon">💵</span>
         Purchase Orders
       </p>
     <% end %>
 
-    <!-- Link to Stations -->
+    <!-- Link to Employees -->
     <%= link_to employees_path, class: 'in-text no-underline' do %>
       <p class="nav-btn <%= 'active' if current_page?(employees_path) %>">
-        <span class="icon">📋</span>
+        <span class="icon">👨‍💻</span>
         Employees
+      </p>
+    <% end %>
+
+    <!-- Link to Clients -->
+    <%= link_to clients_path, class: 'in-text no-underline' do %>
+      <p class="nav-btn <%= 'active' if current_page?(clients_path) %>">
+        <span class="icon">👷🏻</span>
+        Clients
+      </p>
+    <% end %>
+
+    <!-- Link to Suppliers -->
+    <%= link_to suppliers_path, class: 'in-text no-underline' do %>
+      <p class="nav-btn <%= 'active' if current_page?(suppliers_path) %>">
+        <span class="icon">👷🏻</span>
+        Suppliers
       </p>
     <% end %>
   </main>

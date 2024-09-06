@@ -15,30 +15,30 @@
   <div data-controller="company-select">
     <%= form.label :company, style: "display: block" %>
     <% Company.all.each do |company| %>
-      <%= form.radio_button :company_id, company.id %> <%= company.code %>
+      <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForClient" } %> <%= company.code %>
     <% end %>
-  </div>
-  <%= turbo_frame_tag "request_form_types", data: {controller: 'navigate'} do %>
-    <div>
-      <%= form.label :request_type, style: "display: block" %>
+    <%= turbo_frame_tag "request_form_types", data: {controller: 'navigate'} do %>
       <div>
-        <%= form.radio_button :request_type, "Allowance", data: { action: "change->navigate#to", url: new_request_form_path({request_form: {request_type: 'Allowance'}}) } %>
-        <%= form.label :request_type_allowance, "Allowance" %>
-        <%= form.radio_button :request_type, "Order", data: { action: "change->navigate#to", url: new_request_form_path({request_form: {request_type: 'Order'}}) } %>
-        <%= form.label :request_type_order, "Order" %>
+        <%= form.label :request_type, style: "display: block" %>
+        <div>
+          <%= form.radio_button :request_type, "Allowance", data: { action: "change->navigate#to", url: new_request_form_path({request_form: {request_type: 'Allowance'}}) } %>
+          <%= form.label :request_type_allowance, "Allowance" %>
+          <%= form.radio_button :request_type, "Order", data: { action: "change->navigate#to", url: new_request_form_path({request_form: {request_type: 'Order'}}) } %>
+          <%= form.label :request_type_order, "Order" %>
+        </div>
       </div>
-    </div>
-    <div class="project-section" style="display: <%= @request_form.request_type? ? 'block' : 'none' %>">
-      <%= form.label :project_id %>
-      <%= form.collection_select :project_id, Project.all, :id, :uid, { prompt: "Select Project"} %>
-    </div>
-    <div class="canvass-section" style="display: <%= @request_form.request_type? ? 'block' : 'none' %>">
-      <%= form.label :canvass_id %>
-      <%= form.collection_select :canvass_id, Canvass.all, :id, :uid, { prompt: "Select Canvass"} %>
-    </div>
-    <div class="canvass-section" style="display: <%= @request_form.request_type? ? 'block' : 'none' %>">
-      <%= form.label :quotation_id, style: "display: block" %>
-      <%= form.collection_select :quotation_id, Quotation.all, :id, :uid, { prompt: "Select Quotation"} %>
+      <div style="display: <%= @request_form.request_type? ? 'block' : 'none' %>">
+        <%= form.label :project_id %>
+        <%= form.collection_select :project_id, Project.all, :id, :uid, { prompt: "Select Project"} %>
+      </div>
+      <div style="display: <%= @request_form.request_type? ? 'block' : 'none' %>">
+        <%= form.label :canvass_id %>
+        <%= form.collection_select :canvass_id, Canvass.all, :id, :uid, { prompt: "Select Canvass"} %>
+      </div>
+      <div class="canvass-section" style="display: <%= @request_form.request_type? ? 'block' : 'none' %>">
+        <%= form.label :quotation_id, style: "display: block" %>
+        <%= form.collection_select :quotation_id, Quotation.all, :id, :uid, { prompt: "Select Quotation"} %>
+      </div>
     </div>
     <% if @request_form.Allowance? %>
       <%= render 'allowance_form', form: form %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_06_050105) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_06_072228) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -124,10 +124,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_06_050105) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "company_id"
-    t.bigint "quotation_id", null: false
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["company_id"], name: "index_projects_on_company_id"
-    t.index ["quotation_id"], name: "index_projects_on_quotation_id"
   end
 
   create_table "purchase_orders", force: :cascade do |t|
@@ -241,7 +239,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_06_050105) do
   add_foreign_key "products", "suppliers"
   add_foreign_key "projects", "clients"
   add_foreign_key "projects", "companies"
-  add_foreign_key "projects", "quotations"
   add_foreign_key "purchase_orders", "companies"
   add_foreign_key "purchase_orders", "particulars", column: "particulars_id"
   add_foreign_key "purchase_orders", "products", column: "products_id"

@@ -10,20 +10,31 @@
     </div>
   <% end %>
   <div>
-    <%= form.label :preparer, style: "display: block" %>
-    <%= form.text_field :preparer %>
+    <%= form.label :preparer, "Prepared By", style: "display: block" %>
+    <%= form.collection_select :preparer, Employee.all, :id, :name%>
   </div>
-  <div>
-    <%= form.label :terms, style: "display: block" %>
-    <%= form.number_field :terms %>
-  </div>
-  <div>
-    <%= form.label :total, style: "display: block" %>
-    <%= form.text_field :total %>
+  <div data-controller="company-select">
+    <%= form.label :company, style: "display: block" %>
+    <% Company.all.each do |company| %>
+      <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForRequestFormsAndSuppliers" } %> <%= company.code %>
+    <% end %>
+    <div>
+      <%= form.label :request_form_ids, "Request Form", style: "display: block" %>
+      <%= form.collection_select :request_form_ids, [], :id, :uid, { prompt: "Select Request Form", multiple: true}, { style: "display: block", data: { company_select_target: "requestFormSelect" } } %>
+    </div>
+    <div>
+      <%= form.label :supplier_id, style: "display: block" %>
+      <%= form.collection_select :supplier_id, [], :id, :uid, { prompt: "Select Supplier" }, { style: "display: block", data: { company_select_target: "supplierSelect" } } %>
+    </div>
   </div>
   <div>
     <%= form.label :discount, style: "display: block" %>
     <%= form.text_field :discount %>
+  </div>
+  <!--
+  <div>
+    <%= form.label :terms, style: "display: block" %>
+    <%= form.collection_select :terms, PurchaseOrder.terms.keys, :to_s, :to_s, { prompt: "Select Payment Terms" }, { style: "display: block" } %>
   </div>
   <div>
     <%= form.label :requester, style: "display: block" %>
@@ -42,17 +53,10 @@
     <%= form.text_field :approver %>
   </div>
   <div>
-    <%= form.label :company_id, style: "display: block" %>
-    <%= form.text_field :company_id %>
-  </div>
-  <div>
-    <%= form.label :supplier_id, style: "display: block" %>
-    <%= form.text_field :supplier_id %>
-  </div>
-  <div>
     <%= form.label :project_id, style: "display: block" %>
     <%= form.text_field :project_id %>
   </div>
+  -->
   <div>
     <%= form.submit %>
   </div>

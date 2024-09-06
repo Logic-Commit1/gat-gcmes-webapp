@@ -17,48 +17,52 @@
     <% Company.all.each do |company| %>
       <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForClient" } %> <%= company.code %>
     <% end %>
-    <%= form.label :client_id, style: "display: block" %>
-    <%= form.collection_select :client_id, [], :id, :name, { prompt: "Select Client" }, { style: "display: block", data: { company_select_target: "clientSelect" } } %>
-  </div>
-  <div>
-    <%= form.label :attention, style: "display: block" %>
-    <%= form.text_field :attention %>
-  </div>
-  <div>
-    <%= form.label :vessel, style: "display: block" %>
-    <%= form.text_field :vessel %>
-  </div>
-  <div>
-    <%= form.label :subject, style: "display: block" %>
-    <%= form.text_field :subject %>
-  </div>
-  <template data-nested-form-target="template">
-    <%= form.fields_for :products, Product.new, child_index: 'NEW_RECORD' do |product_fields| %>
-      <%= render "quotations/quotation_product_form", f: product_fields %>
-    <% end %>
-  </template>
-  <%= form.fields_for :products do |product_fields| %>
-    <%= render "quotations/quotation_product_form", f: product_fields %>
-  <% end %>
-  <div data-nested-form-target="target"></div>
-  <button type="button" data-action="nested-form#add">Add Item</button>
-  <div>
-    <%= form.label :lead_time, style: "display: block" %>
-    <%= form.text_area :lead_time %>
-  </div>
-  <div>
-    <%= form.label :warranty, style: "display: block" %>
-    <%= form.text_area :warranty %>
-  </div>
-  <div>
-    <%= form.label :payment, 'Payment', style: "display: block" %>
-    <%= form.collection_select :payment, Quotation.payments.keys, :to_s, :to_s, { prompt: "Select Payment Terms" }, { style: "display: block" } %>
-  </div>
-  <div>
-    <%= form.label :additional_conditions, style: "display: block" %>
-    <%= form.text_area :additional_conditions %>
-  </div>
-  <div>
-    <%= form.submit %>
+    <div class="hidden">
+      <%= form.label :client_id, style: "display: block" %>
+      <%= form.collection_select :client_id, [], :id, :name, { prompt: "Select Client" }, { style: "display: block", data: { company_select_target: "clientSelect" } } %>
+    </div>
+    <div class="hidden">
+      <div>
+        <%= form.label :attention, style: "display: block" %>
+        <%= form.text_field :attention %>
+      </div>
+      <div>
+        <%= form.label :vessel, style: "display: block" %>
+        <%= form.text_field :vessel %>
+      </div>
+      <div>
+        <%= form.label :subject, style: "display: block" %>
+        <%= form.text_field :subject %>
+      </div>
+      <template data-nested-form-target="template">
+        <%= form.fields_for :products, Product.new, child_index: 'NEW_RECORD' do |product_fields| %>
+          <%= render "quotations/quotation_product_form", f: product_fields %>
+        <% end %>
+      </template>
+      <%= form.fields_for :products do |product_fields| %>
+        <%= render "quotations/quotation_product_form", f: product_fields %>
+      <% end %>
+      <div data-nested-form-target="target"></div>
+      <button type="button" data-action="nested-form#add">Add Item</button>
+      <div>
+        <%= form.label :lead_time, style: "display: block" %>
+        <%= form.text_area :lead_time %>
+      </div>
+      <div>
+        <%= form.label :warranty, style: "display: block" %>
+        <%= form.text_area :warranty %>
+      </div>
+      <div>
+        <%= form.label :payment, 'Payment', style: "display: block" %>
+        <%= form.collection_select :payment, Quotation.payments.keys, :to_s, :to_s, { prompt: "Select Payment Terms" }, { style: "display: block" } %>
+      </div>
+      <div>
+        <%= form.label :additional_conditions, style: "display: block" %>
+        <%= form.text_area :additional_conditions %>
+      </div>
+      <div>
+        <%= form.submit %>
+      </div>
+    </div>
   </div>
 <% end %>

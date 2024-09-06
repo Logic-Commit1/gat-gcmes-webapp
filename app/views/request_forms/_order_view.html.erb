@@ -16,16 +16,14 @@
         <td><%= p.price %></td>
       </tr>
     <% end %>
+    <tr>
+      <td>Total</td>
+      <td></td>
+      <td></td>
+      <td><%= request_form.total %></td>
+    </tr>
   </tbody>
 </table>
-<p>
-  <strong>Destination:</strong>
-  <%= request_form.destination %>
-</p>
-<p>
-  <strong>Total:</strong>
-  <%= request_form.total %>
-</p>
 <p>
   <strong>Remarks:</strong>
   <%= request_form.remarks %>
