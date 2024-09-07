@@ -14,6 +14,9 @@ Rails.application.routes.draw do
     get 'clients', on: :member
     get 'suppliers', on: :member
     get 'request_forms', on: :member
+    get 'projects', on: :member
+    get 'canvasses', on: :member
+    get 'quotations', on: :member
   end
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

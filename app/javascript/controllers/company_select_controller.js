@@ -2,29 +2,11 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["clientSelect","supplierSelect","requestFormSelect"]
+  static targets = ["clientSelect", "supplierSelect", "requestFormSelect", "projectSelect", "canvassSelect", "quotationSelect"]
 
   selectCompanyForClient(event) {
-    const companyId = event.target.value
-
-    fetch(`/companies/${companyId}/clients`, {
-      headers: {
-        "Accept": "application/json"
-      }
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-        return response.json()
-      })
-      .then(clients => {
-        this.updateClientOptions(clients);
-        this.showHiddenDivs(); // Call the method to show hidden divs
-      })
-      .catch(error => {
-        console.error("Fetch error: ", error)
-      })
+    this.fetchAndUpdateOptions(event, "/clients", this.clientSelectTarget, "Select Client", "name")
+    this.showHiddenDivs() // Call the method to show hidden divs
   }
 
   selectCompanyForRequestFormsAndSuppliers(event) {
@@ -32,30 +14,36 @@ export default class extends Controller {
     this.selectCompanyForRequestForms(event)
   }
 
-  selectCompanyForSuppliers(event) {
-    const companyId = event.target.value
+  selectCompanyForProjectsCanvassesQuotations(event) {
+    this.selectCompanyForProjects(event)
+    this.selectCompanyForCanvasses(event)
+    this.selectCompanyForQuotations(event)
+  }
 
-    fetch(`/companies/${companyId}/suppliers`, {
-      headers: {
-        "Accept": "application/json"
-      }
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-        return response.json()
-      })
-      .then(suppliers => this.updateSupplierOptions(suppliers))
-      .catch(error => {
-        console.error("Fetch error: ", error)
-      })
+  selectCompanyForSuppliers(event) {
+    this.fetchAndUpdateOptions(event, "/suppliers", this.supplierSelectTarget, "Select Supplier", "name")
   }
 
   selectCompanyForRequestForms(event) {
+    this.fetchAndUpdateOptions(event, "/request_forms", this.requestFormSelectTarget, "Select Request Form", "uid")
+  }
+
+  selectCompanyForProjects(event) {
+    this.fetchAndUpdateOptions(event, "/projects", this.projectSelectTarget, "Select Project", "uid")
+  }
+
+  selectCompanyForCanvasses(event) {
+    this.fetchAndUpdateOptions(event, "/canvasses", this.canvassSelectTarget, "Select Canvass", "uid")
+  }
+
+  selectCompanyForQuotations(event) {
+    this.fetchAndUpdateOptions(event, "/quotations", this.quotationSelectTarget, "Select Quotation", "uid")
+  }
+
+  fetchAndUpdateOptions(event, endpoint, selectTarget, promptText, displayAttribute) {
     const companyId = event.target.value
 
-    fetch(`/companies/${companyId}/request_forms`, {
+    fetch(`/companies/${companyId}${endpoint}`, {
       headers: {
         "Accept": "application/json"
       }
@@ -66,76 +54,35 @@ export default class extends Controller {
         }
         return response.json()
       })
-      .then(requestForms => this.updateRequestFormOptions(requestForms))
+      .then(items => this.updateOptions(selectTarget, items, promptText, displayAttribute))
       .catch(error => {
         console.error("Fetch error: ", error)
       })
   }
 
-  updateClientOptions(clients) {
+  updateOptions(selectTarget, items, promptText, displayAttribute) {
     // Clear existing options
-    this.clientSelectTarget.innerHTML = ""
+    selectTarget.innerHTML = ""
 
     // Add a prompt option
     const promptOption = document.createElement("option")
-    promptOption.textContent = "Select Client"
+    promptOption.textContent = promptText
     promptOption.value = ""
-    this.clientSelectTarget.appendChild(promptOption)
+    selectTarget.appendChild(promptOption)
 
-    // Add new options for each client
-    clients.forEach(client => {
+    // Add new options based on the provided items
+    items.forEach(item => {
       const option = document.createElement("option")
-      option.value = client.id
-      option.textContent = client.name
-      this.clientSelectTarget.appendChild(option)
-    })
-  }
-
-  updateSupplierOptions(suppliers) {
-    // Clear existing options
-    this.supplierSelectTarget.innerHTML = ""
-
-    // Add a prompt option
-    const promptOption = document.createElement("option")
-    promptOption.textContent = "Select Supplier"
-    promptOption.value = ""
-    this.supplierSelectTarget.appendChild(promptOption)
-
-    // Add new options for each supplier
-    suppliers.forEach(supplier => {
-      const option = document.createElement("option")
-      option.value = supplier.id
-      option.textContent = supplier.name
-      this.supplierSelectTarget.appendChild(option)
-    })
-  }
-
-  updateRequestFormOptions(requestForms) {
-    // Clear existing options
-    this.requestFormSelectTarget.innerHTML = ""
-
-    // Add a prompt option
-    const promptOption = document.createElement("option")
-    promptOption.textContent = "Select Request Form"
-    promptOption.value = ""
-    this.requestFormSelectTarget.appendChild(promptOption)
-
-    // Add new options for each client
-    requestForms.forEach(requestForm => {
-      const option = document.createElement("option")
-      option.value = requestForm.id
-      option.textContent = requestForm.uid
-      this.requestFormSelectTarget.appendChild(option)
+      option.value = item.id
+      option.textContent = item[displayAttribute]
+      selectTarget.appendChild(option)
     })
   }
 
   showHiddenDivs() {
-    // Show hidden divs by removing the 'hidden' class
-    const hiddenDivs = this.element.querySelectorAll('.hidden');
-    console.log(hiddenDivs)
+    const hiddenDivs = this.element.querySelectorAll('.hidden')
     hiddenDivs.forEach(div => {
-        div.classList.remove('hidden');
-    });
-  } 
-
+      div.classList.remove('hidden')
+    })
+  }
 }

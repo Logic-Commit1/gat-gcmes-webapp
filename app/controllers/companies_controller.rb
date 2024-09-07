@@ -20,4 +20,24 @@ class CompaniesController < ApplicationController
         request_forms = company.request_forms.select(:id, :uid) # Only select necessary fields
         render json: request_forms
       end
+
+      def projects
+        company = Company.find(params[:id])
+        projects = company.projects.select(:id, :uid) # Only select necessary fields
+        render json: projects
+      end
+
+      def canvasses
+        company = Company.find(params[:id])
+        canvasses = company.canvasses.select(:id, :uid) # Only select necessary fields
+        render json: canvasses
+      end
+
+      def quotations
+        company = Company.find(params[:id])
+        quotations = company.quotations.select(:id, :uid) # Only select necessary fields
+        render json: quotations
+      end
+
+      
 end

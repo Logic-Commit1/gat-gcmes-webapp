@@ -9,33 +9,36 @@
       </ul>
     </div>
   <% end %>
-  <div>
-    <%= form.label :preparer, "Prepared By", style: "display: block" %>
-    <%= form.collection_select :preparer, Employee.all, :id, :name%>
-  </div>
   <div data-controller="company-select">
-    <%= form.label :company, style: "display: block" %>
-    <% Company.all.each do |company| %>
-      <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForRequestFormsAndSuppliers" } %> <%= company.code %>
-    <% end %>
+    <div>
+      <%= form.label :company, style: "display: block" %>
+      <% Company.all.each do |company| %>
+        <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForRequestFormsAndSuppliers" } %> <%= company.code %>
+      <% end %>
+    </div>
+    <div>
+      <%= form.label :preparer, "Prepared By", style: "display: block" %>
+      <%= form.collection_select :preparer, Employee.all, :id, :name%>
+    </div>
+    <div>
+      <%= form.label :supplier_id, "Vendor",style: "display: block" %>
+      <%= form.collection_select :supplier_id, [], :id, :uid, { prompt: "Select Vendor" }, { style: "display: block", data: { company_select_target: "supplierSelect" } } %>
+    </div>
     <div>
       <%= form.label :request_form_ids, "Request Form", style: "display: block" %>
       <%= form.collection_select :request_form_ids, [], :id, :uid, { prompt: "Select Request Form", multiple: true}, { style: "display: block", data: { company_select_target: "requestFormSelect" } } %>
-    </div>
-    <div>
-      <%= form.label :supplier_id, style: "display: block" %>
-      <%= form.collection_select :supplier_id, [], :id, :uid, { prompt: "Select Supplier" }, { style: "display: block", data: { company_select_target: "supplierSelect" } } %>
     </div>
   </div>
   <div>
     <%= form.label :discount, style: "display: block" %>
     <%= form.text_field :discount %>
   </div>
-  <!--
   <div>
     <%= form.label :terms, style: "display: block" %>
     <%= form.collection_select :terms, PurchaseOrder.terms.keys, :to_s, :to_s, { prompt: "Select Payment Terms" }, { style: "display: block" } %>
   </div>
+  <br>
+  <!--
   <div>
     <%= form.label :requester, style: "display: block" %>
     <%= form.text_field :requester %>

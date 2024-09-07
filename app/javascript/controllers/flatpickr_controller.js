@@ -4,7 +4,6 @@ import flatpickr from "flatpickr";
 // Connects to data-controller="flatpickr"
 export default class extends Controller {
   connect() {
-    console.log('connected', this.element);
     let startDateElement = document.querySelector(".start_travel_date");
     let endDateElement = document.querySelector(".end_travel_date");
 
