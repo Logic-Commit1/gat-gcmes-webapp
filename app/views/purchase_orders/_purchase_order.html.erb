@@ -5,7 +5,7 @@
   </p>
   <p>
     <strong>Preparer:</strong>
-    <%= purchase_order.preparer %>
+    <%= purchase_order.employee.name %>
   </p>
   <p>
     <strong>Terms:</strong>
@@ -37,10 +37,10 @@
   </p>
   <p>
     <strong>Company:</strong>
-    <%= purchase_order.company_id %>
+    <%= purchase_order.company.code %>
   </p>
   <p>
     <strong>Supplier:</strong>
-    <%= purchase_order.supplier_id %>
+    <%= purchase_order.supplier.name %>
   </p>
 </div>

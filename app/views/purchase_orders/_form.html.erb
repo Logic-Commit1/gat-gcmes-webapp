@@ -17,8 +17,8 @@
       <% end %>
     </div>
     <div>
-      <%= form.label :preparer, "Prepared By", style: "display: block" %>
-      <%= form.collection_select :preparer, Employee.all, :id, :name%>
+      <%= form.label :employee_id, "Prepared By", style: "display: block" %>
+      <%= form.collection_select :employee_id, Employee.all, :id, :name%>
     </div>
     <div>
       <%= form.label :supplier_id, "Vendor",style: "display: block" %>
