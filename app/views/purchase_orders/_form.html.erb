@@ -1,4 +1,4 @@
-<%= form_with(model: purchase_order) do |form| %>
+<%= form_with(model: purchase_order, data: {controller: 'purchase-order'}) do |form| %>
   <% if purchase_order.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(purchase_order.errors.count, "error") %> prohibited this purchase_order from being saved:</h2>
@@ -26,16 +26,24 @@
     </div>
     <div>
       <%= form.label :request_form_ids, "Request Form", style: "display: block" %>
-      <%= form.collection_select :request_form_ids, [], :id, :uid, { prompt: "Select Request Form", multiple: true}, { style: "display: block", data: { company_select_target: "requestFormSelect" } } %>
+      <%= form.select :request_form_ids, options_from_collection_for_select([], :id, :uid), {}, { multiple: true, data: { controller: 'slim', slim_target: 'field', company_select_target: "requestFormSelect", purchase_order_target: "requestFormSelect" } } %>    </div>
+  </div>
+  <button data-action="purchase-order#handleContinueButton">Continue</button>
+  <div data-purchase-order-target="itemsContainer"></div>
+  <div class="hidden">
+    <!--
+    <div>
+      <%= form.label :discount, style: "display: block" %>
+      <%= form.text_field :discount %>
     </div>
-  </div>
-  <div>
-    <%= form.label :discount, style: "display: block" %>
-    <%= form.text_field :discount %>
-  </div>
-  <div>
-    <%= form.label :terms, style: "display: block" %>
-    <%= form.collection_select :terms, PurchaseOrder.terms.keys, :to_s, :to_s, { prompt: "Select Payment Terms" }, { style: "display: block" } %>
+  -->
+    <div>
+      <%= form.label :terms, style: "display: block" %>
+      <%= form.collection_select :terms, PurchaseOrder.terms.keys, :to_s, :to_s, { prompt: "Select Payment Terms" }, { style: "display: block" } %>
+    </div>
+    <div>
+      <%= form.submit %>
+    </div>
   </div>
   <br>
   <!--
@@ -60,7 +68,4 @@
     <%= form.text_field :project_id %>
   </div>
   -->
-  <div>
-    <%= form.submit %>
-  </div>
 <% end %>

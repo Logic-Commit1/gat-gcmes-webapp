@@ -8,3 +8,5 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 pin "@stimulus-components/rails-nested-form", to: "@stimulus-components--rails-nested-form.js" # @5.0.0
 pin "flatpickr" # @4.6.13
 pin "stimulus-flatpickr" # @3.0.0
+pin "slim-select" # @1.27.1
+pin "stimulus-slimselect" # @0.2.0

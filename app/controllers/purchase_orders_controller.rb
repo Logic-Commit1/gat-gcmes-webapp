@@ -67,4 +67,14 @@ class PurchaseOrdersController < ApplicationController
     def purchase_order_params
       params.require(:purchase_order).permit(:uid, :employee_id, :terms, :total, :discount, :requester, :checker, :pre_approver, :approver, :company_id, :supplier_id, :project_id, :request_form_ids)
     end
+
+    # def items
+    #   request_form_ids = params[:request_form_ids]
+    #   @products = Product.where(request_form_id: request_form_ids)
+    #   @particulars = Particular.where(request_form_id: request_form_ids)
+
+    #   respond_to do |format|
+    #     format.html { render partial: 'products_particulars', locals: { products: @products, particulars: @particulars } }
+    #   end
+    # end
 end

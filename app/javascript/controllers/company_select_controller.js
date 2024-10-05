@@ -21,11 +21,11 @@ export default class extends Controller {
   }
 
   selectCompanyForSuppliers(event) {
-    this.fetchAndUpdateOptions(event, "/suppliers", this.supplierSelectTarget, "Select Supplier", "name")
+    this.fetchAndUpdateOptions(event, "/suppliers", this.supplierSelectTarget, "Select Vendor", "name")
   }
 
   selectCompanyForRequestForms(event) {
-    this.fetchAndUpdateOptions(event, "/request_forms", this.requestFormSelectTarget, "Select Request Form", "uid")
+    this.fetchAndUpdateOptions(event, "/request_forms", this.requestFormSelectTarget, "", "uid")
   }
 
   selectCompanyForProjects(event) {
@@ -65,10 +65,12 @@ export default class extends Controller {
     selectTarget.innerHTML = ""
 
     // Add a prompt option
-    const promptOption = document.createElement("option")
-    promptOption.textContent = promptText
-    promptOption.value = ""
-    selectTarget.appendChild(promptOption)
+    if (promptText !== "") {
+      const promptOption = document.createElement("option")
+      promptOption.textContent = promptText
+      promptOption.value = ""
+      selectTarget.appendChild(promptOption)
+    }
 
     // Add new options based on the provided items
     items.forEach(item => {

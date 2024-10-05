@@ -59,6 +59,30 @@ class RequestFormsController < ApplicationController
     end
   end
 
+  def items
+    request_form_ids = params[:request_form_ids].split(',').map(&:to_i)
+    request_forms = RequestForm.where(id: request_form_ids)
+
+    particulars = []
+    products = []
+
+    request_forms.each do |request_form|
+      if request_form.request_type == "Allowance"
+        particulars.concat(request_form.particulars)
+      else
+        products.concat(request_form.products)
+      end
+    end
+
+    # You can choose to render either particulars or products based on your needs
+    render json: { particulars: particulars, products: products }
+    # if particulars.present? && products.present?
+    # else if particulars.present? && products.present?
+    #   render json: { products: products }
+    # end
+    
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_request_form
