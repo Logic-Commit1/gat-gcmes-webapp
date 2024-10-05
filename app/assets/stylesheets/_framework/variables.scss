@@ -1,27 +1,27 @@
 :root {
-    // Max Width
-    --max-width: 1124px;
-    // Brand Colors
-    --primary-color: #FF6200;
-    --secondary-color: #FDD424;
-    --tertiary-color: #000A52;
-    --background-color: #F2F6FF;
-    --black-color: #191919;
-    --accent-color: #FFC0974F;
-    // Primary Colors
-    --green: #56941E;
-    --yellow: #ffcc00;
-    --red: #ed1419;
-    // Social Media Colos
-    --facebook: #3b5998;
-    --messenger: #0078ff;
-    --twitter: #1da1f2;
-    // Gradient
-    --gradient: linear-gradient(225deg, #FD9346, #FF6200);
-    // Border Radius
-    --border-radius: 16px;
-    // Cards
-    --card-padding: 24px;
-    --card-border-radius: 24px;
-    --card-full-width: calc(100% - 48px);
+  // Max Width
+  --max-width: 1124px;
+  // Brand Colors
+  --primary-color: #fdd424;
+  --secondary-color: #fdd424;
+  --tertiary-color: #000a52;
+  --background-color: linear-gradient(180deg, #f2f6ff 0%, #4e6db3 100%);
+  --black-color: #191919;
+  --accent-color: #ffc0974f;
+  // Primary Colors
+  --green: #56941e;
+  --yellow: #ffcc00;
+  --red: #ed1419;
+  // Social Media Colos
+  --facebook: #3b5998;
+  --messenger: #0078ff;
+  --twitter: #1da1f2;
+  // Gradient
+  --gradient: linear-gradient(225deg, #fd9346, #ff6200);
+  // Border Radius
+  --border-radius: 16px;
+  // Cards
+  --card-padding: 24px;
+  --card-border-radius: 24px;
+  --card-full-width: calc(100% - 48px);
 }
