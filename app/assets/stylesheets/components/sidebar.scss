@@ -1,57 +1,63 @@
-// // moderators/sidebar.scss
+// moderators/sidebar.scss
 // #moderators-sidebar {
-//     width: 274px;
-//     height: calc(100vh - 48px);
-//     padding: 24px;
-//     background: #ffffff;
+//   width: 274px;
+//   height: calc(100vh - 48px);
+//   padding: 24px;
+//   background: #ffffff;
 // }
 
-// #moderators-sidebar #brand img {
-//     width: 214px;
-// }
+#moderators-sidebar #brand {
+  text-align: center;
+}
 
-// #moderators-sidebar #navigation {
-//     margin: 55px 0;
-// }
+#moderators-sidebar #brand img {
+  max-width: 100px;
+  border-radius: 12px;
+  background: #000a52;
+}
 
-// #moderators-sidebar #navigation p {
-//     width: 100%;
-//     margin: 0 0 0 -24px;
-//     padding: 20px 0 20px 24px;
-//     font-size: 10pt;
-//     font-weight: 500;
-//     border-top-right-radius: 12px;
-//     border-bottom-right-radius: 12px;
-// }
+#moderators-sidebar #navigation {
+  margin: 55px 0;
+}
 
-// #moderators-sidebar #navigation p.active {
-//     background: #eeeeee;
-// }
+#moderators-sidebar #navigation p {
+  width: 100%;
+  margin: 0;
+  padding: 16px 0 16px 24px;
+  font-size: 10pt;
+  font-weight: 500;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
 
-// #moderators-sidebar #navigation p span {
-//     float: left;
-//     margin-top: -6px;
-//     margin-right: 16px;
-//     font-size: 14pt;
-// }
+#moderators-sidebar #navigation p.active {
+  background: #eeeeee;
+}
 
-// #moderators-sidebar #actions {
-//     position: absolute;
-//     left: 0;
-//     bottom: 0;
-//     width: unset;
-//     padding: 24px;
-//     text-align: left;
-// }
+#moderators-sidebar #navigation p span {
+  float: left;
+  margin-top: -6px;
+  margin-right: 16px;
+  font-size: 14pt;
+}
 
-// #moderators-sidebar #actions a {
-//     width: fit-content;
-//     margin: 0;
-//     padding: 4px 6px;
-//     font-weight: normal;
-//     color: #000000;
-// }
+#moderators-sidebar #actions {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: unset;
+  padding: 24px;
+  text-align: left;
+}
 
-// #moderators-sidebar #actions a i {
-//     margin-right: 5px;
-// }
+#moderators-sidebar #actions a {
+  width: fit-content;
+  margin: 0;
+  padding: 4px 6px;
+  font-weight: normal;
+  color: #000000;
+}
+
+#moderators-sidebar #actions a i {
+  margin-right: 5px;
+}

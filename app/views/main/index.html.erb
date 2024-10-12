@@ -1,8 +1,151 @@
 <!-- Landing Page -->
 <div id="landing-page" class="page">
-  <!-- BACKGROUND IMAGE -->
-  <div id="background-image">
-    <p> Welcome back, Logic!</p>
+  <h1 class="title">Dashboard</h1>
+
+  <!-- Dashboard Cards -->
+  <div id="counts" class="row">
+    <!-- Request Forms Card -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <i class="fa-solid fa-file"></i>
+          <h5 class="title">Request Forms</h5>
+          <p class="value">₱ 535,748<span class="statistics text-success">+15.7%</span></p>
+          <p class="previous-text"> vs. Previous Month</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Purchase Orders Card -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <i class="fa-solid fa-file-invoice-dollar"></i>
+          <h5 class="title">Purchase Orders</h5>
+          <p class="value">₱ 52,947<span class="statistics text-danger">-6.2%</span></p>
+          <p class="previous-text"> vs. Previous Month</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quotations Card -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <i class="fa-solid fa-quote-left"></i>
+          <h5 class="title">Quotations</h5>
+          <p class="value">₱ 64,723<span class="statistics text-success">+2.5%</span></p>          
+          <p class="previous-text"> vs. Previous Month</p>
+        </div>
+      </div>
+    </div>
   </div>
-  <!-- NAVIGATION -->
+
+  <!-- Request Forms Table -->
+<div id="request-forms-table" class="row mt-4">
+  <div class="col-md-12">
+    <div class="table-header">
+      <p class="table-title">Request Forms</p>
+    </div>
+    <table class="table table-hover ">
+      <thead class="thead-light">
+        <tr>
+          <th>Number</th>
+          <th>P.O#</th>
+          <th>Client Name</th>
+          <th>Amount</th>
+          <th>Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>RFN-738429</td>
+          <td>73469</td>
+          <td>2GO Group Inc.</td>
+          <td>₱ 35,000.00</td>
+          <td>July 27, 2024</td>
+          <td><span class="badge badge-warning">Pending</span></td>
+        </tr>
+        <tr>
+          <td>RFN-738590</td>
+          <td>13457</td>
+          <td>2GO Group Inc.</td>
+          <td>₱ 42,467.00</td>
+          <td>July 27, 2024</td>
+          <td><span class="badge badge-warning">Pending</span></td>
+        </tr>
+        <tr>
+          <td>RFN-738480</td>
+          <td>29453</td>
+          <td>Frabelle Corp.</td>
+          <td>₱ 15,400.00</td>
+          <td>July 27, 2024</td>
+          <td><span class="badge badge-warning">Pending</span></td>
+        </tr>
+        <tr>
+          <td>RFN-738210</td>
+          <td>27421</td>
+          <td>PSACC</td>
+          <td>₱ 12,850.80</td>
+          <td>July 27, 2024</td>
+          <td><span class="badge badge-success">Approved</span></td>
+        </tr>
+        <tr>
+          <td>RFN-738680</td>
+          <td>36421</td>
+          <td>PSACC</td>
+          <td>₱ 15,400.00</td>
+          <td>July 27, 2024</td>
+          <td><span class="badge badge-danger">Rejected</span></td>
+        </tr>
+        <tr>
+          <td>RFN-738157</td>
+          <td>63521</td>
+          <td>Chelsea Shipping Corp.</td>
+          <td>₱ 115,490.50</td>
+          <td>July 27, 2024</td>
+          <td><span class="badge badge-success">Approved</span></td>
+        </tr>
+        <tr>
+          <td>RFN-738974</td>
+          <td>53921</td>
+          <td>2GO Group Inc.</td>
+          <td>₱ 85,530.00</td>
+          <td>July 27, 2024</td>
+          <td><span class="badge badge-success">Approved</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+  <!-- Purchase Orders Table -->
+  <div id="purchase-orders-table" class="row mt-4">
+    <div class="col-md-12">
+      <table class="table table-hover ">
+        <thead class="thead-light">
+          <tr>
+            <th>Number</th>
+            <th>Vendor</th>
+            <th>Client Name</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>GCMES_DH_00549</td>
+            <td>DENSTAR HARDWARE</td>
+            <td>2GO Group Inc.</td>
+            <td>₱ 35,000.00</td>
+            <td>July 27, 2024</td>
+            <td><span class="badge badge-warning">Pending</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
