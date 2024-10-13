@@ -11,10 +11,9 @@
 
 .page {
   position: relative;
-  max-width: var(--max-width);
-  margin: auto;
   z-index: 1;
   min-height: 100vh;
+  margin: 0 40px auto;
 }
 
 #main {

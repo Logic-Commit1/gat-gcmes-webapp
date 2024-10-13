@@ -1,16 +1,6 @@
-<p style="color: green"><%= notice %></p>
-<% content_for :title, "Suppliers" %>
-<h1>Suppliers</h1>
-<%= link_to "New supplier", new_supplier_path %>
-<br>
-<br>
-<div id="suppliers">
-  <% @suppliers.each do |supplier| %>
-    <%= render supplier %>
-    <p>
-      <%= link_to "Show this supplier", supplier %>
-    </p>
-    <br>
-    <br>
-  <% end %>
+<!-- Landing Page -->
+<div id="landing-page" class="page">
+  <p class="title">Suppliers</p>
+  <!-- Request Forms Table -->
+  <%= render "components/table" %>
 </div>

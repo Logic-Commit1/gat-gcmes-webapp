@@ -1,24 +1,45 @@
 // colors.scss
 .primary {
-    color: #FF6200;
+  color: #22417b;
 }
 
 .secondary {
-    color: #881505;
+  color: #fdd424;
 }
 
 .black {
-    color: #191919;
+  color: #262e3a;
 }
 
 .green {
-    color: #56941E;
+  color: #00a826;
 }
 
 .yellow {
-    color: #ffcc00;
+  color: #ffcc00;
 }
 
 .red {
-    color: #ed1419;
+  color: #9a000f;
+}
+
+.text-success,
+.approved {
+  color: #28a745;
+  background-color: #c6efcf;
+  outline: 1px solid #28a745;
+}
+
+.text-danger,
+.rejected {
+  color: #a80000;
+  background-color: #efc6c6;
+  outline: 1px solid #a80000;
+}
+
+.text-neutral,
+.pending {
+  color: #995a00;
+  background-color: #ffedcf;
+  outline: 1px solid #995a00;
 }

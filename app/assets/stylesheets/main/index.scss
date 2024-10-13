@@ -1,43 +1,23 @@
 #landing-page {
-  .page {
-    padding: 20px;
-  }
-
   .title {
     font-size: 2rem;
-    margin-bottom: 20px;
+    font-weight: 600;
   }
 
   #counts {
     display: flex;
+    flex-wrap: wrap;
   }
 
-  .card {
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-
-  .card-body {
-    padding: 15px;
-  }
-
-  .card .title {
-    font-size: 1.2rem;
-  }
-
-  .value {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-  }
-
-  .statistics {
-    font-size: 0.9rem;
+  .previous-text {
+    margin: 0;
+    color: var(--gray-color);
+    font-weight: 300;
   }
 
   .table {
     width: 100%;
     background-color: #fff;
-    margin-top: 20px;
   }
 
   .table-hover tbody tr:hover {
@@ -92,19 +72,13 @@
 
   /* Values and statistics */
 
-  .card-body .statistics {
-    font-size: 16px;
-    font-weight: 600;
-    margin-left: 10px;
-  }
+  // .text-success {
+  //   color: #28a745;
+  // }
 
-  .text-success {
-    color: #28a745;
-  }
-
-  .text-danger {
-    color: var(--red);
-  }
+  // .text-danger {
+  //   color: var(--red);
+  // }
 
   /* Badge (Status) styling */
   .badge {

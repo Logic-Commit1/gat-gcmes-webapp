@@ -1,14 +1,27 @@
-<p style="color: green"><%= notice %></p>
-<% content_for :title, "Request forms" %>
-<h1>Request forms</h1>
-<%= link_to "New request form", new_request_form_path %>
-<br>
-<br>
-<div id="request_forms">
-  <% @request_forms.each do |request_form| %>
-    <%= render request_form %>
-    <p>
-      <%= link_to "Show this request form", request_form %>
-    </p>
-  <% end %>
+<!-- Landing Page -->
+<div id="landing-page" class="page">
+  <p class="title">Request Forms</p>
+  <!-- Dashboard Cards -->
+  <div id="counts" class="row">
+    <!-- Request Forms Card -->
+    <%= render "components/count", type: "Request Forms", value: "535,748", percentage: "+15.7%" %>
+    <%= render "components/count", type: "Purchase Orders", value: "52,947", percentage: "-6.2%" %>
+    <%= render "components/count", type: "quotations", value: "64,723", percentage: "+2.5%" %>
+  </div>
+  <!-- Request Forms Table -->
+  <%= render "components/table" %>
 </div>
+<p style="color: green"><%#= notice %></p>
+<%# content_for :title, "Request forms" %>
+<%# <h1>Request forms</h1> %>
+<%#= link_to "New request form", new_request_form_path %>
+<%# <br> %>
+<%# <br> %>
+<%# <div id="request_forms"> %>
+<%# @request_forms.each do |request_form| %>
+  <%#= render request_form %>
+  <%# <p> %>
+  <%#= link_to "Show this request form", request_form %>
+  <%# </p> %>
+  <%# end %>
+  <%# </div> %>

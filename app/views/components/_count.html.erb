@@ -1,0 +1,22 @@
+<div class="col-md-4">
+  <div class="card">
+    <div class="card-body">
+      <div class="header">
+        <div>
+          <i class="fa-solid fa-file-invoice-dollar"></i>
+          <span id="count-title"><%= type.capitalize %></span>
+        </div>
+        <div>
+          <i class="fa-solid fa-ellipsis-vertical options-button"></i>
+        </div>
+      </div>
+      <div class="details">
+        <p class="value">₱ <%= value%></p>
+        <span class="statistics text-success"><%= percentage %></span>
+      </div>
+      
+      <p class="previous-text"> vs. Previous Month</p>
+      <%# <p class="value">₱ 52,947<span class="statistics text-danger">-6.2%</span></p> %>
+    </div>
+  </div>
+</div>

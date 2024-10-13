@@ -1,14 +1,29 @@
-<p style="color: green"><%= notice %></p>
-<% content_for :title, "Quotations" %>
-<h1>Quotations</h1>
-<%= link_to "New quotation", new_quotation_path %>
-<br>
-<br>
-<div id="quotations">
-  <% @quotations.each do |quotation| %>
-    <%= render quotation %>
-    <p>
-      <%= link_to "Show this quotation", quotation %>
-    </p>
-  <% end %>
+<!-- Landing Page -->
+<div id="landing-page" class="page">
+  <p class="title">Quotations</p>
+  <!-- Dashboard Cards -->
+  <div id="counts" class="row">
+    <!-- Request Forms Card -->
+    <%= render "components/count", type: "Request Forms", value: "535,748", percentage: "+15.7%" %>
+    <%= render "components/count", type: "Purchase Orders", value: "52,947", percentage: "-6.2%" %>
+    <%= render "components/count", type: "quotations", value: "64,723", percentage: "+2.5%" %>
+  </div>
+  <!-- Request Forms Table -->
+  <%= render "components/table" %>
 </div>
+<!--
+<p style="color: green"><%= notice %></p>
+-->
+<%# content_for :title, "Quotations" %>
+<%# <h1>Quotations</h1> %>
+<%#= link_to "New quotation", new_quotation_path %>
+<%# <br> %>
+<%# <br> %>
+<%# <div id="quotations"> %>
+<%# @quotations.each do |quotation| %>
+  <%#= render quotation %>
+  <%# <p> %>
+  <%#= link_to "Show this quotation", quotation %>
+  <%# </p> %>
+  <%# end %>
+  <%# </div> %>
