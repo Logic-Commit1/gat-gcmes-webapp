@@ -1,5 +1,5 @@
 <!-- Landing Page -->
-<div id="landing-page" class="page">
+<div class="page">
   <p class="title">Dashboard</p>
   <!-- Dashboard Cards -->
   <div id="counts" class="row">
@@ -9,5 +9,116 @@
     <%= render "components/count", type: "quotations", value: "64,723", percentage: "+2.5%" %>
   </div>
   <!-- Request Forms Table -->
-  <%= render "components/table" %>
+  <div class="document-container">
+    <div class="header">
+      <p id="title">Request Forms</p>
+      <div class="search-bar">
+        <input type="date" placeholder="mm/dd/yy" />
+        <input type="text" placeholder="RFN-738429" />
+        <button type="button">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+    </div>
+    <table class="document-table">
+      <thead>
+        <tr>
+          <th>NUMBER</th>
+          <th>P.O. #</th>
+          <th>CLIENT NAME</th>
+          <th>AMOUNT</th>
+          <th>DATE</th>
+          <th>STATUS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @request_forms.each do |form| %>
+          <tr>
+            <td><a href="#"><%= form.uid %></a></td>
+            <td><%= form.purchase_order&.uid %></td>
+            <td><%= form.quotation.client.code %></td>
+            <td><%= number_to_currency(form.total ) %></td>
+            <td><%= form.created_at.strftime("%B %d, %Y") %></td>
+            <td><span class="status <%#= form.status %>"><%= form.approver %></span></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <!-- Purchase Orders Table -->
+  <div class="document-container">
+    <div class="header">
+      <p id="title">Purchase Orders</p>
+      <div class="search-bar">
+        <input type="date" placeholder="mm/dd/yy" />
+        <input type="text" placeholder="PO-123456" />
+        <button type="button">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+    </div>
+    <table class="document-table">
+      <thead>
+        <tr>
+          <th>NUMBER</th>
+          <th>VENDOR</th>
+          <th>DATE</th>
+          <th>AMOUNT</th>
+          <th>DATE</th>
+          <th>STATUS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @purchase_orders.each do |order| %>
+          <tr>
+            <td><a href="#"><%= order.uid %></a></td>
+            <td><%= order.supplier.name %></td>
+            <td><%= order.created_at.strftime("%B %d, %Y") %></td>
+            <td><%= number_to_currency(order.total) %></td>
+            <td><%= order.created_at.strftime("%B %d, %Y") %></td>
+            <td><span class="status <%#= order.status %>"><%= order.approver %></span></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <!-- Quotations Table -->
+  <div class="document-container">
+    <div class="header">
+      <p id="title">Quotations</p>
+      <div class="search-bar">
+        <input type="date" placeholder="mm/dd/yy" />
+        <input type="text" placeholder="QTN-123456" />
+        <button type="button">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+    </div>
+    <table class="document-table">
+      <thead>
+        <tr>
+          <th>REFERENCE NUMBER</th>
+          <th>CLIENT</th>
+          <th>SUBJECT</th>
+          <th>AMOUNT</th>
+          <th>DATE</th>
+          <th>STATUS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @quotations.each do |quotation| %>
+          <tr>
+            <td><a href="#"><%= quotation.uid %></a></td>
+            <td><%= quotation.client.code %></td>
+            <td><%= quotation.subject %></td>
+            <td><%= number_to_currency(quotation.total) %></td>
+            <td><%= quotation.created_at.strftime("%B %d, %Y") %></td>
+            <td><span class="status <%#= quotation.status %>"><%= quotation.approver %></span></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

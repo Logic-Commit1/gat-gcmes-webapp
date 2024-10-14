@@ -1,4 +1,4 @@
-.request-forms-container {
+.document-container {
   margin: 0 auto;
 
   background-color: #fff;
@@ -9,7 +9,7 @@
   .header {
     display: flex;
     justify-content: space-between;
-    #request-forms-title {
+    #title {
       font-size: 1.5rem;
       font-weight: 600;
       margin-left: var(--card-padding);
@@ -41,12 +41,13 @@
     }
   }
 
-  .request-forms-table {
+  .document-table {
     th,
     td {
       padding: 12px 15px;
       text-align: left;
-      border-bottom: 1px solid #ddd;
+      border: 0;
+      border: 1px solid #ddd;
     }
 
     th {

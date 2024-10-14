@@ -1,0 +1,35 @@
+<!-- Landing Page -->
+<div class="page">
+  <p class="title"><%= title %></p>
+  <!-- Dashboard Cards -->
+  <%# if ["Employees", "Clients", "Suppliers"].include?(title) %>
+  <%# <div id="counts" class="row"> %>
+  <!-- Request Forms Card -->
+  <%#= render "components/count", type: "Request Forms", value: "535,748", percentage: "+15.7%" %>
+  <%#= render "components/count", type: "Purchase Orders", value: "52,947", percentage: "-6.2%" %>
+  <%#= render "components/count", type: "quotations", value: "64,723", percentage: "+2.5%" %>
+  <%# </div> %>
+  <%# end %>
+  <div class="button-container">
+    <% case title %>
+    <% when "Employees" %>
+      <%= link_to 'Create New Employee', new_employee_path, class: 'button' %>
+    <% when "Clients" %>
+      <%= link_to 'Create New Client', new_client_path, class: 'button' %>
+    <% when "Suppliers" %>
+      <%= link_to 'Create New Supplier', new_supplier_path, class: 'button' %>
+    <% when "Quotations" %>
+      <%= link_to 'Create New Quotation', new_quotation_path, class: 'button' %>
+    <% when "Purchase Orders" %>
+      <%= link_to 'Create New Purchase Order', new_purchase_order_path, class: 'button' %>
+    <% when "Projects" %>
+      <%= link_to 'Create New Project', new_project_path, class: 'button' %>
+    <% when "Canvasses" %>
+      <%= link_to 'Create New Canvass', new_canvass_path, class: 'button' %>
+    <% when "Request Forms" %>
+      <%= link_to 'Create New Request Form', new_request_form_path, class: 'button' %>
+    <% end %>
+  </div>
+  <!-- Request Forms Table -->
+  <%= render "components/table", title: title %>
+</div>
