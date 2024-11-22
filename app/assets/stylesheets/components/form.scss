@@ -1,0 +1,66 @@
+form div {
+  margin-bottom: 10px;
+}
+
+form label {
+  display: block;
+}
+
+form input[type="text"],
+form input[type="number"],
+form input[type="submit"],
+form textarea,
+form select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  max-width: 500px;
+}
+
+form input[type="file"] {
+  max-width: 220px;
+}
+
+form select {
+  appearance: none;
+}
+
+form input[type="submit"] {
+  background-color: var(--primary-color);
+  color: var(--black-color);
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  max-width: none;
+}
+
+form a {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+form input[type="submit"]:hover {
+  background-color: #fcd10f;
+}
+
+form .select-container {
+  position: relative;
+  width: 500px;
+}
+
+.svg-inline--fa.fa-w-10 {
+  width: 0.625em;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+form .field {
+  margin-bottom: 2rem;
+}
+
+form #company-field input[type="radio"]:nth-child(3) {
+  margin-left: 1rem;
+}

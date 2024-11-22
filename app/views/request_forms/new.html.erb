@@ -1,11 +1,6 @@
 <% content_for :title, "New request form" %>
-
-<h1>New request form</h1>
-
-<%= render "form", request_form: @request_form %>
-
-<br>
-
-<div>
-  <%= link_to "Back to request forms", request_forms_path %>
+<div class="page">
+  <p class="title">New request form</p>
+  <%= render "form", request_form: @request_form %>
+  <br>
 </div>

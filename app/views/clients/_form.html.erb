@@ -9,33 +9,35 @@
       </ul>
     </div>
   <% end %>
-  <div>
+  <div data-controller="company-select">
     <%= form.label :company, style: "display: block" %>
     <% Company.all.each do |company| %>
-      <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompany" } %> <%= company.code %>
+      <%= form.radio_button :company_id, company.id, data: { action: "company-select#showHiddenDivs" } %> <%= company.code %>
     <% end %>
-  </div>
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name, placeholder: "Philippine Span Asia Carrier Corp." %>
-  </div>
-  <div>
-    <%= form.label :code, style: "display: block" %>
-    <%= form.text_field :code %>
-  </div>
-  <div>
-    <%= form.label :contacts, style: "display: block" %>
-    <%= form.text_field :contacts %>
-  </div>
-  <div>
-    <%= form.label :address, style: "display: block" %>
-    <%= form.text_area :address %>
-  </div>
-  <div>
-    <%= form.label :tin, style: "display: block" %>
-    <%= form.number_field :tin %>
-  </div>
-  <div>
-    <%= form.submit %>
+    <div class="hidden">
+      <div>
+        <%= form.label :name, style: "display: block" %>
+        <%= form.text_field :name, placeholder: "e.g. Philippine Span Asia Carrier Corp." %>
+      </div>
+      <div>
+        <%= form.label :code, style: "display: block" %>
+        <%= form.text_field :code, placeholder: "e.g. PSACC" %>
+      </div>
+      <div>
+        <%= form.label :contacts, style: "display: block" %>
+        <%= form.text_field :contacts, placeholder: "e.g. 09123456789" %>
+      </div>
+      <div>
+        <%= form.label :tin, style: "display: block" %>
+        <%= form.text_field :tin, placeholder: "e.g. 1234567890" %>
+      </div>
+      <div>
+        <%= form.label :address, style: "display: block" %>
+        <%= form.text_area :address, placeholder: "e.g. Sulpicio Go Street, Cebu City" %>
+      </div>
+      <div>
+        <%= form.submit %>
+      </div>
+    </div>
   </div>
 <% end %>

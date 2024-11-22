@@ -8,34 +8,14 @@
     </header>
     <!-- Main: Navigation -->
     <main id="navigation">
-      <!-- Link to Employees -->
-      <%= link_to employees_path, class: 'in-text no-underline' do %>
-        <p class="nav-btn <%= 'active' if current_page?(employees_path) %>">
-          <span class="icon"><i class="fa-solid fa-users"></i></span>
-          Employees
-        </p>
-      <% end %>
-      <!-- Link to Clients -->
-      <%= link_to clients_path, class: 'in-text no-underline' do %>
-        <p class="nav-btn <%= 'active' if current_page?(clients_path) %>">
-          <span class="icon"><i class="fa-solid fa-user"></i></span>
-          Clients
-        </p>
-      <% end %>
-      <!-- Link to Suppliers -->
-      <%= link_to suppliers_path, class: 'in-text no-underline' do %>
-        <p class="nav-btn <%= 'active' if current_page?(suppliers_path) %>">
-          <span class="icon"><i class="fa-solid fa-truck"></i></span>
-          Suppliers
-        </p>
-      <% end %>
-      <!-- Link to Dashboard -->
+      <!-- Link to Dashboard 
       <%= link_to root_path, class: 'in-text no-underline' do %>
         <p class="nav-btn <%= 'active' if current_page?(root_path) %>">
           <span class="icon"><i class="fa-solid fa-home"></i></span>
           Dashboard
         </p>
       <% end %>
+      -->
       <!-- Link to Quotations -->
       <%= link_to quotations_path, class: 'in-text no-underline' do %>
         <p class="nav-btn <%= 'active' if current_page?(quotations_path) %>">
@@ -69,6 +49,27 @@
         <p class="nav-btn <%= 'active' if current_page?(canvasses_path) %>">
           <span class="icon"><i class="fa-solid fa-palette"></i></span>
           Canvasses
+        </p>
+      <% end %>
+      <!-- Link to Employees -->
+      <%= link_to employees_path, class: 'in-text no-underline' do %>
+        <p class="nav-btn <%= 'active' if current_page?(employees_path) %>">
+          <span class="icon"><i class="fa-solid fa-users"></i></span>
+          Employees
+        </p>
+      <% end %>
+      <!-- Link to Clients -->
+      <%= link_to clients_path, class: 'in-text no-underline' do %>
+        <p class="nav-btn <%= 'active' if current_page?(clients_path) %>">
+          <span class="icon"><i class="fa-solid fa-user"></i></span>
+          Clients
+        </p>
+      <% end %>
+      <!-- Link to Suppliers -->
+      <%= link_to suppliers_path, class: 'in-text no-underline' do %>
+        <p class="nav-btn <%= 'active' if current_page?(suppliers_path) %>">
+          <span class="icon"><i class="fa-solid fa-truck"></i></span>
+          Suppliers
         </p>
       <% end %>
     </main>

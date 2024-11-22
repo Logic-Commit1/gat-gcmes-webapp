@@ -14,14 +14,14 @@
   <% end %>
   <div data-controller="company-select">
     <%= turbo_frame_tag "request_form_types", data: {controller: 'navigate'} do %>
-      <div>
-        <%= form.label :request_type, style: "display: block" %>
-        <div>
-          <%= form.radio_button :request_type, "Allowance", data: { action: "change->navigate#to", url: new_request_form_path({request_form: {request_type: 'Allowance'}}) } %>
-          <%= form.label :request_type_allowance, "Allowance" %>
-          <%= form.radio_button :request_type, "Order", data: { action: "change->navigate#to", url: new_request_form_path({request_form: {request_type: 'Order'}}) } %>
-          <%= form.label :request_type_order, "Order" %>
-        </div>
+      <%= form.label :request_type %>
+      <div style="display: flex; align-items: center;">
+        <%= form.radio_button :request_type, "Allowance", data: { action: "change->navigate#to", url: new_request_form_path({request_form: {request_type: 'Allowance'}}) } %>
+        <%= form.label :request_type_allowance, "Allowance", style: "margin-left: 5px;" %>
+      </div>
+      <div style="display: flex; align-items: center;">
+        <%= form.radio_button :request_type, "Order", data: { action: "change->navigate#to", url: new_request_form_path({request_form: {request_type: 'Order'}}) } %>
+        <%= form.label :request_type_order, "Order", style: "margin-left: 5px;" %>
       </div>
       <div style="display: <%= @request_form.request_type? ? 'block' : 'none' %>">
         <div>
@@ -32,15 +32,24 @@
         </div>
         <div>
           <%= form.label :project_id %>
-          <%= form.collection_select :project_id, [], :id, :uid, { prompt: "Select Project"}, data: { company_select_target: "projectSelect" } %>
+          <div class="select-container">
+            <%= form.collection_select :project_id, [], :id, :uid, { prompt: "Select Project"}, data: { company_select_target: "projectSelect" } %>
+            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+          </div>
         </div>
         <div>
           <%= form.label :canvass_id %>
-          <%= form.collection_select :canvass_id, [], :id, :uid, { prompt: "Select Canvass"}, data: { company_select_target: "canvassSelect" } %>
+          <div class="select-container">
+            <%= form.collection_select :canvass_id, [], :id, :uid, { prompt: "Select Canvass"}, data: { company_select_target: "canvassSelect" } %>
+            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+          </div>
         </div>
         <div>
           <%= form.label :quotation_id, style: "display: block" %>
-          <%= form.collection_select :quotation_id, [], :id, :uid, { prompt: "Select Quotation"}, data: { company_select_target: "quotationSelect" } %>
+          <div class="select-container">
+            <%= form.collection_select :quotation_id, [], :id, :uid, { prompt: "Select Quotation"}, data: { company_select_target: "quotationSelect" } %>
+            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+          </div>
         </div>
         <% if @request_form.Allowance? %>
           <%= render 'allowance_form', form: form %>

@@ -13,27 +13,27 @@
     </div>
   <% end %>
   <div data-controller="company-select">
-    <%= form.label :company, style: "display: block" %>
-    <% Company.all.each do |company| %>
-      <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForClient" } %> <%= company.code %>
-    <% end %>
-    <div class="hidden">
-      <%= form.label :client_id, style: "display: block" %>
-      <%= form.collection_select :client_id, [], :id, :name, { prompt: "Select Client" }, { style: "display: block", data: { company_select_target: "clientSelect" } } %>
+    <div class="field" id="company-field">
+      <%= form.label :company %>
+      <% Company.all.each do |company| %>
+        <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForClient" } %> <%= company.code %>
+      <% end %>
     </div>
     <div class="hidden">
-      <div>
-        <%= form.label :attention, style: "display: block" %>
-        <%= form.text_field :attention %>
+      <div class="grid with-2-columns">
+        <div>
+          <%= form.label :client_id %>
+          <div class="select-container">
+            <%= form.collection_select :client_id, [], :id, :name, { prompt: "Select Client" }, { style: "display: block", data: { company_select_target: "clientSelect" } } %>
+            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+          </div>
+        </div>
+        <div>
+          <%= form.label :subject %>
+          <%= form.text_field :subject %>
+        </div>
       </div>
-      <div>
-        <%= form.label :vessel, style: "display: block" %>
-        <%= form.text_field :vessel %>
-      </div>
-      <div>
-        <%= form.label :subject, style: "display: block" %>
-        <%= form.text_field :subject %>
-      </div>
+      <p class="semibold">Items</p>
       <template data-nested-form-target="template">
         <%= form.fields_for :products, Product.new, child_index: 'NEW_RECORD' do |product_fields| %>
           <%= render "quotations/quotation_product_form", f: product_fields %>
@@ -43,22 +43,29 @@
         <%= render "quotations/quotation_product_form", f: product_fields %>
       <% end %>
       <div data-nested-form-target="target"></div>
-      <button type="button" data-action="nested-form#add">Add Item</button>
-      <div>
-        <%= form.label :lead_time, style: "display: block" %>
-        <%= form.text_area :lead_time %>
+      <%= link_to 'Add Item', '#', class: 'button', data: { action: "nested-form#add" } %>
+      <br>
+      <br>
+      <p class="semibold">Terms and Conditions</p>
+      <div class="grid with-2-columns">
+        <div>
+          <%= form.label :lead_time %>
+          <%= form.text_field :lead_time %>
+        </div>
+        <div>
+          <%= form.label :additional_conditions %>
+          <%= form.text_field :additional_conditions %>
+        </div>
       </div>
-      <div>
-        <%= form.label :warranty, style: "display: block" %>
-        <%= form.text_area :warranty %>
-      </div>
-      <div>
-        <%= form.label :payment, 'Payment', style: "display: block" %>
-        <%= form.collection_select :payment, Quotation.payments.keys, :to_s, :to_s, { prompt: "Select Payment Terms" }, { style: "display: block" } %>
-      </div>
-      <div>
-        <%= form.label :additional_conditions, style: "display: block" %>
-        <%= form.text_area :additional_conditions %>
+      <div class="grid with-2-columns">
+        <div>
+          <%= form.label :warranty %>
+          <%= form.text_field :warranty %>
+        </div>
+        <div>
+          <%= form.label :payment, 'Payment' %>
+          <%= form.collection_select :payment, Quotation.payments.keys, :to_s, :to_s, { prompt: "Select Payment Terms" } %>
+        </div>
       </div>
       <div>
         <%= form.submit %>

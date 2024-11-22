@@ -2,7 +2,6 @@
   <% if employee.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
-
       <ul>
         <% employee.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,23 +9,22 @@
       </ul>
     </div>
   <% end %>
-
   <div>
     <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, placeholder: "e.g. John Doe" %>
   </div>
-
   <div>
     <%= form.label :contact_number, style: "display: block" %>
-    <%= form.text_field :contact_number %>
+    <%= form.text_field :contact_number, placeholder: "e.g. 09123456789" %>
   </div>
-
   <div>
     <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
+    <%= form.text_field :email, placeholder: "e.g. john.doe@example.com"   %>
   </div>
-
-  <div>
+  <div class="mt-4">
     <%= form.submit %>
+  </div>
+  <div class="text-center fs-6">
+    <%= link_to "Back", employees_path %>
   </div>
 <% end %>
