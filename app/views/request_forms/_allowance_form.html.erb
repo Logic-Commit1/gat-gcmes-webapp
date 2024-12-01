@@ -1,7 +1,19 @@
-<div>
-  <%= form.label :vehicle, style: "display: block" %>
-  <%= form.text_field :vehicle %>
+<div class="grid with-4-columns">
+  <div>
+    <%= form.label :project_id %>
+    <div class="select-container">
+      <%= form.collection_select :project_id, [], :id, :uid, { prompt: "Select Project"}, data: { company_select_target: "projectSelect" } %>
+      <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+    </div>
+  </div>
+  <div>
+    <%= form.label :vehicle, style: "display: block" %>
+    <div>
+      <%= form.text_field :vehicle %>
+    </div>
+  </div>
 </div>
+<p class="semibold">Allowance Table</p>
 <template data-nested-form-target="template">
   <%= form.fields_for :particulars, Particular.new, child_index: 'NEW_RECORD' do |particular_fields| %>
     <%= render "request_forms/request_form_particular_form", f: particular_fields %>
@@ -11,38 +23,43 @@
   <%= render "request_forms/request_form_particular_form", f: particular_fields %>
 <% end %>
 <div data-nested-form-target="target"></div>
-<button type="button" data-action="nested-form#add">Add Particular</button>
+<%= link_to 'Add Particular', '#', class: 'button', data: { action: "nested-form#add" } %>
+<br>
+<br>
 <div data-controller="flatpickr">
-  <div>
-    <%= form.label :start_travel_date, style: "display: block" %>
-    <%= form.datetime_field :start_travel_date, class: "start_travel_date" %>
+  <div class="grid with-4-columns">
+    <div>
+      <%= form.label :start_travel_date, style: "display: block" %>
+      <%= form.datetime_field :start_travel_date, class: "start_travel_date" %>
+    </div>
+    <div>
+      <%= form.label :end_travel_date, style: "display: block" %>
+      <%= form.datetime_field :end_travel_date, class: "end_travel_date" %>
+    </div>
+    <div>
+      <%= form.label :destination, style: "display: block" %>
+      <%= form.text_field :destination %>
+    </div>
   </div>
-  <div>
-    <%= form.label :end_travel_date, style: "display: block" %>
-    <%= form.datetime_field :end_travel_date, class: "end_travel_date" %>
+  <div class="grid with-4-columns">
+    <div>
+      <%= form.label :remarks, style: "display: block" %>
+      <%= form.text_field :remarks %>
+    </div>
+    <div>
+      <%= form.label :fuel_gauge, style: "display: block" %>
+      <%= form.text_field :fuel_gauge %>
+    </div>
+    <div>
+      <%= form.label :easy_trip_balance, style: "display: block" %>
+      <%= form.text_field :easy_trip_balance %>
+    </div>
+    <div>
+      <%= form.label :sweep_balance, style: "display: block" %>
+      <%= form.text_field :sweep_balance %>
+    </div>
   </div>
-</div>
-<div>
-  <%= form.label :destination, style: "display: block" %>
-  <%= form.text_field :destination %>
-</div>
-<div>
-  <%= form.label :remarks, style: "display: block" %>
-  <%= form.text_area :remarks %>
-</div>
-<div>
-  <%= form.label :fuel_gauge, style: "display: block" %>
-  <%= form.text_field :fuel_gauge %>
-</div>
-<div>
-  <%= form.label :easy_trip_balance, style: "display: block" %>
-  <%= form.text_field :easy_trip_balance %>
-</div>
-<div>
-  <%= form.label :sweep_balance, style: "display: block" %>
-  <%= form.text_field :sweep_balance %>
-</div>
-<!--
+  <!--
 <div>
   <%= form.label :requester, style: "display: block" %>
   <%= form.text_field :requester %>

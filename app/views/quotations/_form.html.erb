@@ -20,7 +20,7 @@
       <% end %>
     </div>
     <div class="hidden">
-      <div class="grid with-2-columns">
+      <div class="grid with-4-columns">
         <div>
           <%= form.label :client_id %>
           <div class="select-container">
@@ -30,7 +30,9 @@
         </div>
         <div>
           <%= form.label :subject %>
-          <%= form.text_field :subject %>
+          <div>
+            <%= form.text_field :subject %>
+          </div>
         </div>
       </div>
       <p class="semibold">Items</p>

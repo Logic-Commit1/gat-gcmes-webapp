@@ -1,6 +1,7 @@
 .grid {
   display: grid;
   grid-template-columns: 1fr;
+  align-items: flex-end;
   &.with-2-columns {
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 12px;
