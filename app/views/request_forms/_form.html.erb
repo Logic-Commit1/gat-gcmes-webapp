@@ -22,7 +22,7 @@
         <%= form.label :request_type_order, "Order", style: "margin-left: 5px;" %>
       </div>
       <div style="display: <%= @request_form.request_type? ? 'block' : 'none' %>">
-        <div>
+        <div class="field" id="company-field">
           <%= form.label :company, style: "display: block" %>
           <% Company.all.each do |company| %>
             <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForProjectsCanvassesQuotations" } %> <%= company.code %>

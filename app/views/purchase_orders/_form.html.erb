@@ -10,43 +10,43 @@
     </div>
   <% end %>
   <div data-controller="company-select">
-    <div>
+    <div class="field" id="company-field">
       <%= form.label :company, style: "display: block" %>
       <% Company.all.each do |company| %>
         <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForRequestFormsAndSuppliers" } %> <%= company.code %>
       <% end %>
     </div>
-    <div>
-      <%= form.label :employee_id, "Prepared By", style: "display: block" %>
-      <%= form.collection_select :employee_id, Employee.all, :id, :name%>
-    </div>
-    <div>
-      <%= form.label :supplier_id, "Vendor",style: "display: block" %>
-      <%= form.collection_select :supplier_id, [], :id, :uid, { prompt: "Select Vendor" }, { style: "display: block", data: { company_select_target: "supplierSelect" } } %>
-    </div>
-    <div>
-      <%= form.label :request_form_ids, "Request Form", style: "display: block" %>
-      <%= form.select :request_form_ids, options_from_collection_for_select([], :id, :uid), {}, { multiple: true, data: { controller: 'slim', slim_target: 'field', company_select_target: "requestFormSelect", purchase_order_target: "requestFormSelect" } } %>    </div>
-  </div>
-  <button data-action="purchase-order#handleContinueButton">Continue</button>
-  <div data-purchase-order-target="itemsContainer"></div>
-  <div class="hidden">
-    <!--
+    <div class="">
+      <div>
+        <%= form.label :employee_id, "Prepared By", style: "display: block" %>
+        <%= form.collection_select :employee_id, Employee.all, :id, :name%>
+      </div>
+      <div>
+        <%= form.label :supplier_id, "Vendor",style: "display: block" %>
+        <%= form.collection_select :supplier_id, [], :id, :uid, { prompt: "Select Vendor" }, { style: "display: block", data: { company_select_target: "supplierSelect" } } %>
+      </div>
+      <div>
+        <%= form.label :request_form_ids, "Request Form", style: "display: block" %>
+        <%= form.select :request_form_ids, options_from_collection_for_select([], :id, :uid), {}, { multiple: true, data: { controller: 'slim', slim_target: 'field', company_select_target: "requestFormSelect", purchase_order_target: "requestFormSelect" } } %>    </div>
+      <button data-action="purchase-order#handleContinueButton">Continue</button>
+      <div data-purchase-order-target="itemsContainer"></div>
+      <div class="hidden">
+        <!--
     <div>
       <%= form.label :discount, style: "display: block" %>
       <%= form.text_field :discount %>
     </div>
   -->
-    <div>
-      <%= form.label :terms, style: "display: block" %>
-      <%= form.collection_select :terms, PurchaseOrder.terms.keys, :to_s, :to_s, { prompt: "Select Payment Terms" }, { style: "display: block" } %>
-    </div>
-    <div>
-      <%= form.submit %>
-    </div>
-  </div>
-  <br>
-  <!--
+        <div>
+          <%= form.label :terms, style: "display: block" %>
+          <%= form.collection_select :terms, PurchaseOrder.terms.keys, :to_s, :to_s, { prompt: "Select Payment Terms" }, { style: "display: block" } %>
+        </div>
+        <div>
+          <%= form.submit %>
+        </div>
+      </div>
+      <br>
+      <!--
   <div>
     <%= form.label :requester, style: "display: block" %>
     <%= form.text_field :requester %>
@@ -68,4 +68,6 @@
     <%= form.text_field :project_id %>
   </div>
   -->
+    </div>
+  </div>
 <% end %>

@@ -23,6 +23,13 @@
           Quotations
         </p>
       <% end %>
+      <!-- Link to Canvasses -->
+      <%= link_to canvasses_path, class: 'in-text no-underline' do %>
+        <p class="nav-btn <%= 'active' if current_page?(canvasses_path) %>">
+          <span class="icon"><i class="fa-solid fa-palette"></i></span>
+          Canvasses
+        </p>
+      <% end %>
       <!-- Link to Request Forms -->
       <%= link_to request_forms_path, class: 'in-text no-underline' do %>
         <p class="nav-btn <%= 'active' if current_page?(request_forms_path) %>">
@@ -42,13 +49,6 @@
         <p class="nav-btn <%= 'active' if current_page?(projects_path) %>">
           <span class="icon"><i class="fa-solid fa-building"></i></span>
           Projects
-        </p>
-      <% end %>
-      <!-- Link to Canvasses -->
-      <%= link_to canvasses_path, class: 'in-text no-underline' do %>
-        <p class="nav-btn <%= 'active' if current_page?(canvasses_path) %>">
-          <span class="icon"><i class="fa-solid fa-palette"></i></span>
-          Canvasses
         </p>
       <% end %>
       <!-- Link to Employees -->
