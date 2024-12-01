@@ -1,15 +1,28 @@
 <div class="nested-form-wrapper" data-new-record="<%= f.object.new_record? %>">
-  <%= f.label :supplier_id %>
-  <%= f.collection_select :supplier_id, Supplier.all, :id, :name, { prompt: "Select Supplier" }, style: "display: block" %>
-  <!-- Hidden Fields to Hold Shared Values -->
-  <%= f.hidden_field :description, class: "description-field", data: { shared_fields_target: "descriptionField" } %>
-  <%= f.hidden_field :quantity, class: "quantity-field", data: { shared_fields_target: "quantityField" } %>
-  <%= f.hidden_field :unit, class: "unit-field", data: { shared_fields_target: "unitField" } %>
-  <!-- =================================== -->
-  <%= f.label :price, "Unit Price", style: "display: block" %>
-  <%= f.text_field :price %>
-  <%= f.label :terms, style: "display: block" %>
-  <%= f.text_area :terms %>
-  <%= f.label :remarks, style: "display: block" %>
-  <%= f.text_area :remarks %>
-</div>
+  <div class="grid with-5-columns">
+    <div>
+      <%= f.label :supplier_id %>
+      <%= f.collection_select :supplier_id, Supplier.all, :id, :name, { prompt: "Select Supplier" }, style: "display: block" %>
+    </div>
+    <!-- Hidden Fields to Hold Shared Values -->
+    <%= f.hidden_field :description, class: "description-field", data: { shared_fields_target: "descriptionField" } %>
+    <%= f.hidden_field :quantity, class: "quantity-field", data: { shared_fields_target: "quantityField" } %>
+    <%= f.hidden_field :unit, class: "unit-field", data: { shared_fields_target: "unitField" } %>
+    <!-- =================================== -->
+    <div>
+      <%= f.label :price, "Unit Price", style: "display: block" %>
+      <%= f.text_field :price %>
+    </div>
+    <div>
+      <%= f.label :terms, style: "display: block" %>
+      <%= f.text_field :terms %>
+    </div>
+    <div>
+      <%= f.label :remarks, style: "display: block" %>
+      <%= f.text_field :remarks %>
+    </div>
+    <div>
+      <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "button", data: { action: "nested-form#remove" } %>
+      <%= f.hidden_field :_destroy %>
+    </div>
+  </div>

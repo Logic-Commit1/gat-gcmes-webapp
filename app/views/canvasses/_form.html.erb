@@ -1,4 +1,7 @@
-<%= form_with(model: canvass) do |form| %>
+<%= form_with(model: canvass, data: {
+  controller: "nested-form",
+  nested_form_wrapper_selector_value: '.nested-form-wrapper'
+}) do |form| %>
   <% if canvass.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(canvass.errors.count, "error") %> prohibited this canvass from being saved:</h2>
@@ -10,28 +13,49 @@
     </div>
   <% end %>
   <!-- Company Selection -->
-  <%= form.label :company, style: "display: block" %>
-  <% Company.all.each do |company| %>
-    <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForClient" } %> <%= company.code %>
-  <% end %>
-  <!-- Shared Fields for Description, Quantity, and Unit -->
-  <div data-controller="shared-fields">
-    <%= form.label :description, "Item Description", style: "display: block" %>
-    <%= text_area_tag :shared_description, nil, data: { action: "input->shared-fields#sync", shared_fields_target: "descriptionField" }, style: "width: 100%;" %>
-    <%= form.label :quantity, style: "display: block" %>
-    <%= number_field_tag :shared_quantity, nil, data: { action: "input->shared-fields#sync", shared_fields_target: "quantityField" }, style: "width: 100%;" %>
-    <%= form.label :unit, "Unit", style: "display: block" %>
-    <%= text_field_tag :shared_unit, nil, data: { action: "input->shared-fields#sync", shared_fields_target: "unitField" }, style: "width: 100%;" %>
-    <div style="display: flex;">
-      <% 3.times do |i| %>
-        <%= form.fields_for :products, Product.new, child_index: i do |product_fields| %>
-          <%= render "canvasses/canvass_product_form", f: product_fields %>
-        <% end %>
+  <div data-controller="company-select">
+    <div class="field" id="company-field">
+      <%= form.label :company, style: "display: block" %>
+      <% Company.all.each do |company| %>
+        <%= form.radio_button :company_id, company.id, data: { action: "company-select#showHiddenDivs" } %> <%= company.code %>
       <% end %>
     </div>
-  </div>
-  <div data-nested-form-target="target"></div>
-  <div>
-    <%= form.submit %>
+    <!-- Shared Fields for Description, Quantity, and Unit -->
+    <div class="hidden" data-controller="shared-fields">
+      <div class="grid with-3-columns gtc-2-1-1">
+        <div>
+          <%= form.label :description, "Item Description", style: "display: block" %>
+          <%= form.text_field :description, data: { shared_fields_target: "descriptionField" }, style: "width: 100%;" %>
+        </div>
+        <div>
+          <%= form.label :quantity, style: "display: block" %>
+          <%= form.number_field :quantity, data: { shared_fields_target: "quantityField" }, style: "width: 100%;" %>
+        </div>
+        <div>
+          <%= form.label :unit, "Unit", style: "display: block" %>
+          <%= form.text_field :unit, data: { shared_fields_target: "unitField" }, style: "width: 100%;" %>
+        </div>
+      </div>
+      <p class="semibold">Supplier Table</p>
+      <div>
+        <template data-nested-form-target="template">
+          <%= form.fields_for :products, Product.new, child_index: 'NEW_RECORD' do |product_fields| %>
+            <%= render "canvasses/canvass_product_form", f: product_fields %>
+          <% end %>
+        </template>
+        <%= form.fields_for :products do |product_fields| %>
+          <%= render "canvasses/canvass_product_form", f: product_fields %>
+        <% end %>
+      </div>
+      <div data-nested-form-target="target"></div>
+      <div>
+        <%= link_to 'Add Supplier', '#', class: 'button', data: { action: "nested-form#add" } %>
+      </div>
+      <br>
+      <br>
+      <div>
+        <%= form.submit data: { action: "shared-fields#sync" } %>
+      </div>
+    </div>
   </div>
 <% end %>

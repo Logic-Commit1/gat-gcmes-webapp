@@ -1,5 +1,5 @@
 class RequestForm < ApplicationRecord
-  belongs_to :canvass
+  belongs_to :canvass, optional: true
   belongs_to :quotation
   belongs_to :company
   belongs_to :project

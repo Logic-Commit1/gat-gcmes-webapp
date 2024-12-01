@@ -8,6 +8,7 @@
   }
   &.with-3-columns {
     grid-template-columns: 1fr 1fr 1fr;
+    // grid-template-columns: 1fr 1.5fr 0.5fr;
     grid-column-gap: 12px;
   }
   &.with-4-columns {
@@ -28,6 +29,12 @@
   }
   div.field {
     margin: 16px 0 0;
+  }
+  &.col-span-2 {
+    grid-column: span 2;
+  }
+  &.gtc-2-1-1 {
+    grid-template-columns: 1.5fr 1fr 1fr;
   }
 }
 

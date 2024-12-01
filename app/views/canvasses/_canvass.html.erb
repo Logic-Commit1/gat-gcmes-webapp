@@ -1,5 +1,7 @@
 <div id="<%= dom_id canvass %>">
   <p><strong>Company:</strong> <%= canvass.company.name %></p>
+  <p><strong>Quantity:</strong> <%= canvass.quantity %></p>
+  <p><strong>Unit:</strong> <%= canvass.unit %></p>
   <% canvass.suppliers.each do |product_info| %>
     <% product_info.each do |description, suppliers| %>
       <p><strong>Product Description:</strong> <%= description %></p>

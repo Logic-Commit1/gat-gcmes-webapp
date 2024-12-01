@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_10_124149) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_01_102500) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,6 +48,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_10_124149) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "suppliers", default: []
+    t.string "description"
+    t.integer "quantity", default: 0
+    t.string "unit"
     t.index ["company_id"], name: "index_canvasses_on_company_id"
   end
 

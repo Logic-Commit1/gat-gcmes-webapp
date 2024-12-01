@@ -10,4 +10,5 @@ class Product < ApplicationRecord
   def compute_total_amount
     self.total = self.price * self.quantity * (1 - self.discount)
   end
+
 end

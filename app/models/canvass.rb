@@ -2,7 +2,6 @@ class Canvass < ApplicationRecord
   belongs_to :company
   has_many :products, dependent: :destroy, inverse_of: :canvass
   has_many :request_forms
-
   accepts_nested_attributes_for :products, allow_destroy: true, reject_if: :all_blank
 
   before_save :set_uid

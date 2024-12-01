@@ -1,8 +1,8 @@
-import NestedForm from '@stimulus-components/rails-nested-form'
+import NestedForm from "@stimulus-components/rails-nested-form"
 
 export default class extends NestedForm {
   connect() {
     super.connect()
-    // console.log('Do what you want here.')
+    console.log("nested_form connected")
   }
 }

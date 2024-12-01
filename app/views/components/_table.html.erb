@@ -89,6 +89,16 @@
             <td><span class="status <%#= form.status %>"><%= form.approver %></span></td>
           </tr>
         <% end %>
+      <% elsif title == "Canvasses" %>
+        <% @canvasses.each do |canvass| %>
+          <tr>
+            <td><%= canvass&.uid %></td>
+            <td><%#= canvass.vendor.code %></td>
+            <td><%#= canvass.purchase_order&.uid %></td>
+            <td><%#= number_to_currency(canvass.total) %></td>
+            <td><%= canvass.created_at.strftime("%B %d, %Y") %></td>
+          </tr>
+        <% end %>
       <% elsif title == "Purchase Orders" %>
         <% @purchase_orders.each do |po| %>
           <tr>
