@@ -7,6 +7,8 @@ class Product < ApplicationRecord
 
   before_save :compute_total_amount
 
+  UNITS_OF_MEASUREMENT = ['g', 'kg', 'pc', 'unit', 'ltr', 'ml'].freeze
+
   def compute_total_amount
     self.total = self.price * self.quantity * (1 - self.discount)
   end

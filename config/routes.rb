@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   get 'request_forms/items', to: 'request_forms#items'
 
   resources :employees
@@ -16,7 +15,7 @@ Rails.application.routes.draw do
   resources :companies do
     get 'clients', on: :member
     get 'suppliers', on: :member
-    get 'request_forms', on: :member
+    get 'order_request_forms', on: :member
     get 'projects', on: :member
     get 'canvasses', on: :member
     get 'quotations', on: :member

@@ -15,10 +15,10 @@ class CompaniesController < ApplicationController
         render json: suppliers
       end
 
-      def request_forms
+      def order_request_forms
         company = Company.find(params[:id])
-        request_forms = company.request_forms.select(:id, :uid) # Only select necessary fields
-        render json: request_forms
+        order_request_forms = company.request_forms.Order.select(:id, :uid) # Only select necessary fields
+        render json: order_request_forms
       end
 
       def projects

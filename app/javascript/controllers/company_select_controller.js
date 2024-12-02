@@ -34,7 +34,6 @@ export default class extends Controller {
   }
 
   selectCompanyForSuppliers(event) {
-    console.log("selectCompanyForSuppliers")
     this.fetchAndUpdateOptions(
       event,
       "/suppliers",
@@ -47,7 +46,7 @@ export default class extends Controller {
   selectCompanyForRequestForms(event) {
     this.fetchAndUpdateOptions(
       event,
-      "/request_forms",
+      "/order_request_forms",
       this.requestFormSelectTarget,
       "",
       "uid"
@@ -134,7 +133,7 @@ export default class extends Controller {
   }
 
   showHiddenDivs() {
-    console.log("showHiddenDivs")
+    // console.log("showHiddenDivs")
     const hiddenDivs = this.element.querySelectorAll(".hidden")
 
     hiddenDivs.forEach((div) => {
