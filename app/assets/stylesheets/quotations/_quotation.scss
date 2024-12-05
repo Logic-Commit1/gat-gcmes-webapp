@@ -1,9 +1,19 @@
-table {
+.quotation-page {
+  .header {
+    .page-title {
+      margin-right: 1rem;
+      color: var(--gray-color);
+      font-weight: 300;
+    }
+  }
+
+  table {
     width: 100%;
     border-collapse: collapse;
   }
 
-  th, td {
+  th,
+  td {
     border: 1px solid black;
     padding: 8px;
     text-align: center;
@@ -17,3 +27,31 @@ table {
     background-color: #f2f2f2;
   }
 
+  i {
+    margin-right: 12px;
+  }
+
+  span {
+    margin-right: 10px;
+    // color: var(--gray-color);
+  }
+
+  #quotation-uid {
+    font-size: 32px;
+    margin: 20px 0;
+  }
+
+  .action-buttons {
+    max-width: 400px;
+
+    button {
+      padding: 6px 10px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button:not(:last-child) {
+      margin-right: 5px;
+    }
+  }
+}

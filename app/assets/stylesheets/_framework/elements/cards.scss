@@ -11,3 +11,34 @@
     display: inline-block;
   }
 }
+
+.contact-card {
+  max-width: 700px;
+
+  .contact-details {
+    padding: 1rem;
+    background: linear-gradient(to right, #ffdb57, #fdae4e);
+    font-size: 12px;
+    max-width: 380px;
+  }
+
+  .logo {
+    padding: 1rem;
+    background-color: #000a52;
+    text-align: center;
+    min-width: 170px;
+
+    img {
+      margin-top: 12px;
+      width: 120px;
+      height: 60px;
+    }
+
+    p {
+      color: #f5db07;
+      font-weight: 500;
+      font-size: 14px;
+      margin-top: 0.8rem;
+    }
+  }
+}

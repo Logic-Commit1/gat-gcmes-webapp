@@ -70,7 +70,7 @@
       <% if title == "Quotations" %>
         <% @quotations.each do |quotation| %>
           <tr>
-            <td><a href="#"><%= quotation.uid %></a></td>
+            <td><%= link_to quotation.uid, quotation_path(quotation) %></td>
             <td><%= quotation.client.code %></td>
             <td><%= quotation.subject %></td>
             <td><%= number_to_currency(quotation.total) %></td>

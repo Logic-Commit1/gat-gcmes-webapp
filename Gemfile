@@ -19,6 +19,8 @@ gem "jbuilder"
 
 # PDF
 gem "prawn", "~> 2.5"
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 # Code Formatter
 gem "htmlbeautifier"

@@ -8,6 +8,19 @@ class QuotationsController < ApplicationController
 
   # GET /quotations/1 or /quotations/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "quotation_#{@quotation.uid}", template: "quotations/show", formats: [:html], page_size: 'A4'
+      end
+      # format.pdf do
+        # render pdf: "quotation_#{@quotation.uid}",
+              #  layout: 'pdf.html',
+              #  template: 'quotations/show',
+              #  page_size: 'A4',
+              #  encoding: "UTF-8"
+      
+    end
   end
 
   # GET /quotations/new
