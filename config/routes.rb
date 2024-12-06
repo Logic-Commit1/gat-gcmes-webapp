@@ -8,7 +8,12 @@ Rails.application.routes.draw do
   resources :canvasses
   resources :suppliers
   resources :products
-  resources :quotations
+  resources :quotations do
+    member do
+      get 'generate_pdf'
+      get 'pdf_view'
+    end
+  end
   resources :projects
   resources :clients
 

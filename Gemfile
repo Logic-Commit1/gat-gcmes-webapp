@@ -18,9 +18,8 @@ gem "stimulus-rails"
 gem "jbuilder"
 
 # PDF
-gem "prawn", "~> 2.5"
-gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary'
+gem 'grover'
+
 
 # Code Formatter
 gem "htmlbeautifier"

@@ -8,19 +8,28 @@ class QuotationsController < ApplicationController
 
   # GET /quotations/1 or /quotations/1.json
   def show
-    respond_to do |format|
-      format.html
-      format.pdf do
-        render pdf: "quotation_#{@quotation.uid}", template: "quotations/show", formats: [:html], page_size: 'A4'
-      end
-      # format.pdf do
-        # render pdf: "quotation_#{@quotation.uid}",
-              #  layout: 'pdf.html',
-              #  template: 'quotations/show',
-              #  page_size: 'A4',
-              #  encoding: "UTF-8"
-      
-    end
+    @quotation = Quotation.find(params[:id])
+  end
+
+  def pdf_view
+    @quotation = Quotation.find(params[:id])
+    
+    # Render the PDF layout
+    render 'components/quotation/pdf_layout', locals: { quotation: @quotation }
+  end
+
+  def generate_pdf
+    @quotation = Quotation.find(params[:id])  
+    # Use the PdfGeneratorService to generate the PDF
+    pdf = PdfGenerator.new(@quotation).generate
+        
+    # Send the PDF to the browser
+    send_data(
+      pdf,
+      filename: "quotation_#{@quotation.uid}.pdf",
+      type: 'application/pdf',
+      disposition: 'inline'
+    ) 
   end
 
   # GET /quotations/new

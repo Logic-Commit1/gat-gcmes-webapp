@@ -1,0 +1,114 @@
+.pdf-container {
+  header {
+    margin-bottom: 24px;
+  }
+  font-size: 10px;
+  .contact-card {
+    .contact-details {
+      padding: 8px;
+      background: linear-gradient(to right, #ffdb57, #fdae4e);
+      font-size: 8px;
+      max-width: 260px;
+    }
+
+    .logo {
+      // padding: 0.8rem 0;
+      background-color: #000a52;
+      text-align: center;
+      width: 145px;
+
+      img {
+        margin-top: 0.8rem;
+        width: 76px;
+        height: 40px;
+      }
+
+      p {
+        color: #f5db07;
+        font-weight: 600;
+        font-size: 10px;
+        margin-top: 0.7rem;
+      }
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  th {
+    background-color: #fff8c2;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+  }
+  th,
+  td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+  }
+
+  #customer-container td:first-child {
+    background-color: #fff8c2;
+  }
+
+  #products-container {
+    #product-image {
+      max-width: 225px;
+      max-height: 150px;
+      text-align: center;
+    }
+    tbody tr:nth-child(n + 2) td:nth-child(-n + 3) {
+      border: none;
+    }
+    // Center the product image
+    tbody tr:nth-last-child(1) td:nth-child(4) {
+      text-align: center;
+    }
+  }
+
+  #totals-container {
+    max-width: 200px;
+    float: right;
+    margin-bottom: 3rem;
+
+    tr:last-child {
+      background-color: #f8d251;
+      strong {
+        color: #d60000;
+      }
+    }
+    th,
+    td {
+      border: none;
+      text-align: right;
+    }
+    tr td:first-child {
+      text-align: left;
+    }
+  }
+
+  #terms-container {
+    margin-top: 120px;
+    max-width: 500px;
+    p {
+      margin-bottom: 0.5rem;
+    }
+
+    #terms-details {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      row-gap: 0.3rem;
+    }
+  }
+
+  #signatures-container tbody tr td {
+    height: 90px;
+  }
+}
