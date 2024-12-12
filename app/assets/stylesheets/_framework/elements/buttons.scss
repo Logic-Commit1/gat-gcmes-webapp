@@ -1,3 +1,15 @@
 .button {
   background-color: var(--primary-color);
 }
+
+#btn-approve {
+  background-color: var(--success-color);
+}
+
+#btn-reject {
+  background-color: var(--danger-color);
+}
+
+#btn-pending {
+  background-color: var(--warning-color);
+}

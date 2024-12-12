@@ -1,20 +1,40 @@
-<div class="action-buttons flex space-between">
-  <button class="button flex items-center" style="background-color: white;">
-    <%= link_to edit_quotation_path(document) do %>
-      <i class="fa-regular fa-edit"></i>
-      <span>Edit</span>
-    <% end %>
-  </button>
-  <button class="button flex items-center" style="background-color: white;">
+<div class="action-buttons flex flex-start">
+  <% unless document.approved? %>
+    <button class="button flex items-center" style="background-color: white;">
+      <%= link_to edit_quotation_path(document) do %>
+        <i class="fa-regular fa-edit"></i>
+        <span>Edit</span>
+      <% end %>
+    </button>
+  <% end %>
+  <%# <button class="button flex items-center" style="background-color: white;">
     <i class="fa-regular fa-comment"></i>
     <span>Comments</span>
-  </button>
-  <button class="button flex items-center white" style="background-color: var(--danger-color);">
-    <i class="fa-regular fa-trash-can"></i>
-    <span class="white">Void</span>
-  </button>
-  <button class="button flex items-center white" style="background-color: var(--success-color);">
-    <i class="fa-regular fa-circle-check"></i>
-    <span class >Approve</span>
-  </button>
+  </button> %>
+  <% unless document.approved? %>
+    <button class="button flex items-center white" style="background-color: var(--danger-color);">
+      <i class="fa-regular fa-trash-can"></i>
+      <span class="white">Void</span>
+    </button>
+  <% end %>
+  <% unless document.approved? %>
+    <%= button_to approve_quotation_path(document), 
+                method: :patch, 
+                class: "button flex items-center white", 
+                id: "btn-approve", 
+                data: { turbo_confirm: "Are you sure you want to approve '#{document.uid}'?" } do %>
+      <i class="fa-regular fa-circle-check"></i>
+      <span>Approve</span>
+    <% end %>
+  <% end %>
+  <% if document.approved? %>
+    <%= button_to pending_quotation_path(document), 
+                method: :patch, 
+                class: "button flex items-center white", 
+                id: "btn-reject", 
+                data: { turbo_confirm: "Are you sure you want to unapprove '#{document.uid}'?" } do %>
+      <i class="fa-regular fa-circle-xmark"></i>
+      <span>Unapprove</span>
+    <% end %>
+  <% end %>
 </div>

@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   resources :quotations do
     member do
       get 'pdf_view'
+      patch :approve
+      patch :reject
+      patch :pending
     end
   end
   resources :projects

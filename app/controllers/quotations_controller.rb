@@ -2,7 +2,7 @@ class QuotationsController < ApplicationController
   # include Rails.application.routes.url_helpers
 
   layout 'pdf', only: :pdf_view
-  before_action :set_quotation, only: %i[ show edit update destroy ]
+  before_action :set_quotation, only: %i[ show edit update destroy approve pending reject ]
 
   # GET /quotations or /quotations.json
   def index
@@ -81,6 +81,36 @@ class QuotationsController < ApplicationController
       format.html { redirect_to quotations_url, notice: "Quotation was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def approve
+    if @quotation.approved!
+      flash[:success] = "Quotation approved successfully!"
+    else
+      flash[:error] = "Failed to approve quotation."
+    end
+
+    redirect_to @quotation
+  end
+
+  def pending
+    if @quotation.pending!
+      flash[:success] = "Quotation pending successfully!"
+    else
+      flash[:error] = "Failed to pending quotation."
+    end
+
+    redirect_to @quotation
+  end
+
+  def reject
+    if @quotation.rejected!
+      flash[:success] = "Quotation rejected successfully!"
+    else
+      flash[:error] = "Failed to reject quotation."
+    end
+
+    redirect_to @quotation
   end
 
   private
