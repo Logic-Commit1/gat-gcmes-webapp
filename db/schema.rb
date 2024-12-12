@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_11_174533) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_12_153903) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,7 +51,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_11_174533) do
     t.string "description"
     t.integer "quantity", default: 0
     t.string "unit"
+    t.datetime "deleted_at"
     t.index ["company_id"], name: "index_canvasses_on_company_id"
+    t.index ["deleted_at"], name: "index_canvasses_on_deleted_at"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -149,7 +151,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_11_174533) do
     t.datetime "updated_at", null: false
     t.bigint "employee_id", null: false
     t.bigint "request_form_id"
+    t.datetime "deleted_at"
     t.index ["company_id"], name: "index_purchase_orders_on_company_id"
+    t.index ["deleted_at"], name: "index_purchase_orders_on_deleted_at"
     t.index ["employee_id"], name: "index_purchase_orders_on_employee_id"
     t.index ["request_form_id"], name: "index_purchase_orders_on_request_form_id"
     t.index ["supplier_id"], name: "index_purchase_orders_on_supplier_id"
@@ -176,8 +180,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_11_174533) do
     t.bigint "company_id"
     t.bigint "project_id"
     t.integer "status", default: 0
+    t.datetime "deleted_at"
     t.index ["client_id"], name: "index_quotations_on_client_id"
     t.index ["company_id"], name: "index_quotations_on_company_id"
+    t.index ["deleted_at"], name: "index_quotations_on_deleted_at"
     t.index ["project_id"], name: "index_quotations_on_project_id"
   end
 
@@ -212,8 +218,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_11_174533) do
     t.datetime "start_travel_date"
     t.datetime "end_travel_date"
     t.integer "sequence_id"
+    t.datetime "deleted_at"
     t.index ["canvass_id"], name: "index_request_forms_on_canvass_id"
     t.index ["company_id"], name: "index_request_forms_on_company_id"
+    t.index ["deleted_at"], name: "index_request_forms_on_deleted_at"
     t.index ["project_id"], name: "index_request_forms_on_project_id"
     t.index ["quotation_id"], name: "index_request_forms_on_quotation_id"
   end

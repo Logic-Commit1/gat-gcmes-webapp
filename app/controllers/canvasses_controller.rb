@@ -1,5 +1,5 @@
 class CanvassesController < ApplicationController
-  before_action :set_canvass, only: %i[ show edit update destroy ]
+  before_action :set_canvass, only: %i[ show edit update destroy approve pending void ]
 
   # GET /canvasses or /canvasses.json
   def index
@@ -49,13 +49,38 @@ class CanvassesController < ApplicationController
   end
 
   # DELETE /canvasses/1 or /canvasses/1.json
-  def destroy
-    @canvass.destroy!
+  # def destroy
+  #   @canvass.destroy!
 
-    respond_to do |format|
-      format.html { redirect_to canvasses_url, notice: "Canvass was successfully destroyed." }
-      format.json { head :no_content }
+  #   respond_to do |format|
+  #     format.html { redirect_to canvasses_url, notice: "Canvass was successfully destroyed." }
+  #     format.json { head :no_content }
+  #   end
+  # end
+
+  def void
+    @canvass.destroy
+    redirect_to canvasses_path, notice: 'Canvass was successfully voided.'
+  end
+
+  def approve
+    if @canvass.approved!
+      flash[:success] = "Canvass approved successfully!"
+    else
+      flash[:error] = "Failed to approve canvass."
     end
+
+    redirect_to @canvass
+  end
+
+  def pending
+    if @canvass.pending!
+      flash[:success] = "Canvass pending successfully!"
+    else
+      flash[:error] = "Failed to pending canvass."
+    end
+
+    redirect_to @canvass
   end
 
   private

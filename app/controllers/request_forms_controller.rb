@@ -1,5 +1,5 @@
 class RequestFormsController < ApplicationController
-  before_action :set_request_form, only: %i[ show edit update destroy ]
+  before_action :set_request_form, only: %i[ show edit update destroy approve pending void ]
 
   # GET /request_forms or /request_forms.json
   def index
@@ -50,13 +50,38 @@ class RequestFormsController < ApplicationController
   end
 
   # DELETE /request_forms/1 or /request_forms/1.json
-  def destroy
-    @request_form.destroy!
+  # def destroy
+  #   @request_form.destroy!
 
-    respond_to do |format|
-      format.html { redirect_to request_forms_url, notice: "Request form was successfully destroyed." }
-      format.json { head :no_content }
+  #   respond_to do |format|
+  #     format.html { redirect_to request_forms_url, notice: "Request form was successfully destroyed." }
+  #     format.json { head :no_content }
+  #   end
+  # end
+
+  def void
+    @request_form.destroy
+    redirect_to request_forms_path, notice: 'Request form was successfully voided.'
+  end
+
+  def approve
+    if @request_form.approved!
+      flash[:success] = "Request form approved successfully!"
+    else
+      flash[:error] = "Failed to approve request form."
     end
+
+    redirect_to @request_form
+  end
+
+  def pending
+    if @request_form.pending!
+      flash[:success] = "Request form pending successfully!"
+    else
+      flash[:error] = "Failed to pending request form."
+    end
+
+    redirect_to @request_form
   end
 
   def items

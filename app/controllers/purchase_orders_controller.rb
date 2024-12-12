@@ -1,5 +1,5 @@
 class PurchaseOrdersController < ApplicationController
-  before_action :set_purchase_order, only: %i[ show edit update destroy ]
+  before_action :set_purchase_order, only: %i[ show edit update destroy approve pending void ]
 
   # GET /purchase_orders or /purchase_orders.json
   def index
@@ -48,13 +48,38 @@ class PurchaseOrdersController < ApplicationController
   end
 
   # DELETE /purchase_orders/1 or /purchase_orders/1.json
-  def destroy
-    @purchase_order.destroy!
+  # def destroy
+  #   @purchase_order.destroy!
 
-    respond_to do |format|
-      format.html { redirect_to purchase_orders_url, notice: "Purchase order was successfully destroyed." }
-      format.json { head :no_content }
+  #   respond_to do |format|
+  #     format.html { redirect_to purchase_orders_url, notice: "Purchase order was successfully destroyed." }
+  #     format.json { head :no_content }
+  #   end
+  # end
+
+  def void
+    @purchase_order.destroy
+    redirect_to purchase_orders_path, notice: 'Purchase order was successfully voided.'
+  end
+
+  def approve
+    if @purchase_order.approved!
+      flash[:success] = "Purchase order approved successfully!"
+    else
+      flash[:error] = "Failed to approve purchase order."
     end
+
+    redirect_to @purchase_order
+  end
+
+  def pending
+    if @purchase_order.pending!
+      flash[:success] = "Purchase order pending successfully!"
+    else
+      flash[:error] = "Failed to pending purchase order."
+    end
+
+    redirect_to @purchase_order
   end
 
   private

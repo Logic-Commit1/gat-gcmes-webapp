@@ -177,6 +177,8 @@ GEM
     nokogiri (1.16.8-x86_64-linux)
       racc (~> 1.4)
     parallel (1.26.3)
+    paranoia (3.0.0)
+      activerecord (>= 6, < 8.1)
     parser (3.3.6.0)
       ast (~> 2.4.1)
       racc
@@ -347,6 +349,7 @@ DEPENDENCIES
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
+  paranoia
   pg (~> 1.1)
   pry (~> 0.14.2)
   puma (>= 5.0)

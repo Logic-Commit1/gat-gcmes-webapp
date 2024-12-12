@@ -2,7 +2,7 @@ class QuotationsController < ApplicationController
   # include Rails.application.routes.url_helpers
 
   layout 'pdf', only: :pdf_view
-  before_action :set_quotation, only: %i[ show edit update destroy approve pending reject ]
+  before_action :set_quotation, only: %i[ show edit update void approve pending reject ]
 
   # GET /quotations or /quotations.json
   def index
@@ -74,13 +74,17 @@ class QuotationsController < ApplicationController
   end
 
   # DELETE /quotations/1 or /quotations/1.json
-  def destroy
-    @quotation.destroy!
+  # def destroy
+  #   @quotation.destroy!
 
-    respond_to do |format|
-      format.html { redirect_to quotations_url, notice: "Quotation was successfully destroyed." }
-      format.json { head :no_content }
-    end
+  #   respond_to do |format|
+  #     format.html { redirect_to quotations_url, notice: "Quotation was successfully destroyed." }
+  #     format.json { head :no_content }
+  #   end
+  # end
+  def void
+    @quotation.destroy
+    redirect_to quotations_path, notice: 'Quotation was successfully voided.'
   end
 
   def approve

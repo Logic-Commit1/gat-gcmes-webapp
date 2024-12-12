@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       patch :approve
       patch :reject
       patch :pending
+      delete :void
     end
   end
   resources :projects

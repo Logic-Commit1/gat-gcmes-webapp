@@ -1,4 +1,6 @@
 class RequestForm < ApplicationRecord
+  acts_as_paranoid
+  
   belongs_to :canvass, optional: true
   belongs_to :quotation
   belongs_to :company

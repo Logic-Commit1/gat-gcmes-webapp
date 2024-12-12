@@ -1,5 +1,6 @@
 class Quotation < ApplicationRecord
-  include Rails.application.routes.url_helpers
+  # include Rails.application.routes.url_helpers
+  acts_as_paranoid
 
   belongs_to :client
   belongs_to :company
@@ -14,6 +15,10 @@ class Quotation < ApplicationRecord
 
   before_save :set_uid
   before_save :compute_totals_quotation
+
+  # Add scopes if necessary
+  scope :voided, -> { where.not(deleted_at: nil) }
+  scope :active, -> { where(deleted_at: nil) }
 
   def compute_totals_quotation
     products.each { |product| product.compute_total_amount }

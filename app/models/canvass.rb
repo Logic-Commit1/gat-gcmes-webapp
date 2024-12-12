@@ -1,4 +1,6 @@
 class Canvass < ApplicationRecord
+  acts_as_paranoid
+  
   belongs_to :company
   has_many :products, dependent: :destroy, inverse_of: :canvass
   has_many :request_forms

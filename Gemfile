@@ -20,7 +20,6 @@ gem "jbuilder"
 # PDF
 gem 'grover'
 
-
 # Code Formatter
 gem "htmlbeautifier"
 
@@ -29,6 +28,10 @@ gem "sass-rails"
 
 # Font Awesome
 gem "font-awesome-sass"
+
+# Soft Delete
+gem 'paranoia'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
