@@ -5,6 +5,8 @@ class Product < ApplicationRecord
   belongs_to :request_form, optional: true
   belongs_to :purchase_order, optional: true
 
+  has_one_attached :image
+
   before_save :compute_total_amount
 
   UNITS_OF_MEASUREMENT = ['g', 'kg', 'pc', 'unit', 'ltr', 'ml'].freeze
