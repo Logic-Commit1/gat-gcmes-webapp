@@ -30,9 +30,7 @@
           <th>Status</th>
         <% elsif title == "Canvasses" %>
           <th>Reference Number</th>
-          <th>Vendor</th>
-          <th>P.O.</th>
-          <th>Amount</th>
+          <th>Item</th>
           <th>Date</th>
           <th>Status</th>
         <% elsif title == "Purchase Orders" %>
@@ -92,11 +90,10 @@
       <% elsif title == "Canvasses" %>
         <% @canvasses.each do |canvass| %>
           <tr>
-            <td><%= canvass&.uid %></td>
-            <td><%#= canvass.vendor.code %></td>
-            <td><%#= canvass.purchase_order&.uid %></td>
-            <td><%#= number_to_currency(canvass.total) %></td>
+            <td><%= link_to canvass.uid, canvass_path(canvass) %></td>
+            <td><%= canvass.description %></td>
             <td><%= canvass.created_at.strftime("%B %d, %Y") %></td>
+            <td><span class="status <%= canvass.status %>"><%= canvass.status.capitalize %></span></td>
           </tr>
         <% end %>
       <% elsif title == "Purchase Orders" %>

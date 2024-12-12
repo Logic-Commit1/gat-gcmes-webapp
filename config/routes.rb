@@ -5,7 +5,16 @@ Rails.application.routes.draw do
   resources :purchase_orders
   resources :particulars
   resources :request_forms 
-  resources :canvasses
+  resources :canvasses do
+    member do
+      get 'pdf_view'
+      patch :approve
+      patch :reject
+      patch :pending
+      delete :void
+    end
+  end
+
   resources :suppliers
   resources :products
   resources :quotations do

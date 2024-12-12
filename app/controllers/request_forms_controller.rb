@@ -1,5 +1,5 @@
 class RequestFormsController < ApplicationController
-  before_action :set_request_form, only: %i[ show edit update destroy approve pending void ]
+  before_action :set_request_form, only: %i[ show edit update approve pending void ]
 
   # GET /request_forms or /request_forms.json
   def index

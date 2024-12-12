@@ -1,7 +1,7 @@
 <div class="action-buttons flex flex-start">
   <% unless document.approved? %>
-    <button class="button flex items-center" style="background-color: white;">
-      <%= link_to edit_quotation_path(document) do %>
+    <button class="button flex items-center white">
+      <%= link_to send("edit_#{document.class.name.parameterize.underscore}_path", document) do %>
         <i class="fa-regular fa-edit"></i>
         <span>Edit</span>
       <% end %>
@@ -12,7 +12,7 @@
     <span>Comments</span>
   </button> %>
   <% unless document.approved? %>
-    <%= button_to void_quotation_path(document), 
+    <%= button_to send("void_#{document.class.name.parameterize.underscore}_path", document), 
                 method: :delete, 
                 class: "button flex items-center white", 
                 style: "background-color: var(--danger-color);", 
@@ -22,7 +22,7 @@
     <% end %>
   <% end %>
   <% unless document.approved? %>
-    <%= button_to approve_quotation_path(document), 
+    <%= button_to send("approve_#{document.class.name.parameterize.underscore}_path", document), 
                 method: :patch, 
                 class: "button flex items-center white", 
                 id: "btn-approve", 
@@ -32,7 +32,7 @@
     <% end %>
   <% end %>
   <% if document.approved? %>
-    <%= button_to pending_quotation_path(document), 
+    <%= button_to send("pending_#{document.class.name.parameterize.underscore}_path", document), 
                 method: :patch, 
                 class: "button flex items-center white", 
                 id: "btn-reject", 

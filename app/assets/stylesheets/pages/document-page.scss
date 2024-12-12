@@ -1,0 +1,19 @@
+.document-page {
+  .header {
+    .page-title {
+      margin-right: 1rem;
+      color: var(--gray-color);
+      font-weight: 300;
+    }
+  }
+
+  //   span {
+  // margin-right: 10px;
+  // color: var(--gray-color);
+  //   }
+
+  #document-uid {
+    font-size: 32px;
+    margin: 20px 0;
+  }
+}

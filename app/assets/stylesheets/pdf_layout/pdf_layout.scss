@@ -1,6 +1,17 @@
 .pdf-container {
+  padding: 0 1rem;
   header {
     margin-bottom: 24px;
+    .old-header {
+      text-align: center;
+      p {
+        font-size: 8px;
+      }
+      #company-name {
+        font-size: 24px;
+        font-weight: bold;
+      }
+    }
   }
   font-size: 10px;
   .contact-card {
@@ -32,11 +43,6 @@
     }
   }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
   th,
   th {
     background-color: #fff8c2;
@@ -47,6 +53,12 @@
     border-collapse: collapse;
     margin: 10px 0;
   }
+
+  // .canvass-table {
+  //   max-width: 500px;
+  //   margin: 0 auto;
+  // }
+
   th,
   td {
     border: 1px solid black;

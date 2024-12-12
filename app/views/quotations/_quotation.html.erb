@@ -1,8 +1,3 @@
-<div class="page quotation-page" id="<%= dom_id quotation %>">
-  <%#= render layout: 'quotation' do %>
-    <%= render 'pages/show', document: @quotation %>
-    <%#= render 'quotations/pdf_view', quotation: @quotation %>
-    <!--
-    -->
-    <%# end %>
-  </div>
+<div class="page document-page" id="<%= dom_id quotation %>">
+  <%= render 'pages/show', document: @quotation %>
+</div>

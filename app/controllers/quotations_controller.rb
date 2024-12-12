@@ -16,14 +16,14 @@ class QuotationsController < ApplicationController
 
   def pdf_view
     @quotation = Quotation.find(params[:id])
-    pdf_path = @quotation.pdf_path
+    # pdf_path = @quotation.pdf_path
   
-    if File.exist?(pdf_path)
-      send_file pdf_path, type: 'application/pdf', disposition: 'inline'
-    else
-      generate_pdf(@quotation)
-      send_file pdf_path, type: 'application/pdf', disposition: 'inline'
-    end
+    # if File.exist?(pdf_path)
+    #   send_file pdf_path, type: 'application/pdf', disposition: 'inline'
+    # else
+    #   generate_pdf(@quotation)
+    #   send_file pdf_path, type: 'application/pdf', disposition: 'inline'
+    # end
   end
   # def pdf_view
   #   @quotation = Quotation.find(params[:id])  

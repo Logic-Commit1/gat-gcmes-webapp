@@ -1,10 +1,12 @@
 class Canvass < ApplicationRecord
   acts_as_paranoid
-  
+
   belongs_to :company
   has_many :products, dependent: :destroy, inverse_of: :canvass
   has_many :request_forms
   accepts_nested_attributes_for :products, allow_destroy: true, reject_if: :all_blank
+
+  enum :status, [ :pending, :approved, :rejected ]
 
   before_save :set_uid
   before_save :set_suppliers
@@ -40,4 +42,15 @@ class Canvass < ApplicationRecord
     # Set the suppliers attribute to the formatted suppliers_info array
     self.suppliers = suppliers_info
   end
+
+  def pdf_path
+    Rails.root.join('tmp/canvasses', "#{uid}.pdf")
+  end
+
+  def save_pdf(pdf_content)
+    FileUtils.mkdir_p(File.dirname(pdf_path))
+    File.open(pdf_path, 'wb') { |file| file.write(pdf_content) }
+  end
+
+  private
 end

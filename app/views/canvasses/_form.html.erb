@@ -13,7 +13,7 @@
     </div>
   <% end %>
   <!-- Company Selection -->
-  <div data-controller="company-select">
+  <div data-controller="company-select" data-edit-mode="<%= canvass.persisted? %>">
     <div class="field" id="company-field">
       <%= form.label :company, style: "display: block" %>
       <% Company.all.each do |company| %>
@@ -21,7 +21,7 @@
       <% end %>
     </div>
     <!-- Shared Fields for Description, Quantity, and Unit -->
-    <div class="hidden" data-controller="shared-fields">
+    <div class="<%= 'hidden' if canvass.new_record? %>" data-controller="shared-fields">
       <div class="grid with-3-columns gtc-2-1-1">
         <div>
           <%= form.label :description, "Item Description", style: "display: block" %>
@@ -55,6 +55,9 @@
       <br>
       <div>
         <%= form.submit data: { action: "shared-fields#sync" } %>
+      </div>
+      <div class="text-center">
+        <%= link_to 'Cancel', action_name == 'new' ? canvasses_path : canvass_path(@canvass) %>
       </div>
     </div>
   </div>

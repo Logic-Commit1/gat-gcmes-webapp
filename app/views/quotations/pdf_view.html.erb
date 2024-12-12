@@ -2,11 +2,11 @@
   <header class="flex space-between items-center">
     <div class="contact-card flex">
       <div class="contact-details">
-        <p class="flex items-center"><i class="fa-solid fa-location-dot" style="margin-right: 8px;"></i><span><%= quotation.company.address %></span></p>
+        <p class="flex items-center"><i class="fa-solid fa-location-dot" style="margin-right: 8px;"></i><span><%= @quotation.company.address %></span></p>
         <br>
-        <p class="flex items-center"><i class="fa-solid fa-phone" style="margin-right: 8px;"></i><span>(02) <%= quotation.company.contact_numbers.join(' | ') %></span></p>
+        <p class="flex items-center"><i class="fa-solid fa-phone" style="margin-right: 8px;"></i><span>(02) <%= @quotation.company.contact_numbers.join(' | ') %></span></p>
         <br>
-        <p class="flex items-center"><i class="fa-solid fa-envelope" style="margin-right: 8px;"></i><span><%= quotation.company.emails.join(', ') %></span></p>
+        <p class="flex items-center"><i class="fa-solid fa-envelope" style="margin-right: 8px;"></i><span><%= @quotation.company.emails.join(', ') %></span></p>
       </div>
       <div class="logo">
         <%= image_tag "#{request.base_url}/assets/gat-logo.png" %>
@@ -14,14 +14,14 @@
       </div>
     </div>
     <div class="align-right">
-      <h2>quotation</h2>
+      <h2>@quotation</h2>
       <h6>
-        <%= quotation.uid %>
+        <%= @quotation.uid %>
       </h6>
     </div>
   </header>
   <p class="align-right">
-    Date Requested: <%= quotation.created_at.strftime("%B %d, %Y") %>
+    Date Requested: <%= @quotation.created_at.strftime("%B %d, %Y") %>
   </p>
   <table id="customer-container">
     <thead>
@@ -32,24 +32,24 @@
     <tbody>
       <tr>
         <td>Company Name</td>
-        <td><%= quotation.client.name %></td>
+        <td><%= @quotation.client.name %></td>
       </tr>
       <tr>
         <td>Business Address</td>
-        <td><%= quotation.client.address %></td>
+        <td><%= @quotation.client.address %></td>
       </tr>
       <tr>
         <td>Attention</td>
-        <td><%= quotation.attention %></td>
+        <td><%= @quotation.attention %></td>
       </tr>
       <tr>
         <td>Vessel</td>
-        <td><%= quotation.vessel %></td>
+        <td><%= @quotation.vessel %></td>
       </tr>
     </tbody>
   </table>
   <strong>Subject:</strong>
-  <%= quotation.subject %>
+  <%= @quotation.subject %>
 </p>
 <table id="products-container">
   <thead>
@@ -63,7 +63,7 @@
     </tr>
   </thead>
   <tbody>
-    <% quotation.products.each_with_index do |p, index| %>
+    <% @quotation.products.each_with_index do |p, index| %>
       <tr>
         <td><%= index + 1 %></td>
         <td><%= p.quantity %></td>
@@ -112,26 +112,26 @@
 <table id="totals-container" style="background-color: #f0f0f0;">
   <tr>
     <td><strong>SUB TOTAL</strong></td>
-    <td><strong>PHP <%= number_with_precision(quotation.sub_total, precision: 2, delimiter: ',') %></strong></td>
+    <td><strong>PHP <%= number_with_precision(@quotation.sub_total, precision: 2, delimiter: ',') %></strong></td>
   </tr>
   <tr>
     <td><strong>12% VAT</strong></td>
-    <td><strong>PHP <%= number_with_precision(quotation.vat, precision: 2, delimiter: ',') %></strong></td>
+    <td><strong>PHP <%= number_with_precision(@quotation.vat, precision: 2, delimiter: ',') %></strong></td>
   </tr>
   <tr id="total-container">
     <td><strong>TOTAL</strong></td>
-    <td><strong>PHP <%= number_with_precision(quotation.total, precision: 2, delimiter: ',') %></strong></td>
+    <td><strong>PHP <%= number_with_precision(@quotation.total, precision: 2, delimiter: ',') %></strong></td>
   </tr>
 </table>
 <div id="terms-container">
   <p><strong>TERMS AND CONDITIONS</strong></p>
   <div id="terms-details">
     <div><strong>Lead time</strong></div>
-    <div><%= quotation.lead_time %></div>
+    <div><%= @quotation.lead_time %></div>
     <div><strong>Warranty</strong></div>
-    <div><%= quotation.warranty %></div>
+    <div><%= @quotation.warranty %></div>
     <div><strong>Payment</strong></div>
-    <div><%#= quotation.payment %>30 days</div>
+    <div><%#= @quotation.payment %>30 days</div>
   </div>
 </div>
 <%# <p class="align-center">For further information, please contact us</p> %>

@@ -1,10 +1,18 @@
 <div class="show-page">
   <%= render 'pages/components/show_header', document: document %>
-  <p id="<%= document.class.name.downcase %>-uid"><%= document.uid %></p>
+  <p id="document-uid"><%= document.uid %></p>
   <%= render 'pages/components/action_buttons', document: document %>
+  <!--
+  -->
   <div class="">
     <iframe 
-      src="<%= pdf_view_quotation_path(@quotation) %>"
+      src="<%= case document.class.name.parameterize.underscore
+                when 'quotation' then pdf_view_quotation_path(@quotation)
+                when 'canvass' then pdf_view_canvass_path(document)
+                when 'request_form' then pdf_view_request_form_path(document)
+                when 'purchase_order' then pdf_view_purchase_order_path(document)
+                else '#' # Fallback or default case
+              end %>"
       width="650px" 
       height="700px" 
       frameborder="0">
