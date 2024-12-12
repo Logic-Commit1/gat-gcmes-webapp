@@ -1,20 +1,13 @@
-<%= render 'pages/components/show_header', document: document %>
-<p id="<%= document.class.name.downcase %>-uid"><%= document.uid %></p>
-<div class="action-buttons flex space-between">
-  <button class="button flex items-center" style="background-color: white;">
-    <i class="fa-regular fa-edit"></i>
-    <span>Edit</span>
-  </button>
-  <button class="button flex items-center" style="background-color: white;">
-    <i class="fa-regular fa-comment"></i>
-    <span>Comments</span>
-  </button>
-  <button class="button flex items-center white" style="background-color: var(--danger-color);">
-    <i class="fa-regular fa-trash-can"></i>
-    <span class="white">Void</span>
-  </button>
-  <button class="button flex items-center white" style="background-color: var(--success-color);">
-    <i class="fa-regular fa-circle-check"></i>
-    <span class >Approve</span>
-  </button>
+<div class="show-page">
+  <%= render 'pages/components/show_header', document: document %>
+  <p id="<%= document.class.name.downcase %>-uid"><%= document.uid %></p>
+  <%= render 'pages/components/action_buttons', document: document %>
+  <div class="">
+    <iframe 
+      src="<%= pdf_view_quotation_path(@quotation) %>"
+      width="650px" 
+      height="700px" 
+      frameborder="0">
+    </iframe>
+  </div>
 </div>

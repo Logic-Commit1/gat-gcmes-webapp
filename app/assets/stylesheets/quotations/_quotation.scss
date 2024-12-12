@@ -8,26 +8,12 @@
   }
 
   span {
-    margin-right: 10px;
+    // margin-right: 10px;
     // color: var(--gray-color);
   }
 
   #quotation-uid {
     font-size: 32px;
     margin: 20px 0;
-  }
-
-  .action-buttons {
-    max-width: 400px;
-
-    button {
-      padding: 6px 10px;
-      border: none;
-      border-radius: 5px;
-    }
-
-    button:not(:last-child) {
-      margin-right: 5px;
-    }
   }
 }

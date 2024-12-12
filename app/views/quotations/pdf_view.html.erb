@@ -1,0 +1,154 @@
+<div class="pdf-container">
+  <header class="flex space-between items-center">
+    <div class="contact-card flex">
+      <div class="contact-details">
+        <p class="flex items-center"><i class="fa-solid fa-location-dot" style="margin-right: 8px;"></i><span><%= quotation.company.address %></span></p>
+        <br>
+        <p class="flex items-center"><i class="fa-solid fa-phone" style="margin-right: 8px;"></i><span>(02) <%= quotation.company.contact_numbers.join(' | ') %></span></p>
+        <br>
+        <p class="flex items-center"><i class="fa-solid fa-envelope" style="margin-right: 8px;"></i><span><%= quotation.company.emails.join(', ') %></span></p>
+      </div>
+      <div class="logo">
+        <%= image_tag "#{request.base_url}/assets/gat-logo.png" %>
+        <p>GOLDEN ARROW TRADING</p>
+      </div>
+    </div>
+    <div class="align-right">
+      <h2>Quotation</h2>
+      <h6>
+        <%= quotation.uid %>
+      </h6>
+    </div>
+  </header>
+  <p class="align-right">
+    Date Requested: <%= quotation.created_at.strftime("%B %d, %Y") %>
+  </p>
+  <table id="customer-container">
+    <thead>
+      <tr>
+        <th class="text-center" colspan="2">CUSTOMER DETAILS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Company Name</td>
+        <td><%= quotation.client.name %></td>
+      </tr>
+      <tr>
+        <td>Business Address</td>
+        <td><%= quotation.client.address %></td>
+      </tr>
+      <tr>
+        <td>Attention</td>
+        <td><%= quotation.attention %></td>
+      </tr>
+      <tr>
+        <td>Vessel</td>
+        <td><%= quotation.vessel %></td>
+      </tr>
+    </tbody>
+  </table>
+  <strong>Subject:</strong>
+  <%= quotation.subject %>
+</p>
+<table id="products-container">
+  <thead>
+    <tr>
+      <th>SN</th>
+      <th>QTY</th>
+      <th>U/M</th>
+      <th colspan="2">DESCRIPTION</th>
+      <th>UNIT PRICE</th>
+      <th>TOTAL AMOUNT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% quotation.products.each_with_index do |p, index| %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= p.quantity %></td>
+        <td><%= p.unit %></td>
+        <td colspan="2"><%= p.name %></td>
+        <td>PHP <%= number_with_precision(p.price, precision: 2, delimiter: ',') %></td>
+        <td>PHP <%= number_with_precision(p.total, precision: 2, delimiter: ',') %></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>BRAND</td>
+        <td>VESPA</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>WORKING PRESSURE</td>
+        <td>12 kg/cm2</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>POWER RATED</td>
+        <td>7.5 HORSE POWER</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>AIR DISPLACEMENT</td>
+        <td>1,020 liters/min ( 1.02 m'/min)</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td colspan="2"><%= image_tag("/assets/sample-compressor.jpg", id: 'product-image') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<table id="totals-container" style="background-color: #f0f0f0;">
+  <tr>
+    <td><strong>SUB TOTAL</strong></td>
+    <td><strong>PHP <%= number_with_precision(quotation.sub_total, precision: 2, delimiter: ',') %></strong></td>
+  </tr>
+  <tr>
+    <td><strong>12% VAT</strong></td>
+    <td><strong>PHP <%= number_with_precision(quotation.vat, precision: 2, delimiter: ',') %></strong></td>
+  </tr>
+  <tr id="total-container">
+    <td><strong>TOTAL</strong></td>
+    <td><strong>PHP <%= number_with_precision(quotation.total, precision: 2, delimiter: ',') %></strong></td>
+  </tr>
+</table>
+<div id="terms-container">
+  <p><strong>TERMS AND CONDITIONS</strong></p>
+  <div id="terms-details">
+    <div><strong>Lead time</strong></div>
+    <div><%= quotation.lead_time %></div>
+    <div><strong>Warranty</strong></div>
+    <div><%= quotation.warranty %></div>
+    <div><strong>Payment</strong></div>
+    <div><%#= quotation.payment %>30 days</div>
+  </div>
+</div>
+<%# <p class="align-center">For further information, please contact us</p> %>
+<table id="signatures-container">
+  <thead>
+    <tr>
+      <th>Conforme by</th>
+      <th>Prepared by</th>
+      <th>Approved by</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+</div>

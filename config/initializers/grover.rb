@@ -16,4 +16,7 @@ Grover.configure do |config|
       height: 1123 # A4 height in pixels at 96 DPI
     }
   }
+  config.use_png_middleware = true
+  config.use_jpeg_middleware = true
+  config.use_pdf_middleware = false
 end

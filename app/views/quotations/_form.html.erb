@@ -12,22 +12,24 @@
       </ul>
     </div>
   <% end %>
-  <div data-controller="company-select">
+  <div data-controller="company-select" data-edit-mode="<%= quotation.persisted? %>" data-client-id="<%= quotation.client_id %>">
     <div class="field" id="company-field">
       <%= form.label :company %>
       <% Company.all.each do |company| %>
         <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForClient" } %> <%= company.code %>
       <% end %>
     </div>
-    <div class="hidden">
+    <div class="<%= 'hidden' if quotation.new_record? %>">
       <div class="grid with-4-columns">
-        <div>
-          <%= form.label :client_id %>
-          <div class="select-container">
-            <%= form.collection_select :client_id, [], :id, :name, { prompt: "Select Client" }, { style: "display: block", data: { company_select_target: "clientSelect" } } %>
-            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+        <% if quotation.new_record? %>
+          <div>
+            <%= form.label :client_id %>
+            <div class="select-container">
+              <%= form.collection_select :client_id, [], :id, :name, { prompt: "Select Client" }, { style: "display: block", data: { company_select_target: "clientSelect" } } %>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+            </div>
           </div>
-        </div>
+        <% end %>
         <div>
           <%= form.label :subject %>
           <div>
@@ -75,6 +77,8 @@
       <div>
         <%= form.submit %>
       </div>
+      <%= link_to 'Cancel', action_name == 'new' ? quotations_path : quotation_path(@quotation) %>
     </div>
   </div>
+</div>
 <% end %>

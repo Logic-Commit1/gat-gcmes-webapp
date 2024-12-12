@@ -75,7 +75,7 @@
             <td><%= quotation.subject %></td>
             <td><%= number_to_currency(quotation.total) %></td>
             <td><%= quotation.created_at.strftime("%B %d, %Y") %></td>
-            <td><span class="status <%#= quotation.status %>"><%= quotation.approver %></span></td>
+            <td><span class="status <%= quotation.status %>"><%= quotation.status.capitalize %></span></td>
           </tr>
         <% end %>
       <% elsif title == "Request Forms" %>

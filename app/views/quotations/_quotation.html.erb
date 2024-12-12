@@ -1,14 +1,8 @@
 <div class="page quotation-page" id="<%= dom_id quotation %>">
-  <%#= render 'pages/show', document: @quotation %>
-  <%= render 'components/quotation/pdf_layout', quotation: @quotation %>
-  <!--
-  <div class="pdf-container">
-    <iframe 
-      src="<%= generate_pdf_quotation_path(@quotation) %>"
-      width="100%" 
-      height="600px" 
-      frameborder="0">
-    </iframe>
+  <%#= render layout: 'quotation' do %>
+    <%= render 'pages/show', document: @quotation %>
+    <%#= render 'quotations/pdf_view', quotation: @quotation %>
+    <!--
+    -->
+    <%# end %>
   </div>
-  -->
-</div>

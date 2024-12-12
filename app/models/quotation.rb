@@ -1,4 +1,6 @@
 class Quotation < ApplicationRecord
+  include Rails.application.routes.url_helpers
+
   belongs_to :client
   belongs_to :company
   belongs_to :project, optional: true
@@ -8,6 +10,7 @@ class Quotation < ApplicationRecord
   accepts_nested_attributes_for :products, allow_destroy: true, reject_if: :all_blank
 
   enum :payment, [ "50% downpayment", "30 days", "Paid" ]
+  enum :status, [ :pending, :approved, :rejected ]
 
   before_save :set_uid
   before_save :compute_totals_quotation
@@ -25,6 +28,15 @@ class Quotation < ApplicationRecord
     year_str = Time.now.year.to_s[2, 2]
     count = self.client.quotations.count
     self.uid = "#{client_code}#{year_str}-#{(count+1).to_s.rjust(3, '0')}"
+  end
+
+  def pdf_path
+    Rails.root.join('tmp/quotations', "#{uid}.pdf")
+  end
+
+  def save_pdf(pdf_content)
+    FileUtils.mkdir_p(File.dirname(pdf_path))
+    File.open(pdf_path, 'wb') { |file| file.write(pdf_content) }
   end
 
   private

@@ -1,0 +1,20 @@
+<div class="action-buttons flex space-between">
+  <button class="button flex items-center" style="background-color: white;">
+    <%= link_to edit_quotation_path(document) do %>
+      <i class="fa-regular fa-edit"></i>
+      <span>Edit</span>
+    <% end %>
+  </button>
+  <button class="button flex items-center" style="background-color: white;">
+    <i class="fa-regular fa-comment"></i>
+    <span>Comments</span>
+  </button>
+  <button class="button flex items-center white" style="background-color: var(--danger-color);">
+    <i class="fa-regular fa-trash-can"></i>
+    <span class="white">Void</span>
+  </button>
+  <button class="button flex items-center white" style="background-color: var(--success-color);">
+    <i class="fa-regular fa-circle-check"></i>
+    <span class >Approve</span>
+  </button>
+</div>

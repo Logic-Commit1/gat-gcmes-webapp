@@ -10,3 +10,4 @@ pin "flatpickr" # @4.6.13
 pin "stimulus-flatpickr" # @3.0.0
 pin "slim-select" # @1.27.1
 pin "stimulus-slimselect" # @0.2.0
+pin "gat-logo", to: "gat-logo.png"

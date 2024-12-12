@@ -1,11 +1,23 @@
+<!-- app/views/layouts/quotation.html.erb -->
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title>Quotation PDF</title>
-    <style></style>
+    <title><%= content_for(:title) || "Quotation" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= yield :head %>
   </head>
   <body>
-    <%= yield %>
+    <div class="">
+      <div class="row">
+        <div class="col-12 pt-4" id="">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
   </body>
-</html> 
+</html>

@@ -1,4 +1,7 @@
 class QuotationsController < ApplicationController
+  # include Rails.application.routes.url_helpers
+
+  layout 'pdf', only: :pdf_view
   before_action :set_quotation, only: %i[ show edit update destroy ]
 
   # GET /quotations or /quotations.json
@@ -13,24 +16,31 @@ class QuotationsController < ApplicationController
 
   def pdf_view
     @quotation = Quotation.find(params[:id])
+    pdf_path = @quotation.pdf_path
+  
+    if File.exist?(pdf_path)
+      send_file pdf_path, type: 'application/pdf', disposition: 'inline'
+    else
+      generate_pdf(@quotation)
+      send_file pdf_path, type: 'application/pdf', disposition: 'inline'
+    end
+  end
+  # def pdf_view
+  #   @quotation = Quotation.find(params[:id])  
     
-    # Render the PDF layout
-    render 'components/quotation/pdf_layout', locals: { quotation: @quotation }
-  end
-
-  def generate_pdf
-    @quotation = Quotation.find(params[:id])  
-    # Use the PdfGeneratorService to generate the PDF
-    pdf = PdfGenerator.new(@quotation).generate
-        
-    # Send the PDF to the browser
-    send_data(
-      pdf,
-      filename: "quotation_#{@quotation.uid}.pdf",
-      type: 'application/pdf',
-      disposition: 'inline'
-    ) 
-  end
+  #   html = render_to_string(template: 'quotations/pdf_view', layout: 'pdf', locals: { quotation: @quotation })
+  #   css_url = view_context.asset_url('application.css') # Full URL for production
+  #   # or
+  #   # css_url = view_context.stylesheet_path('application', media: 'all') # Relative URL for development
+  #   pdf = Grover.new(html, style_tag_options: [{ url: css_url }]).to_pdf
+  #   # Send the PDF to the browser
+  #   send_data(
+  #     pdf,
+  #     filename: "quotation_#{@quotation.uid}.pdf",
+  #     type: 'application/pdf',
+  #     disposition: 'inline'
+  #   ) 
+  # end
 
   # GET /quotations/new
   def new
@@ -43,30 +53,23 @@ class QuotationsController < ApplicationController
   end
 
   # POST /quotations or /quotations.json
-  def create
+   def create
     @quotation = Quotation.new(quotation_params)
-
-    respond_to do |format|
-      if @quotation.save
-        format.html { redirect_to quotation_url(@quotation), notice: "Quotation was successfully created." }
-        format.json { render :show, status: :created, location: @quotation }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @quotation.errors, status: :unprocessable_entity }
-      end
+    if @quotation.save
+      generate_pdf(@quotation)
+      redirect_to @quotation
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /quotations/1 or /quotations/1.json
   def update
-    respond_to do |format|
-      if @quotation.update(quotation_params)
-        format.html { redirect_to quotation_url(@quotation), notice: "Quotation was successfully updated." }
-        format.json { render :show, status: :ok, location: @quotation }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @quotation.errors, status: :unprocessable_entity }
-      end
+    if @quotation.update(quotation_params)
+      generate_pdf(@quotation)
+      redirect_to @quotation
+    else
+      render :edit
     end
   end
 
@@ -81,6 +84,21 @@ class QuotationsController < ApplicationController
   end
 
   private
+    def generate_pdf(quotation)
+      html = render_to_string(
+        template: 'quotations/pdf_view',
+        layout: 'pdf',
+        locals: { quotation: quotation }
+      )
+      
+      # Use absolute URL for FontAwesome CSS
+      fontawesome_css_url = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" # Update to the correct version if necessary
+      application_css_url = view_context.asset_url('application.css') # Full URL for production
+
+      # Include both CSS files
+      pdf = Grover.new(html, style_tag_options: [{ url: application_css_url }, { url: fontawesome_css_url }]).to_pdf
+      quotation.save_pdf(pdf)
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_quotation
       @quotation = Quotation.find(params[:id])

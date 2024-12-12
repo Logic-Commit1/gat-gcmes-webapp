@@ -11,6 +11,13 @@ export default class extends Controller {
     "quotationSelect",
   ]
 
+  connect() {
+    // Check if the form is in edit mode
+    if (this.element.dataset.editMode === "true") {
+      this.populateClientSelect()
+    }
+  }
+
   selectCompanyForClient(event) {
     this.fetchAndUpdateOptions(
       event,
@@ -20,6 +27,20 @@ export default class extends Controller {
       "name"
     )
     this.showHiddenDivs() // Call the method to show hidden divs
+  }
+
+  populateClientSelect() {
+    const selectedCompanyId = this.element.querySelector(
+      'input[name="quotation[company_id]"]:checked'
+    ).value
+
+    this.fetchAndUpdateOptions(
+      { target: { value: selectedCompanyId } },
+      "/clients",
+      this.clientSelectTarget,
+      "Select Client",
+      "name"
+    )
   }
 
   selectCompanyForRequestFormsAndSuppliers(event) {
@@ -129,6 +150,10 @@ export default class extends Controller {
       option.value = item.id
       option.textContent = item[displayAttribute]
       selectTarget.appendChild(option)
+
+      if (this.element.dataset.clientId == item.id) {
+        option.selected = true
+      }
     })
   }
 

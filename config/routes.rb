@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   resources :products
   resources :quotations do
     member do
-      get 'generate_pdf'
       get 'pdf_view'
     end
   end

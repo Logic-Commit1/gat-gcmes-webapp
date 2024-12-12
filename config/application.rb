@@ -25,6 +25,7 @@ module Gat
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Add Grover middleware
-    config.middleware.use Grover::Middleware
+    config.middleware.use Grover::Middleware, root_url: 'http://localhost:3000'
+
   end
 end
