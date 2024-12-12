@@ -1,5 +1,5 @@
 class CanvassesController < ApplicationController
-  before_action :set_canvass, only: %i[ show edit update destroy approve pending void ]
+  before_action :set_canvass, only: %i[ show edit update approve pending void ]
 
   # GET /canvasses or /canvasses.json
   def index

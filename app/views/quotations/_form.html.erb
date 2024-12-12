@@ -77,7 +77,9 @@
       <div>
         <%= form.submit %>
       </div>
-      <%= link_to 'Cancel', action_name == 'new' ? quotations_path : quotation_path(@quotation) %>
+      <div class="text-center">
+        <%= link_to 'Cancel', action_name == 'new' ? quotations_path : quotation_path(@quotation) %>
+      </div>
     </div>
   </div>
 </div>
