@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
   resources :suppliers
   resources :products
+  resources :specs
   resources :quotations do
     member do
       get 'pdf_view'

@@ -28,6 +28,9 @@ class QuotationsController < ApplicationController
   def new
     @quotation = Quotation.new(quotation_params)
     @quotation.products.build
+    # @quotation.products.each do |product|
+    #   product.specs.build
+    # end
   end
 
   # GET /quotations/1/edit
@@ -134,9 +137,15 @@ class QuotationsController < ApplicationController
         :uid, :company_id, :client_id, :attention, :vessel, :subject, :user_id,
         :remarks, :payment, :lead_time, :warranty, :sub_total,
         :total, :vat, :additional_conditions, :preparer, :approver,
-        products_attributes: [ :id, :name, :quantity, :unit, :price, :discount, :brand, :description, :specs, :terms, :remarks, :image, :quotation_id, :canvass_id, :request_form_id, :purchase_order_id, :_destroy ]
-        )
-      rescue
-        {}
+        products_attributes: [
+          :id, :name, :quantity, :unit, :price, :discount, :brand, 
+          :description, :specs, :terms, :remarks, :image, 
+          :quotation_id, :canvass_id, :request_form_id, :purchase_order_id, 
+          :_destroy,
+          specs_attributes: [:id, :name, :value, :_destroy]
+        ]
+      )
+    rescue
+      {}
     end
 end

@@ -19,7 +19,7 @@
         <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForClient" } %> <%= company.code %>
       <% end %>
     </div>
-    <div class="<%= 'hidden' if quotation.new_record? %>">
+    <div class="<%= '' if quotation.new_record? %>">
       <div class="grid with-4-columns">
         <% if quotation.new_record? %>
           <div>
@@ -49,17 +49,19 @@
           </div>
         </div>
       </div>
-      <p class="semibold">Items</p>
-      <template data-nested-form-target="template">
-        <%= form.fields_for :products, Product.new, child_index: 'NEW_RECORD' do |product_fields| %>
+      <div>
+        <p class="semibold">Items</p>
+        <template data-nested-form-target="template">
+          <%= form.fields_for :products, Product.new, child_index: 'NEW_RECORD' do |product_fields| %>
+            <%= render "quotations/quotation_product_form", f: product_fields %>
+          <% end %>
+        </template>
+        <%= form.fields_for :products do |product_fields| %>
           <%= render "quotations/quotation_product_form", f: product_fields %>
         <% end %>
-      </template>
-      <%= form.fields_for :products do |product_fields| %>
-        <%= render "quotations/quotation_product_form", f: product_fields %>
-      <% end %>
-      <div data-nested-form-target="target"></div>
-      <%= link_to 'Add Item', '#', class: 'button', data: { action: "nested-form#add" } %>
+        <div data-nested-form-target="target"></div>
+        <%= link_to 'Add Item', '#', class: 'button', data: { action: "nested-form#add" } %>
+      </div>
       <br>
       <br>
       <p class="semibold">Terms and Conditions</p>

@@ -32,16 +32,32 @@
       <%= f.file_field :image %>
     </div>
     <!--
+    -->
     <div>
       <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "button", data: { action: "nested-form#remove" } %>
       <%= f.hidden_field :_destroy %>
     </div>
-    -->
   </div>
-  <%#= f.label :description, style: "display: block" %>
-  <%#= f.text_area :description %>
-  <%#= f.label :specs, style: "display: block" %>
-  <%#= f.text_area :specs %>
-  <%#= f.label :remarks, style: "display: block" %>
-  <%#= f.text_area :remarks %>
+  <%# <p>Specifications</p> %>
+  <template data-nested-form-target="template">
+    <%= f.fields_for :specs, Spec.new, child_index: 'NEW_RECORD' do |spec_fields| %>
+      <div class="nested-spec-form grid with-5-columns">
+        <div>
+          <%= spec_fields.label :name %>
+          <%= spec_fields.text_field :name %>
+        </div>
+        <div>
+          <%= spec_fields.label :value %>
+          <%= spec_fields.text_field :value %>
+        </div>
+        <div>
+          <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "button", data: { action: "nested-form#removeSpec" } %>
+        </div>
+        <%#= link_to "Remove Spec", "#", class: "button", data: { action: "nested-form#removeSpec" } %>
+        <%= spec_fields.hidden_field :_destroy %>
+      </div>
+    <% end %>
+  </template>
+  <div data-nested-form-target="target"></div>
+  <%= link_to 'Add Specification', '#', class: 'button', data: { action: "nested-form#addSpec" } %>
 </div>

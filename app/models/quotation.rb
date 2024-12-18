@@ -1,7 +1,4 @@
 class Quotation < ApplicationRecord
-  # include Rails.application.routes.url_helpers
-  # acts_as_paranoid
-
   belongs_to :client
   belongs_to :company
   

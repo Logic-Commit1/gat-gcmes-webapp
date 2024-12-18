@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_17_113425) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_18_090035) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -230,6 +230,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_17_113425) do
     t.index ["quotation_id"], name: "index_request_forms_on_quotation_id"
   end
 
+  create_table "specs", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "value", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_specs_on_product_id"
+  end
+
   create_table "suppliers", force: :cascade do |t|
     t.string "name"
     t.string "code"
@@ -264,5 +273,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_17_113425) do
   add_foreign_key "request_forms", "companies"
   add_foreign_key "request_forms", "projects"
   add_foreign_key "request_forms", "quotations"
+  add_foreign_key "specs", "products"
   add_foreign_key "suppliers", "companies"
 end
