@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_12_171350) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_17_113425) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -105,7 +105,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_12_171350) do
     t.decimal "price", default: "0.0"
     t.string "brand"
     t.text "description"
-    t.text "specs"
+    t.jsonb "specs", default: []
     t.text "terms"
     t.text "remarks"
     t.string "image"
@@ -182,6 +182,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_12_171350) do
     t.bigint "project_id"
     t.integer "status", default: 0
     t.datetime "deleted_at"
+    t.decimal "discount", default: "0.0"
+    t.decimal "discount_rate", default: "0.0"
     t.index ["client_id"], name: "index_quotations_on_client_id"
     t.index ["company_id"], name: "index_quotations_on_company_id"
     t.index ["deleted_at"], name: "index_quotations_on_deleted_at"
@@ -220,6 +222,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_12_171350) do
     t.datetime "end_travel_date"
     t.integer "sequence_id"
     t.datetime "deleted_at"
+    t.integer "status", default: 0
     t.index ["canvass_id"], name: "index_request_forms_on_canvass_id"
     t.index ["company_id"], name: "index_request_forms_on_company_id"
     t.index ["deleted_at"], name: "index_request_forms_on_deleted_at"

@@ -4,7 +4,15 @@ Rails.application.routes.draw do
   resources :employees
   resources :purchase_orders
   resources :particulars
-  resources :request_forms 
+  resources :request_forms do
+    member do
+      get 'pdf_view'
+      patch :approve
+      patch :reject
+      patch :pending
+      delete :void
+    end
+  end
   resources :canvasses do
     member do
       get 'pdf_view'
@@ -50,5 +58,5 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # Defines the root path route ("/")
-  root "main#index"
+  root "quotations#index"
 end

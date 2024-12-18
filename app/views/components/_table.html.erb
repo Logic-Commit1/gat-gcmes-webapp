@@ -71,7 +71,7 @@
             <td><%= link_to quotation.uid, quotation_path(quotation) %></td>
             <td><%= quotation.client.code %></td>
             <td><%= quotation.subject %></td>
-            <td><%= number_to_currency(quotation.total) %></td>
+            <td><%= number_to_currency(quotation.total, unit: "₱") %></td>
             <td><%= quotation.created_at.strftime("%B %d, %Y") %></td>
             <td><span class="status <%= quotation.status %>"><%= quotation.status.capitalize %></span></td>
           </tr>
@@ -79,10 +79,10 @@
       <% elsif title == "Request Forms" %>
         <% @request_forms.each do |form| %>
           <tr>
-            <td><a href="#"><%= form.uid %></a></td>
+            <td><%= link_to form.uid, request_form_path(form) %></td>
             <td><%= form.purchase_order&.uid %></td>
             <td><%= form.quotation.client.code %></td>
-            <td><%= number_to_currency(form.total ) %></td>
+            <td><%= number_to_currency(form.total, unit: "₱") %></td>
             <td><%= form.created_at.strftime("%B %d, %Y") %></td>
             <td><span class="status <%#= form.status %>"><%= form.approver %></span></td>
           </tr>

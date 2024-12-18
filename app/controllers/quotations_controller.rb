@@ -1,8 +1,8 @@
 class QuotationsController < ApplicationController
-  # include Rails.application.routes.url_helpers
+  include Rails.application.routes.url_helpers
 
   layout 'pdf', only: :pdf_view
-  before_action :set_quotation, only: %i[ show edit update void approve pending reject ]
+  before_action :set_quotation, only: %i[ show edit update void approve pending reject pdf_view ]
 
   # GET /quotations or /quotations.json
   def index
@@ -11,36 +11,18 @@ class QuotationsController < ApplicationController
 
   # GET /quotations/1 or /quotations/1.json
   def show
-    @quotation = Quotation.find(params[:id])
   end
 
   def pdf_view
-    @quotation = Quotation.find(params[:id])
-    # pdf_path = @quotation.pdf_path
+    pdf_path = @quotation.pdf_path
   
-    # if File.exist?(pdf_path)
-    #   send_file pdf_path, type: 'application/pdf', disposition: 'inline'
-    # else
-    #   generate_pdf(@quotation)
-    #   send_file pdf_path, type: 'application/pdf', disposition: 'inline'
-    # end
+    if File.exist?(pdf_path)
+      send_file pdf_path, type: 'application/pdf', disposition: 'inline'
+    else
+      generate_pdf(@quotation)
+      send_file pdf_path, type: 'application/pdf', disposition: 'inline'
+    end
   end
-  # def pdf_view
-  #   @quotation = Quotation.find(params[:id])  
-    
-  #   html = render_to_string(template: 'quotations/pdf_view', layout: 'pdf', locals: { quotation: @quotation })
-  #   css_url = view_context.asset_url('application.css') # Full URL for production
-  #   # or
-  #   # css_url = view_context.stylesheet_path('application', media: 'all') # Relative URL for development
-  #   pdf = Grover.new(html, style_tag_options: [{ url: css_url }]).to_pdf
-  #   # Send the PDF to the browser
-  #   send_data(
-  #     pdf,
-  #     filename: "quotation_#{@quotation.uid}.pdf",
-  #     type: 'application/pdf',
-  #     disposition: 'inline'
-  #   ) 
-  # end
 
   # GET /quotations/new
   def new
@@ -88,7 +70,11 @@ class QuotationsController < ApplicationController
   end
 
   def approve
+    pdf_path = @quotation.pdf_path
+
     if @quotation.approved!
+      generate_pdf(@quotation)
+      send_file pdf_path, type: 'application/pdf', disposition: 'inline'
       flash[:success] = "Quotation approved successfully!"
     else
       flash[:error] = "Failed to approve quotation."
@@ -98,7 +84,11 @@ class QuotationsController < ApplicationController
   end
 
   def pending
+    pdf_path = @quotation.pdf_path
+
     if @quotation.pending!
+      generate_pdf(@quotation)
+      send_file pdf_path, type: 'application/pdf', disposition: 'inline'
       flash[:success] = "Quotation pending successfully!"
     else
       flash[:error] = "Failed to pending quotation."

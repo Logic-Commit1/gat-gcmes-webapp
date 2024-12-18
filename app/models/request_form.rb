@@ -1,7 +1,7 @@
 class RequestForm < ApplicationRecord
-  acts_as_paranoid
+  # acts_as_paranoid
   
-  belongs_to :canvass, optional: true
+  belongs_to :canvass
   belongs_to :quotation
   belongs_to :company
   belongs_to :project
@@ -14,10 +14,13 @@ class RequestForm < ApplicationRecord
   accepts_nested_attributes_for :products, allow_destroy: true, reject_if: :all_blank
 
   enum :request_type, ['Allowance', 'Order']
+  enum :status, [ :pending, :approved, :rejected ]
 
   before_save :compute_totals_request_form
   before_save :set_sequence_id
   before_save :set_uid
+
+  # validate :quotation_presence_if_order
 
   def compute_totals_request_form
     if products.present?
@@ -33,6 +36,15 @@ class RequestForm < ApplicationRecord
     self.uid = "RFN-#{form_type}F-#{self.sequence_id.to_s.rjust(6, '0')}"
   end
 
+  def pdf_path
+    Rails.root.join('tmp/request_forms', "#{uid}.pdf")
+  end
+
+  def save_pdf(pdf_content)
+    FileUtils.mkdir_p(File.dirname(pdf_path))
+    File.open(pdf_path, 'wb') { |file| file.write(pdf_content) }
+  end
+
   private
   def set_sequence_id
     sequence_record = RequestFormSequence.find_or_create_by(request_type: request_type)
@@ -46,6 +58,12 @@ class RequestForm < ApplicationRecord
       self.total = particulars.sum { |product| product.allowance }
     else
       p 'not valid'
+    end
+  end
+
+  def quotation_presence_if_order
+    if request_type == "Order" && quotation.blank?
+      errors.add(:quotation, "must be present for Order request type")
     end
   end
 end

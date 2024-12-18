@@ -31,9 +31,8 @@ export default class extends Controller {
 
   populateClientSelect() {
     const selectedCompanyId = this.element.querySelector(
-      'input[name="quotation[company_id]"]:checked'
+      "#company-field input:checked"
     ).value
-
     this.fetchAndUpdateOptions(
       { target: { value: selectedCompanyId } },
       "/clients",
@@ -52,6 +51,7 @@ export default class extends Controller {
     this.selectCompanyForProjects(event)
     this.selectCompanyForCanvasses(event)
     this.selectCompanyForQuotations(event)
+    this.showHiddenDivs()
   }
 
   selectCompanyForSuppliers(event) {
@@ -164,5 +164,21 @@ export default class extends Controller {
     hiddenDivs.forEach((div) => {
       div.classList.remove("hidden")
     })
+  }
+
+  getDynamicTarget() {
+    const targets = [
+      this.supplierSelectTarget,
+      this.requestFormSelectTarget,
+      this.projectSelectTarget,
+      this.canvassSelectTarget,
+      this.quotationSelectTarget,
+    ]
+
+    function hasValue(target) {
+      return target && target.value.trim() !== ""
+    }
+
+    return targets.find(hasValue)
   }
 }

@@ -1,5 +1,7 @@
 class RequestFormsController < ApplicationController
-  before_action :set_request_form, only: %i[ show edit update approve pending void ]
+  layout 'pdf', only: :pdf_view
+
+  before_action :set_request_form, only: %i[ show edit update approve pending void pdf_view ]
 
   # GET /request_forms or /request_forms.json
   def index
@@ -8,6 +10,17 @@ class RequestFormsController < ApplicationController
 
   # GET /request_forms/1 or /request_forms/1.json
   def show
+  end
+
+  def pdf_view
+    pdf_path = @request_form.pdf_path
+  
+    if File.exist?(pdf_path)
+      send_file pdf_path, type: 'application/pdf', disposition: 'inline'
+    else
+      generate_pdf(@request_form)
+      send_file pdf_path, type: 'application/pdf', disposition: 'inline'
+    end
   end
 
   # GET /request_forms/new
@@ -109,6 +122,21 @@ class RequestFormsController < ApplicationController
   end
 
   private
+    def generate_pdf(request_form)
+      html = render_to_string(
+        template: 'request_forms/pdf_view',
+        layout: 'pdf',
+        locals: { request_form: request_form }
+      )
+      
+      # Use absolute URL for FontAwesome CSS
+      fontawesome_css_url = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" # Update to the correct version if necessary
+      application_css_url = view_context.asset_url('application.css') # Full URL for production
+
+      # Include both CSS files
+      pdf = Grover.new(html, style_tag_options: [{ url: application_css_url }, { url: fontawesome_css_url }]).to_pdf
+      request_form.save_pdf(pdf)
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_request_form
       @request_form = RequestForm.find(params[:id])

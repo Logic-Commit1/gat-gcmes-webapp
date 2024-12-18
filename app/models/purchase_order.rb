@@ -1,5 +1,5 @@
 class PurchaseOrder < ApplicationRecord
-  acts_as_paranoid
+  # acts_as_paranoid
   
   belongs_to :company
   belongs_to :supplier

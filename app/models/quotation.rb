@@ -1,11 +1,11 @@
 class Quotation < ApplicationRecord
   # include Rails.application.routes.url_helpers
-  acts_as_paranoid
+  # acts_as_paranoid
 
   belongs_to :client
   belongs_to :company
-  belongs_to :project, optional: true
   
+  has_many :projects
   has_many :products, dependent: :destroy, inverse_of: :quotation
   has_many :request_forms
   accepts_nested_attributes_for :products, allow_destroy: true, reject_if: :all_blank
@@ -53,6 +53,7 @@ class Quotation < ApplicationRecord
   def compute_value_added_tax
     self.vat = self.sub_total * 0.12
   end
+  
   
   def compute_total_amount
     self.total = self.sub_total + self.vat

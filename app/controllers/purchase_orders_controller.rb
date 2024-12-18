@@ -1,5 +1,5 @@
 class PurchaseOrdersController < ApplicationController
-  before_action :set_purchase_order, only: %i[ show edit update destroy approve pending void ]
+  before_action :set_purchase_order, only: %i[ show edit update approve pending void ]
 
   # GET /purchase_orders or /purchase_orders.json
   def index

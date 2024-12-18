@@ -1,5 +1,5 @@
 class Canvass < ApplicationRecord
-  acts_as_paranoid
+  # acts_as_paranoid
 
   belongs_to :company
   has_many :products, dependent: :destroy, inverse_of: :canvass
@@ -10,6 +10,7 @@ class Canvass < ApplicationRecord
 
   before_save :set_uid
   before_save :set_suppliers
+  before_destroy :delete_pdf
 
   def set_uid 
     return if self.uid.present?
@@ -53,4 +54,8 @@ class Canvass < ApplicationRecord
   end
 
   private
+
+  def delete_pdf
+    File.delete(pdf_path) if File.exist?(pdf_path)
+  end
 end

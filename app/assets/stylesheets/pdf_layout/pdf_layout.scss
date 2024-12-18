@@ -120,7 +120,13 @@
     }
   }
 
-  #signatures-container tbody tr td {
-    height: 90px;
+  #signatures-container {
+    thead tr th {
+      text-align: center;
+    }
+    tbody tr td {
+      height: 70px;
+      text-align: center;
+    }
   }
 }

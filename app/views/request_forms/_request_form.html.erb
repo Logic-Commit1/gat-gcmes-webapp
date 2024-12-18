@@ -1,16 +1,4 @@
-<div id="<%= dom_id request_form %>">
-  <p>
-    <strong>Uid:</strong>
-    <%= request_form.uid %>
-  </p>
-  <p>
-    <strong>Type:</strong>
-    <%= request_form.request_type %>
-  </p>
-  <% if request_form.Allowance? %>
-    <%= render 'allowance_view', request_form: request_form%>
-  <% elsif request_form.Order? %>
-    <%= render 'order_view', request_form: request_form%>
-  <% else %>
-  <% end %>
+<div class="page document-page" id="<%= dom_id request_form %>">
+  <p style="color: green"><%= notice %></p>
+  <%= render 'pages/show', document: @request_form %>
 </div>

@@ -12,7 +12,7 @@
       </ul>
     </div>
   <% end %>
-  <div data-controller="company-select">
+  <div data-controller="company-select" data-edit-mode="<%= request_form.persisted? %>">
     <%= turbo_frame_tag "request_form_types", data: {controller: 'navigate'} do %>
       <%= form.label :request_type %>
       <div class="flex items-center ">
@@ -28,6 +28,8 @@
             <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForProjectsCanvassesQuotations" } %> <%= company.code %>
           <% end %>
         </div>
+      </div>
+      <div class="<%= 'hidden' if @request_form.new_record? %>">
         <% if @request_form.Allowance? %>
           <%= render 'allowance_form', form: form %>
         <% elsif @request_form.Order? %>
@@ -51,9 +53,9 @@
           </div>
         </div>
       <%end %>
-    </div>
-    <div style="display: <%= @request_form.request_type? ? 'block' : 'none' %>">
-      <%= form.submit %>
+      <div>
+        <%= form.submit %>
+      </div>
     </div>
   </div>
 <% end %>
