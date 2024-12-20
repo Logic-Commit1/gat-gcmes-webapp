@@ -5,7 +5,7 @@
 }) do |form| %>
     <% if quotation.errors.any? %>
       <div style="color: red">
-        <h2><%= pluralize(quotation.errors.count, "error") %> prohibited this quotation from being saved:</h2>
+        <h5><%= pluralize(quotation.errors.count, "error") %> prohibited this quotation from being saved:</h5>
         <ul>
           <% quotation.errors.each do |error| %>
             <li><%= error.full_message %></li>
@@ -125,7 +125,7 @@
           <%= form.submit %>
         </div>
         <div class="text-center">
-          <%= link_to 'Cancel', action_name == 'new' ? quotations_path : quotation_path(@quotation) %>
+          <%= link_to 'Cancel', quotation.persisted? ? quotation_path(quotation) : quotations_path %>
         </div>
       </div>
     </div>

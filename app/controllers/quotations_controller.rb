@@ -44,7 +44,7 @@ class QuotationsController < ApplicationController
       generate_pdf(@quotation)
       redirect_to @quotation
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

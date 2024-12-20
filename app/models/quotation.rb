@@ -7,9 +7,10 @@ class Quotation < ApplicationRecord
   has_many :request_forms
   accepts_nested_attributes_for :products, allow_destroy: true, reject_if: :all_blank
 
-  validates :company, presence: true
-  validates :client, presence: true
-  validates :products, presence: true
+  # validates :company, presence: true
+  # validates :client, presence: true
+  # validate :must_have_at_least_one_product
+
 
   enum :payment, [ "50% downpayment", "30 days", "Paid" ]
   enum :status, [ :pending, :approved, :rejected ]
@@ -64,5 +65,11 @@ class Quotation < ApplicationRecord
   
   def compute_total_amount
     self.total = self.sub_total - self.discount + self.vat 
+  end
+
+  def must_have_at_least_one_product
+    if products.reject(&:marked_for_destruction?).empty?
+      errors.add(:base, "At least one product item must be added")
+    end
   end
 end
