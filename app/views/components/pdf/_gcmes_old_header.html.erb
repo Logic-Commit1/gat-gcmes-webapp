@@ -1,0 +1,12 @@
+<div class="old-header flex space-around items-center">
+  <div class="logo">
+    <%= image_tag "#{request.base_url}/assets/gcmes-logo.png", style: "width: 100px; height: 50px;" %>
+  </div>
+  <div class="company-info">
+    <p id="company-name"><%= @canvass.company.name.upcase %></p>
+    <p id="company-address">169 M.H. DEL PILAR STREET, TINAJEROS, MALABON CITY</p>
+    <p id="company-proprietor">GENO D. BAUTISTA</p>
+    <p id="company-contact-number"><%= @canvass.company.contact_numbers.join(' , ') %></p>
+    <p id="company-email"><%= @canvass.company.emails.join(' , ') %></p>
+  </div>
+</div>

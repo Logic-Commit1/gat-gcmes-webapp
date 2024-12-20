@@ -1,20 +1,14 @@
 <div class="pdf-container">
   <header>
-    <div class="old-header">
-      <!--
-      <div class="logo">
-        <%= image_tag "#{request.base_url}/assets/gat-logo.png", style: "width: 100px; height: 50px;" %>
-      </div>
-    -->
-      <p id="company-name"><%= @canvass.company.name.upcase %></p>
-      <p id="company-address">169 M.H. DEL PILAR STREET, TINAJEROS, MALABON CITY</p>
-      <p id="company-proprietor">GENO D. BAUTISTA</p>
-      <p id="company-contact-number"><%= @canvass.company.contact_numbers.join(' , ') %></p>
-      <p id="company-email"><%= @canvass.company.emails.join(' , ') %></p>
-    </div>
+    <% if @canvass.company.gat? %>
+      <%= render 'components/pdf/gat_old_header' %>
+    <% end %>
+    <% if @canvass.company.gcmes? %>
+      <%= render 'components/pdf/gcmes_old_header' %>
+    <% end %>
   </header>
   <p class="description"><strong>Product Description:</strong> <%= @canvass.description %></p>
-  <p class="quantity-unit"><strong>Quantity & Unit:</strong> <%= @canvass.quantity %> <%= @canvass.unit %></p>
+  <p class="quantity-unit"><strong>Quantity:</strong> <%= @canvass.quantity %> <%= @canvass.unit %></p>
   <% @canvass.suppliers.each do |product_info| %>
     <% product_info.each do |description, suppliers| %>
       <table class="canvass-table" border="1" style="width: 100%; border-collapse: collapse;">

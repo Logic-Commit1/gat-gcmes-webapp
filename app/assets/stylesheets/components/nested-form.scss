@@ -4,6 +4,8 @@
     border-radius: 0px;
   }
 }
+
+// Quotation Product Table
 .quotation-product-table {
   font-size: 14px;
   width: 100%;
@@ -24,7 +26,6 @@
   }
 
   td {
-    //   padding: 10px;
     vertical-align: top;
     border: 1px solid #ccc;
     label {
@@ -38,6 +39,70 @@
       padding: 8px;
       box-sizing: border-box;
       border: none;
+    }
+  }
+
+  #spec-title {
+    display: grid;
+    grid-template-columns: 0.4fr 0.4fr 1fr;
+    align-items: flex-end;
+    gap: 10px;
+  }
+
+  .nested-spec-form {
+    display: grid;
+    grid-template-columns: 0.4fr 0.4fr 1fr;
+    align-items: center;
+    column-gap: 10px;
+
+    input[type="text"] {
+      //   max-width: 350px;
+      border: 1px solid #ccc;
+    }
+  }
+}
+
+// Canvass Product Table
+.canvass-product-table {
+  font-size: 14px;
+  width: 100%;
+  border-collapse: collapse;
+  thead {
+    #table-header {
+      background-color: #f9f9fb;
+      font-size: 12px;
+    }
+    th {
+      border: 1px solid #ccc;
+      padding: 10px;
+      font-weight: 500;
+      &:nth-child(n + 3):nth-child(-n + 6) {
+        text-align: right;
+      }
+    }
+  }
+
+  td {
+    vertical-align: top;
+    border: 1px solid #ccc;
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="file"],
+    select {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      border: none;
+    }
+    .select-container {
+      margin: 0;
+      select {
+        border-radius: 0;
+      }
     }
   }
 
