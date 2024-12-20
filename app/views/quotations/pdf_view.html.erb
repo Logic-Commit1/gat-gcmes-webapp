@@ -24,7 +24,7 @@
     </thead>
     <tbody>
       <tr>
-        <td style="width: 15%;">Company Name</td>
+        <td style="width: 20%;">Company Name</td>
         <td><%= @quotation.client.name %></td>
       </tr>
       <tr>
@@ -77,15 +77,15 @@
           <td><%= spec.value&.capitalize %></td>
         </tr>
       <% end %>
-      <tr>
-        <td></td>
-        <td style="text-align: center;" colspan="2">
-          <% if p.image.attached? %>
+      <% if p.image.attached? %>
+        <tr>
+          <td></td>
+          <td style="text-align: center;" colspan="2">
             <% image_data = p.image.download %>
             <%= image_tag("data:image/png;base64,#{Base64.strict_encode64(image_data)}", style: "width: 100px; height: 100px;") %>
-          <% end %>
-        </td>
-      </tr>
+          </td>
+        </tr>
+      <% end %>
       <tr>
         <td colspan="6"></td>
       </tr>
@@ -98,16 +98,16 @@
     <td><strong>SUB TOTAL</strong></td>
     <td><strong>PHP <%= number_with_precision(@quotation.sub_total, precision: 2, delimiter: ',') %></strong></td>
   </tr>
-  <tr>
-    <td><strong>12% VAT</strong></td>
-    <td><strong><%= number_with_precision(@quotation.vat, precision: 2, delimiter: ',') %></strong></td>
-  </tr>
   <% if @quotation.discount > 0 %>
     <tr>
       <td><strong>DISCOUNT</strong></td>
       <td><strong>(<%= number_with_precision(@quotation.discount, precision: 2, delimiter: ',') %>)</strong></td>
     </tr>
   <% end %>
+  <tr>
+    <td><strong>12% VAT</strong></td>
+    <td><strong><%= number_with_precision(@quotation.vat, precision: 2, delimiter: ',') %></strong></td>
+  </tr>
   <tr id="total-row">
     <td><strong>TOTAL</strong></td>
     <td><strong>PHP <%= number_with_precision(@quotation.total, precision: 2, delimiter: ',') %></strong></td>
@@ -124,11 +124,11 @@
     <div><strong>Warranty</strong></div>
     <div><%= @quotation.warranty %></div>
     <div><strong>Payment</strong></div>
-    <div><%#= @quotation.payment %>30 days</div>
+    <div><%= @quotation.payment %></div>
   </div>
 </div>
 <br>
-<%# <p class="align-center">For further information, please contact us</p> %>
+<div class="align-center">Note: This document is not valid without manager’s signature</div>
 <table id="signatures-table">
   <thead>
     <tr>

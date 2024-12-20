@@ -24,6 +24,7 @@ class Quotation < ApplicationRecord
   def compute_totals_quotation
     products.each { |product| product.compute_total_amount }
     compute_sub_total
+    compute_discount_amount
     compute_value_added_tax
     compute_total_amount
   end
@@ -51,12 +52,17 @@ class Quotation < ApplicationRecord
     self.sub_total = products.sum { |product| product.total }
   end
 
+  def compute_discount_amount
+    return if self.discount_rate.blank?
+    self.discount = self.sub_total * (self.discount_rate / 100)
+  end
+
   def compute_value_added_tax
-    self.vat = self.sub_total * 0.12
+    self.vat = (self.sub_total - self.discount) * 0.12
   end
   
   
   def compute_total_amount
-    self.total = self.sub_total + self.vat
+    self.total = self.sub_total - self.discount + self.vat 
   end
 end

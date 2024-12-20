@@ -4,9 +4,9 @@
       <tr>
         <td style="width: 30%;"><%= f.text_field :name %></td>
         <td style="width: 15%;"><%= f.text_field :brand %></td>
-        <td style="width: 10%;"><%= f.number_field :quantity, style: "text-align: right", placeholder: "0.00" %></td>
+        <td style="width: 10%;"><%= f.number_field :quantity, style: "text-align: right", placeholder: "0.00", data: { action: "input->total-calculator#calculate" } %></td>
         <td style="width: 10%;"><%= f.text_field :unit, style: "text-align: right", placeholder: "Unit" %></td>
-        <td style="width: 15%;"><%= f.text_field :price, value: f.object.price != 0.0 ? f.object.price : nil, style: "text-align: right", placeholder: "PHP 0.00" %></td>
+        <td style="width: 15%;"><%= f.text_field :price, value: f.object.price != 0.0 ? f.object.price : nil, style: "text-align: right", placeholder: "PHP 0.00", data: { action: "input->total-calculator#calculate" } %></td>
         <td style="width: 15%;"><%= f.file_field :image %></td>
         <td style="width: 10%; text-align: center; vertical-align: middle;">
           <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#remove" } %>
@@ -37,12 +37,6 @@
           <div data-nested-form-target="spec-target"></div>
         </td>
       </tr>
-      <!--
-      <tr>
-        <td><%= f.label :discount, "Discount", style: "display: block" %></td>
-        <td><%= f.text_field :discount, value: f.object.discount != 0.0 ? f.object.discount : nil %></td>
-      </tr>
-      -->
     </tbody>
   </table>
   <template data-nested-form-target="template">

@@ -50,7 +50,7 @@
           <%= form.text_field :subject %>
         </div>
         <div class="separator"></div>
-        <div id="item-table-section">
+        <div id="item-table-section" data-controller="total-calculator">
           <p class="semibold" style="margin-bottom: 10px;">Item Table</p>
           <table class="quotation-product-table">
             <thead>
@@ -75,6 +75,30 @@
           <% end %>
           <div data-nested-form-target="target"></div>
           <%= link_to '<i class="fas fa-plus"></i> Add Item'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#add" } %>
+          <div class="total-calculator">
+            <div class="totals-section">
+              <div class="total-row">
+                <span class="total-label">Sub Total:</span>
+                <span data-total-calculator-target="subTotal">PHP 0.00</span>
+              </div>
+              <div class="total-row">
+                <div>
+                  <span class="total-label">Discount:</span>
+                  <%= form.text_field :discount_rate, value: form.object.discount_rate != 0.0 ? form.object.discount_rate : nil, data: { action: "input->total-calculator#calculate" } %>
+                  %
+                </div>
+                <span data-total-calculator-target="discount">PHP 0.00</span>
+              </div>
+              <div class="total-row">
+                <span class="total-label">VAT (12%):</span>
+                <span data-total-calculator-target="vat">PHP 0.00</span>
+              </div>
+              <div class="total-row total-final">
+                <span class="total-label">Total Amount:</span>
+                <span data-total-calculator-target="total">PHP 0.00</span>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="separator"></div>
         <div id="terms-and-conditions-section">

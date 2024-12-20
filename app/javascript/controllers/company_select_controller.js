@@ -12,6 +12,7 @@ export default class extends Controller {
   ]
 
   connect() {
+    console.log("connect company select controller")
     // Check if the form is in edit mode
     if (this.element.dataset.editMode === "true") {
       this.populateClientSelect()
