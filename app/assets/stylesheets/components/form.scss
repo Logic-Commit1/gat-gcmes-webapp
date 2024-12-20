@@ -2,8 +2,17 @@ form div {
   margin-bottom: 10px;
 }
 
-form label {
-  display: block;
+// form label {
+//   display: block;
+// }
+
+form input[type="text"],
+form input[type="number"],
+form textarea,
+form select {
+  &:hover {
+    box-shadow: 0 0 2px var(--button-color);
+  }
 }
 
 form input[type="text"],
@@ -12,10 +21,20 @@ form input[type="submit"],
 form textarea,
 form select {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 0.75rem;
   border: 1px solid #ccc;
   border-radius: 5px;
-  max-width: 500px;
+  max-width: 400px;
+}
+
+form input[type="file"] {
+  padding: 0;
+}
+
+form input[type="file"] {
+  width: 100%;
+  font-size: 0.7rem;
+  border: 1px solid #ccc;
 }
 
 form input[type="file"] {
@@ -27,8 +46,8 @@ form select {
 }
 
 form input[type="submit"] {
-  background-color: var(--primary-color);
-  color: var(--black-color);
+  background-color: var(--button-color);
+  color: white;
   border: none;
   font-size: 0.875rem;
   font-weight: 500;
@@ -42,13 +61,14 @@ form a {
 }
 
 form input[type="submit"]:hover {
-  background-color: #fcd10f;
+  // background-color: #0e69cc;
 }
 
 form .select-container {
   position: relative;
   // width: 500px;
   width: auto;
+  max-width: 400px;
 }
 
 .svg-inline--fa.fa-w-10 {
@@ -62,6 +82,36 @@ form .field {
   margin-bottom: 2rem;
 }
 
-form #company-field input[type="radio"]:nth-child(3) {
-  margin-left: 1rem;
+form #company-field {
+  input[type="radio"]:nth-of-type(2) {
+    margin-left: 1rem;
+  }
+}
+
+.form-container {
+  display: grid;
+  gap: 1rem;
+
+  .field {
+    display: grid;
+    grid-template-columns: 0.5fr 2fr;
+    // gap: 1rem;
+  }
+
+  .form-container .select-container {
+    position: relative;
+  }
+
+  .select-status-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .separator {
+    border-top: 1px solid #efefef;
+    margin: 1rem 0;
+  }
 }

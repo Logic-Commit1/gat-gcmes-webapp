@@ -6,7 +6,7 @@ class QuotationsController < ApplicationController
 
   # GET /quotations or /quotations.json
   def index
-    @quotations = Quotation.all
+    @quotations = Quotation.order(created_at: :desc)
   end
 
   # GET /quotations/1 or /quotations/1.json

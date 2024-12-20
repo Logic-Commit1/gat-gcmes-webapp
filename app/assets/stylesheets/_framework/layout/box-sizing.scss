@@ -1,0 +1,11 @@
+.border-box {
+  box-sizing: border-box;
+}
+
+.border-box > div {
+  padding: 12px 0;
+}
+
+.inline-box {
+  display: inline-block;
+}

@@ -2,38 +2,58 @@
   display: grid;
   grid-template-columns: 1fr;
   align-items: flex-end;
+
   &.with-2-columns {
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 12px;
+
+    &.field {
+      max-width: 600px;
+    }
   }
+
   &.with-3-columns {
     grid-template-columns: 1fr 1fr 1fr;
-    // grid-template-columns: 1fr 1.5fr 0.5fr;
     grid-column-gap: 12px;
+
+    .grid-item {
+      display: contents; // Allows the grid to treat children as direct children of the grid
+    }
+
+    .label {
+      text-align: right; // Align labels to the right
+      margin-right: 10px; // Space between label and input
+    }
   }
+
   &.with-4-columns {
-    // grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-columns: 2fr 1fr 1fr 1fr;
     grid-column-gap: 12px;
   }
+
   &.with-5-columns {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-column-gap: 12px;
   }
+
   &.with-6-columns {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-column-gap: 12px;
   }
+
   &.with-7-columns {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-column-gap: 12px;
   }
+
   div.field {
     margin: 16px 0 0;
   }
+
   &.col-span-2 {
     grid-column: span 2;
   }
+
   &.gtc-2-1-1 {
     grid-template-columns: 1.5fr 1fr 1fr;
   }
@@ -48,4 +68,8 @@
 
 .baseline {
   align-items: baseline;
+}
+
+.separator {
+  border-top: 1px solid #f3f3f3;
 }

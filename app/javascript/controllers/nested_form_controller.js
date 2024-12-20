@@ -8,6 +8,8 @@ export default class extends NestedForm {
   addSpec(event) {
     event.preventDefault()
 
+    this.showHiddenSpecTitles(event)
+
     // Find the closest nested form wrapper for the current product
     const targetWrapper = event.currentTarget.closest(".nested-form-wrapper")
 
@@ -29,7 +31,7 @@ export default class extends NestedForm {
 
     // Insert the content into the target within the product's scope
     const target = targetWrapper.querySelector(
-      '[data-nested-form-target="target"]'
+      '[data-nested-form-target="spec-target"]'
     )
     if (target) {
       target.insertAdjacentHTML("beforeend", content)
@@ -55,5 +57,16 @@ export default class extends NestedForm {
 
     // Hide the specification form
     specWrapper.style.display = "none"
+  }
+
+  showHiddenSpecTitles(event) {
+    // Find the closest nested form wrapper for the current button
+    const targetWrapper = event.currentTarget.closest(".nested-form-wrapper")
+
+    // Locate the hidden spec title within the same wrapper
+    const hiddenSpecTitle = targetWrapper.querySelector(".hidden#spec-title")
+    if (hiddenSpecTitle) {
+      hiddenSpecTitle.classList.remove("hidden")
+    }
   }
 }

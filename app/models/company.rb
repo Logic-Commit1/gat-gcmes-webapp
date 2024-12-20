@@ -5,4 +5,12 @@ class Company < ApplicationRecord
   has_many :projects
   has_many :request_forms
   has_many :canvasses
+
+  def gat?
+    code.downcase == 'gat'
+  end
+
+  def gcmes?
+    code.downcase == 'gcmes'
+  end
 end

@@ -2,12 +2,16 @@
   <!-- Header -->
   <header id="brand">
     <%#= link_to moderators_dashboard_path, class: 'no-underline' do %>
-      <!-- Logo -->
-      <img class="bloop" src="/assets/gcmes-logo.png" alt="logo"/>
+      <!-- Logo 
+      <div class="logos">
+        <img class="" src="/assets/gat-logo.png" alt="logo"/>
+        <img class="" src="/assets/gcmes-logo.png" alt="logo"/>
+      </div>
+      -->
       <%# end %>
     </header>
     <!-- Main: Navigation -->
-    <main id="navigation">
+    <nav id="navigation">
       <!-- Link to Dashboard 
       <%= link_to root_path, class: 'in-text no-underline' do %>
         <p class="nav-btn <%= 'active' if current_page?(root_path) %>">
@@ -26,7 +30,7 @@
       <!-- Link to Canvasses -->
       <%= link_to canvasses_path, class: 'in-text no-underline' do %>
         <p class="nav-btn <%= 'active' if current_page?(canvasses_path) %>">
-          <span class="icon"><i class="fa-solid fa-palette"></i></span>
+          <span class="icon"><i class="fa-solid fa-file-contract"></i></span>
           Canvasses
         </p>
       <% end %>
@@ -40,7 +44,7 @@
       <!-- Link to Purchase Orders -->
       <%= link_to purchase_orders_path, class: 'in-text no-underline' do %>
         <p class="nav-btn <%= 'active' if current_page?(purchase_orders_path) %>">
-          <span class="icon"><i class="fa-solid fa-calculator"></i></span>
+          <span class="icon"><i class="fa-solid fa-file-invoice"></i></span>
           Purchase Orders
         </p>
       <% end %>
@@ -54,7 +58,7 @@
       <!-- Link to Employees -->
       <%= link_to employees_path, class: 'in-text no-underline' do %>
         <p class="nav-btn <%= 'active' if current_page?(employees_path) %>">
-          <span class="icon"><i class="fa-solid fa-users"></i></span>
+          <span class="icon"><i class="fa-solid fa-user-group"></i></span>
           Employees
         </p>
       <% end %>
@@ -72,7 +76,7 @@
           Suppliers
         </p>
       <% end %>
-    </main>
+    </nav>
     <!-- Footer -->
     <%# <footer id="actions"> %>
     <%#= link_to "<i class='fal fa-sign-out'></i> Sign Out".html_safe, moderators_signout_path, id: 'signout-btn', class: 'sub-cta' %>

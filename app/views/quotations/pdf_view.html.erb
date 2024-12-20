@@ -1,29 +1,22 @@
 <div class="pdf-container">
   <header class="flex space-between items-center">
-    <div class="contact-card flex">
-      <div class="contact-details">
-        <p class="flex items-center"><i class="fa-solid fa-location-dot" style="margin-right: 8px;"></i><span><%= @quotation.company.address %></span></p>
-        <br>
-        <p class="flex items-center"><i class="fa-solid fa-phone" style="margin-right: 8px;"></i><span>(02) <%= @quotation.company.contact_numbers.join(' | ') %></span></p>
-        <br>
-        <p class="flex items-center"><i class="fa-solid fa-envelope" style="margin-right: 8px;"></i><span><%= @quotation.company.emails.join(', ') %></span></p>
-      </div>
-      <div class="logo">
-        <%= image_tag "#{request.base_url}/assets/gat-logo.png" %>
-        <p>GOLDEN ARROW TRADING</p>
-      </div>
-    </div>
+    <% if @quotation.company.gat? %>
+      <%= render 'components/pdf/gat_contact_card' %>
+    <% end %>
+    <% if @quotation.company.gcmes? %>
+      <%= render 'components/pdf/gcmes_contact_card' %>
+    <% end %>
     <div class="align-right">
-      <h2>Quotation</h2>
-      <h6>
+      <h1>Quotation</h1>
+      <h5 class="document-uid">
         <%= @quotation.uid %>
-      </h6>
+      </h5>
     </div>
   </header>
   <p class="align-right">
     Date Requested: <%= @quotation.created_at.strftime("%B %d, %Y") %>
   </p>
-  <table id="customer-container">
+  <table id="customer-table">
     <thead>
       <tr>
         <th class="text-center" colspan="2">CUSTOMER DETAILS</th>
@@ -31,7 +24,7 @@
     </thead>
     <tbody>
       <tr>
-        <td>Company Name</td>
+        <td style="width: 15%;">Company Name</td>
         <td><%= @quotation.client.name %></td>
       </tr>
       <tr>
@@ -40,81 +33,67 @@
       </tr>
       <tr>
         <td>Attention</td>
-        <td><%= @quotation.attention %></td>
+        <td><%= @quotation.attention&.capitalize %></td>
       </tr>
       <tr>
         <td>Vessel</td>
-        <td><%= @quotation.vessel %></td>
+        <td><%= @quotation.vessel&.capitalize %></td>
       </tr>
     </tbody>
   </table>
   <strong>Subject:</strong>
   <%= @quotation.subject %>
 </p>
-<table id="products-container">
+<table id="products-table">
   <thead>
     <tr>
       <th>SN</th>
-      <th>QTY</th>
-      <th>U/M</th>
       <th colspan="2">DESCRIPTION</th>
-      <th>UNIT PRICE</th>
-      <th>TOTAL AMOUNT</th>
+      <th class="align-right">QUANTITY</th>
+      <th class="align-right">U/M</th>
+      <th class="align-right">UNIT PRICE</th>
+      <th class="align-right">TOTAL AMOUNT</th>
     </tr>
   </thead>
   <tbody>
     <% @quotation.products.each_with_index do |p, index| %>
       <tr>
-        <td><%= index + 1 %></td>
-        <td><%= p.quantity %></td>
-        <td><%= p.unit %></td>
+        <td style="border: 1px solid black;"><%= index + 1 %></td>
         <td colspan="2"><%= p.name %></td>
-        <td>PHP <%= number_with_precision(p.price, precision: 2, delimiter: ',') %></td>
-        <td>PHP <%= number_with_precision(p.total, precision: 2, delimiter: ',') %></td>
+        <td class="align-right"><%= p.quantity %></td>
+        <td class="align-right"><%= p.unit %></td>
+        <td class="align-right">PHP <%= number_with_precision(p.price, precision: 2, delimiter: ',') %></td>
+        <td class="align-right">PHP <%= number_with_precision(p.total, precision: 2, delimiter: ',') %></td>
       </tr>
       <tr>
-        <td></td>
-        <td></td>
         <td></td>
         <td>BRAND</td>
-        <td>VESPA</td>
+        <td><%= p.brand %></td>
       </tr>
+      <% p.specs.each do |spec| %>
+        <tr>
+          <td></td>
+          <td><%= spec.name&.capitalize %></td>
+          <td><%= spec.value&.capitalize %></td>
+        </tr>
+      <% end %>
       <tr>
         <td></td>
-        <td></td>
-        <td></td>
-        <td>WORKING PRESSURE</td>
-        <td>12 kg/cm2</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>POWER RATED</td>
-        <td>7.5 HORSE POWER</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>AIR DISPLACEMENT</td>
-        <td>1,020 liters/min ( 1.02 m'/min)</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td colspan="2">
+        <td style="text-align: center;" colspan="2">
           <% if p.image.attached? %>
             <% image_data = p.image.download %>
             <%= image_tag("data:image/png;base64,#{Base64.strict_encode64(image_data)}", style: "width: 100px; height: 100px;") %>
           <% end %>
         </td>
       </tr>
-    <% end %>
-  </tbody>
+      <tr>
+        <td colspan="6"></td>
+      </tr>
+    </div>
+  <% end %>
+</tbody>
 </table>
-<table id="totals-container" style="background-color: #f0f0f0;">
+<table id="totals-table">
   <tr>
     <td><strong>SUB TOTAL</strong></td>
     <td><strong>PHP <%= number_with_precision(@quotation.sub_total, precision: 2, delimiter: ',') %></strong></td>
@@ -129,14 +108,11 @@
       <td><strong>(<%= number_with_precision(@quotation.discount, precision: 2, delimiter: ',') %>)</strong></td>
     </tr>
   <% end %>
-  <tr id="total-container">
+  <tr id="total-row">
     <td><strong>TOTAL</strong></td>
     <td><strong>PHP <%= number_with_precision(@quotation.total, precision: 2, delimiter: ',') %></strong></td>
   </tr>
 </table>
-<br>
-<br>
-<br>
 <br>
 <br>
 <br>
@@ -151,8 +127,9 @@
     <div><%#= @quotation.payment %>30 days</div>
   </div>
 </div>
+<br>
 <%# <p class="align-center">For further information, please contact us</p> %>
-<table id="signatures-container">
+<table id="signatures-table">
   <thead>
     <tr>
       <th>Conforme by</th>

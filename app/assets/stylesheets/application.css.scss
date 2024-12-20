@@ -30,10 +30,7 @@ span {
 
 p {
   margin: 0;
-}
-
-.container {
-  // max-width: var(--max-width);
+  font-size: 14px;
 }
 
 @font-face {
@@ -90,4 +87,10 @@ p {
   font-weight: 600;
   font-style: normal;
   font-display: swap;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

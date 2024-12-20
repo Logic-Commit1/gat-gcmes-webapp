@@ -21,15 +21,9 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
-    <div class="container">
-      <div class="row">
-        <div class="col-2 pt-4">
-          <%= render "components/sidebar" %>
-        </div>
-        <div class="col-10 pt-4" id="main">
-          <%= yield %>
-        </div>
-      </div>
-    </div>
+    <%= render "components/sidebar" %>
+    <main>
+      <%= yield %>
+    </main>
   </body>
 </html>

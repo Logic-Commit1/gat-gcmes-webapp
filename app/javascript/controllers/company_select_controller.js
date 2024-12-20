@@ -162,7 +162,9 @@ export default class extends Controller {
     const hiddenDivs = this.element.querySelectorAll(".hidden")
 
     hiddenDivs.forEach((div) => {
-      div.classList.remove("hidden")
+      if (!div.closest(".nested-form-wrapper")) {
+        div.classList.remove("hidden")
+      }
     })
   }
 

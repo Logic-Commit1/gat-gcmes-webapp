@@ -1,63 +1,83 @@
-// moderators/sidebar.scss
-// #moderators-sidebar {
-//   width: 274px;
-//   height: calc(100vh - 48px);
-//   padding: 24px;
-//   background: #ffffff;
-// }
-
-#moderators-sidebar #brand {
-  text-align: center;
-}
-
-#moderators-sidebar #brand img {
-  max-width: 100px;
-  border-radius: 12px;
-  background: #000a52;
-}
-
-#moderators-sidebar #navigation {
-  margin: 26px 0;
-}
-
-#moderators-sidebar #navigation p {
-  width: 100%;
-  margin: 0;
-  padding: 16px 0 16px 24px;
-  font-size: 10pt;
-  font-weight: 500;
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-
-#moderators-sidebar #navigation p.active {
-  background: #eeeeee;
-}
-
-#moderators-sidebar #navigation p span {
-  float: left;
-  margin-top: -6px;
-  margin-right: 16px;
-  font-size: 14pt;
-}
-
-#moderators-sidebar #actions {
+#moderators-sidebar {
+  width: 234px;
+  // height: calc(100vh - 48px);
+  height: 100%;
+  padding: 16px;
+  background-color: #eceff3;
   position: absolute;
-  left: 0;
-  bottom: 0;
-  width: unset;
-  padding: 24px;
-  text-align: left;
-}
+  border-right: 1px solid #e0e0e0;
 
-#moderators-sidebar #actions a {
-  width: fit-content;
-  margin: 0;
-  padding: 4px 6px;
-  font-weight: normal;
-  color: #000000;
-}
+  #brand {
+    text-align: center;
 
-#moderators-sidebar #actions a i {
-  margin-right: 5px;
+    .logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      background: #000a52;
+      max-width: 250px;
+      margin: 0 auto;
+      padding: 12px;
+      border-radius: 12px;
+    }
+
+    img {
+      max-width: 100px;
+    }
+  }
+
+  #navigation {
+    margin: 26px 0;
+
+    p {
+      color: #7a7a7a;
+      width: 100%;
+      margin: 0;
+      padding: 16px 0 16px 30px;
+      font-size: 10pt;
+      font-weight: 500;
+      border-top-right-radius: 12px;
+      border-bottom-right-radius: 12px;
+      // transition: background-color 0.3s ease;
+
+      &:hover {
+        // background-color: #eeeeee;
+        color: var(--black-color);
+      }
+
+      &.active {
+        font-weight: 700;
+        color: var(--secondary-color);
+      }
+
+      span {
+        float: left;
+        margin-top: -6px;
+        margin-right: 12px;
+        font-size: 14pt;
+      }
+    }
+  }
+
+  #actions {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: unset;
+    padding: 24px;
+    text-align: left;
+
+    a {
+      width: fit-content;
+      margin: 0;
+      padding: 4px 6px;
+      font-weight: normal;
+      color: #000000;
+
+      i {
+        margin-right: 5px;
+      }
+    }
+  }
 }

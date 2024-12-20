@@ -1,5 +1,8 @@
 .pdf-container {
   padding: 0 1rem;
+  p {
+    font-size: 10px;
+  }
   header {
     margin-bottom: 24px;
     .old-header {
@@ -12,14 +15,20 @@
         font-weight: bold;
       }
     }
+    .document-uid {
+      font-size: 12px;
+      font-weight: 500;
+    }
   }
   font-size: 10px;
   .contact-card {
     .contact-details {
       padding: 8px;
       background: linear-gradient(to right, #ffdb57, #fdae4e);
-      font-size: 8px;
       max-width: 260px;
+      p {
+        font-size: 8px;
+      }
     }
 
     .logo {
@@ -28,10 +37,16 @@
       text-align: center;
       width: 145px;
 
-      img {
+      img.gat-logo {
         margin-top: 0.8rem;
         width: 76px;
         height: 40px;
+      }
+
+      img.gcmes-logo {
+        margin-top: 0rem;
+        width: 120px;
+        height: 84px;
       }
 
       p {
@@ -63,29 +78,29 @@
   td {
     border: 1px solid black;
     padding: 8px;
-    text-align: left;
+    // text-align: left;
   }
 
-  #customer-container td:first-child {
+  #customer-table td:first-child {
     background-color: #fff8c2;
   }
 
-  #products-container {
+  #products-table {
     #product-image {
       max-width: 225px;
       max-height: 150px;
       text-align: center;
     }
-    tbody tr:nth-child(n + 2) td:nth-child(-n + 3) {
+    tbody td:first-child {
       border: none;
     }
-    // Center the product image
-    tbody tr:nth-last-child(1) td:nth-child(4) {
-      text-align: center;
+
+    .index-number {
+      border: 1px solid black;
     }
   }
 
-  #totals-container {
+  #totals-table {
     max-width: 200px;
     float: right;
     margin-bottom: 3rem;
@@ -120,7 +135,7 @@
     }
   }
 
-  #signatures-container {
+  #signatures-table {
     thead tr th {
       text-align: center;
     }

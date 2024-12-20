@@ -1,5 +1,5 @@
 .button {
-  background-color: var(--primary-color);
+  background-color: var(--button-color);
 }
 
 .button.white {
@@ -16,4 +16,12 @@
 
 #btn-pending {
   background-color: var(--warning-color);
+}
+
+.add-item-button {
+  color: var(--button-color);
+}
+
+.remove-item-button {
+  color: var(--danger-color);
 }
