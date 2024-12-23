@@ -81,7 +81,7 @@
           <tr>
             <td><%= link_to form.uid, request_form_path(form) %></td>
             <td><%= form.purchase_order&.uid %></td>
-            <td><%= form.quotation.client.code %></td>
+            <td><%#= form.quotation.client.code %></td>
             <td><%= number_to_currency(form.total, unit: "₱") %></td>
             <td><%= form.created_at.strftime("%B %d, %Y") %></td>
             <td><span class="status <%#= form.status %>"><%= form.approver %></span></td>

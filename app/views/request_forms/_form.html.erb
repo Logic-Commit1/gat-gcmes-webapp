@@ -1,61 +1,70 @@
-<%= form_with(model: request_form, data: {
+<div class="form-container">
+  <%= form_with(model: request_form, html: {autocomplete: 'off'}, data: {
   controller: "nested-form",
   nested_form_wrapper_selector_value: '.nested-form-wrapper'
 }) do |form| %>
-  <% if request_form.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(request_form.errors.count, "error") %> prohibited this request_form from being saved:</h2>
-      <ul>
-        <% request_form.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <div data-controller="company-select" data-edit-mode="<%= request_form.persisted? %>">
-    <%= turbo_frame_tag "request_form_types", data: {controller: 'navigate'} do %>
-      <%= form.label :request_type %>
-      <div class="flex items-center ">
-        <%= form.radio_button :request_type, "Allowance", data: { action: "change->navigate#to", url: new_request_form_path({request_form: {request_type: 'Allowance'}}) } %>
-        <%= form.label :request_type_allowance, "Allowance", style: "margin-left: 5px;" %>
-        <%= form.radio_button :request_type, "Order", style: "margin-left: 1rem;", data: { action: "change->navigate#to", url: new_request_form_path({request_form: {request_type: 'Order'}}) } %>
-        <%= form.label :request_type_order, "Order", style: "margin-left: 5px;" %>
-      </div>
-      <div style="display: <%= @request_form.request_type? ? 'block' : 'none' %>">
-        <div class="field" id="company-field">
-          <%= form.label :company, style: "display: block" %>
-          <% Company.all.each do |company| %>
-            <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForProjectsCanvassesQuotations" } %> <%= company.code %>
+    <% if request_form.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(request_form.errors.count, "error") %> prohibited this request_form from being saved:</h2>
+        <ul>
+          <% request_form.errors.each do |error| %>
+            <li><%= error.full_message %></li>
           <% end %>
-        </div>
+        </ul>
       </div>
-      <div class="<%= 'hidden' if @request_form.new_record? %>">
-        <% if @request_form.Allowance? %>
-          <%= render 'allowance_form', form: form %>
-        <% elsif @request_form.Order? %>
-          <%= render 'order_form', form: form %>
-        <% else %>
-        <% end %>
-        <div class="grid with-4-columns">
+    <% end %>
+    <div data-controller="company-select" data-edit-mode="<%= request_form.persisted? %>">
+      <%= turbo_frame_tag "request_form_types", data: {controller: 'navigate'} do %>
+        <div class="field ">
+          <%= form.label :request_type %>
           <div>
+            <%= form.radio_button :request_type, "Allowance", data: { action: "change->navigate#to", url: new_request_form_path({request_form: {request_type: 'Allowance'}}) } %>
+            <%= form.label :request_type_allowance, "Allowance", style: "margin-left: 5px;" %>
+            <%= form.radio_button :request_type, "Order", style: "margin-left: 1rem;", data: { action: "change->navigate#to", url: new_request_form_path({request_form: {request_type: 'Order'}}) } %>
+            <%= form.label :request_type_order, "Order", style: "margin-left: 5px;" %>
+          </div>
+        </div>
+        <div style="display: <%= @request_form.request_type? ? 'block' : 'none' %>">
+          <div class="field" id="company-field">
+            <%= form.label :company %>
+            <div>
+              <% Company.all.each do |company| %>
+                <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForProjectsCanvassesQuotations" } %> <%= company.code %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div style="display: <%= @request_form.Order? ? 'block' : 'none' %>" class="grid with-4-columns">
+          <div class="separator"></div>
+          <div class="semibold">Link Documents</div>
+          <div class="field">
             <%= form.label :canvass_id %>
             <div class="select-container">
               <%= form.collection_select :canvass_id, [], :id, :uid, { prompt: "Select Canvass"}, data: { company_select_target: "canvassSelect" } %>
               <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
             </div>
           </div>
-          <div>
-            <%= form.label :quotation_id, style: "display: block" %>
+          <div class="field">
+            <%= form.label :quotation_id %>
             <div class="select-container">
               <%= form.collection_select :quotation_id, [], :id, :uid, { prompt: "Select Quotation"}, data: { company_select_target: "quotationSelect" } %>
               <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
             </div>
           </div>
         </div>
-      <%end %>
-      <div>
-        <%= form.submit %>
+        <div class="separator"></div>
+        <div class="<%= 'hidden' if @request_form.new_record? %>">
+          <%# if @request_form.Allowance? %>
+          <%= render 'allowance_form', form: form %>
+          <%# elsif @request_form.Order? %>
+          <%#= render 'order_form', form: form %>
+          <%# else %>
+          <%# end %>
+        <%end %>
+        <div>
+          <%= form.submit %>
+        </div>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>

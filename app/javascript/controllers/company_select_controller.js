@@ -19,7 +19,7 @@ export default class extends Controller {
     }
   }
 
-  selectCompanyForClient(event) {
+  ForClient(event) {
     this.fetchAndUpdateOptions(
       event,
       "/clients",

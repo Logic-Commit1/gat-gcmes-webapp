@@ -1,17 +1,21 @@
 <div class="nested-form-wrapper" data-new-record="<%= f.object.new_record? %>">
-  <div class="grid with-3-columns">
-    <div>
-      <%= f.label :name, "Particular", style: "display: block" %>
-      <%= f.text_field :name %>
-    </div>
-    <div>
-      <%= f.label :allowance, "Estimated Request Allowance", style: "display: block" %>
-      <%= f.text_field :allowance %>
-    </div>
-    <%# <button type="button" data-action="nested-form#remove">Remove Particular</button> %>
-    <div>
-      <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "button", data: { action: "nested-form#remove" } %>
-      <%= f.hidden_field :_destroy %>
-    </div>
-  </div>
+  <table class="allowance-table">
+    <tbody>
+      <tr>
+        <td style="width: 30%;">
+          <%= f.text_field :name %>
+        </td>
+        <td style="width: 15%;">
+          <%= f.text_field :allowance, placeholder: "PHP 0.00", style: "text-align: right" %>
+        </td>
+        <td style="width: 15%;">
+          <%= f.text_field :remarks %>
+        </td>
+        <td style="width: 3%; text-align: center; vertical-align: middle;">
+          <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#remove" } %>
+          <%= f.hidden_field :_destroy %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

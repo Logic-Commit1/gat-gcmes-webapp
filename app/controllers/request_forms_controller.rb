@@ -13,14 +13,14 @@ class RequestFormsController < ApplicationController
   end
 
   def pdf_view
-    pdf_path = @request_form.pdf_path
+    # pdf_path = @request_form.pdf_path
   
-    if File.exist?(pdf_path)
-      send_file pdf_path, type: 'application/pdf', disposition: 'inline'
-    else
-      generate_pdf(@request_form)
-      send_file pdf_path, type: 'application/pdf', disposition: 'inline'
-    end
+    # if File.exist?(pdf_path)
+    #   send_file pdf_path, type: 'application/pdf', disposition: 'inline'
+    # else
+    #   generate_pdf(@request_form)
+    #   send_file pdf_path, type: 'application/pdf', disposition: 'inline'
+    # end
   end
 
   # GET /request_forms/new
@@ -149,7 +149,7 @@ class RequestFormsController < ApplicationController
         :remarks, :fuel_gauge, :easy_trip_balance, :sweep_balance,
         :requester, :checker, :procurer, :pre_approver, :approver,
         :canvass_id, :quotation_id, :company_id, :project_id,
-        particulars_attributes: [ :id, :name, :allowance, :quotation_id, :canvass_id, :request_form_id, :purchase_order_id, :_destroy ],
+        particulars_attributes: [ :id, :name, :allowance, :quotation_id, :canvass_id, :request_form_id, :purchase_order_id, :_destroy, :remarks ],
         products_attributes: [ :id, :name, :quantity, :unit, :price, :discount, :brand, :description, :specs, :terms, :remarks, :image, :quotation_id, :canvass_id, :request_form_id, :purchase_order_id, :_destroy ]
         )
       rescue

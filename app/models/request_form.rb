@@ -1,8 +1,8 @@
 class RequestForm < ApplicationRecord
   # acts_as_paranoid
   
-  belongs_to :canvass
-  belongs_to :quotation
+  belongs_to :canvass, optional: true
+  belongs_to :quotation, optional: true
   belongs_to :company
   belongs_to :project
   belongs_to :purchase_order, optional: true

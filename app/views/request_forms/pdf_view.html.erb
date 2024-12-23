@@ -1,8 +1,8 @@
 <div class="pdf-container">
-  <% if request_form.Allowance? %>
-    <%= render 'allowance_view', request_form: request_form%>
-  <% elsif request_form.Order? %>
-    <%= render 'order_view', request_form: request_form%>
+  <% if @request_form.Allowance? %>
+    <%= render 'allowance_view', request_form: @request_form%>
+  <% elsif @request_form.Order? %>
+    <%= render 'order_view', request_form: @request_form%>
   <% else %>
   <% end %>
 </div>

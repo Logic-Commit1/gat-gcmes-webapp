@@ -115,6 +115,15 @@ form #company-field {
     margin: 1rem 0;
   }
 
+  .travel-date-fields {
+    div {
+      margin: 0;
+    }
+    input[type="text"] {
+      max-width: 97%;
+    }
+  }
+
   .total-calculator {
     .totals-section {
       margin-bottom: 30px;

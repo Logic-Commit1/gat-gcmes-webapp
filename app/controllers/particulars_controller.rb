@@ -65,6 +65,6 @@ class ParticularsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def particular_params
-      params.require(:particular).permit(:name, :allowance, :request_form_id)
+      params.require(:particular).permit(:name, :allowance, :request_form_id, :remarks)
     end
 end
