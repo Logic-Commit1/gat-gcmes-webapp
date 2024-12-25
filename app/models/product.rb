@@ -15,7 +15,11 @@ class Product < ApplicationRecord
   UNITS_OF_MEASUREMENT = ['g', 'kg', 'pc', 'unit', 'ltr', 'ml'].freeze
 
   def compute_total_amount
-    self.total = self.price * self.quantity * (1 - self.discount)
+    if price && quantity && discount
+      self.total = price * quantity * (1 - discount)
+    else
+      self.total = 0
+    end
   end
 
 end

@@ -1,83 +1,86 @@
-<div>
-  <div class="field">
-    <%= form.label :project_id %>
-    <div class="select-container">
-      <%= form.collection_select :project_id, [], :id, :uid, { prompt: "Select Project"}, data: { company_select_target: "projectSelect" } %>
-      <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+<div class="allowance-form-container">
+  <div class="separator"></div>
+  <div class="allowance-section">
+    <p class="semibold" style="margin-bottom: 10px;">Allowance Table</p>
+    <table class="allowance-table">
+      <thead>
+        <tr id="table-header">
+          <th style="width: 30%;">PARTICULAR</th>
+          <th style="width: 15%;">AMOUNT</th>
+          <th style="width: 15%;">REMARKS</th>
+          <th style="width: 3%;"></th>
+        </tr>
+      </thead>
+    </table>
+    <div class="nested-form-wrapper" data-new-record="<%= form.object.new_record? %>">
+      <table class="allowance-table" data-form-validation-target="particularsTable">
+        <tbody>
+          <template data-nested-form-target="template">
+            <%= form.fields_for :particulars, Particular.new, child_index: 'NEW_RECORD' do |particular_fields| %>
+              <%= render "request_forms/request_form_particular_form", f: particular_fields %>
+            <% end %>
+          </template>
+          <%= form.fields_for :particulars do |particular_fields| %>
+            <%= render "request_forms/request_form_particular_form", f: particular_fields %>
+          <% end %>
+          <tr data-nested-form-target="target"></tr>
+        </tbody>
+      </table>
+    </div>
+    <%= link_to '<i class="fas fa-plus"></i> Add Particular'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#add" } %>
+    <div class="error-message hidden" data-form-validation-target="particularsError">
+      Please add at least one particular and fill in all required fields
     </div>
   </div>
-</div>
-<div class="separator"></div>
-<div class="allowance-section">
-  <p class="semibold" style="margin-bottom: 10px;">Allowance Table</p>
-  <table class="allowance-table">
-    <thead>
-      <tr id="table-header">
-        <th style="width: 30%;">PARTICULAR</th>
-        <th style="width: 15%;">AMOUNT</th>
-        <th style="width: 15%;">REMARKS</th>
-        <th style="width: 3%;"></th>
-      </tr>
-    </thead>
-  </table>
-  <template data-nested-form-target="template">
-    <%= form.fields_for :particulars, Particular.new, child_index: 'NEW_RECORD' do |particular_fields| %>
-      <%= render "request_forms/request_form_particular_form", f: particular_fields %>
-    <% end %>
-  </template>
-  <%= form.fields_for :particulars do |particular_fields| %>
-    <%= render "request_forms/request_form_particular_form", f: particular_fields %>
-  <% end %>
-  <div data-nested-form-target="target"></div>
-  <%= link_to '<i class="fas fa-plus"></i> Add Particular'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#add" } %>
-</div>
-<div class="separator"></div>
-<div class="" data-controller="flatpickr">
-  <div class="">
-    <div class="field">
-      <label>Travel Date</label>
-      <div class="flex travel-date-fields">
-        <div>
-          <%= form.label :start_travel_date, style: "display: block" %>
-          <%= form.datetime_field :start_travel_date, class: "start_travel_date" %>
-        </div>
-        <div>
-          <%= form.label :end_travel_date, style: "display: block"   %>
-          <%= form.datetime_field :end_travel_date, class: "end_travel_date" %>
+  <div class="separator"></div>
+  <div class="" data-controller="flatpickr">
+    <div class="">
+      <div class="field">
+        <label>Travel Date</label>
+        <div class="flex travel-date-fields">
+          <div>
+            <%= form.label :start_travel_date, 'Start Date', style: "display: block" %>
+            <%= form.datetime_field :start_travel_date, class: "start_travel_date" %>
+          </div>
+          <div>
+            <%= form.label :end_travel_date, 'End Date', style: "display: block"   %>
+            <%= form.datetime_field :end_travel_date, class: "end_travel_date" %>
+          </div>
         </div>
       </div>
+      <div class="field">
+        <%= form.label :destination %>
+        <%= form.text_field :destination %>
+      </div>
+      <div class="field">
+        <%= form.label :vehicle %>
+        <%= form.text_field :vehicle %>
+      </div>
     </div>
-    <div class="field">
-      <%= form.label :destination %>
-      <%= form.text_field :destination %>
+    <div class="separator"></div>
+    <div class="balance-section">
+      <div class="semibold">Balances</div>
+      <div class="field">
+        <%= form.label :fuel_gauge %>
+        <%= form.text_field :fuel_gauge, class: "align-right" %>
+      </div>
+      <div class="field">
+        <%= form.label :easy_trip_balance %>
+        <%= form.text_field :easy_trip_balance, class: "align-right" %>
+      </div>
+      <div class="field">
+        <%= form.label :sweep_balance, style: "display: block" %>
+        <%= form.text_field :sweep_balance, class: "align-right" %>
+      </div>
     </div>
+    <div class="separator"></div>
     <div class="field">
-      <%= form.label :vehicle %>
-      <%= form.text_field :vehicle %>
+      <%= form.label :remarks %>
+      <%= form.text_field :remarks %>
     </div>
   </div>
-  <div class="separator"></div>
-  <div class="balance-section">
-    <div class="semibold">Balances</div>
-    <div class="field">
-      <%= form.label :fuel_gauge %>
-      <%= form.text_field :fuel_gauge %>
-    </div>
-    <div class="field">
-      <%= form.label :easy_trip_balance %>
-      <%= form.text_field :easy_trip_balance %>
-    </div>
-    <div class="field">
-      <%= form.label :sweep_balance, style: "display: block" %>
-      <%= form.text_field :sweep_balance %>
-    </div>
-  </div>
-  <div class="separator"></div>
-  <div class="field">
-    <%= form.label :remarks %>
-    <%= form.text_field :remarks %>
-  </div>
-  <!--
+</div>
+<!--
 <div>
   <%= form.label :requester, style: "display: block" %>
   <%= form.text_field :requester %>

@@ -2,7 +2,7 @@ class Project < ApplicationRecord
   belongs_to :client
   belongs_to :company
 
-  belongs_to :quotation
+  # belongs_to :quotation
   has_many :request_forms
   
   has_one_attached :client_po

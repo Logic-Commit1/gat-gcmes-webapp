@@ -58,7 +58,7 @@
   }
 
   tr:nth-child(even) {
-    background-color: #f2f2f2;
+    // background-color: #f2f2f2;
   }
 
   .document-table {
@@ -68,6 +68,15 @@
       text-align: left;
       border: 0;
       border: 1px solid #ddd;
+    }
+
+    tbody tr {
+      cursor: pointer;
+      transition: background-color 0.1s ease;
+
+      &:hover {
+        background-color: #f8f9fa;
+      }
     }
 
     th {

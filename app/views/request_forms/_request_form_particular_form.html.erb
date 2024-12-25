@@ -1,21 +1,17 @@
-<div class="nested-form-wrapper" data-new-record="<%= f.object.new_record? %>">
-  <table class="allowance-table">
-    <tbody>
-      <tr>
-        <td style="width: 30%;">
-          <%= f.text_field :name %>
-        </td>
-        <td style="width: 15%;">
-          <%= f.text_field :allowance, placeholder: "PHP 0.00", style: "text-align: right" %>
-        </td>
-        <td style="width: 15%;">
-          <%= f.text_field :remarks %>
-        </td>
-        <td style="width: 3%; text-align: center; vertical-align: middle;">
-          <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#remove" } %>
-          <%= f.hidden_field :_destroy %>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<tr class="nested-form-wrapper" data-new-record="<%= f.object.new_record? %>" >
+  <td style="width: 30%;">
+    <%= f.text_field :name %>
+  </td>
+  <td style="width: 15%;">
+    <%= f.text_field :allowance, placeholder: "PHP 0.00", style: "text-align: right" %>
+  </td>
+  <td style="width: 15%;">
+    <%= f.text_field :remarks %>
+  </td>
+  <td style="width: 3%; text-align: center; vertical-align: middle;">
+    <% if f.object.request_form&.particulars&.first != f.object %>
+      <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#remove" } %>
+      <%= f.hidden_field :_destroy %>
+    <% end %>
+  </td>
+</tr>

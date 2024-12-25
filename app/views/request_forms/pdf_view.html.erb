@@ -1,4 +1,7 @@
 <div class="pdf-container">
+  <header class="flex space-between items-center">
+    <%= render 'components/pdf/header', document: @request_form %>
+  </header>
   <% if @request_form.Allowance? %>
     <%= render 'allowance_view', request_form: @request_form%>
   <% elsif @request_form.Order? %>

@@ -5,7 +5,7 @@ class RequestFormsController < ApplicationController
 
   # GET /request_forms or /request_forms.json
   def index
-    @request_forms = RequestForm.all
+    @request_forms = RequestForm.all.order(created_at: :desc)
   end
 
   # GET /request_forms/1 or /request_forms/1.json

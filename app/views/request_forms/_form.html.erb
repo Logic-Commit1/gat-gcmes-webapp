@@ -1,7 +1,9 @@
 <div class="form-container">
   <%= form_with(model: request_form, html: {autocomplete: 'off'}, data: {
-  controller: "nested-form",
-  nested_form_wrapper_selector_value: '.nested-form-wrapper'
+  controller: "nested-form form-validation",
+  nested_form_wrapper_selector_value: '.nested-form-wrapper',
+  form_validation_target: "form",
+  action: "submit->form-validation#validateForm"
 }) do |form| %>
     <% if request_form.errors.any? %>
       <div style="color: red">
@@ -34,32 +36,65 @@
             </div>
           </div>
         </div>
-        <div style="display: <%= @request_form.Order? ? 'block' : 'none' %>" class="grid with-4-columns">
-          <div class="separator"></div>
-          <div class="semibold">Link Documents</div>
-          <div class="field">
-            <%= form.label :canvass_id %>
-            <div class="select-container">
-              <%= form.collection_select :canvass_id, [], :id, :uid, { prompt: "Select Canvass"}, data: { company_select_target: "canvassSelect" } %>
-              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+        <% if @request_form.Order? %>
+          <div class="link-documents-section hidden" data-company-select-target="linkDocumentsSection">
+            <div class="separator"></div>
+            <div class="semibold">Link Documents</div>
+            <div class="field">
+              <%= form.label :canvass_id %>
+              <div class="select-container">
+                <%= form.collection_select :canvass_id, [], :id, :uid, 
+                    { prompt: "Select Canvass"}, 
+                    data: { 
+                      company_select_target: "canvassSelect",
+                      form_validation_target: "canvassSelect"
+                    } %>
+                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+              </div>
+              <div class="error-message hidden" data-form-validation-target="canvassError">
+                Please select a canvass
+              </div>
+            </div>
+            <div class="field">
+              <%= form.label :quotation_id %>
+              <div class="select-container">
+                <%= form.collection_select :quotation_id, [], :id, :uid, 
+                    { prompt: "Select Quotatiossn"}, 
+                    data: { 
+                      company_select_target: "quotationSelect",
+                      form_validation_target: "quotationSelect"
+                    } %>
+                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+              </div>
+              <div class="error-message hidden" data-form-validation-target="quotationError">
+                Please select a quotation
+              </div>
             </div>
           </div>
-          <div class="field">
-            <%= form.label :quotation_id %>
-            <div class="select-container">
-              <%= form.collection_select :quotation_id, [], :id, :uid, { prompt: "Select Quotation"}, data: { company_select_target: "quotationSelect" } %>
-              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
-            </div>
+        <% end %>
+        <div class="separator"></div>
+        <div class="field hidden" data-company-select-target="projectSelectField">
+          <%= form.label :project_id %>
+          <div class="select-container">
+            <%= form.collection_select :project_id, [], :id, :uid, 
+                { prompt: "Select Project"}, 
+                data: { 
+                  company_select_target: "projectSelect",
+                  form_validation_target: "projectSelect"
+                } %>
+            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+          </div>
+          <div class="error-message hidden" data-form-validation-target="projectError">
+            Please select a project
           </div>
         </div>
-        <div class="separator"></div>
         <div class="<%= 'hidden' if @request_form.new_record? %>">
-          <%# if @request_form.Allowance? %>
-          <%= render 'allowance_form', form: form %>
-          <%# elsif @request_form.Order? %>
-          <%#= render 'order_form', form: form %>
-          <%# else %>
-          <%# end %>
+          <% if @request_form.Allowance? %>
+            <%= render 'allowance_form', form: form %>
+          <% elsif @request_form.Order? %>
+            <%= render 'order_form', form: form %>
+          <% else %>
+          <% end %>
         <%end %>
         <div>
           <%= form.submit %>

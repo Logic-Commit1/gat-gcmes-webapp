@@ -67,8 +67,8 @@
       <!-- Dynamic content will be generated based on the title -->
       <% if title == "Quotations" %>
         <% @quotations.each do |quotation| %>
-          <tr>
-            <td><%= link_to quotation.uid, quotation_path(quotation) %></td>
+          <tr onclick="window.location='<%= quotation_path(quotation) %>'" style="cursor: pointer">
+            <td><%= quotation.uid %></td>
             <td><%= quotation.client.code %></td>
             <td><%= quotation.subject %></td>
             <td><%= number_to_currency(quotation.total, unit: "₱") %></td>
@@ -78,19 +78,19 @@
         <% end %>
       <% elsif title == "Request Forms" %>
         <% @request_forms.each do |form| %>
-          <tr>
-            <td><%= link_to form.uid, request_form_path(form) %></td>
+          <tr onclick="window.location='<%= request_form_path(form) %>'" style="cursor: pointer">
+            <td><%= form.uid %></td>
             <td><%= form.purchase_order&.uid %></td>
             <td><%#= form.quotation.client.code %></td>
             <td><%= number_to_currency(form.total, unit: "₱") %></td>
             <td><%= form.created_at.strftime("%B %d, %Y") %></td>
-            <td><span class="status <%#= form.status %>"><%= form.approver %></span></td>
+            <td><span class="status <%= form.status %>"><%= form.status.capitalize %></span></td>
           </tr>
         <% end %>
       <% elsif title == "Canvasses" %>
         <% @canvasses.each do |canvass| %>
-          <tr>
-            <td><%= link_to canvass.uid, canvass_path(canvass) %></td>
+          <tr onclick="window.location='<%= canvass_path(canvass) %>'" style="cursor: pointer">
+            <td><%= canvass.uid %></td>
             <td><%= canvass.description %></td>
             <td><%= canvass.created_at.strftime("%B %d, %Y") %></td>
             <td><span class="status <%= canvass.status %>"><%= canvass.status.capitalize %></span></td>
@@ -104,6 +104,16 @@
             <td><%= number_to_currency(po.total ) %></td>
             <td><%= po.created_at.strftime("%B %d, %Y") %></td>
             <td><span class="status <%#= form.status %>"><%= po.approver %></span></td>
+          </tr>
+        <% end %>
+      <% elsif title == "Projects" %>
+        <% @projects.each do |project| %>
+          <tr>
+            <td><%= project.uid %></td>
+            <td><%= project.client.code %></td>
+            <td><%#= number_to_currency(project.total) %></td>
+            <td><%= project.created_at.strftime("%B %d, %Y") %></td>
+            <td><span class="status <%= project.status.downcase %>"><%= project.status.capitalize %></span></td>
           </tr>
         <% end %>
       <% elsif title == "Employees" %>

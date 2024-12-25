@@ -1,17 +1,6 @@
 <div class="pdf-container">
   <header class="flex space-between items-center">
-    <% if @quotation.company.gat? %>
-      <%= render 'components/pdf/gat_contact_card' %>
-    <% end %>
-    <% if @quotation.company.gcmes? %>
-      <%= render 'components/pdf/gcmes_contact_card' %>
-    <% end %>
-    <div class="align-right">
-      <h1>Quotation</h1>
-      <h5 class="document-uid">
-        <%= @quotation.uid %>
-      </h5>
-    </div>
+    <%= render 'components/pdf/header', document: @quotation %>
   </header>
   <p class="align-right">
     Date Requested: <%= @quotation.created_at.strftime("%B %d, %Y") %>
@@ -129,7 +118,7 @@
 </div>
 <br>
 <div class="align-center">Note: This document is not valid without manager&rsquo;s signature</div>
-<table id="signatures-table">
+<table class="signatures-table">
   <thead>
     <tr>
       <th>Conforme by</th>

@@ -1,58 +1,84 @@
-<p>
-  <strong>Vehicle:</strong>
-  <%= request_form.vehicle %>
+<p style="display: inline-block;"><strong>Project:</strong> <%= request_form.project.uid %></p>
+<p style="display: inline-block; margin-left: 30px;"><strong>Vehicle:</strong> <%= request_form.vehicle %></p>
 </p>
 <table>
   <thead>
     <tr>
-      <th>Particulars</th>
-      <th>Estimate Allowance</th>
-      <th>Remarks</th>
+      <th style="width: 5%">SN</th>
+      <th style="width: 40%">Particulars</th>
+      <th style="width: 20%">Estimate Allowance</th>
+      <th style="width: 35%">Remarks</th>
     </tr>
   </thead>
   <tbody>
-    <% request_form&.particulars.each do |p| %>
+    <% request_form&.particulars.each_with_index do |p, index| %>
       <tr>
+        <td class="align-center"><%= index + 1 %></td>
         <td><%= p.name %></td>
-        <td><%= p.allowance %></td>
+        <td class="align-right"><% if index == 0 %>PHP<% end %> <%= number_with_precision(p.allowance, precision: 2, delimiter: ',') %></td>
         <td></td>
       </tr>
     </tbody>
   <% end %>
   <tr>
+    <td></td>
     <td>Total</td>
-    <td><%= request_form.total %></td>
+    <td class="align-right">PHP <%= number_with_precision(request_form.total, precision: 2, delimiter: ',') %></td>
     <td></td>
   </tr>
 </table>
-<p>
-  <strong>Travel Date Start:</strong>
-  <%= request_form.start_travel_date&.strftime("%B %d, %Y") %>
+<p style="display: inline-block;">
+  <strong>Travel Date:</strong>
+  <%= request_form.start_travel_date&.strftime("%B %d") %> to <%= request_form.end_travel_date&.strftime("%B %d") %>
 </p>
-<p>
-  <strong>Travel Date End:</strong>
-  <%= request_form.end_travel_date&.strftime("%B %d, %Y") %>
-</p>
-<p>
+<p style="display: inline-block; margin-left: 30px;">
   <strong>Destination:</strong>
   <%= request_form.destination %>
 </p>
-<p>
-  <strong>Remarks:</strong>
-  <%= request_form.remarks %>
-</p>
-<p>
-  <strong>Fuel gauge:</strong>
-  <%= request_form.fuel_gauge %>
-</p>
-<p>
-  <strong>Easy trip balance:</strong>
-  <%= request_form.easy_trip_balance %>
-</p>
-<p>
-  <strong>Sweep balance:</strong>
-  <%= request_form.sweep_balance %>
-</p>
+<table class="balance-table">
+  <thead>
+    <tr>
+      <th style="width: 40%;">REMARKS</th>
+      <th style="width: 15%;">FUEL GAUGE</th>
+      <th style="width: 20%;">EASY TRIP BALANCE</th>
+      <th style="width: 20%;">SWEEP BALANCE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= request_form.remarks %></td>
+      <td class="align-right">PHP <%= number_with_precision(request_form.fuel_gauge, precision: 2, delimiter: ',') %></td>
+      <td class="align-right">PHP <%= number_with_precision(request_form.easy_trip_balance, precision: 2, delimiter: ',') %></td>
+      <td class="align-right">PHP <%= number_with_precision(request_form.sweep_balance, precision: 2, delimiter: ',') %></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<table class="signatures-table">
+  <thead>
+    <tr>
+      <th>Requested by</th>
+      <th>Checked by</th>
+      <th>Pre-approved by</th>
+      <th>Approved by</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <% if !@request_form.approved? %>
+        <td>
+          <%= image_tag "#{request.base_url}/assets/fake-signature.png", style: "width: 100px; height: 40px;" %>
+          <p>Robert D. Bautista</p>
+        </td>
+      <% else %>
+        <td></td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
 <!--
   <p>
     <strong>Requester:</strong>
@@ -75,15 +101,3 @@
     <%= request_form.approver %>
   </p>
   -->
-<p>
-  <strong>Company:</strong>
-  <%= request_form.company.code %>
-</p>
-<p>
-  <strong>Project:</strong>
-  <%= request_form.project.uid %>
-</p>
-<p>
-  <strong>Client:</strong>
-  <%= request_form.project.client.name %>
-</p>

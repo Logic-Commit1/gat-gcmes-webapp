@@ -7,6 +7,7 @@ export default class extends Controller {
     "supplierSelect",
     "requestFormSelect",
     "projectSelect",
+    "projectSelectField",
     "canvassSelect",
     "quotationSelect",
   ]
@@ -19,7 +20,7 @@ export default class extends Controller {
     }
   }
 
-  ForClient(event) {
+  selectCompanyForClient(event) {
     this.fetchAndUpdateOptions(
       event,
       "/clients",
@@ -50,8 +51,10 @@ export default class extends Controller {
 
   selectCompanyForProjectsCanvassesQuotations(event) {
     this.selectCompanyForProjects(event)
-    this.selectCompanyForCanvasses(event)
-    this.selectCompanyForQuotations(event)
+    if (this.hasCanvassSelectTarget && this.hasQuotationSelectTarget) {
+      this.selectCompanyForCanvasses(event)
+      this.selectCompanyForQuotations(event)
+    }
     this.showHiddenDivs()
   }
 
@@ -159,14 +162,22 @@ export default class extends Controller {
   }
 
   showHiddenDivs() {
-    // console.log("showHiddenDivs")
     const hiddenDivs = this.element.querySelectorAll(".hidden")
 
     hiddenDivs.forEach((div) => {
-      if (!div.closest(".nested-form-wrapper")) {
+      if (
+        !div.closest(".nested-form-wrapper") &&
+        !div.classList.contains("error-message")
+      ) {
         div.classList.remove("hidden")
       }
     })
+  }
+
+  showProjectSelect() {
+    console.log("showProjectSelect")
+    this.projectSelectFieldTarget.classList.remove("hidden")
+    console.log(2)
   }
 
   getDynamicTarget() {

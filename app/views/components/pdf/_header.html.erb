@@ -1,0 +1,12 @@
+<% if document.company.gat? %>
+  <%= render 'components/pdf/gat_contact_card', document: document %>
+<% end %>
+<% if document.company.gcmes? %>
+  <%= render 'components/pdf/gcmes_contact_card', document: document %>
+<% end %>
+<div class="align-right">
+  <h1><%= document.class.name.titleize %></h1>
+  <h5 class="document-uid">
+    <%= document.uid %>
+  </h5>
+</div>

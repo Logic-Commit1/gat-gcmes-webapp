@@ -1,31 +1,39 @@
-<div class="grid with-4-columns">
-  <div>
-    <%= form.label :project_id %>
-    <div class="select-container">
-      <%= form.collection_select :project_id, [], :id, :uid, { prompt: "Select Project"}, data: { company_select_target: "projectSelect" } %>
-      <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+<div class="order-form-container">
+  <div class="separator"></div>
+  <div class="order-section">
+    <p class="semibold">Items Table</p>
+    <table class="order-table">
+      <thead>
+        <tr id="table-header">
+          <th style="width: 30%;">ITEM</th>
+          <th style="width: 15%;">QUANTITY</th>
+          <th style="width: 15%;">U/M</th>
+          <th style="width: 15%;">UNIT PRICE</th>
+          <th style="width: 3%;"></th>
+        </tr>
+      </thead>
+    </table>
+    <div class="nested-form-wrapper" data-new-record="<%= form.object.new_record? %>">
+      <table class="order-table" data-form-validation-target="itemsTable">
+        <tbody>
+          <template data-nested-form-target="template">
+            <%= form.fields_for :products, Product.new, child_index: 'NEW_RECORD' do |product_fields| %>
+              <%= render "request_forms/request_form_product_form", f: product_fields %>
+            <% end %>
+          </template>
+          <%= form.fields_for :products do |product_fields| %>
+            <%= render "request_forms/request_form_product_form", f: product_fields %>
+          <% end %>
+          <tr data-nested-form-target="target"></tr>
+        </tbody>
+      </table>
     </div>
-  </div>
-  <div>
-    <%= form.label :brand, style: "display: block" %>
-    <div>
-      <%= form.text_field :brand %>
+    <%= link_to '<i class="fas fa-plus"></i> Add Item'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#add" } %>
+    <div class="error-message hidden" data-form-validation-target="itemsError">
+      Please add at least one item and fill in all required fields
     </div>
   </div>
 </div>
-<p class="semibold">Items Table</p>
-<template data-nested-form-target="template">
-  <%= form.fields_for :products, Product.new, child_index: 'NEW_RECORD' do |product_fields| %>
-    <%= render "request_forms/request_form_product_form", f: product_fields %>
-  <% end %>
-</template>
-<%= form.fields_for :products do |product_fields| %>
-  <%= render "request_forms/request_form_product_form", f: product_fields %>
-<% end %>
-<div data-nested-form-target="target"></div>
-<%= link_to 'Add Item', '#', class: 'button', data: { action: "nested-form#add" } %>
-<br>
-<br>
 <!--
 <div>
   <%= form.label :remarks, style: "display: block" %>

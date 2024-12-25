@@ -1,13 +1,13 @@
 <div class="contact-card flex">
   <div class="contact-details">
-    <p class="flex items-center"><i class="fa-solid fa-location-dot" style="margin-right: 8px;"></i><span><%= @quotation.company.address %></span></p>
+    <p class="flex items-center"><i class="fa-solid fa-location-dot" style="margin-right: 8px;"></i><span><%= document.company.address %></span></p>
     <br>
-    <p class="flex items-center"><i class="fa-solid fa-phone" style="margin-right: 8px;"></i><span>(02) <%= @quotation.company.contact_numbers.join(' | ') %></span></p>
+    <p class="flex items-center"><i class="fa-solid fa-phone" style="margin-right: 8px;"></i><span>(02) <%= document.company.contact_numbers.join(' | ') %></span></p>
     <br>
-    <p class="flex items-center"><i class="fa-solid fa-envelope" style="margin-right: 8px;"></i><span><%= @quotation.company.emails.join(', ') %></span></p>
+    <p class="flex items-center"><i class="fa-solid fa-envelope" style="margin-right: 8px;"></i><span><%= document.company.emails.join(', ') %></span></p>
   </div>
   <div class="logo">
-    <% @quotation.company%>
+    <% document.company%>
     <%= image_tag "#{request.base_url}/assets/gat-logo.png", class: 'gat-logo' %>
     <p>GOLDEN ARROW TRADING</p>
   </div>

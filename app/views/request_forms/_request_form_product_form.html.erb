@@ -1,24 +1,20 @@
-<div class="nested-form-wrapper" data-new-record="<%= f.object.new_record? %>">
-  <div class="grid with-5-columns">
-    <div>
-      <%= f.label :name, "Item", style: "display: block" %>
-      <%= f.text_field :name %>
-    </div>
-    <div>
-      <%= f.label :quantity, style: "display: block" %>
-      <%= f.number_field :quantity %>
-    </div>
-    <div>
-      <%= f.label :unit, "U/M", style: "display: block" %>
-      <%= f.text_field :unit %>
-    </div>
-    <div>
-      <%= f.label :price, "Unit Price", style: "display: block" %>
-      <%= f.text_field :price %>
-    </div>
-    <div>
-      <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "button", data: { action: "nested-form#remove" } %>
+<tr class="nested-form-wrapper" data-new-record="<%= f.object.new_record? %>" >
+  <td style="width: 30%;">
+    <%= f.text_field :description, class: "required" %>
+  </td>
+  <td style="width: 15%;">
+    <%= f.number_field :quantity, class: "required align-right" %>
+  </td>
+  <td style="width: 15%;">
+    <%= f.text_field :unit, class: "required align-right" %>
+  </td>
+  <td style="width: 15%;" >
+    <%= f.number_field :price, step: :any, class: "required align-right" %>
+  </td>
+  <td style="width: 3%; text-align: center; vertical-align: middle;">
+    <% if f.object.request_form&.products&.first != f.object %>
+      <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#remove" } %>
       <%= f.hidden_field :_destroy %>
-    </div>
-  </div>
-</div>
+    <% end %>
+  </td>
+</tr>

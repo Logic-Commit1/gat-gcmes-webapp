@@ -13,14 +13,14 @@ class CanvassesController < ApplicationController
   end
 
   def pdf_view
-    pdf_path = @canvass.pdf_path
+    # pdf_path = @canvass.pdf_path
   
-    if File.exist?(pdf_path)
-      send_file pdf_path, type: 'application/pdf', disposition: 'inline'
-    else
-      generate_pdf(@canvass)
-      send_file pdf_path, type: 'application/pdf', disposition: 'inline'
-    end
+    # if File.exist?(pdf_path)
+    #   send_file pdf_path, type: 'application/pdf', disposition: 'inline'
+    # else
+    #   generate_pdf(@canvass)
+    #   send_file pdf_path, type: 'application/pdf', disposition: 'inline'
+    # end
   end
 
   # GET /canvasses/new
