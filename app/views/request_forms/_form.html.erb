@@ -3,7 +3,7 @@
   controller: "nested-form form-validation",
   nested_form_wrapper_selector_value: '.nested-form-wrapper',
   form_validation_target: "form",
-  action: "submit->form-validation#validateForm"
+  action: "submit->form-validation#validateRequestForm"
 }) do |form| %>
     <% if request_form.errors.any? %>
       <div style="color: red">

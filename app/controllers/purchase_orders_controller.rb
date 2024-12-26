@@ -1,9 +1,10 @@
 class PurchaseOrdersController < ApplicationController
+  layout 'pdf', only: :pdf_view
   before_action :set_purchase_order, only: %i[ show edit update approve pending void ]
 
   # GET /purchase_orders or /purchase_orders.json
   def index
-    @purchase_orders = PurchaseOrder.all
+    @purchase_orders = PurchaseOrder.order(created_at: :desc)
   end
 
   # GET /purchase_orders/1 or /purchase_orders/1.json

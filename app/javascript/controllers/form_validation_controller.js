@@ -34,7 +34,7 @@ export default class extends Controller {
     })
   }
 
-  validateForm(event) {
+  validateRequestForm(event) {
     this.clearErrors()
     let isValid = true
 
@@ -133,6 +133,13 @@ export default class extends Controller {
         }
       }
     }
+
+    return isValid
+  }
+
+  validatePurchaseOrderForm(event) {
+    this.clearErrors()
+    let isValid = true
 
     return isValid
   }

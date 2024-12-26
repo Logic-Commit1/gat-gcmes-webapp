@@ -5,7 +5,7 @@ class CanvassesController < ApplicationController
 
   # GET /canvasses or /canvasses.json
   def index
-    @canvasses = Canvass.all
+    @canvasses = Canvass.order(created_at: :desc)
   end
 
   # GET /canvasses/1 or /canvasses/1.json
