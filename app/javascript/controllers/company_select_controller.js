@@ -44,7 +44,8 @@ export default class extends Controller {
     )
   }
 
-  selectCompanyForRequestFormsAndSuppliers(event) {
+  selectCompanyForProjectsRequestFormsAndSuppliers(event) {
+    this.selectCompanyForProjects(event)
     this.selectCompanyForSuppliers(event)
     this.selectCompanyForRequestForms(event)
   }

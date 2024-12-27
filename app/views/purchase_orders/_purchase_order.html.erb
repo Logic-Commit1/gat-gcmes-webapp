@@ -1,46 +1,4 @@
-<div id="<%= dom_id purchase_order %>">
-  <p>
-    <strong>Uid:</strong>
-    <%= purchase_order.uid %>
-  </p>
-  <p>
-    <strong>Preparer:</strong>
-    <%= purchase_order.employee.name %>
-  </p>
-  <p>
-    <strong>Terms:</strong>
-    <%= purchase_order.terms %>
-  </p>
-  <p>
-    <strong>Total:</strong>
-    <%= purchase_order.total %>
-  </p>
-  <p>
-    <strong>Discount:</strong>
-    <%= purchase_order.discount %>
-  </p>
-  <p>
-    <strong>Requester:</strong>
-    <%= purchase_order.requester %>
-  </p>
-  <p>
-    <strong>Checker:</strong>
-    <%= purchase_order.checker %>
-  </p>
-  <p>
-    <strong>Pre approver:</strong>
-    <%= purchase_order.pre_approver %>
-  </p>
-  <p>
-    <strong>Approver:</strong>
-    <%= purchase_order.approver %>
-  </p>
-  <p>
-    <strong>Company:</strong>
-    <%= purchase_order.company.code %>
-  </p>
-  <p>
-    <strong>Supplier:</strong>
-    <%= purchase_order.supplier.name %>
-  </p>
+<div class="page document-page" id="<%= dom_id purchase_order %>">
+  <p style="color: green"><%= notice %></p>
+  <%= render 'pages/show', document: @purchase_order %>
 </div>

@@ -22,7 +22,7 @@
     <% request_form&.products.each_with_index do |p, index| %>
       <tr>
         <td class="align-center"><%= index + 1 %></td>
-        <td><%= p.name %></td>
+        <td><%= p.description %></td>
         <td class="align-right"><%= p.quantity %></td>
         <td><%= p.unit %></td>
         <td class="align-right"><% if index == 0 %>PHP<% end %> <%= number_with_precision(p.price, precision: 2, delimiter: ',') %></td>

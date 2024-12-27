@@ -45,9 +45,12 @@ export default class extends Controller {
 
   handleContinueButton(event) {
     event.preventDefault()
+
     const selectedRequestFormIds = Array.from(
       this.requestFormSelectTarget.selectedOptions
     ).map((option) => option.value)
+    console.log("Selected Request Form IDs:", selectedRequestFormIds)
+
     this.fetchItemsofRequestForm(selectedRequestFormIds)
 
     // show hidden fields
@@ -102,7 +105,7 @@ export default class extends Controller {
       items.products.forEach((product) => {
         productsTable += `
             <tr>
-              <td>${product.name}</td>
+              <td>${product.description}</td>
               <td>${product.price}</td>
               <td>${product.quantity}</td>
               <td>${product.discount}</td>

@@ -106,19 +106,30 @@ class RequestFormsController < ApplicationController
 
     request_forms.each do |request_form|
       if request_form.request_type == "Allowance"
-        particulars.concat(request_form.particulars)
+        particulars.concat(request_form.particulars.map { |p| 
+          {
+            id: p.id,
+            name: p.name,
+            allowance: p.allowance,
+            remarks: p.remarks
+          }
+        })
       else
-        products.concat(request_form.products)
+        products.concat(request_form.products.map { |p| 
+          {
+            id: p.id,
+            name: p.name,
+            price: p.price,
+            quantity: p.quantity,
+            discount: p.discount,
+            unit: p.unit,
+            description: p.description,
+          }
+        })
       end
     end
 
-    # You can choose to render either particulars or products based on your needs
     render json: { particulars: particulars, products: products }
-    # if particulars.present? && products.present?
-    # else if particulars.present? && products.present?
-    #   render json: { products: products }
-    # end
-    
   end
 
   private

@@ -1,0 +1,99 @@
+<div class="pdf-container">
+  <header class="flex space-between items-center">
+    <%= render 'components/pdf/header', document: @purchase_order %>
+  </header>
+  <div class="flex space-between">
+    <p>
+      <strong>Project:</strong> <%= @purchase_order.project.uid %>
+    </p>
+    <p>
+      <strong>Date:</strong> <%= @purchase_order.created_at.strftime("%B %d, %Y") %>
+    </p>
+  </div>
+  <table id="customer-table">
+    <thead>
+      <tr>
+        <th class="text-center" colspan="2">SUPPLIER DETAILS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="width: 20%;">Company Name</td>
+        <td><%= @purchase_order.supplier.name %></td>
+      </tr>
+      <tr>
+        <td>Address</td>
+        <td><%= @purchase_order.supplier.address %></td>
+      </tr>
+    </tbody>
+  </table>
+  <table>
+    <thead>
+      <tr>
+        <th>SN</th>
+        <th>Subject Description</th>
+        <th class="align-right">Quantity</th>
+        <th class="align-right">U/M</th>
+        <th class="align-right">Unit Price</th>
+        <th class="align-right">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @purchase_order.products.each_with_index do |product, index| %>
+        <tr>
+          <td class="align-center"><%= index + 1 %></td>
+          <td><%= product.name %></td>
+          <td class="align-right"><%= product.quantity %></td>
+          <td class="align-right"><%= product.unit %></td>
+          <td class="align-right"><% if index == 0 %>PHP <% end %><%= number_with_precision(product.price, precision: 2, delimiter: ',') %></td>
+          <td class="align-right"><% if index == 0 %>PHP <% end %><%= number_with_precision(product.price * product.quantity, precision: 2, delimiter: ',') %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td colspan="4" ></td>
+        <td class="align-right">Total</td>
+        <td class="align-right">PHP <%= number_with_precision(@purchase_order.total, precision: 2, delimiter: ',') %></td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>Terms:</strong> <%= @purchase_order.terms %></p>
+  <br>
+  <br>
+  <br>
+  <table class="signatures-table">
+    <thead>
+      <tr>
+        <th>Requested by</th>
+        <th>Checked by</th>
+        <th>Pre-approved by</th>
+        <th>Approved by</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <% if !@purchase_order.approved? %>
+          <td>
+            <%= image_tag "#{request.base_url}/assets/fake-signature.png", style: "width: 100px; height: 40px;" %>
+            <p>Robert D. Bautista</p>
+          </td>
+        <% else %>
+          <td></td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <p>Conforme:</p>
+    <hr style="width: 50%; border-top: 1px solid black; margin-top: 16px;" />
+  </div>
+  <div style="margin: 16px auto; width: 80%;">
+    <p class="justify">Vendor shall confirm this order by signing CONFORME and dating it as proof of acceptance. 
+    In case of any breach of this order, GAT shall have the right to cancel the order by providing 
+    a written notice to the Vendor, without prejudice GAT’s right to claim for damages, if any. 
+    An unexcused delay by the Vendor in the performance of its obligation or in the delivery of 
+    the goods shall cause termination of this order for default.</p>
+  </div>
+</div>

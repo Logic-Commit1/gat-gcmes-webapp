@@ -12,7 +12,7 @@
     <%= f.number_field :price, step: :any, class: "required align-right" %>
   </td>
   <td style="width: 3%; text-align: center; vertical-align: middle;">
-    <% if f.object.request_form&.products&.first != f.object %>
+    <% if f.object.purchase_order&.products&.first != f.object %>
       <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#remove" } %>
       <%= f.hidden_field :_destroy %>
     <% end %>

@@ -1,6 +1,6 @@
 class PurchaseOrdersController < ApplicationController
   layout 'pdf', only: :pdf_view
-  before_action :set_purchase_order, only: %i[ show edit update approve pending void ]
+  before_action :set_purchase_order, only: %i[ show edit update approve pending void pdf_view ]
 
   # GET /purchase_orders or /purchase_orders.json
   def index
@@ -11,9 +11,21 @@ class PurchaseOrdersController < ApplicationController
   def show
   end
 
+  def pdf_view
+    # pdf_path = @request_form.pdf_path
+  
+    # if File.exist?(pdf_path)
+    #   send_file pdf_path, type: 'application/pdf', disposition: 'inline'
+    # else
+    #   generate_pdf(@request_form)
+    #   send_file pdf_path, type: 'application/pdf', disposition: 'inline'
+    # end
+  end
+
   # GET /purchase_orders/new
   def new
-    @purchase_order = PurchaseOrder.new
+    @purchase_order = PurchaseOrder.new(purchase_order_params)
+    @purchase_order.products.build
   end
 
   # GET /purchase_orders/1/edit
@@ -91,16 +103,16 @@ class PurchaseOrdersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def purchase_order_params
-      params.require(:purchase_order).permit(:uid, :employee_id, :terms, :total, :discount, :requester, :checker, :pre_approver, :approver, :company_id, :supplier_id, :project_id, :request_form_ids)
-    end
-
-    # def items
-    #   request_form_ids = params[:request_form_ids]
-    #   @products = Product.where(request_form_id: request_form_ids)
-    #   @particulars = Particular.where(request_form_id: request_form_ids)
-
-    #   respond_to do |format|
-    #     format.html { render partial: 'products_particulars', locals: { products: @products, particulars: @particulars } }
-    #   end
-    # end
+      params.require(:purchase_order).permit(:uid, :employee_id, :terms, :total, :discount, :requester, :checker, :pre_approver, :approver, :company_id, :supplier_id, :project_id, :request_form_ids,
+      products_attributes: [
+        :id, :name, :quantity, :unit, :price, :discount, :brand, 
+        :description, :specs, :terms, :remarks, :image, 
+        :quotation_id, :canvass_id, :request_form_id, :purchase_order_id,
+        :_destroy,
+        specs_attributes: [:id, :name, :value, :_destroy]
+      ]
+      )
+    rescue
+      {}
+      end
 end

@@ -4,6 +4,7 @@ class Project < ApplicationRecord
 
   # belongs_to :quotation
   has_many :request_forms
+  has_many :purchase_orders
   
   has_one_attached :client_po
 

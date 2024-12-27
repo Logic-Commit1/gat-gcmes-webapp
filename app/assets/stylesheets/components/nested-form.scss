@@ -204,7 +204,9 @@
       padding: 10px;
       font-weight: 500;
 
-      &:nth-child(2) {
+      &:nth-child(2),
+      &:nth-child(3),
+      &:nth-child(4) {
         text-align: right;
       }
     }
@@ -239,6 +241,47 @@
   .balance-section {
     input[type="text"] {
       width: 20%;
+    }
+  }
+}
+
+.item-table {
+  font-size: 14px;
+  width: 100%;
+  border-collapse: collapse;
+  thead {
+    #table-header {
+      background-color: #f9f9fb;
+      font-size: 12px;
+    }
+    th {
+      border: 1px solid #ccc;
+      padding: 10px;
+      font-weight: 500;
+    }
+  }
+
+  td {
+    vertical-align: top;
+    border: 1px solid #ccc;
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="file"],
+    select {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      border: none;
+    }
+    .select-container {
+      margin: 0;
+      select {
+        border-radius: 0;
+      }
     }
   }
 }

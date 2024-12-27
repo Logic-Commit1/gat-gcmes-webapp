@@ -23,8 +23,8 @@
           <th>Status</th>
         <% elsif title == "Request Forms" %>
           <th>Reference Number</th>
-          <th>P.O Number</th>
-          <th>Client</th>
+          <th>Quotation</th>
+          <th>Canvass</th>
           <th>Amount</th>
           <th>Date</th>
           <th>Status</th>
@@ -80,8 +80,8 @@
         <% @request_forms.each do |form| %>
           <tr onclick="window.location='<%= request_form_path(form) %>'" style="cursor: pointer">
             <td><%= form.uid %></td>
-            <td><%= form.purchase_order&.uid %></td>
-            <td><%#= form.quotation.client.code %></td>
+            <td><%= form.quotation&.uid %></td>
+            <td><%= form.canvass&.uid %></td>
             <td><%= number_to_currency(form.total, unit: "₱") %></td>
             <td><%= form.created_at.strftime("%B %d, %Y") %></td>
             <td><span class="status <%= form.status %>"><%= form.status.capitalize %></span></td>
@@ -98,12 +98,12 @@
         <% end %>
       <% elsif title == "Purchase Orders" %>
         <% @purchase_orders.each do |po| %>
-          <tr>
+          <tr onclick="window.location='<%= purchase_order_path(po) %>'" style="cursor: pointer">
             <td><%= po&.uid %></td>
             <td><%= po.supplier.code %></td>
             <td><%= number_to_currency(po.total ) %></td>
             <td><%= po.created_at.strftime("%B %d, %Y") %></td>
-            <td><span class="status <%#= form.status %>"><%= po.approver %></span></td>
+            <td><span class="status <%= po.status %>"><%= po.status&.capitalize %></span></td>
           </tr>
         <% end %>
       <% elsif title == "Projects" %>

@@ -2,7 +2,15 @@ Rails.application.routes.draw do
   get 'request_forms/items', to: 'request_forms#items'
 
   resources :employees
-  resources :purchase_orders
+  resources :purchase_orders do
+    member do
+      get 'pdf_view'
+      patch :approve
+      patch :reject
+      patch :pending
+      delete :void
+    end
+  end
   resources :particulars
   resources :request_forms do
     member do

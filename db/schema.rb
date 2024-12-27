@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_23_072713) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_27_100052) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -118,7 +118,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_23_072713) do
     t.bigint "canvass_id"
     t.bigint "supplier_id"
     t.bigint "request_form_id"
+    t.bigint "purchase_order_id"
     t.index ["canvass_id"], name: "index_products_on_canvass_id"
+    t.index ["purchase_order_id"], name: "index_products_on_purchase_order_id"
     t.index ["quotation_id"], name: "index_products_on_quotation_id"
     t.index ["request_form_id"], name: "index_products_on_request_form_id"
     t.index ["supplier_id"], name: "index_products_on_supplier_id"
@@ -151,12 +153,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_23_072713) do
     t.bigint "supplier_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "employee_id", null: false
+    t.bigint "employee_id"
     t.bigint "request_form_id"
     t.datetime "deleted_at"
+    t.bigint "project_id", null: false
+    t.integer "status", default: 0
     t.index ["company_id"], name: "index_purchase_orders_on_company_id"
     t.index ["deleted_at"], name: "index_purchase_orders_on_deleted_at"
     t.index ["employee_id"], name: "index_purchase_orders_on_employee_id"
+    t.index ["project_id"], name: "index_purchase_orders_on_project_id"
     t.index ["request_form_id"], name: "index_purchase_orders_on_request_form_id"
     t.index ["supplier_id"], name: "index_purchase_orders_on_supplier_id"
   end
@@ -258,6 +263,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_23_072713) do
   add_foreign_key "clients", "companies"
   add_foreign_key "particulars", "request_forms"
   add_foreign_key "products", "canvasses"
+  add_foreign_key "products", "purchase_orders"
   add_foreign_key "products", "quotations"
   add_foreign_key "products", "request_forms"
   add_foreign_key "products", "suppliers"
@@ -265,6 +271,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_23_072713) do
   add_foreign_key "projects", "companies"
   add_foreign_key "purchase_orders", "companies"
   add_foreign_key "purchase_orders", "employees"
+  add_foreign_key "purchase_orders", "projects"
   add_foreign_key "purchase_orders", "request_forms"
   add_foreign_key "purchase_orders", "suppliers"
   add_foreign_key "quotations", "clients"
