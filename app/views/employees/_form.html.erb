@@ -19,10 +19,29 @@
   </div>
   <div>
     <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email, placeholder: "e.g. john.doe@example.com"   %>
+    <%= form.text_field :email, placeholder: "e.g. john.doe@example.com" %>
+  </div>
+  <div class="contacts-section">
+    <h3>Additional Contacts</h3>
+    <div data-controller="nested-form" 
+         data-nested-form-wrapper-selector-value=".nested-form-wrapper">
+      <template data-nested-form-target="template">
+        <%= form.fields_for :contacts, Contact.new, child_index: 'NEW_RECORD' do |contact_form| %>
+          <%= render "contact_fields", f: contact_form %>
+        <% end %>
+      </template>
+      <%= form.fields_for :contacts do |contact_form| %>
+        <%= render "contact_fields", f: contact_form %>
+      <% end %>
+      <div class="mt-4">
+        <%= link_to "Add Contact", "#", 
+            class: "add-contact-button", 
+            data: { action: "nested-form#add" } %>
+      </div>
+    </div>
   </div>
   <div class="mt-4">
-    <%= form.submit %>
+    <%= form.submit class: "submit-button" %>
   </div>
   <div class="text-center fs-6">
     <%= link_to "Back", employees_path %>

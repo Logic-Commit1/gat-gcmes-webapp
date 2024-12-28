@@ -22,7 +22,7 @@
           <% end %>
         </div>
       </div>
-      <div class="<%= '' if quotation.new_record? %>">
+      <div class="<%= 'hidden' if quotation.new_record? %>">
         <div class="separator"></div>
         <div id="client-section">
           <% if quotation.new_record? %>

@@ -1,26 +1,34 @@
-<div id="<%= dom_id client %>">
-  <p>
-    <strong>Name:</strong>
-    <%= client.name %>
-  </p>
-  <p>
-    <strong>Code:</strong>
-    <%= client.code %>
-  </p>
-  <p>
-    <strong>Contacts:</strong>
-    <%= client.contacts %>
-  </p>
-  <p>
-    <strong>Address:</strong>
-    <%= client.address %>
-  </p>
-  <p>
-    <strong>Partner:</strong>
-    <%= client.company.code %>
-  </p>
-  <p>
-    <strong>Tin:</strong>
-    <%= client.tin %>
-  </p>
+<div class="document-page show-page page client-page" id="<%= dom_id client %>">
+  <%= render 'pages/components/show_header', document: client %>
+  <%= render 'pages/components/action_buttons', document: client %>
+  <div class="client-card">
+    <p class="client-name">
+      <%= client.name %>
+    </p>
+    <p>
+      <%= client.address %>
+    </p>
+    <hr>
+    <p>
+      <p>Contacts</p>
+      <table>
+        <tbody>
+          <% client.contacts.each do |contact| %>
+            <tr>
+              <td><%= contact.name %></td>
+              <td><%= contact.contact_numbers.join(', ') %></td>
+              <td> <%= contact.emails.join(', ') %><%= mail_to contact.emails.first, '<i class="far fa-envelope" style="margin-left: 5px;"></i>'.html_safe %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </p>
+  </div>
+  <br>
+  <br>
+  <% if client.projects.any? %>
+    <div class="projects-with-client-card">
+      <%= render 'components/table', title: 'Projects', documents: client.projects %>
+    </div>
+  <% end %>
 </div>

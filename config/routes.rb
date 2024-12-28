@@ -44,7 +44,12 @@ Rails.application.routes.draw do
     end
   end
   resources :projects
-  resources :clients
+  resources :clients do
+    member do
+      delete :destroy
+    end
+  end
+
 
   resources :companies do
     get 'clients', on: :member

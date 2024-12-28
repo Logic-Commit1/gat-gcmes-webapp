@@ -1,42 +1,70 @@
-<%= form_with(model: client) do |form| %>
-  <% if client.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(client.errors.count, "error") %> prohibited this client from being saved:</h2>
-      <ul>
-        <% client.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <div data-controller="company-select">
-    <%= form.label :company, style: "display: block" %>
-    <% Company.all.each do |company| %>
-      <%= form.radio_button :company_id, company.id, data: { action: "company-select#showHiddenDivs" } %> <%= company.code %>
+<div class="form-container">
+  <%= form_with(model: client, html: { autocomplete: "off" }, data: {
+  controller: "nested-form",
+  nested_form_wrapper_selector_value: '.nested-form-wrapper'
+}) do |form| %>
+    <% if client.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(client.errors.count, "error") %> prohibited this client from being saved:</h2>
+        <ul>
+          <% client.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
     <% end %>
-    <div class="hidden">
-      <div>
-        <%= form.label :name, style: "display: block" %>
-        <%= form.text_field :name, placeholder: "e.g. Philippine Span Asia Carrier Corp." %>
+    <div data-controller="company-select">
+      <div class="field flex" id="company-field">
+        <%= form.label :company, style: "display: block" %>
+        <div>
+          <% Company.all.each do |company| %>
+            <%= form.radio_button :company_id, company.id, data: { action: "company-select#showHiddenDivs" } %> <%= company.code %>
+          <% end %>
+        </div>
       </div>
-      <div>
-        <%= form.label :code, style: "display: block" %>
-        <%= form.text_field :code, placeholder: "e.g. PSACC" %>
-      </div>
-      <div>
-        <%= form.label :contacts, style: "display: block" %>
-        <%= form.text_field :contacts, placeholder: "e.g. 09123456789" %>
-      </div>
-      <div>
-        <%= form.label :tin, style: "display: block" %>
-        <%= form.text_field :tin, placeholder: "e.g. 1234567890" %>
-      </div>
-      <div>
-        <%= form.label :address, style: "display: block" %>
-        <%= form.text_area :address, placeholder: "e.g. Sulpicio Go Street, Cebu City" %>
-      </div>
-      <div>
-        <%= form.submit %>
+      <div class='hidden'>
+        <div class="field">
+          <%= form.label :name, style: "display: block" %>
+          <%= form.text_field :name, placeholder: 'Philippine Span Asia Carrier Corporation' %>
+        </div>
+        <div class="field">
+          <%= form.label :code, style: "display: block" %>
+          <%= form.text_field :code, placeholder: 'PSACC' %>
+        </div>
+        <div class="field">
+          <%= form.label :address, style: "display: block" %>
+          <%= form.text_area :address, placeholder: 'Sulpicio Go Street, Cebu City' %>
+        </div>
+        <div class="field">
+          <%= form.label :tin, style: "display: block" %>
+          <%= form.text_field :tin, placeholder: '1234567890' %>
+        </div>
+        <div id="contact-table-section">
+          <p class="semibold" style="margin-bottom: 10px;">Contact Table</p>
+          <table class="contact-table">
+            <thead>
+              <tr id="table-header">
+                <th style="width: 20%;">Name</th>
+                <th style="width: 15%;">Emails</th>
+                <th style="width: 15%;">Contact Numbers</th>
+                <th style="width: 3%;"></th>
+              </tr>
+            </thead>
+          </table>
+          <template data-nested-form-target="template">
+            <%= form.fields_for :contacts, Contact.new, child_index: 'NEW_RECORD' do |contact_fields| %>
+              <%= render "clients/contact_fields", f: contact_fields %>
+            <% end %>
+          </template>
+          <%= form.fields_for :contacts do |contact_fields| %>
+            <%= render "clients/contact_fields", f: contact_fields %>
+          <% end %>
+          <div data-nested-form-target="target"></div>
+          <%= link_to '<i class="fas fa-plus"></i> Add Contact'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#add" } %>
+        </div>
+        <div>
+          <%= form.submit %>
+        </div>
       </div>
     </div>
   </div>

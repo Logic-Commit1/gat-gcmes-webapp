@@ -9,8 +9,10 @@
         <td style="width: 15%;"><%= f.text_field :price, value: f.object.price != 0.0 ? f.object.price : nil, style: "text-align: right", placeholder: "PHP 0.00", data: { action: "input->total-calculator#calculate" } %></td>
         <td style="width: 15%;"><%= f.file_field :image %></td>
         <td style="width: 10%; text-align: center; vertical-align: middle;">
-          <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#remove" } %>
-          <%= f.hidden_field :_destroy %>
+          <% unless f.object == f.object.quotation&.products&.first %>
+            <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#remove" } %>
+            <%= f.hidden_field :_destroy %>
+          <% end %>
         </td>
       </tr>
       <tr>
@@ -29,7 +31,9 @@
                 <%= spec_fields.text_field :value, style: "border: 1px solid #ccc;" %>
               </div>
               <div>
-                <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#removeSpec" } %>
+                <% unless f.object == f.object.quotation&.products&.first&.specs&.first %>
+                  <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#removeSpec" } %>
+                <% end %>
               </div>
               <%= spec_fields.hidden_field :_destroy %>
             </div>
@@ -49,7 +53,9 @@
           <%= spec_fields.text_field :value, style: "border: 1px solid #ccc;" %>
         </div>
         <div>
-          <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#removeSpec" } %>
+          <% unless f.object == f.object.specs&.first %>
+            <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#removeSpec" } %>
+          <% end %>
         </div>
         <%= spec_fields.hidden_field :_destroy %>
       </div>

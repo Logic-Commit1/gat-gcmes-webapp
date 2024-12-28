@@ -17,4 +17,71 @@
       margin-right: 5px;
     }
   }
+
+  &.client-page {
+    max-width: 800px;
+    .client-card {
+      margin-bottom: 1rem;
+      padding: 1.5rem 2.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #fff;
+
+      .client-name {
+        font-size: 2rem;
+        font-weight: 500;
+      }
+
+      p {
+        margin-bottom: 12px;
+        font-size: 16px;
+      }
+
+      hr {
+        margin: 16px 0;
+        border: none;
+        border-top: 1px solid #ccc;
+      }
+
+      strong {
+        display: block;
+        margin-bottom: 12px;
+        font-size: 18px;
+      }
+
+      table {
+        width: 60%;
+        border-collapse: collapse;
+        margin: 8px 0;
+
+        th,
+        td {
+          text-align: left;
+          // border-bottom: 1px solid #eee;
+        }
+
+        th {
+          font-weight: 500;
+          // color: var(--gray-color);
+          // background-color: #f9f9f9;
+        }
+      }
+
+      div {
+        // margin-bottom: 12px;
+        // border: 1px solid #eee;
+        // border-radius: 4px;
+
+        p {
+          margin-bottom: 8px;
+          color: var(--gray-color);
+
+          &:first-child {
+            font-weight: 500;
+            color: #000;
+          }
+        }
+      }
+    }
+  }
 }

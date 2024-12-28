@@ -1,44 +1,61 @@
 <div class="action-buttons flex flex-start">
-  <% unless document.approved? %>
+  <% if document.class.name.underscore == 'client' %>
     <button class="button flex items-center white">
       <%= link_to send("edit_#{document.class.name.underscore}_path", document) do %>
         <i class="fa-regular fa-edit"></i>
         <span>Edit</span>
       <% end %>
     </button>
-  <% end %>
-  <%# <button class="button flex items-center" style="background-color: white;">
+    <%= button_to send("#{document.class.name.underscore}_path", document), 
+                method: :delete, 
+                class: "button flex items-center white", 
+                style: "background-color: var(--danger-color);", 
+                data: { turbo_confirm: "Are you sure you want to delete '#{document.name}'?" } do %>
+      <i class="fa-regular fa-trash-can"></i>
+      <span class="white">Delete</span>
+    <% end %>
+  <% else %>
+    <% unless document.approved? %>
+      <button class="button flex items-center white">
+        <%= link_to send("edit_#{document.class.name.underscore}_path", document) do %>
+          <i class="fa-regular fa-edit"></i>
+          <span>Edit</span>
+        <% end %>
+      </button>
+    <% end %>
+    <%# <button class="button flex items-center" style="background-color: white;">
     <i class="fa-regular fa-comment"></i>
     <span>Comments</span>
   </button> %>
-  <% unless document.approved? %>
-    <%= button_to send("void_#{document.class.name.underscore}_path", document), 
+    <% unless document.approved? %>
+      <%= button_to send("void_#{document.class.name.underscore}_path", document), 
                 method: :delete, 
                 class: "button flex items-center white", 
                 style: "background-color: var(--danger-color);", 
                 data: { turbo_confirm: "Are you sure you want to void '#{document.uid}'?" } do %>
-      <i class="fa-regular fa-trash-can"></i>
-      <span class="white">Void</span>
+        <i class="fa-regular fa-trash-can"></i>
+        <span class="white">Void</span>
+      <% end %>
     <% end %>
-  <% end %>
-  <% unless document.approved? %>
-    <%= button_to send("approve_#{document.class.name.underscore}_path", document), 
+    <% unless document.approved? %>
+      <%= button_to send("approve_#{document.class.name.underscore}_path", document), 
                 method: :patch, 
                 class: "button flex items-center white", 
                 id: "btn-approve", 
                 data: { turbo_confirm: "Are you sure you want to approve '#{document.uid}'?" } do %>
-      <i class="fa-regular fa-circle-check"></i>
-      <span>Approve</span>
+        <i class="fa-regular fa-circle-check"></i>
+        <span>Approve</span>
+      <% end %>
     <% end %>
-  <% end %>
-  <% if document.approved? %>
-    <%= button_to send("pending_#{document.class.name.underscore}_path", document), 
+    <% if document.approved? %>
+      <%= button_to send("pending_#{document.class.name.underscore}_path", document), 
                 method: :patch, 
                 class: "button flex items-center white", 
                 id: "btn-reject", 
                 data: { turbo_confirm: "Are you sure you want to unapprove '#{document.uid}'?" } do %>
-      <i class="fa-regular fa-circle-xmark"></i>
-      <span>Unapprove</span>
+        <i class="fa-regular fa-circle-xmark"></i>
+        <span>Unapprove</span>
+      <% end %>
     <% end %>
   <% end %>
 </div>

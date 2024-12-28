@@ -66,7 +66,7 @@
     <tbody>
       <!-- Dynamic content will be generated based on the title -->
       <% if title == "Quotations" %>
-        <% @quotations.each do |quotation| %>
+        <% documents&.each do |quotation| %>
           <tr onclick="window.location='<%= quotation_path(quotation) %>'" style="cursor: pointer">
             <td><%= quotation.uid %></td>
             <td><%= quotation.client.code %></td>
@@ -77,7 +77,7 @@
           </tr>
         <% end %>
       <% elsif title == "Request Forms" %>
-        <% @request_forms.each do |form| %>
+        <% documents&.each do |form| %>
           <tr onclick="window.location='<%= request_form_path(form) %>'" style="cursor: pointer">
             <td><%= form.uid %></td>
             <td><%= form.quotation&.uid %></td>
@@ -88,7 +88,7 @@
           </tr>
         <% end %>
       <% elsif title == "Canvasses" %>
-        <% @canvasses.each do |canvass| %>
+        <% documents&.each do |canvass| %>
           <tr onclick="window.location='<%= canvass_path(canvass) %>'" style="cursor: pointer">
             <td><%= canvass.uid %></td>
             <td><%= canvass.description %></td>
@@ -97,7 +97,7 @@
           </tr>
         <% end %>
       <% elsif title == "Purchase Orders" %>
-        <% @purchase_orders.each do |po| %>
+        <% documents&.each do |po| %>
           <tr onclick="window.location='<%= purchase_order_path(po) %>'" style="cursor: pointer">
             <td><%= po&.uid %></td>
             <td><%= po.supplier.code %></td>
@@ -107,7 +107,8 @@
           </tr>
         <% end %>
       <% elsif title == "Projects" %>
-        <% @projects.each do |project| %>
+        <% documents&.each do |project| %>
+        
           <tr>
             <td><%= project.uid %></td>
             <td><%= project.client.code %></td>
@@ -117,7 +118,7 @@
           </tr>
         <% end %>
       <% elsif title == "Employees" %>
-        <% @employees.each do |employee| %>
+        <% documents&.each do |employee| %>
           <tr>
             <td><%= employee.name %></td>
             <td><%= employee.contact_number %></td>
@@ -125,7 +126,7 @@
           </tr>
         <% end %>
       <% elsif title == "Suppliers" %>
-        <% @suppliers.each do |supplier| %>
+        <% documents&.each do |supplier| %>
           <tr>
             <td><%= supplier.name %></td>
             <td><%= supplier.code %></td>
@@ -134,8 +135,8 @@
           </tr>
         <% end %>
       <% elsif title == "Clients" %>
-        <% @clients.each do |client| %>
-          <tr>
+        <% documents&.each do |client| %>
+          <tr onclick="window.location='<%= client_path(client) %>'" style="cursor: pointer">
             <td><%= client.name %></td>
             <td><%= client.code %></td>
             <td><%= client.address %></td>
