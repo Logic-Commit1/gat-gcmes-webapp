@@ -13,6 +13,7 @@ class SuppliersController < ApplicationController
   # GET /suppliers/new
   def new
     @supplier = Supplier.new
+    @supplier.contacts.build
   end
 
   # GET /suppliers/1/edit
@@ -65,6 +66,19 @@ class SuppliersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def supplier_params
-      params.require(:supplier).permit(:name, :code, :contacts, :address, :tin, :company_id)
+      params.require(:supplier).permit(
+        :name, 
+        :code, 
+        :address, 
+        :tin, 
+        :company_id, 
+        contacts_attributes: [
+          :id, 
+          :name, 
+          { emails: [] }, 
+          { contact_numbers: [] }, 
+          :_destroy
+        ]
+      )
     end
 end

@@ -127,7 +127,7 @@
         <% end %>
       <% elsif title == "Suppliers" %>
         <% documents&.each do |supplier| %>
-          <tr>
+          <tr onclick="window.location='<%= supplier_path(supplier) %>'" style="cursor: pointer">
             <td><%= supplier.name %></td>
             <td><%= supplier.code %></td>
             <td><%= supplier.address %></td>

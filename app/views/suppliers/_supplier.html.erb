@@ -1,26 +1,28 @@
-<div id="<%= dom_id supplier %>">
-  <p>
-    <strong>Partner:</strong>
-    <%= supplier.company.code %>
-  </p>
-  <p>
-    <strong>Name:</strong>
-    <%= supplier.name %>
-  </p>
-  <p>
-    <strong>Code:</strong>
-    <%= supplier.code %>
-  </p>
-  <p>
-    <strong>Contacts:</strong>
-    <%= supplier.contacts %>
-  </p>
-  <p>
-    <strong>Address:</strong>
-    <%= supplier.address %>
-  </p>
-  <p>
-    <strong>Tin:</strong>
-    <%= supplier.tin %>
-  </p>
+<div class="document-page show-page page supplier-page" id="<%= dom_id supplier %>">
+  <%= render 'pages/components/show_header', document: supplier %>
+  <br>
+  <%= render 'pages/components/action_buttons', document: supplier %>
+  <div class="client-card">
+    <p class="client-name">
+      <%= supplier.name %>
+    </p>
+    <p>
+      <%= supplier.address %>
+    </p>
+    <hr>
+    <p>
+      <p>Contacts</p>
+      <table>
+        <tbody>
+          <% supplier.contacts.each do |contact| %>
+            <tr style="height: 30px;">
+              <td><%= contact.name %></td>
+              <td><%= contact.contact_numbers.join(', ') %></td>
+              <td> <%= contact.emails.join(', ') %><%= mail_to contact.emails.first, '<i class="far fa-envelope" style="margin-left: 5px;"></i>'.html_safe %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </p>
+  </div>
 </div>

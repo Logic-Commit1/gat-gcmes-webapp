@@ -1,19 +1,12 @@
 <div class="header">
-  <% if document.class.name.underscore == 'client' %>
-    <a href="/clients" class="back-icon" style="color: #4b4b4b;">
-      <i class="fa-solid fa-arrow-left"></i>
-      <span class="page-title">Clients</span>
-    </a>
-    <i class="fa-solid fa-chevron-right"></i>
+  <a href="/<%= document.class.name.tableize %>" class="back-icon" style="color: #4b4b4b;">
+    <i class="fa-solid fa-arrow-left"></i>
+    <span class="page-title"><%= document.class.name.underscore.humanize.titleize.pluralize %></span>
+  </a>
+  <i class="fa-solid fa-chevron-right"></i>
+  <% if %w[supplier client].include?(document.class.name.underscore) %>
     <span><%= document.name %></span>
-    <br>
-    <br>
   <% else %>
-    <a href="/<%= document.class.name.tableize %>" class="back-icon" style="color: #4b4b4b;">
-      <i class="fa-solid fa-arrow-left"></i>
-      <span class="page-title"><%= document.class.name.underscore.humanize.titleize.pluralize %></span>
-    </a>
-    <i class="fa-solid fa-chevron-right"></i>
     <span><%= document.uid %></span>
   <% end %>
 </div>

@@ -1,5 +1,5 @@
 <div class="action-buttons flex flex-start">
-  <% if document.class.name.underscore == 'client' %>
+  <% if %w[client supplier].include?(document.class.name.underscore) %>
     <button class="button flex items-center white">
       <%= link_to send("edit_#{document.class.name.underscore}_path", document) do %>
         <i class="fa-regular fa-edit"></i>
