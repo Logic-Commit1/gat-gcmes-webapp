@@ -13,11 +13,10 @@ export default class extends Controller {
   ]
 
   connect() {
-    console.log("connect company select controller")
     // Check if the form is in edit mode
-    if (this.element.dataset.editMode === "true") {
-      this.populateClientSelect()
-    }
+    // if (this.element.dataset.editMode === "true") {
+    //   this.populateClientSelect()
+    // }
   }
 
   selectCompanyForClient(event) {
@@ -51,10 +50,10 @@ export default class extends Controller {
     )
   }
 
-  selectCompanyForProjectsRequestFormsAndSuppliers(event) {
+  selectCompanyForProjectsAndSuppliers(event) {
     this.selectCompanyForProjects(event)
     this.selectCompanyForSuppliers(event)
-    this.selectCompanyForRequestForms(event)
+    // this.selectCompanyForRequestForms(event)
   }
 
   selectCompanyForProjectsCanvassesQuotations(event) {
@@ -184,9 +183,7 @@ export default class extends Controller {
   }
 
   showProjectSelect() {
-    console.log("showProjectSelect")
     this.projectSelectFieldTarget.classList.remove("hidden")
-    console.log(2)
   }
 
   getDynamicTarget() {

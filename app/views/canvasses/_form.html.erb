@@ -1,7 +1,9 @@
 <div class="form-container">
   <%= form_with(model: canvass, html: { autocomplete: "off" }, data: {
-  controller: "nested-form",
-  nested_form_wrapper_selector_value: '.nested-form-wrapper'
+  controller: "nested-form form-validation",
+  nested_form_wrapper_selector_value: '.nested-form-wrapper',
+  form_validation_target: "form",
+  action: "submit->form-validation#validateCanvassForm"
 }) do |form| %>
     <% if canvass.errors.any? %>
       <div style="color: red">
@@ -45,11 +47,27 @@
             <div class="semibold">Product Details</div>
             <div class="field">
               <%= form.label :description, "Item Description", style: "display: block" %>
-              <%= form.text_field :description, data: { shared_fields_target: "descriptionField" }, style: "width: 100%;" %>
+              <%= form.text_field :description, 
+                data: { 
+                  shared_fields_target: "descriptionField",
+                  form_validation_target: "descriptionInput"
+                }, 
+                style: "width: 100%;" %>
+              <div class="error-message hidden" data-form-validation-target="descriptionError">
+                Please enter an item description
+              </div>
             </div>
             <div class="field">
               <%= form.label :quantity, style: "display: block" %>
-              <%= form.number_field :quantity, data: { shared_fields_target: "quantityField" }, style: "width: 100%;" %>
+              <%= form.number_field :quantity, 
+                data: { 
+                  shared_fields_target: "quantityField",
+                  form_validation_target: "quantityInput"
+                }, 
+                style: "width: 100%;" %>
+              <div class="error-message hidden" data-form-validation-target="quantityError">
+                Please enter a quantity
+              </div>
             </div>
             <div class="field">
               <%= form.label :unit, "Unit", style: "display: block" %>
@@ -57,7 +75,14 @@
                 <%= form.select :unit, 
                   options_for_select([['Select Unit', '']] + ApplicationRecord::UNIT_OF_MEASUREMENTS.map { |unit| [unit, unit] }), 
                   { include_blank: false },
-                data: { shared_fields_target: "unitField" } %>
+                  data: { 
+                    shared_fields_target: "unitField",
+                    form_validation_target: "unitSelect"
+                  } %>
+                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+              </div>
+              <div class="error-message hidden" data-form-validation-target="unitError">
+                Please select a unit
               </div>
             </div>
           </div>
@@ -86,6 +111,9 @@
             <div data-nested-form-target="target"></div>
           </div>
           <%= link_to '<i class="fas fa-plus"></i> Add Supplier'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#add" } %>
+          <div class="error-message hidden" data-form-validation-target="suppliersError">
+            Please add at least one supplier and fill in all required fields
+          </div>
           <div style="margin-top: 20px;">
             <%= form.submit data: { action: "shared-fields#sync" } %>
           </div>

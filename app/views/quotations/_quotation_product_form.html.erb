@@ -1,7 +1,7 @@
 <div class="nested-form-wrapper" data-new-record="<%= f.object.new_record? %>">
-  <table class="quotation-product-table">
+  <table class="quotation-product-table" >
     <tbody>
-      <tr>
+      <tr data-form-validation-target="itemsTable">
         <td style="width: 30%;"><%= f.text_field :name %></td>
         <td style="width: 15%;"><%= f.text_field :brand %></td>
         <td style="width: 10%;"><%= f.number_field :quantity, style: "text-align: right", placeholder: "0.00", data: { action: "input->total-calculator#calculate" } %></td>

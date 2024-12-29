@@ -1,7 +1,9 @@
 <div class="form-container">
   <%= form_with(model: quotation, html: { autocomplete: "off" }, data: {
-  controller: "nested-form",
-  nested_form_wrapper_selector_value: '.nested-form-wrapper'
+  controller: "nested-form form-validation",
+  nested_form_wrapper_selector_value: '.nested-form-wrapper',
+  form_validation_target: "form",
+  action: "submit->form-validation#validateQuotationForm"
 }) do |form| %>
     <% if quotation.errors.any? %>
       <div style="color: red">
@@ -51,8 +53,18 @@
               <div class="field">
                 <%= form.label :client_id %>
                 <div class="select-container">
-                  <%= form.collection_select :client_id, [], :id, :name, { prompt: "Select Client" }, { style: "display: block", data: { company_select_target: "clientSelect" }} %>
+                  <%= form.collection_select :client_id, [], :id, :name, 
+                    { prompt: "Select Client" }, 
+                    { style: "display: block", 
+                      data: { 
+                        company_select_target: "clientSelect",
+                        form_validation_target: "clientSelect"
+                      }
+                    } %>
                   <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+                </div>
+                <div class="error-message hidden" data-form-validation-target="clientError">
+                  Please select a client
                 </div>
               </div>
             <% end %>
@@ -68,7 +80,10 @@
           <div class="separator"></div>
           <div class="field">
             <%= form.label :subject, "Subject" %>
-            <%= form.text_field :subject %>
+            <%= form.text_field :subject, data: { form_validation_target: "subjectInput" } %>
+            <div class="error-message hidden" data-form-validation-target="subjectError">
+              Please enter a subject
+            </div>
           </div>
           <div class="separator"></div>
           <div id="item-table-section" data-controller="total-calculator">
@@ -96,6 +111,9 @@
             <% end %>
             <div data-nested-form-target="target"></div>
             <%= link_to '<i class="fas fa-plus"></i> Add Item'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#add" } %>
+            <div class="error-message hidden" data-form-validation-target="itemsError">
+              Please add at least one item and fill in all required fields
+            </div>
             <div class="total-calculator">
               <div class="totals-section">
                 <div class="total-row">
