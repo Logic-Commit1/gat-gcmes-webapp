@@ -22,7 +22,7 @@
           <% end %>
         </div>
       </div>
-      <div class='hidden'>
+      <div class="<%= '' if client.new_record? %>">
         <div class="field">
           <%= form.label :name, style: "display: block" %>
           <%= form.text_field :name, placeholder: 'Philippine Span Asia Carrier Corporation' %>
@@ -39,6 +39,7 @@
           <%= form.label :tin, style: "display: block" %>
           <%= form.text_field :tin, placeholder: '1234567890' %>
         </div>
+        <div class="separator"></div>
         <div id="contact-table-section">
           <p class="semibold" style="margin-bottom: 10px;">Contact Table</p>
           <table class="contact-table">
@@ -60,10 +61,13 @@
             <%= render "clients/contact_fields", f: contact_fields %>
           <% end %>
           <div data-nested-form-target="target"></div>
-          <%= link_to '<i class="fas fa-plus"></i> Add Contact'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#add" } %>
         </div>
+        <%= link_to '<i class="fas fa-plus"></i> Add Contact'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#add" } %>
         <div>
           <%= form.submit %>
+        </div>
+        <div class="text-center">
+          <%= link_to 'Cancel', client.persisted? ? client_path(client) : clients_path %>
         </div>
       </div>
     </div>

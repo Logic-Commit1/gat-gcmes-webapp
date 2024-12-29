@@ -18,7 +18,7 @@
       <tr>
         <td colspan="7" style="position: relative; padding: 10px;">
           <%= link_to '<i class="fas fa-plus"></i> Add Spec'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#addSpec" }, style: "position: absolute; left: 15px; bottom: 5px" %>
-          <div class="<%= 'hidden' if @quotation.new_record? %>" id="spec-title">
+          <div class="hidden" id="spec-title">
             <p>Specification</p>
             <p>Value</p>
           </div>

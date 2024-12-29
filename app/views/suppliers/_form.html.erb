@@ -22,7 +22,7 @@
           <% end %>
         </div>
       </div>
-      <div class='hidden'>
+      <div class="<%= 'hidden' if supplier.new_record? %>">
         <div class="field">
           <%= form.label :name, style: "display: block" %>
           <%= form.text_field :name, placeholder: 'Philippine Span Asia Carrier Corporation' %>
@@ -64,6 +64,9 @@
         </div>
         <div>
           <%= form.submit %>
+        </div>
+        <div class="text-center">
+          <%= link_to 'Cancel', supplier.persisted? ? supplier_path(supplier) : suppliers_path %>
         </div>
       </div>
     </div>

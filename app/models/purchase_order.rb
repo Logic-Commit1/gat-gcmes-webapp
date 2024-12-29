@@ -4,9 +4,9 @@ class PurchaseOrder < ApplicationRecord
   belongs_to :company
   belongs_to :supplier
   belongs_to :project
+  belongs_to :request_form, optional: true
   # belongs_to :employee
 
-  has_many :request_forms
   has_many :products, dependent: :destroy, inverse_of: :purchase_order
   accepts_nested_attributes_for :products, allow_destroy: true, reject_if: :all_blank
   # has_many :particulars, through: :request_forms
@@ -32,5 +32,13 @@ class PurchaseOrder < ApplicationRecord
 
   def set_total
     self.total = self.products.sum { |product| product.price * product.quantity }
+  end
+
+  def gat?
+    self.company.code.downcase == 'gat'
+  end
+
+  def gcmes?
+    self.company.code.downcase == 'gcmes'
   end
 end

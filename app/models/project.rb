@@ -22,4 +22,12 @@ class Project < ApplicationRecord
     count = self.client.quotations.count
     self.uid = "#{company_code}_PROJ#{year_str}_#{(count+1).to_s.rjust(4, '0')}"
   end
+   
+  def gat?
+    self.company.code.downcase == 'gat'
+  end
+
+  def gcmes?
+    self.company.code.downcase == 'gcmes'
+  end
 end
