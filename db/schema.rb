@@ -147,7 +147,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_29_050318) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "company_id"
-    t.string "po_number"
+    t.string "po_number", null: false
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["company_id"], name: "index_projects_on_company_id"
   end

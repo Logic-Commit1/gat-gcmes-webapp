@@ -4,7 +4,7 @@
   <%= render 'pages/components/action_buttons', document: document %>
   <!--
   -->
-  <div class="">
+  <div class="flex column-gap-10">
     <iframe 
       src="<%= case document.class.name.underscore
                 when 'quotation' then pdf_view_quotation_path(document)
@@ -18,5 +18,35 @@
       frameborder="0"
       >
     </iframe>
+    <div class="linked-documents">
+      <%= link_to project_path(document.project), class: "project-card" do %>
+        <header>
+          <%= document.project.uid %>
+        </header>
+        <hr>
+        <div class="project-details">
+          <div class="flex space-between">
+            <div class="project-client">
+              <p>Client</p>
+              <p><%= document.project.client.name %></p>
+            </div>
+            <div class="project-amount">
+              <p>Amount</p>
+              <p><%= number_to_currency(document.project.amount, unit: "₱") %></p>
+            </div>
+          </div>
+          <div class="flex space-between">
+            <div class="project-po-number">
+              <p>PO Number</p>
+              <p><%= document.project.po_number.presence || "—" %></p>
+            </div>
+            <div class="project-payment">
+              <p>Payment</p>
+              <p><%= number_to_currency(document.project.payment, unit: "₱") %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
