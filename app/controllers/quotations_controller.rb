@@ -134,7 +134,7 @@ class QuotationsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def quotation_params
       params.require(:quotation).permit(
-        :uid, :company_id, :client_id, :attention, :vessel, :subject, :user_id,
+        :uid, :company_id, :project_id, :client_id, :attention, :vessel, :subject, :user_id,
         :remarks, :payment, :lead_time, :warranty, :sub_total,
         :total, :vat, :additional_conditions, :preparer, :approver, :discount, :discount_rate,
         products_attributes: [

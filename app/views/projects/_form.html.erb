@@ -1,42 +1,72 @@
-<%= form_with(model: project) do |form| %>
-  <% if project.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
-      <ul>
-        <% project.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<div class="form-container">
+  <%= form_with(model: project, html: { autocomplete: "off" }) do |form| %>
+    <% if project.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+        <ul>
+          <% project.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div data-controller="company-select">
+      <div class="field flex" id="company-field">
+        <%= form.label :company, style: "display: block" %>
+        <div>
+          <% Company.all.each do |company| %>
+            <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForClient" } %> <%= company.code %>
+          <% end %>
+        </div>
+      </div>
+      <div class="">
+        <div class="field">
+          <%= form.label :client_id, style: "display: block" %>
+          <div class="select-container">
+            <%= form.collection_select :client_id, [], :id, :name, 
+                { prompt: "Select Client" }, 
+                data: { company_select_target: "clientSelect" } %>
+            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+          </div>
+        </div>
+        <div class="field">
+          <%= form.label :client_po, "Client's P.O.", style: "display: block" %>
+          <%= form.file_field :client_po %>
+        </div>
+        <div class="field">
+          <%= form.label :po_number, "PO Number", style: "display: block" %>
+          <%= form.text_field :po_number %>
+        </div>
+        <div class="separator"></div>
+        <p class="semibold" style="margin-bottom: 10px;">Linked Documents</p>
+        <div class="field">
+          <%= form.label :quotation_id, style: "display: block" %>
+          <div class="select-container">
+            <%= form.collection_select :quotation_id, Quotation.all, :id, :uid, 
+                { prompt: "Select Quotation" }, 
+                data: { company_select_target: "clientSelect" } %>
+            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+          </div>
+        </div>
+        <div class="separator"></div>
+        <div class="field">
+          <%= form.label :amount, style: "display: block" %>
+          <%= form.text_field :amount %>
+        </div>
+        <div class="field">
+          <%= form.label :payment, style: "display: block" %>
+          <div class="select-container">
+            <%= form.select :payment, [['50% downpayment', '50% downpayment'], ['30 days', '30 days'], ['Paid', 'Paid']], { prompt: "Select Payment" } %>
+            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+          </div>
+        </div>
+        <div>
+          <%= form.submit %>
+        </div>
+        <div class="text-center">
+          <%= link_to 'Cancel', project.persisted? ? project_path(project) : projects_path %>
+        </div>
+      </div>
     </div>
   <% end %>
-  <div data-controller="company-select">
-    <%= form.label :company, style: "display: block" %>
-    <% Company.all.each do |company| %>
-      <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForClient" } %> <%= company.code %>
-    <% end %>
-    <div class="hidden">
-      <%= form.label :client_id, style: "display: block" %>
-      <%= form.collection_select :client_id, [], :id, :name, { prompt: "Select Client" }, { style: "display: block", data: { company_select_target: "clientSelect" } } %>
-      <div>
-        <%= form.label :client_po, "Client's P.O.", style: "display: block" %>
-        <%= form.file_field :client_po %>
-      </div>
-      <div>
-        <%= form.label :quotation_id, style: "display: block" %>
-        <%= form.collection_select :quotation_id, Quotation.all, :id, :uid, { prompt: "Select Client" }, { style: "display: block", data: { company_select_target: "clientSelect" } } %>
-      </div>
-      <div>
-        <%= form.label :amount, style: "display: block" %>
-        <%= form.text_field :amount %>
-      </div>
-      <div>
-        <%= form.label :payment, style: "display: block" %>
-        <%= form.select :payment, [['50% downpayment', '50% downpayment'], ['30 days', '30 days'], ['Paid', 'Paid']], { prompt: "Select Payment" }, { style: "display: block" } %>
-      </div>
-      <br>
-      <div>
-        <%= form.submit %>
-      </div>
-    </div>
-  </div>
-<% end %>
+</div>

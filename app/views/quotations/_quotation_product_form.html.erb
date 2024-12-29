@@ -5,7 +5,10 @@
         <td style="width: 30%;"><%= f.text_field :name %></td>
         <td style="width: 15%;"><%= f.text_field :brand %></td>
         <td style="width: 10%;"><%= f.number_field :quantity, style: "text-align: right", placeholder: "0.00", data: { action: "input->total-calculator#calculate" } %></td>
-        <td style="width: 10%;"><%= f.text_field :unit, style: "text-align: right", placeholder: "Unit" %></td>
+        <td style="width: 10%;"><%= f.select :unit,
+                  options_for_select([['Select Unit', '']] + ApplicationRecord::UNIT_OF_MEASUREMENTS.map { |unit| [unit, unit] }),
+                  { include_blank: false },
+                  { style: "text-align: right" } %></td>
         <td style="width: 15%;"><%= f.text_field :price, value: f.object.price != 0.0 ? f.object.price : nil, style: "text-align: right", placeholder: "PHP 0.00", data: { action: "input->total-calculator#calculate" } %></td>
         <td style="width: 15%;"><%= f.file_field :image %></td>
         <td style="width: 10%; text-align: center; vertical-align: middle;">

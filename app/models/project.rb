@@ -2,14 +2,15 @@ class Project < ApplicationRecord
   belongs_to :client
   belongs_to :company
 
-  # belongs_to :quotation
+  has_many :quotations
   has_many :request_forms
   has_many :purchase_orders
+  has_many :canvasses
   
   has_one_attached :client_po
 
   enum :payment, [ "50% downpayment", "30 days", "Paid" ]
-  enum :status, [ "Ongoing", "Served" ]
+  enum :status, [ "Ongoing", "Served", "Cancelled" ]
 
   before_save :set_uid
 

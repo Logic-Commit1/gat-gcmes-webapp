@@ -1,8 +1,8 @@
 class Quotation < ApplicationRecord
   belongs_to :client
   belongs_to :company
+  belongs_to :project
   
-  has_many :projects
   has_many :products, dependent: :destroy, inverse_of: :quotation
   has_many :request_forms
   accepts_nested_attributes_for :products, allow_destroy: true, reject_if: :all_blank

@@ -18,117 +18,134 @@
         <%= form.label :company %>
         <div>
           <% Company.all.each do |company| %>
-            <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForClient" } %> <%= company.code %>
+            <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForProjectsClient" } %> <%= company.code %>
           <% end %>
         </div>
       </div>
       <div class="<%= 'hidden' if quotation.new_record? %>">
         <div class="separator"></div>
-        <div id="client-section">
-          <% if quotation.new_record? %>
-            <div class="semibold">Client Details</div>
-            <div class="field">
-              <%= form.label :client_id %>
-              <div class="select-container">
-                <%= form.collection_select :client_id, [], :id, :name, { prompt: "Select Client" }, { style: "display: block", data: { company_select_target: "clientSelect" }} %>
-                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
-              </div>
+        <div>
+          <div class="field hidden" data-company-select-target="projectSelectField">
+            <%= form.label :project_id %>
+            <div class="select-container">
+              <%= form.collection_select :project_id, [], :id, :uid, 
+                { prompt: "Select Project"}, 
+                data: { 
+                  company_select_target: "projectSelect",
+                  form_validation_target: "projectSelect"
+                } %>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
             </div>
-          <% end %>
-        </div>
-        <div class="field">
-          <%= form.label :attention, "Attention" %>
-          <%= form.text_field :attention %>
-        </div>
-        <div class="field">
-          <%= form.label :vessel, "Vessel" %>
-          <%= form.text_field :vessel %>
-        </div>
-        <div class="separator"></div>
-        <div class="field">
-          <%= form.label :subject, "Subject" %>
-          <%= form.text_field :subject %>
-        </div>
-        <div class="separator"></div>
-        <div id="item-table-section" data-controller="total-calculator">
-          <p class="semibold" style="margin-bottom: 10px;">Item Table</p>
-          <table class="quotation-product-table">
-            <thead>
-              <tr id="table-header">
-                <th style="width: 30%;">ITEM DETAIL</th>
-                <th style="width: 15%;">BRAND</th>
-                <th style="width: 10%;">QUANTITY</th>
-                <th style="width: 10%;">U/M</th>
-                <th style="width: 15%;">UNIT PRICE</th>
-                <th style="width: 15%;">IMAGE</th>
-                <th style="width: 10%;"></th>
-              </tr>
-            </thead>
-          </table>
-          <template data-nested-form-target="template">
-            <%= form.fields_for :products, Product.new, child_index: 'NEW_RECORD' do |product_fields| %>
+            <div class="error-message hidden" data-form-validation-target="projectError">
+              Please select a project
+            </div>
+          </div>
+          <div class="separator"></div>
+          <div id="client-section">
+            <% if quotation.new_record? %>
+              <div class="semibold">Client Details</div>
+              <div class="field">
+                <%= form.label :client_id %>
+                <div class="select-container">
+                  <%= form.collection_select :client_id, [], :id, :name, { prompt: "Select Client" }, { style: "display: block", data: { company_select_target: "clientSelect" }} %>
+                  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <div class="field">
+            <%= form.label :attention, "Attention" %>
+            <%= form.text_field :attention %>
+          </div>
+          <div class="field">
+            <%= form.label :vessel, "Vessel" %>
+            <%= form.text_field :vessel %>
+          </div>
+          <div class="separator"></div>
+          <div class="field">
+            <%= form.label :subject, "Subject" %>
+            <%= form.text_field :subject %>
+          </div>
+          <div class="separator"></div>
+          <div id="item-table-section" data-controller="total-calculator">
+            <p class="semibold" style="margin-bottom: 10px;">Item Table</p>
+            <table class="quotation-product-table">
+              <thead>
+                <tr id="table-header">
+                  <th style="width: 30%;">ITEM DETAIL</th>
+                  <th style="width: 15%;">BRAND</th>
+                  <th style="width: 10%;">QUANTITY</th>
+                  <th style="width: 10%;">U/M</th>
+                  <th style="width: 15%;">UNIT PRICE</th>
+                  <th style="width: 15%;">IMAGE</th>
+                  <th style="width: 10%;"></th>
+                </tr>
+              </thead>
+            </table>
+            <template data-nested-form-target="template">
+              <%= form.fields_for :products, Product.new, child_index: 'NEW_RECORD' do |product_fields| %>
+                <%= render "quotations/quotation_product_form", f: product_fields %>
+              <% end %>
+            </template>
+            <%= form.fields_for :products do |product_fields| %>
               <%= render "quotations/quotation_product_form", f: product_fields %>
             <% end %>
-          </template>
-          <%= form.fields_for :products do |product_fields| %>
-            <%= render "quotations/quotation_product_form", f: product_fields %>
-          <% end %>
-          <div data-nested-form-target="target"></div>
-          <%= link_to '<i class="fas fa-plus"></i> Add Item'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#add" } %>
-          <div class="total-calculator">
-            <div class="totals-section">
-              <div class="total-row">
-                <span class="total-label">Sub Total:</span>
-                <span data-total-calculator-target="subTotal">PHP 0.00</span>
-              </div>
-              <div class="total-row">
-                <div>
-                  <span class="total-label">Discount:</span>
-                  <%= form.text_field :discount_rate, value: form.object.discount_rate != 0.0 ? form.object.discount_rate : nil, data: { action: "input->total-calculator#calculate" } %>
-                  %
+            <div data-nested-form-target="target"></div>
+            <%= link_to '<i class="fas fa-plus"></i> Add Item'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#add" } %>
+            <div class="total-calculator">
+              <div class="totals-section">
+                <div class="total-row">
+                  <span class="total-label">Sub Total:</span>
+                  <span data-total-calculator-target="subTotal">PHP 0.00</span>
                 </div>
-                <span data-total-calculator-target="discount">PHP 0.00</span>
-              </div>
-              <div class="total-row">
-                <span class="total-label">VAT (12%):</span>
-                <span data-total-calculator-target="vat">PHP 0.00</span>
-              </div>
-              <div class="total-row total-final">
-                <span class="total-label">Total Amount:</span>
-                <span data-total-calculator-target="total">PHP 0.00</span>
+                <div class="total-row">
+                  <div>
+                    <span class="total-label">Discount:</span>
+                    <%= form.text_field :discount_rate, value: form.object.discount_rate != 0.0 ? form.object.discount_rate : nil, data: { action: "input->total-calculator#calculate" } %>
+                    %
+                  </div>
+                  <span data-total-calculator-target="discount">PHP 0.00</span>
+                </div>
+                <div class="total-row">
+                  <span class="total-label">VAT (12%):</span>
+                  <span data-total-calculator-target="vat">PHP 0.00</span>
+                </div>
+                <div class="total-row total-final">
+                  <span class="total-label">Total Amount:</span>
+                  <span data-total-calculator-target="total">PHP 0.00</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="separator"></div>
-        <div id="terms-and-conditions-section">
-          <div class="semibold">Terms and Conditions</div>
+          <div class="separator"></div>
+          <div id="terms-and-conditions-section">
+            <div class="semibold">Terms and Conditions</div>
+            <div>
+              <div class="field">
+                <%= form.label :lead_time, class: "label" %>
+                <%= form.text_field :lead_time %>
+              </div>
+              <div class="field">
+                <%= form.label :warranty, class: "label" %>
+                <%= form.text_field :warranty %>
+              </div>
+              <div class="field">
+                <%= form.label :payment, 'Payment', class: "label" %>
+                <div class="select-container">
+                  <%= form.collection_select :payment, Quotation.payments.keys, :to_s, :to_s, { prompt: "Select Payment Terms" }, { autocomplete: "off" } %>
+                  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+                </div>
+              </div>
+            </div>
+          </div>
           <div>
-            <div class="field">
-              <%= form.label :lead_time, class: "label" %>
-              <%= form.text_field :lead_time %>
-            </div>
-            <div class="field">
-              <%= form.label :warranty, class: "label" %>
-              <%= form.text_field :warranty %>
-            </div>
-            <div class="field">
-              <%= form.label :payment, 'Payment', class: "label" %>
-              <div class="select-container">
-                <%= form.collection_select :payment, Quotation.payments.keys, :to_s, :to_s, { prompt: "Select Payment Terms" }, { autocomplete: "off" } %>
-                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
-              </div>
-            </div>
+            <%= form.submit %>
           </div>
-        </div>
-        <div>
-          <%= form.submit %>
-        </div>
-        <div class="text-center">
-          <%= link_to 'Cancel', quotation.persisted? ? quotation_path(quotation) : quotations_path %>
+          <div class="text-center">
+            <%= link_to 'Cancel', quotation.persisted? ? quotation_path(quotation) : quotations_path %>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
 </div>

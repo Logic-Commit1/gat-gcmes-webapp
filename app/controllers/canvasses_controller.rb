@@ -119,7 +119,7 @@ class CanvassesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def canvass_params
-      params.require(:canvass).permit(:uid, :company_id, :description, :quantity, :unit, :suppliers,
+      params.require(:canvass).permit(:uid, :company_id, :project_id, :description, :quantity, :unit, :suppliers,
       products_attributes: [ :id, :name, :quantity, :unit, :price, :discount, :brand, :description, :specs, :terms, :remarks, :image, :quotation_id, :canvass_id, :request_form_id, :purchase_order_id, :_destroy, :supplier_id, :_destroy ]
       )
     rescue

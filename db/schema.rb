@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_27_125320) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_29_050318) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,8 +53,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_27_125320) do
     t.string "unit"
     t.datetime "deleted_at"
     t.integer "status", default: 0
+    t.bigint "project_id", null: false
     t.index ["company_id"], name: "index_canvasses_on_company_id"
     t.index ["deleted_at"], name: "index_canvasses_on_deleted_at"
+    t.index ["project_id"], name: "index_canvasses_on_project_id"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -145,6 +147,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_27_125320) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "company_id"
+    t.string "po_number"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["company_id"], name: "index_projects_on_company_id"
   end
@@ -183,7 +186,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_27_125320) do
     t.string "vessel"
     t.string "subject"
     t.text "remarks"
-    t.string "payment"
+    t.integer "payment"
     t.text "lead_time"
     t.text "warranty"
     t.decimal "sub_total", default: "0.0"
@@ -269,6 +272,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_27_125320) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "canvasses", "companies"
+  add_foreign_key "canvasses", "projects"
   add_foreign_key "clients", "companies"
   add_foreign_key "particulars", "request_forms"
   add_foreign_key "products", "canvasses"

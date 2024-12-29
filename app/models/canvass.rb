@@ -2,6 +2,7 @@ class Canvass < ApplicationRecord
   # acts_as_paranoid
 
   belongs_to :company
+  belongs_to :project
   has_many :products, dependent: :destroy, inverse_of: :canvass
   has_many :request_forms
   accepts_nested_attributes_for :products, allow_destroy: true, reject_if: :all_blank

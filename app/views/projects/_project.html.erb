@@ -1,3 +1,4 @@
+<!--
 <div id="<%= dom_id project %>">
   <p>
     <strong>Uid:</strong>
@@ -24,4 +25,46 @@
     <strong>Payment:</strong>
     <%= project.payment %>
   </p>
+</div>
+-->
+<div class="page document-page show-page project-page" id="<%= dom_id project %>">
+  <%= render 'pages/components/show_header', document: project %>
+  <br>
+  <%= render 'pages/components/action_buttons', document: project %>
+  <div class="project-card">
+    <p class="project-name">
+      <%= project.uid %>
+    </p>
+  </div>
+  <div class="project-details">
+    <p>
+      <%= project.client.name %>
+    </p>
+  </div>
+  <div class="project-details">
+    <p>
+      <%= project.status %>
+    </p>
+  </div>
+  <div class="project-details">
+    <p>
+      <%= project.amount %>
+    </p>
+  </div>
+  <div class="project-details">
+    <p>
+      <%= project.payment %>
+    </p>
+  </div>
+  <div class="project-details">
+    <p>
+      <% if project.client_po.attached? %>
+        <iframe src="<%= rails_blob_path(project.client_po, disposition: 'inline') %>"
+                width="650px"
+                height="700px"
+                frameborder="0">
+        </iframe>
+      <% end %>
+    </p>
+  </div>
 </div>

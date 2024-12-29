@@ -31,6 +31,13 @@ export default class extends Controller {
     this.showHiddenDivs() // Call the method to show hidden divs
   }
 
+  selectCompanyForProjectsClient(event) {
+    this.selectCompanyForProjects(event)
+    this.selectCompanyForClient(event)
+
+    this.showHiddenDivs()
+  }
+
   populateClientSelect() {
     const selectedCompanyId = this.element.querySelector(
       "#company-field input:checked"
@@ -87,6 +94,7 @@ export default class extends Controller {
       "Select Project",
       "uid"
     )
+    this.showHiddenDivs()
   }
 
   selectCompanyForCanvasses(event) {

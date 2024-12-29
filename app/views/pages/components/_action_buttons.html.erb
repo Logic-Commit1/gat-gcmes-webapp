@@ -15,7 +15,7 @@
       <span class="white">Delete</span>
     <% end %>
   <% else %>
-    <% unless document.approved? %>
+    <% if document.class.name != "Project" && !document.approved? %>
       <button class="button flex items-center white">
         <%= link_to send("edit_#{document.class.name.underscore}_path", document) do %>
           <i class="fa-regular fa-edit"></i>
@@ -27,7 +27,9 @@
     <i class="fa-regular fa-comment"></i>
     <span>Comments</span>
   </button> %>
-    <% unless document.approved? %>
+    <% if document.class.name != "Project" %>
+    <%end%>
+    <% if document.class.name != "Project" && !document.approved? %>
       <%= button_to send("void_#{document.class.name.underscore}_path", document), 
                 method: :delete, 
                 class: "button flex items-center white", 
@@ -37,7 +39,7 @@
         <span class="white">Void</span>
       <% end %>
     <% end %>
-    <% unless document.approved? %>
+    <% if document.class.name != "Project" && !document.approved? %>
       <%= button_to send("approve_#{document.class.name.underscore}_path", document), 
                 method: :patch, 
                 class: "button flex items-center white", 
@@ -47,7 +49,7 @@
         <span>Approve</span>
       <% end %>
     <% end %>
-    <% if document.approved? %>
+    <% if document.class.name != "Project" && document.approved? %>
       <%= button_to send("pending_#{document.class.name.underscore}_path", document), 
                 method: :patch, 
                 class: "button flex items-center white", 
