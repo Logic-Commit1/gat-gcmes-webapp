@@ -16,6 +16,7 @@
           <tr>
             <th>Supplier Name</th>
             <th>Price</th>
+            <th>Brand</th>
             <th>Terms</th>
             <th>Remarks</th>
           </tr>
@@ -26,10 +27,12 @@
               <tr>
                 <td><%= supplier_name %></td>
                 <td><%= details[0] %></td>
-                <!-- Price -->
+                <!-- Brand -->
                 <td><%= details[1] %></td>
-                <!-- Terms -->
+                <!-- Price -->
                 <td><%= details[2] %></td>
+                <!-- Terms -->
+                <td><%= details[3] %></td>
                 <!-- Remarks -->
               </tr>
             <% end %>

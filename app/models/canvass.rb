@@ -33,7 +33,7 @@ class Canvass < ApplicationRecord
       # Create an array to hold each supplier's data
       suppliers_array = products.map do |product|
         {
-          product.supplier.name => [product.price, product.terms, product.remarks]
+          product.supplier.name => [product.price, product.brand, product.terms, product.remarks]
         }
       end
 

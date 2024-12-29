@@ -5,9 +5,11 @@ export default class extends Controller {
     "description",
     "quantity",
     "unit",
+    "brand",
     "descriptionField",
     "quantityField",
     "unitField",
+    "brandField",
   ]
 
   connect() {
@@ -21,7 +23,8 @@ export default class extends Controller {
     console.log(
       this.descriptionFieldTargets.map((field) => field.value),
       this.quantityFieldTargets.map((field) => field.value),
-      this.unitFieldTargets.map((field) => field.value)
+      this.unitFieldTargets.map((field) => field.value),
+      this.brandFieldTargets.map((field) => field.value)
     )
   }
 
@@ -31,8 +34,8 @@ export default class extends Controller {
     const descriptionValue = this.descriptionFieldTarget.value
     const quantityValue = this.quantityFieldTarget.value
     const unitValue = this.unitFieldTarget.value
-
-    console.log(descriptionValue, quantityValue, unitValue)
+    const brandValue = this.brandFieldTarget.value
+    console.log(descriptionValue, quantityValue, unitValue, brandValue)
   }
 
   sync() {
@@ -49,10 +52,15 @@ export default class extends Controller {
       'select[name="canvass[unit]"]'
     ).value
     console.log("4")
+    const brandValue = document.querySelector(
+      'input[name="canvass[brand]"]'
+    ).value
+    console.log("5")
     this.descriptionFieldTargets.forEach(
       (field) => (field.value = descriptionValue)
     )
     this.quantityFieldTargets.forEach((field) => (field.value = quantityValue))
     this.unitFieldTargets.forEach((field) => (field.value = unitValue))
+    this.brandFieldTargets.forEach((field) => (field.value = brandValue))
   }
 }
