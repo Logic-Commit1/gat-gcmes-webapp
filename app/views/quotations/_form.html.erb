@@ -25,10 +25,14 @@
       <div class="<%= 'hidden' if quotation.new_record? %>">
         <div class="separator"></div>
         <div>
-          <div class="field hidden" data-company-select-target="projectSelectField">
+          <div class="field <%= 'hidden' if quotation.new_record? %>" data-company-select-target="projectSelectField">
             <%= form.label :project_id %>
             <div class="select-container">
-              <%= form.collection_select :project_id, [], :id, :uid, 
+              <%= form.collection_select :project_id,
+                quotation.new_record? ? [] : 
+                  (quotation.gat? ? Project.all.select(&:gat?) : 
+                   quotation.gcmes? ? Project.all.select(&:gcmes?) : []),
+                :id, :uid,
                 { prompt: "Select Project"}, 
                 data: { 
                   company_select_target: "projectSelect",

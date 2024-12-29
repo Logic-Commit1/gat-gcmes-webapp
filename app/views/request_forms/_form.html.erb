@@ -79,7 +79,11 @@
           <div class="field hidden" data-company-select-target="projectSelectField">
             <%= form.label :project_id %>
             <div class="select-container">
-              <%= form.collection_select :project_id, [], :id, :uid, 
+              <%= form.collection_select :project_id, 
+                request_form.new_record? ? [] : 
+                  (request_form.gat? ? Project.all.select(&:gat?) : 
+                   request_form.gcmes? ? Project.all.select(&:gcmes?) : []),
+                :id, :uid, 
                 { prompt: "Select Project"}, 
                 data: { 
                   company_select_target: "projectSelect",

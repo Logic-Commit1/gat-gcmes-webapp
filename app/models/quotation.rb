@@ -72,4 +72,5 @@ class Quotation < ApplicationRecord
       errors.add(:base, "At least one product item must be added")
     end
   end
+
 end

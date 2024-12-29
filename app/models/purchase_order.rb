@@ -33,12 +33,4 @@ class PurchaseOrder < ApplicationRecord
   def set_total
     self.total = self.products.sum { |product| product.price * product.quantity }
   end
-
-  def gat?
-    self.company.code.downcase == 'gat'
-  end
-
-  def gcmes?
-    self.company.code.downcase == 'gcmes'
-  end
 end
