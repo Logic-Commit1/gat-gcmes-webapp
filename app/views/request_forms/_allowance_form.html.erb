@@ -6,7 +6,7 @@
       <thead>
         <tr id="table-header">
           <th style="width: 30%;">PARTICULAR</th>
-          <th style="width: 15%;">AMOUNT</th>
+          <th style="width: 15%;">(₱) AMOUNT</th>
           <th style="width: 15%;">REMARKS</th>
           <th style="width: 3%;"></th>
         </tr>
@@ -62,15 +62,15 @@
       <div class="semibold">Balances</div>
       <div class="field">
         <%= form.label :fuel_gauge %>
-        <%= form.text_field :fuel_gauge, class: "align-right", placeholder: "PHP 0.00" %>
+        <%= form.text_field :fuel_gauge, class: "align-right", placeholder: "0.00" %>
       </div>
       <div class="field">
         <%= form.label :easy_trip_balance %>
-        <%= form.text_field :easy_trip_balance, class: "align-right", placeholder: "PHP 0.00" %>
+        <%= form.text_field :easy_trip_balance, class: "align-right", placeholder: "0.00" %>
       </div>
       <div class="field">
         <%= form.label :sweep_balance, style: "display: block" %>
-        <%= form.text_field :sweep_balance, class: "align-right", placeholder: "PHP 0.00" %>
+        <%= form.text_field :sweep_balance, class: "align-right", placeholder: "0.00" %>
       </div>
     </div>
     <div class="separator"></div>

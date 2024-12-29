@@ -20,6 +20,8 @@
         </div>
       </div>
       <div class="">
+        <div class="separator"></div>
+        <p class="semibold" style="margin-bottom: 10px;">Client Details</p>
         <div class="field">
           <%= form.label :client_id, style: "display: block" %>
           <div class="select-container">
@@ -30,12 +32,12 @@
           </div>
         </div>
         <div class="field">
-          <%= form.label :client_po, "Client's P.O.", style: "display: block" %>
-          <%= form.file_field :client_po %>
-        </div>
-        <div class="field">
           <%= form.label :po_number, "PO Number", style: "display: block" %>
           <%= form.text_field :po_number %>
+        </div>
+        <div class="field">
+          <%= form.label :client_po, "Client's P.O.", style: "display: block" %>
+          <%= form.file_field :client_po %>
         </div>
         <div class="separator"></div>
         <p class="semibold" style="margin-bottom: 10px;">Linked Documents</p>
@@ -49,6 +51,7 @@
           </div>
         </div>
         <div class="separator"></div>
+        <p class="semibold" style="margin-bottom: 10px;">Payment Information</p>
         <div class="field">
           <%= form.label :amount, style: "display: block" %>
           <%= form.text_field :amount %>

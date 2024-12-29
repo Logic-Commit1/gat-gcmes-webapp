@@ -101,7 +101,7 @@
           <tr onclick="window.location='<%= purchase_order_path(po) %>'" style="cursor: pointer">
             <td><%= po&.uid %></td>
             <td><%= po.supplier.code %></td>
-            <td><%= number_to_currency(po.total ) %></td>
+            <td><%= number_to_currency(po.total, unit: "₱") %></td>
             <td><%= po.created_at.strftime("%B %d, %Y") %></td>
             <td><span class="status <%= po.status %>"><%= po.status&.capitalize %></span></td>
           </tr>

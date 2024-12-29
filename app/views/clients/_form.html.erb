@@ -61,8 +61,8 @@
             <%= render "clients/contact_fields", f: contact_fields %>
           <% end %>
           <div data-nested-form-target="target"></div>
+          <%= link_to '<i class="fas fa-plus"></i> Add Contact'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#add" } %>
         </div>
-        <%= link_to '<i class="fas fa-plus"></i> Add Contact'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#add" } %>
         <div>
           <%= form.submit %>
         </div>
