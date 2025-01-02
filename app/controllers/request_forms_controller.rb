@@ -15,6 +15,8 @@ class RequestFormsController < ApplicationController
       @request_forms = @request_forms.created_on_date(Date.parse(params[:date]))
     end
 
+    @pagy, @request_forms = pagy(@request_forms)
+
     respond_to do |format|
       format.html
       format.turbo_stream do

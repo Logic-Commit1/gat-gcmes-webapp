@@ -7,6 +7,8 @@ class Client < ApplicationRecord
     accepts_nested_attributes_for :contacts, allow_destroy: true, reject_if: :all_blank
     before_validation :process_arrays
 
+    scope :latest_first, -> { order(created_at: :desc) }
+
     private
 
     def process_arrays

@@ -15,6 +15,7 @@ class CanvassesController < ApplicationController
       @canvasses = @canvasses.created_on_date(Date.parse(params[:date]))
     end
 
+    @pagy, @canvasses = pagy(@canvasses)
     respond_to do |format|
       format.html
       format.turbo_stream do

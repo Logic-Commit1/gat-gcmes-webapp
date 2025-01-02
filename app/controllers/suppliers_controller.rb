@@ -3,7 +3,13 @@ class SuppliersController < ApplicationController
 
   # GET /suppliers or /suppliers.json
   def index
-    @suppliers = Supplier.order(created_at: :desc)
+    @suppliers = Supplier.latest_first
+
+    # if params[:query].present?
+    #   @suppliers = @suppliers.search_by_term(params[:query])
+    # end
+
+    @pagy, @suppliers = pagy(@suppliers)
   end
 
   # GET /suppliers/1 or /suppliers/1.json

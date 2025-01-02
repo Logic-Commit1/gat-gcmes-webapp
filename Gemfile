@@ -32,6 +32,9 @@ gem "font-awesome-sass"
 # Soft Delete
 gem 'paranoia'
 
+# Pagination
+gem 'pagy'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 

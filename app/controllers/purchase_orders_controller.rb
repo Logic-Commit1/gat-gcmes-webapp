@@ -14,6 +14,8 @@ class PurchaseOrdersController < ApplicationController
       @purchase_orders = @purchase_orders.created_on_date(Date.parse(params[:date]))
     end
 
+    @pagy, @purchase_orders = pagy(@purchase_orders)
+
     respond_to do |format|
       format.html
       format.turbo_stream do

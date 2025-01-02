@@ -17,6 +17,8 @@ class QuotationsController < ApplicationController
       @quotations = @quotations.where("DATE(created_at) = ?", date)
     end
 
+    @pagy, @quotations = pagy(@quotations)
+
     respond_to do |format|
       format.html
       format.turbo_stream do

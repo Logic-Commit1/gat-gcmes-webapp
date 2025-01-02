@@ -13,6 +13,8 @@ class ProjectsController < ApplicationController
       @projects = @projects.created_on_date(Date.parse(params[:date]))
     end
 
+    @pagy, @projects = pagy(@projects)
+
     respond_to do |format|
       format.html
       format.turbo_stream do

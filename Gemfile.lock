@@ -176,6 +176,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.16.8-x86_64-linux)
       racc (~> 1.4)
+    pagy (9.3.3)
     parallel (1.26.3)
     paranoia (3.0.0)
       activerecord (>= 6, < 8.1)
@@ -349,6 +350,7 @@ DEPENDENCIES
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
+  pagy
   paranoia
   pg (~> 1.1)
   pry (~> 0.14.2)
