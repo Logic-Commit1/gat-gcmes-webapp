@@ -16,6 +16,16 @@ class RequestForm < ApplicationRecord
   enum :request_type, ['Allowance', 'Order']
   enum :status, [ :pending, :approved, :rejected ]
 
+  # Scopes for filtering
+  scope :search_by_term, ->(term) { 
+    where("uid ILIKE :term OR destination ILIKE :term OR vehicle ILIKE :term", 
+          term: "%#{term}%") 
+  }
+  scope :created_on_date, ->(date) { 
+    where("DATE(created_at) = ?", date) 
+  }
+  scope :latest_first, -> { order(created_at: :desc) }
+
   before_save :compute_totals_request_form
   before_save :set_sequence_id
   before_save :set_uid

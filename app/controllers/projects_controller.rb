@@ -3,7 +3,26 @@ class ProjectsController < ApplicationController
 
   # GET /projects or /projects.json
   def index
-    @projects = Project.order(created_at: :desc)
+    @projects = Project.latest_first
+
+    if params[:query].present?
+      @projects = @projects.search_by_term(params[:query])
+    end
+    
+    if params[:date].present?
+      @projects = @projects.created_on_date(Date.parse(params[:date]))
+    end
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update(
+          "projects_table", 
+          partial: "components/table_body", 
+          locals: { documents: @projects, title: "Projects" }
+        )
+      end
+    end
   end
 
   # GET /projects/1 or /projects/1.json

@@ -7,6 +7,24 @@ class QuotationsController < ApplicationController
   # GET /quotations or /quotations.json
   def index
     @quotations = Quotation.order(created_at: :desc)
+    
+    if params[:query].present?
+      @quotations = @quotations.where("uid ILIKE :query OR subject ILIKE :query", query: "%#{params[:query]}%")
+    end
+    
+    if params[:date].present?
+      date = Date.parse(params[:date])
+      @quotations = @quotations.where("DATE(created_at) = ?", date)
+    end
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update("quotations_table", 
+          partial: "components/table_body", 
+          locals: { documents: @quotations, title: "Quotations" })
+      end
+    end
   end
 
   # GET /quotations/1 or /quotations/1.json

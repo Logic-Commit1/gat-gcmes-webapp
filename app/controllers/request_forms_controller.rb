@@ -5,7 +5,26 @@ class RequestFormsController < ApplicationController
 
   # GET /request_forms or /request_forms.json
   def index
-    @request_forms = RequestForm.all.order(created_at: :desc)
+    @request_forms = RequestForm.latest_first
+
+    if params[:query].present?
+      @request_forms = @request_forms.search_by_term(params[:query])
+    end
+    
+    if params[:date].present?
+      @request_forms = @request_forms.created_on_date(Date.parse(params[:date]))
+    end
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update(
+          "request_forms_table", 
+          partial: "components/table_body", 
+          locals: { documents: @request_forms, title: "Request Forms" }
+        )
+      end
+    end
   end
 
   # GET /request_forms/1 or /request_forms/1.json

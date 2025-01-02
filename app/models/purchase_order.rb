@@ -17,6 +17,18 @@ class PurchaseOrder < ApplicationRecord
 
   enum :terms, [ "50% downpayment", "30 days", "Paid" ]
   
+  # Scopes for filtering
+  scope :search_by_term, ->(term) { 
+    joins(:supplier).where(
+      "purchase_orders.uid ILIKE :term OR suppliers.name ILIKE :term", 
+      term: "%#{term}%"
+    ) 
+  }
+  scope :created_on_date, ->(date) { 
+    where("DATE(purchase_orders.created_at) = ?", date) 
+  }
+  scope :latest_first, -> { order(created_at: :desc) }
+  
   before_save :set_uid
   before_save :set_total
 

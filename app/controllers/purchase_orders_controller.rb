@@ -4,7 +4,26 @@ class PurchaseOrdersController < ApplicationController
 
   # GET /purchase_orders or /purchase_orders.json
   def index
-    @purchase_orders = PurchaseOrder.order(created_at: :desc)
+    @purchase_orders = PurchaseOrder.latest_first
+
+    if params[:query].present?
+      @purchase_orders = @purchase_orders.search_by_term(params[:query])
+    end
+    
+    if params[:date].present?
+      @purchase_orders = @purchase_orders.created_on_date(Date.parse(params[:date]))
+    end
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update(
+          "purchase_orders_table", 
+          partial: "components/table_body", 
+          locals: { documents: @purchase_orders, title: "Purchase Orders" }
+        )
+      end
+    end
   end
 
   # GET /purchase_orders/1 or /purchase_orders/1.json

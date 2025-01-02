@@ -9,6 +9,15 @@ class Canvass < ApplicationRecord
 
   enum :status, [ :pending, :approved, :rejected ]
 
+  # Scopes for filtering
+  scope :search_by_term, ->(term) { 
+    where("uid ILIKE :term OR description ILIKE :term", term: "%#{term}%") 
+  }
+  scope :created_on_date, ->(date) { 
+    where("DATE(created_at) = ?", date) 
+  }
+  scope :latest_first, -> { order(created_at: :desc) }
+
   before_save :set_uid
   before_save :set_suppliers
   before_destroy :delete_pdf

@@ -12,6 +12,18 @@ class Project < ApplicationRecord
   enum :payment, [ "50% downpayment", "30 days", "Paid" ]
   enum :status, [ "Ongoing", "Served", "Cancelled" ]
 
+  # Scopes for filtering
+  scope :search_by_term, ->(term) { 
+    joins(:client).where(
+      "projects.uid ILIKE :term OR projects.po_number ILIKE :term OR clients.name ILIKE :term", 
+      term: "%#{term}%"
+    ) 
+  }
+  scope :created_on_date, ->(date) { 
+    where("DATE(projects.created_at) = ?", date) 
+  }
+  scope :latest_first, -> { order(created_at: :desc) }
+
   before_save :set_uid
 
   def set_uid 
