@@ -5,12 +5,12 @@
   <div class="header">
     <p id="title"><%= title %></p>
     <div class="search-bar">
-      <% unless title == "Employees" || title == "Suppliers" || title == "Clients" %>
-        <input type="date" 
+      <%# unless title == "Employees" || title == "Suppliers" || title == "Clients" %>
+      <input type="date" 
           placeholder="mm/dd/yy" 
           data-table-filter-target="dateInput"
           data-action="change->table-filter#filter" />
-      <% end %>
+      <%# end %>
       <input type="text" 
         placeholder="Search..." 
         data-table-filter-target="searchInput"
@@ -55,8 +55,8 @@
           <th>Date</th>
           <th>Status</th>
         <% elsif title == "Employees" %>
-          <th>Name</th>
-          <th>Contact Number</th>
+          <th>Email</th>
+          <th>Department</th>
           <th>Creation Date</th>
         <% elsif title == "Suppliers" %>
           <th>Name</th>

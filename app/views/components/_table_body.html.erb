@@ -56,8 +56,8 @@
   <% elsif title == "Employees" %>
     <% documents&.each do |employee| %>
       <tr>
-        <td><%= employee.name %></td>
-        <td><%= employee.contact_number %></td>
+        <td><%= employee.email %></td>
+        <td><%= employee.department.capitalize %></td>
         <td><%= employee.created_at.strftime("%B %d, %Y") %></td>
       </tr>
     <% end %>

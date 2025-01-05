@@ -8,6 +8,12 @@ class Client < ApplicationRecord
     before_validation :process_arrays
 
     scope :latest_first, -> { order(created_at: :desc) }
+    scope :search_by_term, ->(term) { 
+        joins(:contacts).where(
+          "clients.name ILIKE :term OR clients.code ILIKE :term", 
+          term: "%#{term}%"
+        ) 
+      }
 
     private
 

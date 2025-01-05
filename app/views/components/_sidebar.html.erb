@@ -55,31 +55,37 @@
           Projects
         </p>
       <% end %>
-      <%#= link_to employees_path, class: 'in-text no-underline' do %>
-        <!-- Link to Employees 
+      <!-- Link to Employees 
+      -->
+      <%= link_to employees_path, class: 'in-text no-underline' do %>
         <p class="nav-btn <%= 'active' if current_page?(employees_path) %>">
           <span class="icon"><i class="fa-solid fa-user-group"></i></span>
           Employees
         </p>
-      -->
-        <%# end %>
-        <!-- Link to Clients -->
-        <%= link_to clients_path, class: 'in-text no-underline' do %>
-          <p class="nav-btn <%= 'active' if current_page?(clients_path) %>">
-            <span class="icon"><i class="fa-solid fa-user"></i></span>
-            Clients
-          </p>
-        <% end %>
-        <!-- Link to Suppliers -->
-        <%= link_to suppliers_path, class: 'in-text no-underline' do %>
-          <p class="nav-btn <%= 'active' if current_page?(suppliers_path) %>">
-            <span class="icon"><i class="fa-solid fa-truck"></i></span>
-            Suppliers
-          </p>
-        <% end %>
-      </nav>
-      <!-- Footer -->
-      <%# <footer id="actions"> %>
-      <%#= link_to "<i class='fal fa-sign-out'></i> Sign Out".html_safe, moderators_signout_path, id: 'signout-btn', class: 'sub-cta' %>
-      <%# </footer> %>
-    </aside>
+      <% end %>
+      <!-- Link to Clients -->
+      <%= link_to clients_path, class: 'in-text no-underline' do %>
+        <p class="nav-btn <%= 'active' if current_page?(clients_path) %>">
+          <span class="icon"><i class="fa-solid fa-user"></i></span>
+          Clients
+        </p>
+      <% end %>
+      <!-- Link to Suppliers -->
+      <%= link_to suppliers_path, class: 'in-text no-underline' do %>
+        <p class="nav-btn <%= 'active' if current_page?(suppliers_path) %>">
+          <span class="icon"><i class="fa-solid fa-truck"></i></span>
+          Suppliers
+        </p>
+      <% end %>
+    </nav>
+    <!-- Footer -->
+    <footer id="actions">
+      <%= link_to profile_path, class: 'in-text no-underline' do %>
+        <p class="nav-btn <%= 'active' if current_page?(profile_path) %>">
+          <span class="icon"><i class="fa-solid fa-user-circle"></i></span>
+          My Profile
+        </p>
+      <% end %>
+      <%= link_to "Sign Out", destroy_user_session_path, 'data-turbo-method': :delete, class: 'sub-cta', id: 'signout-btn' %>
+    </footer>
+  </aside>

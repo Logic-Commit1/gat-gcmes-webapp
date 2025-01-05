@@ -4,6 +4,7 @@ class EmployeesController < ApplicationController
   # GET /employees or /employees.json
   def index
     @employees = Employee.order(created_at: :desc)
+    @pagy, @employees = pagy(@employees)
   end
 
   # GET /employees/1 or /employees/1.json
@@ -69,6 +70,7 @@ class EmployeesController < ApplicationController
         :name, 
         :contact_number, 
         :email,
+        :department,
         contacts_attributes: [:id, :name, :_destroy, emails: [], contact_numbers: []]
       )
     end

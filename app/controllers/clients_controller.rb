@@ -5,11 +5,25 @@ class ClientsController < ApplicationController
   def index
     @clients = Client.order(created_at: :desc)
 
-    # if params[:query].present?
-    #   @clients = @clients.search_by_term(params[:query])
-    # end
+    if params[:query].present?
+      @clients = @clients.search_by_term(params[:query])
+    end
+
+    if params[:date].present?
+      date = Date.parse(params[:date])
+      @clients = @clients.where("DATE(created_at) = ?", date)
+    end
 
     @pagy, @clients = pagy(@clients)
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update("clients_table", 
+          partial: "components/table_body", 
+          locals: { documents: @clients, title: "Clients" })
+      end
+    end
   end
 
   # GET /clients/1 or /clients/1.json
