@@ -3,6 +3,10 @@ class ApplicationRecord < ActiveRecord::Base
 
   UNIT_OF_MEASUREMENTS = %w[pcs cm m km in ft yd mi].freeze
 
+  def self.latest_first
+    order(created_at: :desc)
+  end
+
   def gat?
     self.company.code.downcase == "gat"
   end

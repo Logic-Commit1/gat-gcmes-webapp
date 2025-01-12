@@ -25,3 +25,11 @@
 .remove-item-button {
   color: var(--danger-color);
 }
+
+.button.primary {
+  background-color: var(--primary-color);
+}
+
+.button.secondary {
+  background-color: var(--secondary-color);
+}

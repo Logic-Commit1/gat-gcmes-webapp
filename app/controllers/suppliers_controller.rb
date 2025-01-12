@@ -5,11 +5,25 @@ class SuppliersController < ApplicationController
   def index
     @suppliers = Supplier.latest_first
 
-    # if params[:query].present?
-    #   @suppliers = @suppliers.search_by_term(params[:query])
-    # end
+    if params[:query].present?
+      @suppliers = @suppliers.where("code ILIKE :query OR name ILIKE :query", query: "%#{params[:query]}%")
+    end
+
+    if params[:date].present?
+      date = Date.parse(params[:date])
+      @suppliers = @suppliers.where("DATE(created_at) = ?", date)
+    end
 
     @pagy, @suppliers = pagy(@suppliers)
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update("suppliers_table", 
+          partial: "components/table_body", 
+          locals: { documents: @suppliers, title: "Suppliers" })
+      end
+    end
   end
 
   # GET /suppliers/1 or /suppliers/1.json

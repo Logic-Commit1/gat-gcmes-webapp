@@ -14,6 +14,8 @@ class User < ApplicationRecord
   after_initialize :set_default_role, if: :new_record?
 
   validates :email, presence: true
+  validates :first_name, presence: true
+  validates :last_name, presence: true
   validate :email_must_be_whitelisted
   validates :department, presence: true
   

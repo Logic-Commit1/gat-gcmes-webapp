@@ -1,26 +1,30 @@
-<div class="container mx-auto px-4 py-8">
-  <div class="bg-white shadow rounded-lg p-6">
-    <h1 class="text-2xl font-bold mb-6">My Profile</h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="profile-info">
-        <div class="mb-4">
-          <label class="font-semibold">Email:</label>
-          <p><%= @user.email %></p>
-        </div>
-        <%# if @user.employee? %>
-        <div class="mb-4">
-          <label class="font-semibold">Department:</label>
-          <p><%= @user.department %></p>
-        </div>
-        <%# end %>
-        <div class="mb-4">
-          <label class="font-semibold">Member Since:</label>
-          <p><%= @user.created_at.strftime("%B %d, %Y") %></p>
-        </div>
+<div class="profile-container">
+  <div class="profile-header">
+    <h1>My Profile</h1>
+  </div>
+  <div class="profile-content">
+    <div>
+      <div class="profile-field">
+        <label>Name:</label>
+        <p><%= @user.first_name %> <%= @user.last_name %></p>
+      </div>
+      <div class="profile-field">
+        <label>Email:</label>
+        <p><%= @user.email %></p>
+      </div>
+      <%# if @user.employee? %>
+      <div class="profile-field">
+        <label>Department:</label>
+        <p><%= @user.department&.capitalize || 'n/a' %></p>
+      </div>
+      <%# end %>
+      <div class="profile-field">
+        <label>Member Since:</label>
+        <p><%= @user.created_at.strftime("%B %d, %Y") %></p>
       </div>
     </div>
-    <div class="mt-6">
-      <%= link_to "Edit Profile", edit_user_registration_path, class: "btn btn-primary" %>
-    </div>
+  </div>
+  <div class="profile-actions">
+    <%= link_to "Edit Profile", edit_user_registration_path %>
   </div>
 </div>

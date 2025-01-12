@@ -6,7 +6,8 @@ class ClientsController < ApplicationController
     @clients = Client.order(created_at: :desc)
 
     if params[:query].present?
-      @clients = @clients.search_by_term(params[:query])
+      # @clients = @clients.search_by_term(params[:query])
+      @clients = @clients.where("code ILIKE :query OR name ILIKE :query", query: "%#{params[:query]}%")
     end
 
     if params[:date].present?

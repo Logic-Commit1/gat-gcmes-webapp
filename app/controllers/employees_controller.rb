@@ -3,8 +3,27 @@ class EmployeesController < ApplicationController
 
   # GET /employees or /employees.json
   def index
-    @employees = Employee.order(created_at: :desc)
+    @employees = Employee.latest_first
+
+    if params[:query].present?
+      @employees = @employees.where("email ILIKE :query OR department ILIKE :query", query: "%#{params[:query]}%")
+    end
+
+    if params[:date].present?
+      date = Date.parse(params[:date])
+      @employees = @employees.where("DATE(created_at) = ?", date)
+    end
+
     @pagy, @employees = pagy(@employees)
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update("employees_table", 
+          partial: "components/table_body", 
+          locals: { documents: @employees, title: "Employees" })
+      end
+    end
   end
 
   # GET /employees/1 or /employees/1.json

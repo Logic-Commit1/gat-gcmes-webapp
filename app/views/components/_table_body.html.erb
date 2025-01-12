@@ -55,7 +55,7 @@
     <% end %>
   <% elsif title == "Employees" %>
     <% documents&.each do |employee| %>
-      <tr>
+      <tr onclick="window.location='<%= employee_path(employee) %>'" style="cursor: pointer">
         <td><%= employee.email %></td>
         <td><%= employee.department.capitalize %></td>
         <td><%= employee.created_at.strftime("%B %d, %Y") %></td>
