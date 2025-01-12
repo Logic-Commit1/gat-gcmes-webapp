@@ -1,86 +1,85 @@
 <%= turbo_frame_tag "#{title.downcase.gsub(' ', '_')}_table", class: "document-table" do %>
-
-<table class="document-table" data-table-filter-target="table">
-<tbody>
-  <% if title == "Quotations" %>
-    <% documents&.each do |quotation| %>
-      <tr onclick="window.location='<%= quotation_path(quotation) %>'" style="cursor: pointer">
-        <td><%= quotation.uid %></td>
-        <!--<td><%= quotation.client.code %></td>-->
-        <td><%= quotation.subject %></td>
-        <td><%= number_to_currency(quotation.total, unit: "₱") %></td>
-        <td><%= quotation.created_at.strftime("%B %d, %Y") %></td>
-        <td><span class="status <%= quotation.status %>"><%= quotation.status.capitalize %></span></td>
-      </tr>
-    <% end %>
-  <% elsif title == "Request Forms" %>
-    <% documents&.each do |form| %>
-      <tr onclick="window.location='<%= request_form_path(form) %>'" style="cursor: pointer">
-        <td><%= form.uid %></td>
-        <td><%= form.quotation&.uid %></td>
-        <td><%= form.canvass&.uid %></td>
-        <td><%= number_to_currency(form.total, unit: "₱") %></td>
-        <td><%= form.created_at.strftime("%B %d, %Y") %></td>
-        <td><span class="status <%= form.status %>"><%= form.status.capitalize %></span></td>
-      </tr>
-    <% end %>
-  <% elsif title == "Canvasses" %>
-    <% documents&.each do |canvass| %>
-      <tr onclick="window.location='<%= canvass_path(canvass) %>'" style="cursor: pointer">
-        <td><%= canvass.uid %></td>
-        <td><%= canvass.description %></td>
-        <td><%= canvass.created_at.strftime("%B %d, %Y") %></td>
-        <td><span class="status <%= canvass.status %>"><%= canvass.status.capitalize %></span></td>
-      </tr>
-    <% end %>
-  <% elsif title == "Purchase Orders" %>
-    <% documents&.each do |po| %>
-      <tr onclick="window.location='<%= purchase_order_path(po) %>'" style="cursor: pointer">
-        <td><%= po&.uid %></td>
-        <td><%= po.supplier.code %></td>
-        <td><%= number_to_currency(po.total, unit: "₱") %></td>
-        <td><%= po.created_at.strftime("%B %d, %Y") %></td>
-        <td><span class="status <%= po.status %>"><%= po.status&.capitalize %></span></td>
-      </tr>
-    <% end %>
-  <% elsif title == "Projects" %>
-    <% documents&.each do |project| %>
-      <tr onclick="window.location='<%= project_path(project) %>'" style="cursor: pointer">
-        <td><%= project.uid %></td>
-        <td><%= project.client.code %></td>
-        <td><%#= number_to_currency(project.total) %></td>
-        <td><%= project.created_at.strftime("%B %d, %Y") %></td>
-        <td><span class="status <%= project.status.downcase %>"><%= project.status.capitalize %></span></td>
-      </tr>
-    <% end %>
-  <% elsif title == "Employees" %>
-    <% documents&.each do |employee| %>
-      <tr onclick="window.location='<%= employee_path(employee) %>'" style="cursor: pointer">
-        <td><%= employee.email %></td>
-        <td><%= employee.department.capitalize %></td>
-        <td><%= employee.created_at.strftime("%B %d, %Y") %></td>
-      </tr>
-    <% end %>
-  <% elsif title == "Suppliers" %>
-    <% documents&.each do |supplier| %>
-      <tr onclick="window.location='<%= supplier_path(supplier) %>'" style="cursor: pointer">
-        <td><%= supplier.name %></td>
-        <td><%= supplier.code %></td>
-        <td><%= supplier.address %></td>
-        <td><%= supplier.created_at.strftime("%B %d, %Y") %></td>
-      </tr>
-    <% end %>
-  <% elsif title == "Clients" %>
-    <% documents&.each do |client| %>
-      <tr onclick="window.location='<%= client_path(client) %>'" style="cursor: pointer">
-        <td><%= client.name %></td>
-        <td><%= client.code %></td>
-        <td><%= client.address %></td>
-        <td><%= client.company.code %></td>
-        <td><%= client.created_at.strftime("%B %d, %Y") %></td>
-      </tr>
-    <% end %>
-  <% end %>
-</tbody> 
-</table>
+  <table class="document-table" data-table-filter-target="table">
+    <tbody>
+      <% if title == "Quotations" %>
+        <% documents&.each do |quotation| %>
+          <tr onclick="window.location='<%= quotation_path(quotation) %>'" style="cursor: pointer">
+            <td><%= quotation.uid %></td>
+            <!--<td><%= quotation.client.code %></td>-->
+            <td><%= quotation.subject %></td>
+            <td><%= number_to_currency(quotation.total, unit: "₱") %></td>
+            <td><%= quotation.created_at.strftime("%B %d, %Y") %></td>
+            <td><span class="status <%= quotation.status %>"><%= quotation.status.capitalize %></span></td>
+          </tr>
+        <% end %>
+      <% elsif title == "Request Forms" %>
+        <% documents&.each do |form| %>
+          <tr onclick="window.location='<%= request_form_path(form) %>'" style="cursor: pointer">
+            <td><%= form.uid %></td>
+            <td><%= form.quotation&.uid %></td>
+            <td><%= form.canvass&.uid %></td>
+            <td><%= number_to_currency(form.total, unit: "₱") %></td>
+            <td><%= form.created_at.strftime("%B %d, %Y") %></td>
+            <td><span class="status <%= form.status %>"><%= form.status.capitalize %></span></td>
+          </tr>
+        <% end %>
+      <% elsif title == "Canvasses" %>
+        <% documents&.each do |canvass| %>
+          <tr onclick="window.location='<%= canvass_path(canvass) %>'" style="cursor: pointer">
+            <td><%= canvass.uid %></td>
+            <td><%= canvass.description %></td>
+            <td><%= canvass.created_at.strftime("%B %d, %Y") %></td>
+            <td><span class="status <%= canvass.status %>"><%= canvass.status.capitalize %></span></td>
+          </tr>
+        <% end %>
+      <% elsif title == "Purchase Orders" %>
+        <% documents&.each do |po| %>
+          <tr onclick="window.location='<%= purchase_order_path(po) %>'" style="cursor: pointer">
+            <td><%= po&.uid %></td>
+            <td><%= po.supplier.code %></td>
+            <td><%= number_to_currency(po.total, unit: "₱") %></td>
+            <td><%= po.created_at.strftime("%B %d, %Y") %></td>
+            <td><span class="status <%= po.status %>"><%= po.status&.capitalize %></span></td>
+          </tr>
+        <% end %>
+      <% elsif title == "Projects" %>
+        <% documents&.each do |project| %>
+          <tr onclick="window.location='<%= project_path(project) %>'" style="cursor: pointer">
+            <td><%= project.uid %></td>
+            <td><%= project.client.code %></td>
+            <td><%#= number_to_currency(project.total) %></td>
+            <td><%= project.created_at.strftime("%B %d, %Y") %></td>
+            <td><span class="status <%= project.status.downcase %>"><%= project.status.capitalize %></span></td>
+          </tr>
+        <% end %>
+      <% elsif title == "Employees" %>
+        <% documents&.each do |employee| %>
+          <tr onclick="window.location='<%= employee_path(employee) %>'" style="cursor: pointer">
+            <td><%= employee.email %></td>
+            <td><%= employee.department.capitalize %></td>
+            <td><%= employee.created_at.strftime("%B %d, %Y") %></td>
+          </tr>
+        <% end %>
+      <% elsif title == "Suppliers" %>
+        <% documents&.each do |supplier| %>
+          <tr onclick="window.location='<%= supplier_path(supplier) %>'" style="cursor: pointer">
+            <td><%= supplier.name %></td>
+            <td><%= supplier.code %></td>
+            <td><%= supplier.address %></td>
+            <td><%= supplier.created_at.strftime("%B %d, %Y") %></td>
+          </tr>
+        <% end %>
+      <% elsif title == "Clients" %>
+        <% documents&.each do |client| %>
+          <tr onclick="window.location='<%= client_path(client) %>'" style="cursor: pointer">
+            <td><%= client.name %></td>
+            <td><%= client.code %></td>
+            <td><%= client.address %></td>
+            <td><%= client.company.code %></td>
+            <td><%= client.created_at.strftime("%B %d, %Y") %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody> 
+  </table>
 <% end %>

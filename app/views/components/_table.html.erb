@@ -20,6 +20,9 @@
       </button>
     </div>
   </div>
+  <div class="pagination">
+    <%== pagy_nav(@pagy) if @pagy.pages > 1 %>
+  </div>
   <table class="document-table">
     <thead>
       <tr>
@@ -74,5 +77,4 @@
     </thead>
   </table>
   <%= render "components/table_body", documents: documents, title: title %>
-  <%== pagy_nav(@pagy) if @pagy.pages > 1 %>
 </div>
