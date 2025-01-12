@@ -14,6 +14,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = resource
     if @user.update(account_update_params)
     #   set_flash_message :notice, :updated
+      flash[:notice] = "Profile updated successfully"
       # Sign in the user bypassing validation in case their password changed
       redirect_to profile_path
     #   bypass_sign_in @user

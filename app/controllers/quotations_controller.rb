@@ -89,7 +89,8 @@ class QuotationsController < ApplicationController
   # end
   def void
     @quotation.destroy
-    redirect_to quotations_path, notice: 'Quotation was successfully voided.'
+    flash[:success] = 'Quotation was successfully voided.'
+    redirect_to quotations_path
   end
 
   def approve

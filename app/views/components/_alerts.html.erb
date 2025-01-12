@@ -1,6 +1,44 @@
 <!-- Alerts -->
-<% if flash.present? %>
-  <% flash.each do |key, value| %>
-    <p class="alert"><%= value %></p>
+<div class="toast-container" data-controller="alert">
+  <% if flash.present? %>
+    <% flash.each do |key, value| %>
+      <% 
+        duration = case key.to_s
+          when 'error', 'alert'
+            8000
+          when 'warning'
+            6000
+          else
+            4000
+        end
+      %>
+      <div class="alert-toast" 
+           data-alert-target="toast"
+           data-alert-duration-value="<%= duration %>"
+           role="alert">
+        <div class="toast-header">
+          <% 
+            icon_class = case key.to_s
+              when 'notice', 'success'
+                'bi-check-circle-fill icon-success'
+              when 'error', 'alert'
+                'bi-x-circle-fill icon-danger'
+              when 'warning'
+                'bi-exclamation-triangle-fill icon-warning'
+              when 'info'
+                'bi-info-circle-fill icon-info'
+              else
+                'bi-bell-fill icon-secondary'
+              end
+          %>
+          <i class="bi <%= icon_class %> me-2"></i>
+          <strong><%= key.to_s.titleize %></strong>
+          <%# <button type="button" class="close-button" data-action="click->alert#close">x</button> %>
+        </div>
+        <div class="toast-body">
+          <%= value %>
+        </div>
+      </div>
+    <% end %>
   <% end %>
-<% end %>
+</div>
