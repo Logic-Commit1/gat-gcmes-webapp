@@ -49,14 +49,15 @@
             <td><%= project.client.code %></td>
             <td><%#= number_to_currency(project.total) %></td>
             <td><%= project.created_at.strftime("%B %d, %Y") %></td>
-            <td><span class="status <%= project.status.downcase %>"><%= project.status.capitalize %></span></td>
+            <td><span class="status <%= project.status&.downcase %>"><%= project.status&.capitalize %></span></td>
           </tr>
         <% end %>
       <% elsif title == "Employees" %>
         <% documents&.each do |employee| %>
-          <tr onclick="window.location='<%= employee_path(employee) %>'" style="cursor: pointer">
+          <tr>
+            <td><%= employee.first_name&.titleize %> <%= employee.last_name&.titleize %></td>
             <td><%= employee.email %></td>
-            <td><%= employee.department.capitalize %></td>
+            <td><%= employee.department&.capitalize %></td>
             <td><%= employee.created_at.strftime("%B %d, %Y") %></td>
           </tr>
         <% end %>
