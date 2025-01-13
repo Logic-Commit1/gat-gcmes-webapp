@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   get 'request_forms/items', to: 'request_forms#items'
   get 'profile', to: 'profiles#show', as: :profile
 
-  resources :employees
+  resources :employees do
+    collection do
+      get :whitelisted
+    end
+  end
   resources :purchase_orders do
     member do
       get 'pdf_view'
@@ -78,4 +82,5 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "quotations#index"
   get 'main', to: 'main#index'
+  # get 'employees/whitelisted', to: 'employees#whitelisted'
 end

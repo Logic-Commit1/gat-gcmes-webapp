@@ -26,6 +26,10 @@ class EmployeesController < ApplicationController
     end
   end
 
+  def whitelisted
+    @employees = Employee.latest_first
+  end
+
   # GET /employees/1 or /employees/1.json
   def show
   end
@@ -33,6 +37,7 @@ class EmployeesController < ApplicationController
   # GET /employees/new
   def new
     @employee = Employee.new
+    @employees = Employee.all
   end
 
   # GET /employees/1/edit
@@ -45,7 +50,7 @@ class EmployeesController < ApplicationController
 
     respond_to do |format|
       if @employee.save
-        format.html { redirect_to employee_url(@employee), notice: "Employee was successfully created." }
+        format.html { redirect_to whitelisted_employees_path, notice: "Employee was successfully created." }
         format.json { render :show, status: :created, location: @employee }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -72,7 +77,7 @@ class EmployeesController < ApplicationController
     @employee.destroy!
 
     respond_to do |format|
-      format.html { redirect_to employees_url, notice: "Employee was successfully destroyed." }
+      format.html { redirect_to whitelisted_employees_path, notice: "Employee was successfully destroyed." }
       format.json { head :no_content }
     end
   end

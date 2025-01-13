@@ -1,0 +1,36 @@
+<% content_for :title, "Whitelisted Employees" %>
+<div class="page">
+  <p class="title">Whitelisted Employees</p>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Created At</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @employees.each do |employee| %>
+          <tr>
+            <td><%= employee.email %></td>
+            <td><%= employee.created_at.strftime("%B %d, %Y") %></td>
+            <td>
+              <%#= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#remove" } %>
+              <%= button_to employee_path(employee), 
+                  method: :delete,
+                  style: "background-color: #ff2323; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;",
+                  class: "remove-item-button",
+                  form: { data: { turbo_confirm: "Are you sure you want to remove this whitelisted email?" } } do %>
+                <i class="fas fa-trash"></i>
+                <span>Delete</span>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <%= link_to "Back", new_employee_path, class: "whitelisted-link" %>
+</div>

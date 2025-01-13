@@ -21,7 +21,7 @@
     </div>
   </div>
   <div class="pagination">
-    <%== pagy_nav(@pagy) if @pagy.pages > 1 %>
+    <%== pagy_nav(@pagy) if @pagy.present? && @pagy.pages > 1 %>
   </div>
   <table class="document-table">
     <thead>
@@ -58,6 +58,11 @@
           <th>Date</th>
           <th>Status</th>
         <% elsif title == "Employees" %>
+          <th>Name</th>
+          <th>Department</th>
+          <th>Email</th>
+          <%# <th>Creation Date</th> %>
+        <% elsif title == "Whitelisted Employees" %>
           <th>Name</th>
           <th>Email</th>
           <th>Department</th>

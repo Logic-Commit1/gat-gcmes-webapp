@@ -56,6 +56,17 @@
         <% documents&.each do |employee| %>
           <tr>
             <td><%= employee.first_name&.titleize %> <%= employee.last_name&.titleize %></td>
+            <td><%= employee.department&.capitalize %></td>
+            <td><%= employee.email %></td>
+            <!--
+            <td><%= employee.created_at.strftime("%B %d, %Y") %></td>
+            -->
+          </tr>
+        <% end %>
+      <% elsif title == "Whitelisted Employees" %>
+        <% documents&.each do |employee| %>
+          <tr>
+            
             <td><%= employee.email %></td>
             <td><%= employee.department&.capitalize %></td>
             <td><%= employee.created_at.strftime("%B %d, %Y") %></td>
