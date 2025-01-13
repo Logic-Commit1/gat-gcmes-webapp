@@ -1,5 +1,6 @@
 class EmployeesController < ApplicationController
   before_action :set_employee, only: %i[ show edit update destroy ]
+  before_action :set_user, only: %i[ promote demote ]
 
   # GET /employees or /employees.json
   def index
@@ -82,10 +83,60 @@ class EmployeesController < ApplicationController
     end
   end
 
+  def promote
+    if @user&.promote!
+      respond_to do |format|
+        format.turbo_stream { 
+          flash.now[:notice] = "Employee was successfully promoted."
+          render turbo_stream: [
+            turbo_stream.update("flash", partial: "components/alerts"),
+            turbo_stream.update("employees_table", partial: "components/table_body", locals: { documents: User.latest_first, title: "Employees" })
+          ]
+        }
+        format.html { redirect_back(fallback_location: employees_path, notice: "Employee was successfully promoted.") }
+      end
+    else
+      respond_to do |format|
+        format.turbo_stream { 
+          flash.now[:alert] = "Unable to promote employee."
+          render turbo_stream: turbo_stream.update("flash", partial: "components/alerts")
+        }
+        format.html { redirect_back(fallback_location: employees_path, alert: "Unable to promote employee.") }
+      end
+    end
+  end
+
+  def demote
+    if @user&.demote!
+      respond_to do |format|
+        format.turbo_stream { 
+          flash.now[:notice] = "Employee was successfully demoted."
+          render turbo_stream: [
+            turbo_stream.update("flash", partial: "components/alerts"),
+            turbo_stream.update("employees_table", partial: "components/table_body", locals: { documents: User.latest_first, title: "Employees" })
+          ]
+        }
+        format.html { redirect_back(fallback_location: employees_path, notice: "Employee was successfully demoted.") }
+      end
+    else
+      respond_to do |format|
+        format.turbo_stream { 
+          flash.now[:alert] = "Unable to demote employee."
+          render turbo_stream: turbo_stream.update("flash", partial: "components/alerts")
+        }
+        format.html { redirect_back(fallback_location: employees_path, alert: "Unable to demote employee.") }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee
       @employee = Employee.find(params[:id])
+    end
+
+    def set_user
+      @user = User.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

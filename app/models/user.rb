@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  enum role: { user: 0, moderator: 1, admin: 2 }
+  enum role: { regular: 0, head: 1, manager: 2, admin: 3 }
   # enum department: { operation: 0, accounting: 1, purchasing: 2, sales: 3, warehouse: 4 }
   enum :department, [ :operation, :accounting, :purchasing, :sales, :warehouse ]
 
@@ -19,10 +19,32 @@ class User < ApplicationRecord
   validate :email_must_be_whitelisted
   validates :department, presence: true
   
+  def promote!
+    case role
+    when 'regular'
+      head!
+    when 'head'
+      manager!
+    when 'manager'
+      admin!
+    end
+  end
+
+  def demote!
+    case role
+    when 'admin'
+      manager!
+    when 'manager'
+      head!
+    when 'head'
+      regular!
+    end
+  end
+
   private
 
   def set_default_role
-    self.role ||= :user
+    self.role ||= :regular
   end
 
   def email_must_be_whitelisted

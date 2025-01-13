@@ -23,7 +23,7 @@ export default class extends Controller {
     toast.classList.add("hide")
     // Remove the element after animation completes
     setTimeout(() => {
-      console.log("removing toast")
+      toast.remove()
     }, 300) // Match the CSS animation duration
   }
 }

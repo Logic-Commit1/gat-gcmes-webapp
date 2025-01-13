@@ -2,12 +2,21 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     registrations: 'users/registrations'
   }
+  resources :users, only: [] do
+    member do
+      patch :promote
+    end
+  end
   get 'request_forms/items', to: 'request_forms#items'
   get 'profile', to: 'profiles#show', as: :profile
 
   resources :employees do
     collection do
       get :whitelisted
+    end
+    member do
+      patch :promote
+      patch :demote
     end
   end
   resources :purchase_orders do
