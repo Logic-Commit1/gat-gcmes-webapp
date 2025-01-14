@@ -32,55 +32,54 @@
   </table>
   <strong>Subject:</strong>
   <%= @quotation.subject %>
-</p>
-<table id="products-table">
-  <thead>
-    <tr>
-      <th>SN</th>
-      <th colspan="2">DESCRIPTION</th>
-      <th class="align-right">QUANTITY</th>
-      <th class="align-right">U/M</th>
-      <th class="align-right">UNIT PRICE</th>
-      <th class="align-right">TOTAL AMOUNT</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @quotation.products.each_with_index do |p, index| %>
+  <table id="products-table">
+    <thead>
       <tr>
-        <td style="border: 1px solid black;"><%= index + 1 %></td>
-        <td colspan="2"><%= p.name %></td>
-        <td class="align-right"><%= p.quantity %></td>
-        <td class="align-right"><%= p.unit %></td>
-        <td class="align-right">PHP <%= number_with_precision(p.price, precision: 2, delimiter: ',') %></td>
-        <td class="align-right">PHP <%= number_with_precision(p.total, precision: 2, delimiter: ',') %></td>
+        <th>SN</th>
+        <th colspan="2">DESCRIPTION</th>
+        <th class="align-right">QUANTITY</th>
+        <th class="align-right">U/M</th>
+        <th class="align-right">UNIT PRICE</th>
+        <th class="align-right">TOTAL AMOUNT</th>
       </tr>
-      <tr>
-        <td></td>
-        <td>BRAND</td>
-        <td><%= p.brand %></td>
-      </tr>
-      <% p.specs.each do |spec| %>
+    </thead>
+    <tbody>
+      <% @quotation.products.each_with_index do |p, index| %>
+        <tr>
+          <td style="border: 1px solid black;"><%= index + 1 %></td>
+          <td colspan="2"><%= p.name %></td>
+          <td class="align-right"><%= p.quantity %></td>
+          <td class="align-right"><%= p.unit %></td>
+          <td class="align-right">PHP <%= number_with_precision(p.price, precision: 2, delimiter: ',') %></td>
+          <td class="align-right">PHP <%= number_with_precision(p.total, precision: 2, delimiter: ',') %></td>
+        </tr>
         <tr>
           <td></td>
-          <td><%= spec.name&.capitalize %></td>
-          <td><%= spec.value&.capitalize %></td>
+          <td>BRAND</td>
+          <td><%= p.brand %></td>
         </tr>
-      <% end %>
-      <% if p.image.attached? %>
+        <% p.specs.each do |spec| %>
+          <tr>
+            <td></td>
+            <td><%= spec.name&.capitalize %></td>
+            <td><%= spec.value&.capitalize %></td>
+          </tr>
+        <% end %>
+        <% if p.image.attached? %>
+          <tr>
+            <td></td>
+            <td style="text-align: center;" colspan="2">
+              <% image_data = p.image.download %>
+              <%= image_tag("data:image/png;base64,#{Base64.strict_encode64(image_data)}", style: "width: 100px; height: 100px;") %>
+            </td>
+          </tr>
+        <% end %>
         <tr>
-          <td></td>
-          <td style="text-align: center;" colspan="2">
-            <% image_data = p.image.download %>
-            <%= image_tag("data:image/png;base64,#{Base64.strict_encode64(image_data)}", style: "width: 100px; height: 100px;") %>
-          </td>
+          <td colspan="6"></td>
         </tr>
-      <% end %>
-      <tr>
-        <td colspan="6"></td>
-      </tr>
-    </div>
-  <% end %>
-</tbody>
+      </div>
+    <% end %>
+  </tbody>
 </table>
 <table id="totals-table">
   <tr>
@@ -115,28 +114,30 @@
   </div>
 </div>
 <br>
-<div class="align-center">Note: This document is not valid without manager&rsquo;s signature</div>
-<table class="signatures-table">
-  <thead>
-    <tr>
-      <th>Conforme by</th>
-      <th>Prepared by</th>
-      <th>Approved by</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td></td>
-      <td></td>
-      <% if @quotation.approved? %>
-        <td>
-          <%= image_tag "#{request.base_url}/assets/fake-signature.png", style: "width: 100px; height: 40px;" %>
-          <p>Robert D. Bautista</p>
-        </td>
-      <% else %>
+<div>
+  <div class="align-center">Note: This document is not valid without manager&rsquo;s signature</div>
+  <table class="signatures-table">
+    <thead>
+      <tr>
+        <th>Conforme by</th>
+        <th>Prepared by</th>
+        <th>Approved by</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
         <td></td>
-      <% end %>
-    </tr>
-  </tbody>
-</table>
+        <td></td>
+        <% if @quotation.approved? %>
+          <td>
+            <%= image_tag "#{request.base_url}/assets/fake-signature.png", style: "width: 100px; height: 40px;" %>
+            <p>Robert D. Bautista</p>
+          </td>
+        <% else %>
+          <td></td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+</div>
 </div>

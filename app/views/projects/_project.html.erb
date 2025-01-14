@@ -32,27 +32,25 @@
   <br>
   <%= render 'pages/components/action_buttons', document: project %>
   <div class="project-card">
-    <div class="project-name">
+    <div class="project-name mb-4">
       <%= project.uid %>
       <div style="margin-bottom: 5px;" class="status-dot <%= project.status.downcase %>"></div>
     </div>
     <div class="project-details">
       <p>
+        <span class="semibold">Client:</span>
         <%= project.client.name %>
       </p>
     </div>
     <div class="project-details">
       <p>
-        <%= project.status %>
+        <span class="semibold">Amount:</span>
+        PHP <%= number_with_precision(project.amount, precision: 2, delimiter: ',') %>
       </p>
     </div>
     <div class="project-details">
       <p>
-        <%= project.amount %>
-      </p>
-    </div>
-    <div class="project-details">
-      <p>
+        <span class="semibold">Terms:</span>
         <%= project.payment %>
       </p>
     </div>
@@ -134,7 +132,7 @@
       <% if project.request_forms.any? %>
         <div class="linked-documents-body">
           <% project.request_forms.each do |request_form| %>
-            <div class='document-link' onclick="window.open('<%= request_form.uid %>', '_blank')">
+            <div class='document-link'>
               <%= link_to request_form.uid, request_form %>
               <% status_color = case request_form.status
                                when 'approved' then 'bg-green-500'

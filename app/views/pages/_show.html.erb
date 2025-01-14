@@ -4,7 +4,7 @@
   <%= render 'pages/components/action_buttons', document: document %>
   <!--
   -->
-  <div class="flex column-gap-10">
+  <div class="flex column-gap-50">
     <iframe 
       src="<%= case document.class.name.underscore
                 when 'quotation' then pdf_view_quotation_path(document)

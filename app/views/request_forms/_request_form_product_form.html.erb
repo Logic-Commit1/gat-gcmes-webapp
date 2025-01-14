@@ -6,7 +6,10 @@
     <%= f.number_field :quantity, class: "required align-right", placeholder: "0" %>
   </td>
   <td style="width: 15%;">
-    <%= f.text_field :unit, class: "required align-right" %>
+    <%= f.select :unit,
+                  options_for_select([['Select Unit', '']] + ApplicationRecord::UNIT_OF_MEASUREMENTS.map { |unit| [unit, unit] }),
+                  { include_blank: false },
+                  { class: "required align-right" } %>
   </td>
   <td style="width: 15%;" >
     <%= f.number_field :price, step: :any, class: "required align-right", placeholder: "0.00" %>
