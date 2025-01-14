@@ -4,11 +4,13 @@
     font-size: 10px;
   }
   header {
+    text-align: center;
+    margin: 0 auto;
     margin-bottom: 24px;
     .old-header {
       max-width: 480px;
       text-align: center;
-      margin-left: 74px;
+      margin: 0 auto 0 35%;
       p {
         font-size: 8px;
       }

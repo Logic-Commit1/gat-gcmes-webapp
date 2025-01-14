@@ -57,6 +57,10 @@
   &.gtc-2-1-1 {
     grid-template-columns: 1.5fr 1fr 1fr;
   }
+
+  &.baseline {
+    align-items: baseline;
+  }
 }
 
 .grid-header {

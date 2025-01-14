@@ -5,6 +5,8 @@ export default class extends Controller {
     "form",
     "projectSelect",
     "projectError",
+    "poNumberInput",
+    "poNumberError",
     "canvassSelect",
     "canvassError",
     "quotationSelect",
@@ -31,6 +33,12 @@ export default class extends Controller {
     "requestFormError",
     "termsSelect",
     "termsError",
+    "companySelect",
+    "companyError",
+    "amountInput",
+    "amountError",
+    "paymentSelect",
+    "paymentError",
   ]
 
   connect() {
@@ -374,6 +382,60 @@ export default class extends Controller {
           isValid = false
         }
       }
+    }
+
+    return isValid
+  }
+
+  validateProjectForm(event) {
+    this.clearErrors()
+    let isValid = true
+
+    // Validate company selection
+    if (this.hasCompanySelectTarget) {
+      const selectedCompany = this.element.querySelector(
+        'input[name="project[company_id]"]:checked'
+      )
+      if (!selectedCompany) {
+        event.preventDefault()
+        this.companyErrorTarget.classList.remove("hidden")
+        isValid = false
+      }
+    }
+
+    // Validate client selection
+    if (this.hasClientSelectTarget && !this.clientSelectTarget.value) {
+      event.preventDefault()
+      this.clientSelectTarget.classList.add("field-error")
+      this.clientErrorTarget.classList.remove("hidden")
+      isValid = false
+    }
+
+    // Validate PO number
+    if (this.hasPoNumberInputTarget && !this.poNumberInputTarget.value.trim()) {
+      event.preventDefault()
+      this.poNumberInputTarget.classList.add("field-error")
+      this.poNumberErrorTarget.classList.remove("hidden")
+      isValid = false
+    }
+
+    // Validate amount
+    if (this.hasAmountInputTarget) {
+      const amount = this.amountInputTarget.value.trim()
+      if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
+        event.preventDefault()
+        this.amountInputTarget.classList.add("field-error")
+        this.amountErrorTarget.classList.remove("hidden")
+        isValid = false
+      }
+    }
+
+    // Validate payment selection
+    if (this.hasPaymentSelectTarget && !this.paymentSelectTarget.value) {
+      event.preventDefault()
+      this.paymentSelectTarget.classList.add("field-error")
+      this.paymentErrorTarget.classList.remove("hidden")
+      isValid = false
     }
 
     return isValid

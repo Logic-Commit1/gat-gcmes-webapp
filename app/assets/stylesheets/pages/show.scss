@@ -19,16 +19,21 @@
   }
 
   &.client-page,
-  &.supplier-page {
+  &.supplier-page,
+  &.project-page {
     max-width: 800px;
-    .client-card {
+    .client-card,
+    .supplier-card,
+    .project-card {
       margin-bottom: 1rem;
       padding: 1.5rem 2.5rem;
       border: 1px solid #ccc;
       border-radius: 5px;
       background-color: #fff;
 
-      .client-name {
+      .client-name,
+      .supplier-name,
+      .project-name {
         font-size: 2rem;
         font-weight: 500;
       }
@@ -166,6 +171,36 @@
         p:last-child {
           text-align: left;
         }
+      }
+    }
+  }
+
+  .status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-left: 5px;
+  }
+
+  .linked-documents {
+    .linked-documents-header {
+      margin-bottom: 12px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .document-link {
+      padding: 6px 12px;
+      width: fit-content;
+      border: 1px solid #222;
+      border-radius: 6px;
+      font-size: 14px;
+      .status-dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-left: 5px;
       }
     }
   }

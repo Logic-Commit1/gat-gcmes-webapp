@@ -32,39 +32,147 @@
   <br>
   <%= render 'pages/components/action_buttons', document: project %>
   <div class="project-card">
-    <p class="project-name">
+    <div class="project-name">
       <%= project.uid %>
-    </p>
-  </div>
-  <div class="project-details">
-    <p>
-      <%= project.client.name %>
-    </p>
-  </div>
-  <div class="project-details">
-    <p>
-      <%= project.status %>
-    </p>
-  </div>
-  <div class="project-details">
-    <p>
-      <%= project.amount %>
-    </p>
-  </div>
-  <div class="project-details">
-    <p>
-      <%= project.payment %>
-    </p>
-  </div>
-  <div class="project-details">
-    <p>
-      <% if project.client_po.attached? %>
-        <iframe src="<%= rails_blob_path(project.client_po, disposition: 'inline') %>"
+      <div style="margin-bottom: 5px;" class="status-dot <%= project.status.downcase %>"></div>
+    </div>
+    <div class="project-details">
+      <p>
+        <%= project.client.name %>
+      </p>
+    </div>
+    <div class="project-details">
+      <p>
+        <%= project.status %>
+      </p>
+    </div>
+    <div class="project-details">
+      <p>
+        <%= project.amount %>
+      </p>
+    </div>
+    <div class="project-details">
+      <p>
+        <%= project.payment %>
+      </p>
+    </div>
+    <div class="project-details">
+      <p>
+        <% if project.client_po.attached? %>
+          <iframe src="<%= rails_blob_path(project.client_po, disposition: 'inline') %>"
                 width="650px"
                 height="700px"
                 frameborder="0">
-        </iframe>
-      <% end %>
-    </p>
+          </iframe>
+        <% end %>
+      </p>
+    </div>
   </div>
-</div>
+  <div class="related-documents grid with-4-columns baseline">
+    <div class="linked-documents">
+      <div class="linked-documents-header">
+        <p>Quotations</p>
+      </div>
+      <% if project.quotations.any? %>
+        <div class="linked-documents-body">
+          <% project.quotations.each do |quotation| %>
+            <div class='document-link'>
+              <%= link_to quotation.uid, quotation %>
+              <% status_color = case quotation.status
+                               when 'approved' then 'bg-green-500'
+                               when 'rejected' then 'bg-red-500'
+                               else 'bg-orange-500'
+                               end %>
+              <div class="status-dot <%= quotation.status %>"></div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="linked-documents-body">
+          <p>
+            No Quotations
+          </p>
+        </div>
+      <% end %>
+    </div>
+    <div class="linked-documents">
+      <div class="linked-documents-header">
+        <p>
+          Canvasses
+        </p>
+      </div>
+      <% if project.canvasses.any? %>
+        <div class="linked-documents-body">
+          <% project.canvasses.each do |canvass| %>
+            <div class='document-link'>
+              <%= link_to canvass.uid, canvass %>
+              <% status_color = case canvass.status
+                               when 'approved' then 'bg-green-500'
+                               when 'rejected' then 'bg-red-500'
+                               else 'bg-orange-500'
+                               end %>
+              <div class="status-dot <%= canvass.status %>"></div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <!--
+        <div class="linked-documents-body">
+          <p>
+            No Canvasses
+          </p>
+        </div>
+      -->
+      <% end %>
+    </div>
+    <div class="linked-documents">
+      <div class="linked-documents-header">
+        <p>
+          Request Forms
+        </p>
+      </div>
+      <% if project.request_forms.any? %>
+        <div class="linked-documents-body">
+          <% project.request_forms.each do |request_form| %>
+            <div class='document-link' onclick="window.open('<%= request_form.uid %>', '_blank')">
+              <%= link_to request_form.uid, request_form %>
+              <% status_color = case request_form.status
+                               when 'approved' then 'bg-green-500'
+                               when 'rejected' then 'bg-red-500'
+                               else 'bg-orange-500'
+                               end %>
+              <div class="status-dot <%= request_form.status %>"></div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="linked-documents-body">
+        </div>
+      <% end %>
+    </div>
+    <div class="linked-documents">
+      <div class="linked-documents-header">
+        <p>
+          Purchase Orders
+        </p>
+      </div>
+      <% if project.purchase_orders.any? %>
+        <div class="linked-documents-body">
+          <% project.purchase_orders.each do |purchase_order| %>
+            <div class='document-link'>
+              <%= link_to purchase_order.uid, purchase_order %>
+              <% status_color = case purchase_order.status
+                               when 'approved' then 'bg-green-500'
+                               when 'rejected' then 'bg-red-500'
+                               else 'bg-orange-500'
+                               end %>
+              <div class="status-dot <%= purchase_order.status %>"></div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="linked-documents-body">
+        </div>
+      <% end %>
+    </div>
+  </div>
