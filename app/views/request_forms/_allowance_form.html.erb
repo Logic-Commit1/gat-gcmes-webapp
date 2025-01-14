@@ -1,4 +1,4 @@
-<div class="allowance-form-container">
+<div class="allowance-form-container" data-controller="total-calculator">
   <div class="separator"></div>
   <div class="allowance-section">
     <p class="semibold" style="margin-bottom: 10px;">Allowance Table</p>
@@ -12,24 +12,28 @@
         </tr>
       </thead>
     </table>
-    <div class="nested-form-wrapper" data-new-record="<%= form.object.new_record? %>">
-      <table class="allowance-table" data-form-validation-target="particularsTable">
-        <tbody>
-          <template data-nested-form-target="template">
-            <%= form.fields_for :particulars, Particular.new, child_index: 'NEW_RECORD' do |particular_fields| %>
-              <%= render "request_forms/request_form_particular_form", f: particular_fields %>
-            <% end %>
-          </template>
-          <%= form.fields_for :particulars do |particular_fields| %>
-            <%= render "request_forms/request_form_particular_form", f: particular_fields %>
-          <% end %>
-          <tr data-nested-form-target="target"></tr>
-        </tbody>
-      </table>
-    </div>
+  
+    <template data-nested-form-target="template">
+      <%= form.fields_for :particulars, Particular.new, child_index: 'NEW_RECORD' do |particular_fields| %>
+        <%= render "request_forms/request_form_particular_form", f: particular_fields %>
+      <% end %>
+    </template>
+    <%= form.fields_for :particulars do |particular_fields| %>
+      <%= render "request_forms/request_form_particular_form", f: particular_fields %>
+    <% end %>
+    <div data-nested-form-target="target"></div>
+        
     <%= link_to '<i class="fas fa-plus"></i> Add Particular'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#add" } %>
     <div class="error-message hidden" data-form-validation-target="particularsError">
       Please add at least one particular and fill in all required fields
+    </div>
+  </div>
+  <div class="total-calculator">
+    <div class="totals-section">
+      <div class="total-row total-final">
+        <span class="total-label">Total Amount:</span>
+        <span data-total-calculator-target="allowanceTotal">PHP 0.00</span>
+      </div>
     </div>
   </div>
   <div class="separator"></div>

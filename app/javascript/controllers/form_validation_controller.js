@@ -96,6 +96,8 @@ export default class extends Controller {
         )
       ).slice(0, 5)
 
+      console.log(rows)
+
       if (rows.length === 0) {
         event.preventDefault()
         this.itemsErrorTarget.classList.remove("hidden")
@@ -158,9 +160,13 @@ export default class extends Controller {
 
       // Validate items table
       if (this.hasItemsTableTarget) {
-        const rows = this.itemsTableTarget.querySelectorAll(
-          'tr:not([data-nested-form-target="target"])'
-        )
+        const rows = Array.from(
+          this.itemsTableTarget.querySelectorAll(
+            'td:not([data-nested-form-target="target"])'
+          )
+        ).slice(0, 4)
+
+        console.log(rows)
 
         if (rows.length === 0) {
           event.preventDefault()
@@ -170,7 +176,7 @@ export default class extends Controller {
           let hasItemErrors = false
 
           rows.forEach((row) => {
-            const inputs = row.querySelectorAll("input")
+            const inputs = row.querySelectorAll("input, select")
             inputs.forEach((input) => {
               if (!input.value || input.value.trim() === "") {
                 input.classList.add("field-error")

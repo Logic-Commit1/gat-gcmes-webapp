@@ -8,10 +8,16 @@ export default class extends Controller {
     "discount",
     "priceInput",
     "quantityInput",
+    "allowanceTotal",
   ]
 
   connect() {
-    this.calculate()
+    // if (this.hasAllowanceTotalTarget) {
+    //   console.log("Allowance Total Target")
+    //   this.calculateAllowanceTotal()
+    // } else {
+    //   this.calculate()
+    // }
   }
 
   calculate() {
@@ -22,9 +28,25 @@ export default class extends Controller {
     const vat = discountedSubTotal * 0.12
     const total = discountedSubTotal + vat
 
-    this.subTotalTarget.textContent = `${this.formatNumber(subTotal)}`
-    this.discountTarget.textContent = `- ${this.formatNumber(discountAmount)}`
-    this.vatTarget.textContent = `${this.formatNumber(vat)}`
+    // if no discount or vat, show subtotal
+    if (
+      !this.hasSubTotalTarget &&
+      !this.hasDiscountTarget &&
+      !this.hasVatTarget
+    ) {
+      this.totalTarget.textContent = `PHP ${this.formatNumber(subTotal)}`
+      return
+    }
+
+    if (this.hasSubTotalTarget) {
+      this.subTotalTarget.textContent = `${this.formatNumber(subTotal)}`
+    }
+    if (this.hasDiscountTarget) {
+      this.discountTarget.textContent = `- ${this.formatNumber(discountAmount)}`
+    }
+    if (this.hasVatTarget) {
+      this.vatTarget.textContent = `${this.formatNumber(vat)}`
+    }
     this.totalTarget.textContent = `PHP ${this.formatNumber(total)}`
   }
 
@@ -46,10 +68,13 @@ export default class extends Controller {
   }
 
   getDiscountPercentage() {
-    const discountInput = document.querySelector(
-      'input[name*="[discount_rate]"]'
-    )
-    return parseFloat(discountInput.value) || 0
+    if (this.hasDiscountTarget) {
+      const discountInput = document.querySelector(
+        'input[name*="[discount_rate]"]'
+      )
+      return parseFloat(discountInput.value) || 0
+    }
+    return 0
   }
 
   formatNumber(value) {
@@ -57,5 +82,20 @@ export default class extends Controller {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     }).format(value)
+  }
+
+  calculateAllowanceTotal() {
+    let sum = 0
+    const rows = document.querySelectorAll(
+      '.nested-form-wrapper:not([data-nested-form-target="template"])'
+    )
+
+    rows.forEach((row) => {
+      const allowance =
+        parseFloat(row.querySelector('input[name*="[allowance]"]')?.value) || 0
+      sum += allowance
+    })
+
+    this.allowanceTotalTarget.textContent = `PHP ${this.formatNumber(sum)}`
   }
 }

@@ -9,7 +9,6 @@ export default class extends Controller {
   }
 
   showHiddenDivs() {
-    // console.log("showHiddenDivs")
     const hiddenDivs = document.querySelectorAll(".hidden")
 
     hiddenDivs.forEach((div) => {

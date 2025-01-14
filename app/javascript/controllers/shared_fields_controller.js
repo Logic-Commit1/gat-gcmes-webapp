@@ -35,27 +35,21 @@ export default class extends Controller {
     const quantityValue = this.quantityFieldTarget.value
     const unitValue = this.unitFieldTarget.value
     const brandValue = this.brandFieldTarget.value
-    console.log(descriptionValue, quantityValue, unitValue, brandValue)
   }
 
   sync() {
-    console.log("1")
     const descriptionValue = document.querySelector(
       'input[name="canvass[description]"]'
     ).value
-    console.log("2")
     const quantityValue = document.querySelector(
       'input[name="canvass[quantity]"]'
     ).value
-    console.log("3")
     const unitValue = document.querySelector(
       'select[name="canvass[unit]"]'
     ).value
-    console.log("4")
     const brandValue = document.querySelector(
       'input[name="canvass[brand]"]'
     ).value
-    console.log("5")
     this.descriptionFieldTargets.forEach(
       (field) => (field.value = descriptionValue)
     )

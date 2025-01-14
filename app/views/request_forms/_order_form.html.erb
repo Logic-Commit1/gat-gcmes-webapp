@@ -1,4 +1,4 @@
-<div class="order-form-container">
+<div class="order-form-container" data-controller="total-calculator">
   <div class="separator"></div>
   <div class="order-section">
     <p class="semibold">Items Table</p>
@@ -13,50 +13,26 @@
         </tr>
       </thead>
     </table>
-    <div class="nested-form-wrapper" data-new-record="<%= form.object.new_record? %>">
-      <table class="order-table" data-form-validation-target="itemsTable">
-        <tbody>
-          <template data-nested-form-target="template">
-            <%= form.fields_for :products, Product.new, child_index: 'NEW_RECORD' do |product_fields| %>
-              <%= render "request_forms/request_form_product_form", f: product_fields %>
-            <% end %>
-          </template>
-          <%= form.fields_for :products do |product_fields| %>
-            <%= render "request_forms/request_form_product_form", f: product_fields %>
-          <% end %>
-          <tr data-nested-form-target="target"></tr>
-        </tbody>
-      </table>
-    </div>
+    <template data-nested-form-target="template">
+      <%= form.fields_for :products, Product.new, child_index: 'NEW_RECORD' do |product_fields| %>
+        <%= render "request_forms/request_form_product_form", f: product_fields %>
+      <% end %>
+    </template>
+    <%= form.fields_for :products do |product_fields| %>
+      <%= render "request_forms/request_form_product_form", f: product_fields %>
+    <% end %>
+    <div data-nested-form-target="target"></div>
     <%= link_to '<i class="fas fa-plus"></i> Add Item'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#add" } %>
     <div class="error-message hidden" data-form-validation-target="itemsError">
       Please add at least one item and fill in all required fields
     </div>
+    <div class="total-calculator">
+      <div class="totals-section">
+        <div class="total-row total-final">
+          <span class="total-label">Total Amount:</span>
+          <span data-total-calculator-target="total">PHP 0.00</span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<!--
-<div>
-  <%= form.label :remarks, style: "display: block" %>
-  <%= form.text_area :remarks %>
-</div>
-<div>
-  <%= form.label :requester, style: "display: block" %>
-  <%= form.text_field :requester %>
-</div>
-<div>
-  <%= form.label :checker, style: "display: block" %>
-  <%= form.text_field :checker %>
-</div>
-<div>
-  <%= form.label :procurer, style: "display: block" %>
-  <%= form.text_field :procurer %>
-</div>
-<div>
-  <%= form.label :pre_approver, style: "display: block" %>
-  <%= form.text_field :pre_approver %>
-</div>
-<div>
-  <%= form.label :approver, style: "display: block" %>
-  <%= form.text_field :approver %>
-</div>
--->
