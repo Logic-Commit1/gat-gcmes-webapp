@@ -54,9 +54,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_12_101445) do
     t.datetime "deleted_at"
     t.integer "status", default: 0
     t.bigint "project_id", null: false
+    t.bigint "user_id"
     t.index ["company_id"], name: "index_canvasses_on_company_id"
     t.index ["deleted_at"], name: "index_canvasses_on_deleted_at"
     t.index ["project_id"], name: "index_canvasses_on_project_id"
+    t.index ["user_id"], name: "index_canvasses_on_user_id"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -149,8 +151,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_12_101445) do
     t.datetime "updated_at", null: false
     t.bigint "company_id"
     t.string "po_number", null: false
+    t.bigint "user_id"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["company_id"], name: "index_projects_on_company_id"
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "purchase_orders", force: :cascade do |t|
@@ -172,12 +176,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_12_101445) do
     t.datetime "deleted_at"
     t.bigint "project_id", null: false
     t.integer "status", default: 0
+    t.bigint "user_id"
     t.index ["company_id"], name: "index_purchase_orders_on_company_id"
     t.index ["deleted_at"], name: "index_purchase_orders_on_deleted_at"
     t.index ["employee_id"], name: "index_purchase_orders_on_employee_id"
     t.index ["project_id"], name: "index_purchase_orders_on_project_id"
     t.index ["request_form_id"], name: "index_purchase_orders_on_request_form_id"
     t.index ["supplier_id"], name: "index_purchase_orders_on_supplier_id"
+    t.index ["user_id"], name: "index_purchase_orders_on_user_id"
   end
 
   create_table "quotations", force: :cascade do |t|
@@ -204,10 +210,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_12_101445) do
     t.datetime "deleted_at"
     t.decimal "discount", default: "0.0"
     t.decimal "discount_rate", default: "0.0"
+    t.bigint "user_id"
     t.index ["client_id"], name: "index_quotations_on_client_id"
     t.index ["company_id"], name: "index_quotations_on_company_id"
     t.index ["deleted_at"], name: "index_quotations_on_deleted_at"
     t.index ["project_id"], name: "index_quotations_on_project_id"
+    t.index ["user_id"], name: "index_quotations_on_user_id"
   end
 
   create_table "request_form_sequences", force: :cascade do |t|
@@ -243,11 +251,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_12_101445) do
     t.integer "sequence_id"
     t.datetime "deleted_at"
     t.integer "status", default: 0
+    t.bigint "user_id"
     t.index ["canvass_id"], name: "index_request_forms_on_canvass_id"
     t.index ["company_id"], name: "index_request_forms_on_company_id"
     t.index ["deleted_at"], name: "index_request_forms_on_deleted_at"
     t.index ["project_id"], name: "index_request_forms_on_project_id"
     t.index ["quotation_id"], name: "index_request_forms_on_quotation_id"
+    t.index ["user_id"], name: "index_request_forms_on_user_id"
   end
 
   create_table "specs", force: :cascade do |t|
@@ -290,6 +300,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_12_101445) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "canvasses", "companies"
   add_foreign_key "canvasses", "projects"
+  add_foreign_key "canvasses", "users"
   add_foreign_key "clients", "companies"
   add_foreign_key "particulars", "request_forms"
   add_foreign_key "products", "canvasses"
@@ -299,18 +310,22 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_12_101445) do
   add_foreign_key "products", "suppliers"
   add_foreign_key "projects", "clients"
   add_foreign_key "projects", "companies"
+  add_foreign_key "projects", "users"
   add_foreign_key "purchase_orders", "companies"
   add_foreign_key "purchase_orders", "employees"
   add_foreign_key "purchase_orders", "projects"
   add_foreign_key "purchase_orders", "request_forms"
   add_foreign_key "purchase_orders", "suppliers"
+  add_foreign_key "purchase_orders", "users"
   add_foreign_key "quotations", "clients"
   add_foreign_key "quotations", "companies"
   add_foreign_key "quotations", "projects"
+  add_foreign_key "quotations", "users"
   add_foreign_key "request_forms", "canvasses"
   add_foreign_key "request_forms", "companies"
   add_foreign_key "request_forms", "projects"
   add_foreign_key "request_forms", "quotations"
+  add_foreign_key "request_forms", "users"
   add_foreign_key "specs", "products"
   add_foreign_key "suppliers", "companies"
 end

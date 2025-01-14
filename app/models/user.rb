@@ -8,9 +8,14 @@ class User < ApplicationRecord
   # enum department: { operation: 0, accounting: 1, purchasing: 2, sales: 3, warehouse: 4 }
   enum :department, [ :operation, :accounting, :purchasing, :sales, :warehouse ]
 
-
   belongs_to :employee, optional: true
   
+  has_many :quotations
+  has_many :canvasses
+  has_many :request_forms
+  has_many :purchase_orders
+  has_many :projects
+
   after_initialize :set_default_role, if: :new_record?
 
   validates :email, presence: true

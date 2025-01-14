@@ -56,6 +56,7 @@ class CanvassesController < ApplicationController
   # POST /canvasses or /canvasses.json
   def create
     @canvass = Canvass.new(canvass_params)
+    @canvass.user = current_user
 
     respond_to do |format|
       if @canvass.save

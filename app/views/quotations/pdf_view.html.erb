@@ -127,7 +127,7 @@
     <tbody>
       <tr>
         <td></td>
-        <td></td>
+        <td><%= @quotation.created_by %></td>
         <% if @quotation.approved? %>
           <td>
             <%= image_tag "#{request.base_url}/assets/fake-signature.png", style: "width: 100px; height: 40px;" %>

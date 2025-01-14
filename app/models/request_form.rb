@@ -6,6 +6,7 @@ class RequestForm < ApplicationRecord
   belongs_to :company
   belongs_to :project
   belongs_to :purchase_order, optional: true
+  belongs_to :user
 
   has_many :particulars, dependent: :destroy, inverse_of: :request_form
   accepts_nested_attributes_for :particulars, allow_destroy: true, reject_if: :all_blank

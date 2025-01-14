@@ -60,6 +60,7 @@ class QuotationsController < ApplicationController
   # POST /quotations or /quotations.json
    def create
     @quotation = Quotation.new(quotation_params)
+    @quotation.user = current_user
     if @quotation.save
       generate_pdf(@quotation)
       redirect_to @quotation

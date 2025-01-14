@@ -56,6 +56,7 @@ class PurchaseOrdersController < ApplicationController
   # POST /purchase_orders or /purchase_orders.json
   def create
     @purchase_order = PurchaseOrder.new(purchase_order_params)
+    @purchase_order.user = current_user
 
     respond_to do |format|
       if @purchase_order.save

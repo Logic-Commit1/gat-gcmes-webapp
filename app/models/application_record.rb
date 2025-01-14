@@ -14,4 +14,8 @@ class ApplicationRecord < ActiveRecord::Base
   def gcmes?
     self.company.code.downcase == "gcmes"
   end
+
+  def created_by
+    "#{user&.first_name&.titleize} #{user&.last_name&.titleize}"
+  end
 end

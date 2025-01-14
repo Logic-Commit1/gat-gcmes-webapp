@@ -5,6 +5,7 @@ class PurchaseOrder < ApplicationRecord
   belongs_to :supplier
   belongs_to :project
   belongs_to :request_form, optional: true
+  belongs_to :user
   # belongs_to :employee
 
   has_many :products, dependent: :destroy, inverse_of: :purchase_order

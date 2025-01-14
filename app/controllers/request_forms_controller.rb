@@ -58,6 +58,7 @@ class RequestFormsController < ApplicationController
   # POST /request_forms or /request_forms.json
   def create
     @request_form = RequestForm.new(request_form_params)
+    @request_form.user = current_user
 
     respond_to do |format|
       if @request_form.save

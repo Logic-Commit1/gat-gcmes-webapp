@@ -2,6 +2,7 @@ class Quotation < ApplicationRecord
   belongs_to :client
   belongs_to :company
   belongs_to :project
+  belongs_to :user
   
   has_many :products, dependent: :destroy, inverse_of: :quotation
   has_many :request_forms
