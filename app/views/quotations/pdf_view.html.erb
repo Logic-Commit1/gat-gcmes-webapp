@@ -127,10 +127,12 @@
     <tbody>
       <tr>
         <td></td>
-        <td><%= @quotation.created_by %></td>
+        <td>
+          <p><%= @quotation.created_by %></p>
+        </td>
         <% if @quotation.approved? %>
           <td>
-            <%= image_tag "#{request.base_url}/assets/fake-signature.png", style: "width: 100px; height: 40px;" %>
+            <%= image_tag "#{request.base_url}/assets/fake-signature.png", class: "signature-image" %>
             <p>Robert D. Bautista</p>
           </td>
         <% else %>

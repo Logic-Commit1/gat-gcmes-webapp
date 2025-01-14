@@ -87,7 +87,7 @@ class EmployeesController < ApplicationController
     if @user&.promote!
       respond_to do |format|
         format.turbo_stream { 
-          flash.now[:notice] = "Employee was successfully promoted."
+          flash.now[:notice] = "Employee was successfully promoted to #{@user.role.humanize}."
           render turbo_stream: [
             turbo_stream.update("flash", partial: "components/alerts"),
             turbo_stream.update("employees_table", partial: "components/table_body", locals: { documents: User.latest_first, title: "Employees" })
@@ -110,7 +110,7 @@ class EmployeesController < ApplicationController
     if @user&.demote!
       respond_to do |format|
         format.turbo_stream { 
-          flash.now[:notice] = "Employee was successfully demoted."
+          flash.now[:notice] = "Employee was successfully demoted to #{@user.role.humanize}."
           render turbo_stream: [
             turbo_stream.update("flash", partial: "components/alerts"),
             turbo_stream.update("employees_table", partial: "components/table_body", locals: { documents: User.latest_first, title: "Employees" })

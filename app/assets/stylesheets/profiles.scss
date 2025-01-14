@@ -5,58 +5,59 @@
   background: white;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
+  border: 1px solid #e0e0e0;
 
-.profile-header {
-  margin-bottom: 2rem;
+  .profile-header {
+    margin-bottom: 2rem;
 
-  h1 {
-    color: #2c3e50;
-    font-size: 2rem;
-    font-weight: 600;
+    h1 {
+      color: #2c3e50;
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  .profile-content {
+    margin-bottom: 2rem;
+  }
+
+  .profile-field {
     margin-bottom: 1.5rem;
-  }
-}
 
-.profile-content {
-  margin-bottom: 2rem;
-}
+    label {
+      display: block;
+      color: #6c7a89;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
 
-.profile-field {
-  margin-bottom: 1.5rem;
-
-  label {
-    display: block;
-    color: #6c7a89;
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
+    p {
+      color: #2c3e50;
+      font-size: 1.1rem;
+      margin: 0;
+    }
   }
 
-  p {
-    color: #2c3e50;
-    font-size: 1.1rem;
-    margin: 0;
-  }
-}
+  .profile-actions {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #edf2f7;
 
-.profile-actions {
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #edf2f7;
+    a {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background-color: #3498db;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: background-color 0.2s;
 
-  a {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    background-color: #3498db;
-    color: white;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: 500;
-    transition: background-color 0.2s;
-
-    &:hover {
-      background-color: #2980b9;
+      &:hover {
+        background-color: #2980b9;
+      }
     }
   }
 }

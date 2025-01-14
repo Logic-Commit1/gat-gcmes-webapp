@@ -21,8 +21,8 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validate :email_must_be_whitelisted
-  validates :department, presence: true
+  validate :email_must_be_whitelisted, on: :create
+  validates :department, presence: true, on: :create
   
   def promote!
     case role

@@ -12,6 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
 
     @user = resource
+
     if @user.update(account_update_params)
     #   set_flash_message :notice, :updated
       flash[:notice] = "Profile updated successfully"
@@ -19,7 +20,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
       redirect_to profile_path
     #   bypass_sign_in @user
     else
-      render "edit"
+      @user.errors.full_messages.each do |message|
+        flash[:alert] = "• #{message}\n"
+      end
+      redirect_to edit_user_registration_path
     end
   end
 

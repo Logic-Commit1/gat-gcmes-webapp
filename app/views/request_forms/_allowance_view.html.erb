@@ -65,12 +65,15 @@
   </thead>
   <tbody>
     <tr>
-      <td><%= @request_form.created_by %></td>
+      <td>
+        <%#= image_tag "#{request.base_url}/assets/fake-signature.png", style: "width: 100px; height: 40px;" %>
+        <p><%= @request_form.created_by %></p>
+      </td>
       <td></td>
       <td></td>
       <% if !@request_form.approved? %>
         <td>
-          <%= image_tag "#{request.base_url}/assets/fake-signature.png", style: "width: 100px; height: 40px;" %>
+          <%= image_tag "#{request.base_url}/assets/fake-signature.png", class: "signature-image" %>
           <p>Robert D. Bautista</p>
         </td>
       <% else %>
