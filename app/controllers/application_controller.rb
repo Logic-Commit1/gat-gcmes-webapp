@@ -21,7 +21,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  
+  def check_user_has_signature
+    return if current_user&.signature&.attached?
+
+    redirect_to :profile,
+                alert: 'You need to have uploaded a signature before you can create or edit reports'
+  end
 
   def authorize_admin!
     unless current_user&.admin?

@@ -22,4 +22,8 @@ class ApplicationRecord < ActiveRecord::Base
   def user_signature
     user&.signature&.attached? ? user.signature.variant(resize_to_limit: [300, 100]) : nil
   end
+
+  def check_user_has_signature
+    current_user&.signature&.attached?
+  end
 end

@@ -1,6 +1,7 @@
 class PurchaseOrdersController < ApplicationController
   layout 'pdf', only: :pdf_view
   before_action :set_purchase_order, only: %i[ show edit update approve pending void pdf_view ]
+  before_action :check_user_has_signature, only: %i[ new create edit update ]
 
   # GET /purchase_orders or /purchase_orders.json
   def index

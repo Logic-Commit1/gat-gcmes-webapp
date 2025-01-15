@@ -2,6 +2,7 @@ class RequestFormsController < ApplicationController
   layout 'pdf', only: :pdf_view
 
   before_action :set_request_form, only: %i[ show edit update approve pending void pdf_view ]
+  before_action :check_user_has_signature, only: %i[ new create edit update ]
 
   # GET /request_forms or /request_forms.json
   def index

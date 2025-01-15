@@ -3,6 +3,7 @@ class QuotationsController < ApplicationController
 
   layout 'pdf', only: :pdf_view
   before_action :set_quotation, only: %i[ show edit update void approve pending reject pdf_view ]
+  before_action :check_user_has_signature, only: %i[ new create edit update ]
 
   # GET /quotations or /quotations.json
   def index
