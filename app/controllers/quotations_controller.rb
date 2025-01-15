@@ -62,7 +62,7 @@ class QuotationsController < ApplicationController
     @quotation = Quotation.new(quotation_params)
     @quotation.user = current_user
     if @quotation.save
-      generate_pdf(@quotation)
+      # generate_pdf(@quotation)
       redirect_to @quotation
     else
       render :new, status: :unprocessable_entity
@@ -72,7 +72,7 @@ class QuotationsController < ApplicationController
   # PATCH/PUT /quotations/1 or /quotations/1.json
   def update
     if @quotation.update(quotation_params)
-      generate_pdf(@quotation)
+      # generate_pdf(@quotation)
       redirect_to @quotation
     else
       render :edit

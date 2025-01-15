@@ -6,7 +6,10 @@ class SuppliersController < ApplicationController
     @suppliers = Supplier.latest_first
 
     if params[:query].present?
-      @suppliers = @suppliers.where("code ILIKE :query OR name ILIKE :query", query: "%#{params[:query]}%")
+      @suppliers = @suppliers.joins(:company).where(
+        "suppliers.code ILIKE :query OR suppliers.name ILIKE :query OR companies.code ILIKE :query", 
+        query: "%#{params[:query]}%"
+      )
     end
 
     if params[:date].present?

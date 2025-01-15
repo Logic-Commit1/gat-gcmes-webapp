@@ -12,12 +12,12 @@ export default class extends Controller {
   ]
 
   connect() {
-    // if (this.hasAllowanceTotalTarget) {
-    //   console.log("Allowance Total Target")
-    //   this.calculateAllowanceTotal()
-    // } else {
-    //   this.calculate()
-    // }
+    if (this.hasAllowanceTotalTarget) {
+      console.log("Allowance Total Target")
+      this.calculateAllowanceTotal()
+    } else {
+      this.calculate()
+    }
   }
 
   calculate() {
@@ -39,7 +39,7 @@ export default class extends Controller {
     }
 
     if (this.hasSubTotalTarget) {
-      this.subTotalTarget.textContent = `${this.formatNumber(subTotal)}`
+      this.subTotalTarget.textContent = `PHP ${this.formatNumber(subTotal)}`
     }
     if (this.hasDiscountTarget) {
       this.discountTarget.textContent = `- ${this.formatNumber(discountAmount)}`

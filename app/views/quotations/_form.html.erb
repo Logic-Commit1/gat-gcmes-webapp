@@ -126,11 +126,11 @@
                     <%= form.text_field :discount_rate, value: form.object.discount_rate != 0.0 ? form.object.discount_rate : nil, data: { action: "input->total-calculator#calculate" } %>
                     %
                   </div>
-                  <span data-total-calculator-target="discount">PHP 0.00</span>
+                  <span data-total-calculator-target="discount">- 0.00</span>
                 </div>
                 <div class="total-row">
                   <span class="total-label">VAT (12%):</span>
-                  <span data-total-calculator-target="vat">PHP 0.00</span>
+                  <span data-total-calculator-target="vat">0.00</span>
                 </div>
                 <div class="total-row total-final">
                   <span class="total-label">Total Amount:</span>

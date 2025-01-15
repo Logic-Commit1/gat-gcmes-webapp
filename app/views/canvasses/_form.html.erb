@@ -64,7 +64,8 @@
                   shared_fields_target: "quantityField",
                   form_validation_target: "quantityInput"
                 }, 
-                style: "width: 100%;" %>
+                style: "width: 100%;",
+                onwheel: "return false" %>
               <div class="error-message hidden" data-form-validation-target="quantityError">
                 Please enter a quantity
               </div>
@@ -73,7 +74,7 @@
               <%= form.label :unit, "Unit", style: "display: block" %>
               <div class="select-container">
                 <%= form.select :unit, 
-                  options_for_select([['Select Unit', '']] + ApplicationRecord::UNIT_OF_MEASUREMENTS.map { |unit| [unit, unit] }), 
+                  options_for_select([['Select Unit', '']] + ApplicationRecord::UNIT_OF_MEASUREMENTS.map { |unit| [unit, unit] }, canvass.unit), 
                   { include_blank: false },
                   data: { 
                     shared_fields_target: "unitField",

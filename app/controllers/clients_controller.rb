@@ -7,7 +7,10 @@ class ClientsController < ApplicationController
 
     if params[:query].present?
       # @clients = @clients.search_by_term(params[:query])
-      @clients = @clients.where("code ILIKE :query OR name ILIKE :query", query: "%#{params[:query]}%")
+      @clients = @clients.joins(:company).where(
+        "clients.code ILIKE :query OR clients.name ILIKE :query OR companies.code ILIKE :query", 
+        query: "%#{params[:query]}%"
+      )
     end
 
     if params[:date].present?

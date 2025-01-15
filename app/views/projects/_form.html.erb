@@ -75,7 +75,7 @@
         <p class="semibold" style="margin-bottom: 10px;">Payment Information</p>
         <div class="field">
           <%= form.label :amount, style: "display: block" %>
-          <%= form.number_field :amount, data: { form_validation_target: "amountInput" } %>
+          <%= form.number_field :amount, data: { form_validation_target: "amountInput" }, onwheel: "return false" %>
           <div class="error-message hidden" data-form-validation-target="amountError">
             Please enter a valid amount
           </div>
