@@ -6,6 +6,7 @@
       <thead>
         <tr>
           <th>Email</th>
+          <th>Department</th>
           <th>Created At</th>
           <th>Actions</th>
         </tr>
@@ -14,6 +15,7 @@
         <% @employees.each do |employee| %>
           <tr>
             <td><%= employee.email %></td>
+            <td><%= employee.department.titleize %></td>
             <td><%= employee.created_at.strftime("%B %d, %Y") %></td>
             <td>
               <%#= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#remove" } %>

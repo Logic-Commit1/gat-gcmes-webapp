@@ -17,10 +17,16 @@ class User < ApplicationRecord
   has_many :projects
 
   after_initialize :set_default_role, if: :new_record?
+  before_validation :format_mobile_number
 
   validates :email, presence: true
   validates :first_name, presence: true
   validates :last_name, presence: true
+  validates :mobile_number, presence: true,
+                          format: { 
+                            with: /\A09\d{9}\z|\A09\d{2}\s\d{3}\s\d{4}\z/,
+                            message: "must be valid (e.g., 09123456789 or 0912 345 6789)" 
+                          }
   validate :email_must_be_whitelisted, on: :create
   validates :department, presence: true, on: :create
   
@@ -50,6 +56,10 @@ class User < ApplicationRecord
 
   def set_default_role
     self.role ||= :regular
+  end
+
+  def format_mobile_number
+    self.mobile_number = mobile_number.gsub(/\s+/, '') if mobile_number.present?
   end
 
   def email_must_be_whitelisted
