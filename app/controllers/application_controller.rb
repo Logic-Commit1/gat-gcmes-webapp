@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     return if current_user&.signature&.attached?
 
     redirect_to :profile,
-                alert: 'You need to have uploaded a signature before you can create or edit reports'
+                alert: 'You need to upload your signature first before you can create or edit reports'
   end
 
   def authorize_admin!

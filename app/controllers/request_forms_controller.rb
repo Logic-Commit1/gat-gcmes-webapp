@@ -102,6 +102,7 @@ class RequestFormsController < ApplicationController
 
   def approve
     if @request_form.approved!
+      @request_form.update(approved_at: Time.now, approver: current_user.full_name)
       flash[:success] = "Request form approved successfully!"
     else
       flash[:error] = "Failed to approve request form."

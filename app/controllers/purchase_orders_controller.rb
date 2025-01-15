@@ -100,6 +100,7 @@ class PurchaseOrdersController < ApplicationController
 
   def approve
     if @purchase_order.approved!
+      @purchase_order.update(approved_at: Time.now, approver: current_user.full_name)
       flash[:success] = "Purchase order approved successfully!"
     else
       flash[:error] = "Failed to approve purchase order."

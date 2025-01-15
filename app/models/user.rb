@@ -64,6 +64,10 @@ class User < ApplicationRecord
     errors.add(:signature, 'must be a JPEG or PNG')
   end
 
+  def full_name
+    "#{first_name.titleize} #{last_name.titleize}"
+  end
+
   private
 
   def set_default_role

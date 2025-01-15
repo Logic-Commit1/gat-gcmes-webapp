@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_15_050048) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_15_143541) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,6 +55,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_15_050048) do
     t.integer "status", default: 0
     t.bigint "project_id", null: false
     t.bigint "user_id"
+    t.string "approver"
+    t.datetime "approved_at"
     t.index ["company_id"], name: "index_canvasses_on_company_id"
     t.index ["deleted_at"], name: "index_canvasses_on_deleted_at"
     t.index ["project_id"], name: "index_canvasses_on_project_id"
@@ -177,6 +179,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_15_050048) do
     t.bigint "project_id", null: false
     t.integer "status", default: 0
     t.bigint "user_id"
+    t.datetime "approved_at"
     t.index ["company_id"], name: "index_purchase_orders_on_company_id"
     t.index ["deleted_at"], name: "index_purchase_orders_on_deleted_at"
     t.index ["employee_id"], name: "index_purchase_orders_on_employee_id"
@@ -211,6 +214,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_15_050048) do
     t.decimal "discount", default: "0.0"
     t.decimal "discount_rate", default: "0.0"
     t.bigint "user_id"
+    t.datetime "approved_at"
     t.index ["client_id"], name: "index_quotations_on_client_id"
     t.index ["company_id"], name: "index_quotations_on_company_id"
     t.index ["deleted_at"], name: "index_quotations_on_deleted_at"
@@ -252,6 +256,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_15_050048) do
     t.datetime "deleted_at"
     t.integer "status", default: 0
     t.bigint "user_id"
+    t.datetime "approved_at"
     t.index ["canvass_id"], name: "index_request_forms_on_canvass_id"
     t.index ["company_id"], name: "index_request_forms_on_company_id"
     t.index ["deleted_at"], name: "index_request_forms_on_deleted_at"

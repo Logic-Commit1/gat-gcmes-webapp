@@ -99,6 +99,7 @@ class CanvassesController < ApplicationController
 
   def approve
     if @canvass.approved!
+      @canvass.update(approved_at: Time.now, approver: current_user.full_name)
       flash[:success] = "Canvass approved successfully!"
     else
       flash[:error] = "Failed to approve canvass."

@@ -35,7 +35,7 @@
         <% end %>
       </button>
     <%end%>
-    <% if document.class.name != "Project" && !document.approved? %>
+    <% if document.class.name != "Project" && !document.approved? && document.user == current_user %>
       <%= button_to send("void_#{document.class.name.underscore}_path", document), 
                 method: :delete, 
                 class: "button flex items-center white", 
@@ -45,7 +45,7 @@
         <span class="white">Void</span>
       <% end %>
     <% end %>
-    <% if document.class.name != "Project" && !document.approved? %>
+    <% if document.class.name != "Project" && !document.approved? && (current_user.admin? || current_user.manager?) %>
       <%= button_to send("approve_#{document.class.name.underscore}_path", document), 
                 method: :patch, 
                 class: "button flex items-center white", 

@@ -99,8 +99,9 @@ class QuotationsController < ApplicationController
     pdf_path = @quotation.pdf_path
 
     if @quotation.approved!
-      generate_pdf(@quotation)
-      send_file pdf_path, type: 'application/pdf', disposition: 'inline'
+      @quotation.update(approved_at: Time.now, approver: current_user.full_name)
+      # generate_pdf(@quotation)
+      # send_file pdf_path, type: 'application/pdf', disposition: 'inline'
       flash[:success] = "Quotation approved successfully!"
     else
       flash[:error] = "Failed to approve quotation."
