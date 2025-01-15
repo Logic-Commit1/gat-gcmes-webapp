@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_one_attached :signature
+
   enum role: { regular: 0, head: 1, manager: 2, admin: 3 }
   # enum department: { operation: 0, accounting: 1, purchasing: 2, sales: 3, warehouse: 4 }
   enum :department, [ :operation, :accounting, :purchasing, :sales, :warehouse ]
@@ -29,7 +31,7 @@ class User < ApplicationRecord
                           }
   validate :email_must_be_whitelisted, on: :create
   validates :department, presence: true, on: :create
-  
+  validate :acceptable_signature, on: :update
   def promote!
     case role
     when 'regular'
@@ -50,6 +52,16 @@ class User < ApplicationRecord
     when 'head'
       regular!
     end
+  end
+
+  def acceptable_signature
+    return unless signature.attached?
+
+    errors.add(:signature, 'is too big') unless signature.byte_size <= 1.megabyte
+
+    return if ['image/jpeg', 'image/png'].include?(signature.content_type)
+
+    errors.add(:signature, 'must be a JPEG or PNG')
   end
 
   private

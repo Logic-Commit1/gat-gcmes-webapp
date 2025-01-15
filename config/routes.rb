@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   end
   get 'request_forms/items', to: 'request_forms#items'
   get 'profile', to: 'profiles#show', as: :profile
+  patch 'profile', to: 'profiles#update'
+  delete 'profile/remove_signature', to: 'profiles#remove_signature', as: :remove_signature
 
   resources :employees do
     collection do

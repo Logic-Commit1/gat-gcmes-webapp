@@ -27,7 +27,13 @@
     <i class="fa-regular fa-comment"></i>
     <span>Comments</span>
   </button> %>
-    <% if document.class.name != "Project" %>
+    <% if document.class.name == "Project" %>
+      <button class="button flex items-center white">
+        <%= link_to send("edit_#{document.class.name.underscore}_path", document) do %>
+          <i class="fa-regular fa-edit"></i>
+          <span>Edit</span>
+        <% end %>
+      </button>
     <%end%>
     <% if document.class.name != "Project" && !document.approved? %>
       <%= button_to send("void_#{document.class.name.underscore}_path", document), 

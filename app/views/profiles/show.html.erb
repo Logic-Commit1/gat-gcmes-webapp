@@ -6,25 +6,46 @@
     <div>
       <div class="profile-field">
         <label>Name:</label>
-        <p><%= @user.first_name.titleize %> <%= @user.last_name.titleize %></p>
+        <p><%= current_user.first_name.titleize %> <%= current_user.last_name.titleize %></p>
       </div>
       <div class="profile-field">
         <label>Email:</label>
-        <p><%= @user.email %></p>
+        <p><%= current_user.email %></p>
       </div>
       <div class="profile-field">
         <label>Mobile Number:</label>
-        <p><%= @user.mobile_number.gsub(/(\d{4})(\d{3})(\d{4})/, '\1 \2 \3') %></p>
+        <p><%= current_user.mobile_number.gsub(/(\d{4})(\d{3})(\d{4})/, '\1 \2 \3') %></p>
       </div>
-      <%# if @user.employee? %>
+      <div class="profile-field">
+        <label>E-Signature:</label>
+        <div class="signature-container">
+          <% if current_user.signature.attached? %>
+            <%= image_tag current_user.signature.variant(resize_to_limit: [300, 100]), class: "signature-preview", id: "existing-signature", loading: "lazy" %>
+            <%= link_to "Remove Signature", remove_signature_path, 'data-turbo-method': :delete, class: "remove-signature-link" %>
+          <% else %>
+            <%= form_for(current_user, url: '/profile', method: :patch, as: :user, class: "signature-form", data: { controller: "signature-upload" }) do |f| %>
+              <div class="signature-upload">
+                <%= f.file_field :signature, data: { 
+                  signature_upload_target: "input",
+                  action: "change->signature-upload#toggleButton"
+                } %>
+                <%= button_tag type: 'submit', class: "signature-submit hidden", data: { signature_upload_target: "button" } do %>
+                  <span>Upload</span>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <%# if current_user.employee? %>
       <div class="profile-field">
         <label>Department:</label>
-        <p><%= @user.department&.capitalize || 'n/a' %></p>
+        <p><%= current_user.department&.capitalize || 'n/a' %></p>
       </div>
       <%# end %>
       <div class="profile-field">
         <label>Member Since:</label>
-        <p><%= @user.created_at.strftime("%B %d, %Y") %></p>
+        <p><%= current_user.created_at.strftime("%B %d, %Y") %></p>
       </div>
     </div>
   </div>

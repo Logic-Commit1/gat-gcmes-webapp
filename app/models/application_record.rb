@@ -18,4 +18,8 @@ class ApplicationRecord < ActiveRecord::Base
   def created_by
     "#{user&.first_name&.titleize} #{user&.last_name&.titleize}"
   end
+
+  def user_signature
+    user&.signature&.attached? ? user.signature.variant(resize_to_limit: [300, 100]) : nil
+  end
 end
