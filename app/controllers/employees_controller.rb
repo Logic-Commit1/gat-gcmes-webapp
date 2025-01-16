@@ -5,15 +5,8 @@ class EmployeesController < ApplicationController
   # GET /employees or /employees.json
   def index
     @employees = User.latest_first
-
-    if params[:query].present?
-      @employees = @employees.where("email ILIKE :query OR department ILIKE :query", query: "%#{params[:query]}%")
-    end
-
-    if params[:date].present?
-      date = Date.parse(params[:date])
-      @employees = @employees.where("DATE(created_at) = ?", date)
-    end
+                    .search_by_term(params[:query])
+                    .created_on_date(params[:date])
 
     @pagy, @employees = pagy(@employees)
 

@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   has_one_attached :signature
 
-  enum role: { regular: 0, head: 1, manager: 2, admin: 3, developer: 4 }
+  enum role: [ :regular, :head, :manager, :admin, :developer ]
   # enum department: { operation: 0, accounting: 1, purchasing: 2, sales: 3, warehouse: 4 }
   enum :department, [ :operation, :accounting, :purchasing, :sales, :warehouse ]
 
@@ -32,6 +32,30 @@ class User < ApplicationRecord
   validate :email_must_be_whitelisted, on: :create
   validates :department, presence: true, on: :create
   validate :acceptable_signature, on: :update
+
+  scope :search_by_term, ->(query) {
+    return all unless query.present?
+    
+    query = query.downcase
+    department_matches = departments.keys.select { |k| k.include?(query) }
+    role_matches = roles.keys.select { |k| k.include?(query) }
+
+    where(
+      "LOWER(first_name) ILIKE :query OR 
+       LOWER(last_name) ILIKE :query OR 
+       LOWER(email) ILIKE :query OR 
+       department IN (:department_values) OR 
+       role IN (:role_values)", 
+      query: "%#{query}%",
+      department_values: department_matches.map { |k| departments[k] },
+      role_values: role_matches.map { |k| roles[k] }
+    ).where.not(department: nil)
+  }
+
+  scope :created_on_date, ->(date) {
+    return all unless date.present?
+    where("DATE(created_at) = ?", Date.parse(date))
+  }
 
   def promote!
     case role

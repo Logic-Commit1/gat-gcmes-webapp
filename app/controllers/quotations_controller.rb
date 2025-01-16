@@ -9,16 +9,9 @@ class QuotationsController < ApplicationController
 
   # GET /quotations or /quotations.json
   def index
-    @quotations = Quotation.order(created_at: :desc)
-    
-    if params[:query].present?
-      @quotations = @quotations.where("uid ILIKE :query OR subject ILIKE :query", query: "%#{params[:query]}%")
-    end
-    
-    if params[:date].present?
-      date = Date.parse(params[:date])
-      @quotations = @quotations.where("DATE(created_at) = ?", date)
-    end
+    @quotations = Quotation.latest_first
+                          .search_by_term(params[:query])
+                          .created_on_date(params[:date])
 
     @pagy, @quotations = pagy(@quotations)
 

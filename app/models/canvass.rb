@@ -11,14 +11,28 @@ class Canvass < ApplicationRecord
 
   enum :status, [ :pending, :approved, :rejected ]
 
-  # Scopes for filtering
-  scope :search_by_term, ->(term) { 
-    where("uid ILIKE :term OR description ILIKE :term", term: "%#{term}%") 
-  }
-  scope :created_on_date, ->(date) { 
-    where("DATE(created_at) = ?", date) 
-  }
+  # Scopes
   scope :latest_first, -> { order(created_at: :desc) }
+  
+  scope :search_by_term, ->(query) {
+    return all unless query.present?
+    
+    query = query.downcase
+    status_matches = statuses.keys.select { |k| k.include?(query) }
+
+    where(
+      "uid ILIKE :query OR 
+       description ILIKE :query OR
+       status IN (:status_values)", 
+      query: "%#{query}%",
+      status_values: status_matches.map { |k| statuses[k] }
+    )
+  }
+
+  scope :created_on_date, ->(date) {
+    return all unless date.present?
+    where("DATE(created_at) = ?", Date.parse(date))
+  }
 
   before_save :set_uid
   before_save :set_suppliers

@@ -9,16 +9,11 @@ class CanvassesController < ApplicationController
   # GET /canvasses or /canvasses.json
   def index
     @canvasses = Canvass.latest_first
-
-    if params[:query].present?
-      @canvasses = @canvasses.search_by_term(params[:query])
-    end
-    
-    if params[:date].present?
-      @canvasses = @canvasses.created_on_date(Date.parse(params[:date]))
-    end
+                        .search_by_term(params[:query])
+                        .created_on_date(params[:date])
 
     @pagy, @canvasses = pagy(@canvasses)
+    
     respond_to do |format|
       format.html
       format.turbo_stream do

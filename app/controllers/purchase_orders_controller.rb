@@ -9,14 +9,8 @@ class PurchaseOrdersController < ApplicationController
   # GET /purchase_orders or /purchase_orders.json
   def index
     @purchase_orders = PurchaseOrder.latest_first
-
-    if params[:query].present?
-      @purchase_orders = @purchase_orders.search_by_term(params[:query])
-    end
-    
-    if params[:date].present?
-      @purchase_orders = @purchase_orders.created_on_date(Date.parse(params[:date]))
-    end
+                                  .search_by_term(params[:query])
+                                  .created_on_date(params[:date])
 
     @pagy, @purchase_orders = pagy(@purchase_orders)
 

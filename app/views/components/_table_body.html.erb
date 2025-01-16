@@ -61,7 +61,9 @@
               <td><%= employee.department&.capitalize %></td>
               <td><%= employee.email %></td>
               <td><%= employee.role&.capitalize %></td>
-              <% unless employee.manager? %>
+              <% if employee.manager? %>
+                <td></td>
+              <% else %>
                 <td>
                   <%= link_to promote_employee_path(employee), class: "btn btn-sm", id: "btn-approve", style: "text-decoration: none; color: white; font-size: 12px;", data: { turbo_method: :patch, turbo_confirm: "Are you sure you want to promote #{employee.first_name.titleize} #{employee.last_name.titleize}?" } do %>
                     <i class="fas fa-arrow-up"></i> Promote

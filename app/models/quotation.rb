@@ -9,20 +9,39 @@ class Quotation < ApplicationRecord
   has_many :request_forms
   accepts_nested_attributes_for :products, allow_destroy: true, reject_if: :all_blank
 
-  # validates :company, presence: true
-  # validates :client, presence: true
-  # validate :must_have_at_least_one_product
-
-
   enum :payment, [ "50% downpayment", "30 days", "Paid" ]
   enum :status, [ :pending, :approved, :rejected ]
 
   before_save :set_uid
   before_save :compute_totals_quotation
 
-  # Add scopes if necessary
+  # Scopes
+  scope :latest_first, -> { order(created_at: :desc) }
   scope :voided, -> { where.not(deleted_at: nil) }
   scope :active, -> { where(deleted_at: nil) }
+
+  scope :search_by_term, ->(query) {
+    return all unless query.present?
+    
+    query = query.downcase
+    status_matches = statuses.keys.select { |k| k.include?(query) }
+    payment_matches = payments.keys.select { |k| k.downcase.include?(query) }
+
+    where(
+      "uid ILIKE :query OR 
+       subject ILIKE :query OR
+       status IN (:status_values) OR
+       payment IN (:payment_values)", 
+      query: "%#{query}%",
+      status_values: status_matches.map { |k| statuses[k] },
+      payment_values: payment_matches.map { |k| payments[k] }
+    )
+  }
+
+  scope :created_on_date, ->(date) {
+    return all unless date.present?
+    where("DATE(created_at) = ?", Date.parse(date))
+  }
 
   def compute_totals_quotation
     products.each { |product| product.compute_total_amount }
@@ -64,7 +83,6 @@ class Quotation < ApplicationRecord
     self.vat = (self.sub_total - self.discount) * 0.12
   end
   
-  
   def compute_total_amount
     self.total = self.sub_total - self.discount + self.vat 
   end
@@ -74,5 +92,4 @@ class Quotation < ApplicationRecord
       errors.add(:base, "At least one product item must be added")
     end
   end
-
 end

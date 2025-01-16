@@ -18,21 +18,36 @@ class RequestForm < ApplicationRecord
   enum :request_type, ['Allowance', 'Order']
   enum :status, [ :pending, :approved, :rejected ]
 
-  # Scopes for filtering
-  scope :search_by_term, ->(term) { 
-    where("uid ILIKE :term OR destination ILIKE :term OR vehicle ILIKE :term", 
-          term: "%#{term}%") 
-  }
-  scope :created_on_date, ->(date) { 
-    where("DATE(created_at) = ?", date) 
-  }
+  # Scopes
   scope :latest_first, -> { order(created_at: :desc) }
+
+  scope :search_by_term, ->(query) {
+    return all unless query.present?
+    
+    query = query.downcase
+    status_matches = statuses.keys.select { |k| k.include?(query) }
+    request_type_matches = request_types.keys.select { |k| k.downcase.include?(query) }
+
+    where(
+      "uid ILIKE :query OR 
+       destination ILIKE :query OR 
+       vehicle ILIKE :query OR
+       status IN (:status_values) OR
+       request_type IN (:request_type_values)", 
+      query: "%#{query}%",
+      status_values: status_matches.map { |k| statuses[k] },
+      request_type_values: request_type_matches.map { |k| request_types[k] }
+    )
+  }
+
+  scope :created_on_date, ->(date) {
+    return all unless date.present?
+    where("DATE(created_at) = ?", Date.parse(date))
+  }
 
   before_save :compute_totals_request_form
   before_save :set_sequence_id
   before_save :set_uid
-
-  # validate :quotation_presence_if_order
 
   def compute_totals_request_form
     if products.present?
@@ -63,6 +78,7 @@ class RequestForm < ApplicationRecord
     self.sequence_id = sequence_record.last_sequence.to_i + 1
     sequence_record.update(last_sequence: self.sequence_id)
   end
+
   def compute_total
     if products.present?
       self.total = products.sum { |product| product.total }

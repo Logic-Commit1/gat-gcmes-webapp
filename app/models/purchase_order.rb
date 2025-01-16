@@ -20,14 +20,26 @@ class PurchaseOrder < ApplicationRecord
   enum :terms, [ "50% downpayment", "30 days", "Paid" ]
   
   # Scopes for filtering
-  scope :search_by_term, ->(term) { 
+  scope :search_by_term, ->(query) {
+    return all unless query.present?
+    
+    query = query.downcase
+    status_matches = statuses.keys.select { |k| k.include?(query) }
+    terms_matches = terms.keys.select { |k| k.downcase.include?(query) }
+
     joins(:supplier).where(
-      "purchase_orders.uid ILIKE :term OR suppliers.name ILIKE :term", 
-      term: "%#{term}%"
-    ) 
+      "purchase_orders.uid ILIKE :query OR 
+       suppliers.name ILIKE :query OR
+       status IN (:status_values) OR
+       terms IN (:terms_values)", 
+      query: "%#{query}%",
+      status_values: status_matches.map { |k| statuses[k] },
+      terms_values: terms_matches.map { |k| terms[k] }
+    )
   }
-  scope :created_on_date, ->(date) { 
-    where("DATE(purchase_orders.created_at) = ?", date) 
+  scope :created_on_date, ->(date) {
+    return all unless date.present?
+    where("DATE(purchase_orders.created_at) = ?", Date.parse(date))
   }
   scope :latest_first, -> { order(created_at: :desc) }
   

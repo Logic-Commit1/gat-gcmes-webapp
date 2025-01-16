@@ -10,14 +10,8 @@ class RequestFormsController < ApplicationController
   # GET /request_forms or /request_forms.json
   def index
     @request_forms = RequestForm.latest_first
-
-    if params[:query].present?
-      @request_forms = @request_forms.search_by_term(params[:query])
-    end
-    
-    if params[:date].present?
-      @request_forms = @request_forms.created_on_date(Date.parse(params[:date]))
-    end
+                              .search_by_term(params[:query])
+                              .created_on_date(params[:date])
 
     @pagy, @request_forms = pagy(@request_forms)
 

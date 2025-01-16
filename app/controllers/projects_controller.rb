@@ -4,14 +4,8 @@ class ProjectsController < ApplicationController
   # GET /projects or /projects.json
   def index
     @projects = Project.latest_first
-
-    if params[:query].present?
-      @projects = @projects.search_by_term(params[:query])
-    end
-    
-    if params[:date].present?
-      @projects = @projects.created_on_date(Date.parse(params[:date]))
-    end
+                      .search_by_term(params[:query])
+                      .created_on_date(params[:date])
 
     @pagy, @projects = pagy(@projects)
 
