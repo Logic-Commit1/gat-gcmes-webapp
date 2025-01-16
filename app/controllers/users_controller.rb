@@ -2,19 +2,19 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:promote]
   before_action :authorize_admin
 
-  def promote
-    if @user.promote!
-      respond_to do |format|
-        format.html { redirect_back(fallback_location: employees_path, notice: "User was successfully promoted.") }
-        format.json { render json: @user, status: :ok }
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_back(fallback_location: employees_path, alert: "Unable to promote user.") }
-        format.json { render json: { error: "Unable to promote user" }, status: :unprocessable_entity }
-      end
-    end
-  end
+  # def promote
+  #   if @user.promote!
+  #     respond_to do |format|
+  #       format.html { redirect_back(fallback_location: employees_path, notice: "User was successfully promoted.") }
+  #       format.json { render json: @user, status: :ok }
+  #     end
+  #   else
+  #     respond_to do |format|
+  #       format.html { redirect_back(fallback_location: employees_path, alert: "Unable to promote user.") }
+  #       format.json { render json: { error: "  user" }, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   private
 

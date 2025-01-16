@@ -3,6 +3,7 @@ class Quotation < ApplicationRecord
   belongs_to :company
   belongs_to :project
   belongs_to :user
+  belongs_to :approver, class_name: 'User', optional: true
   
   has_many :products, dependent: :destroy, inverse_of: :quotation
   has_many :request_forms

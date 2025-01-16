@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_16_100648) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_16_133003) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -215,6 +215,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_16_100648) do
     t.decimal "discount_rate", default: "0.0"
     t.bigint "user_id"
     t.datetime "approved_at"
+    t.bigint "approver_id"
+    t.index ["approver_id"], name: "index_quotations_on_approver_id"
     t.index ["client_id"], name: "index_quotations_on_client_id"
     t.index ["company_id"], name: "index_quotations_on_company_id"
     t.index ["deleted_at"], name: "index_quotations_on_deleted_at"
@@ -327,6 +329,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_16_100648) do
   add_foreign_key "quotations", "companies"
   add_foreign_key "quotations", "projects"
   add_foreign_key "quotations", "users"
+  add_foreign_key "quotations", "users", column: "approver_id"
   add_foreign_key "request_forms", "canvasses"
   add_foreign_key "request_forms", "companies"
   add_foreign_key "request_forms", "projects"

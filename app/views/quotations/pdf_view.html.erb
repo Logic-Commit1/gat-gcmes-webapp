@@ -135,8 +135,10 @@
         </td>
         <% if @quotation.approved? %>
           <td>
-            <%= image_tag "#{request.base_url}/assets/fake-signature.png", class: "signature-image" %>
-            <p>Robert D. Bautista</p>
+            <% if @quotation.approver&.signature&.attached? %>
+              <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@quotation.approver.signature.download)}", class: "signature-image") %>
+            <% end %>
+            <p><%= @quotation.approver.full_name %></p>
           </td>
         <% else %>
           <td></td>
