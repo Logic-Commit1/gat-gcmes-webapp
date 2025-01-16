@@ -27,7 +27,6 @@ Rails.application.configure do
     config.public_file_server.headers = { "Cache-Control" => "public, max-age=#{2.days.to_i}" }
   else
     config.action_controller.perform_caching = false
-
     config.cache_store = :null_store
   end
 
@@ -40,9 +39,7 @@ Rails.application.configure do
   # Disable caching for Action Mailer templates even if Action Controller
   # caching is enabled.
   config.action_mailer.perform_caching = false
-
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
-
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

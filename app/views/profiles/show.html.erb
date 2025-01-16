@@ -14,13 +14,17 @@
       </div>
       <div class="profile-field">
         <label>Mobile Number:</label>
-        <p><%= current_user.mobile_number.gsub(/(\d{4})(\d{3})(\d{4})/, '\1 \2 \3') %></p>
+        <p><%= current_user.mobile_number&.gsub(/(\d{4})(\d{3})(\d{4})/, '\1 \2 \3') %></p>
       </div>
       <div class="profile-field">
         <label>E-Signature:</label>
         <div class="signature-container">
           <% if current_user.signature.attached? %>
-            <%= image_tag current_user.signature.variant(resize_to_limit: [300, 100]), class: "signature-preview", id: "existing-signature", loading: "lazy" %>
+            <%= image_tag("data:image/png;base64,#{Base64.strict_encode64(current_user.signature.download)}", 
+                class: "signature-preview", 
+                id: "existing-signature",
+                style: "height: 100px;"
+                )%>
             <%= link_to "Remove Signature", remove_signature_path, 'data-turbo-method': :delete, class: "remove-signature-link" %>
           <% else %>
             <%= form_for(current_user, url: '/profile', method: :patch, as: :user, class: "signature-form", data: { controller: "signature-upload" }) do |f| %>

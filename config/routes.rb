@@ -60,6 +60,10 @@ Rails.application.routes.draw do
       patch :reject
       patch :pending
       delete :void
+      get 'print_pdf'
+      get 'download_pdf'
+      
+
     end
   end
   resources :projects

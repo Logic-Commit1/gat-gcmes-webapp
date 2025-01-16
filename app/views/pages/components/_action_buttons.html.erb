@@ -1,11 +1,11 @@
 <div class="action-buttons flex flex-start">
   <% if %w[client supplier].include?(document.class.name.underscore) %>
-    <button class="button flex items-center white">
-      <%= link_to send("edit_#{document.class.name.underscore}_path", document) do %>
-        <i class="fa-regular fa-edit"></i>
-        <span>Edit</span>
-      <% end %>
-    </button>
+    <%= button_to send("edit_#{document.class.name.underscore}_path", document), 
+                method: :get, 
+                class: "button flex items-center white" do %>
+      <i class="fa-regular fa-edit"></i>
+      <span>Edit</span>
+    <% end %>
     <%= button_to send("#{document.class.name.underscore}_path", document), 
                 method: :delete, 
                 class: "button flex items-center white", 
@@ -16,12 +16,40 @@
     <% end %>
   <% else %>
     <% if document.class.name != "Project" && !document.approved? %>
-      <button class="button flex items-center white">
-        <%= link_to send("edit_#{document.class.name.underscore}_path", document) do %>
-          <i class="fa-regular fa-edit"></i>
-          <span>Edit</span>
-        <% end %>
-      </button>
+      <%= button_to send("edit_#{document.class.name.underscore}_path", document), 
+                method: :get, 
+                class: "button black flex items-center white",
+                style: "margin-right: 5px;" do %>
+        <i class="fa-regular fa-edit"></i>
+        <span>Edit</span>
+      <% end %>
+    <% end %>
+    <% if document.class.name != "Project" %>
+      <div data-controller="dropdown" class="relative inline-block text-left">
+        <button 
+          type="button" 
+          data-action="click->dropdown#toggleMenu"
+          class="button black flex items-center white">
+          <i class="fa-regular fa-file"></i>
+          <span>PDF/Print</span>
+        </button>
+        <div 
+          class="pdf-dropdown hidden" 
+          data-dropdown-target="menu">
+          <div class="flex flex-col">
+            <div>
+              <%= link_to download_pdf_quotation_path, data: { turbo: false } do %>
+                <i class="fa-regular fa-file-pdf"></i>Download PDF
+              <% end %>
+            </div>
+            <div>
+              <%= link_to print_pdf_quotation_path, target: "_blank" do %>
+                <i class="fa-solid fa-print"></i>Print
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
     <% end %>
     <%# <button class="button flex items-center" style="background-color: white;">
     <i class="fa-regular fa-comment"></i>
@@ -45,7 +73,7 @@
         <span class="white">Void</span>
       <% end %>
     <% end %>
-    <% if document.class.name != "Project" && !document.approved? && (current_user.admin? || current_user.manager?) %>
+    <% if document.class.name != "Project" && !document.approved? && (current_user.manager?) %>
       <%= button_to send("approve_#{document.class.name.underscore}_path", document), 
                 method: :patch, 
                 class: "button flex items-center white", 

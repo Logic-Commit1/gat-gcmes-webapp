@@ -70,7 +70,7 @@
             <td></td>
             <td style="text-align: center;" colspan="2">
               <% image_data = p.image.download %>
-              <%= image_tag("data:image/png;base64,#{Base64.strict_encode64(image_data)}", style: "width: 100px; height: 100px;") %>
+              <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(image_data)}", style: "width: 100px; height: 100px;") %>
             </td>
           </tr>
         <% end %>
@@ -129,7 +129,7 @@
         <td></td>
         <td>
           <% if @quotation.user&.signature&.attached? %>
-            <%= image_tag @quotation.user.signature.variant(resize_to_limit: [300, 100]), class: "signature-image"%>
+            <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@quotation.user.signature.download)}", class: "signature-image") %>
           <% end %>
           <p><%= @quotation.user&.first_name&.titleize %> <%= @quotation.user&.last_name&.titleize %></p>
         </td>

@@ -4,6 +4,14 @@
 
 .flex {
   display: flex;
+
+  &.flex-col {
+    flex-direction: column;
+  }
+}
+
+.relative {
+  position: relative;
 }
 
 .gap-60 {
