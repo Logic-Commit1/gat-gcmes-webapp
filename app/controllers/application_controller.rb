@@ -63,4 +63,11 @@ class ApplicationController < ActionController::Base
   def after_sign_up_path_for(resource)
     root_path
   end
+
+  def download_pdf(pdf_path)
+    File.delete(pdf_path) if File.exist?(pdf_path)
+    generate_pdf(pdf_path)
+
+    send_file pdf_path, type: 'application/pdf', disposition: 'attachment'   
+  end
 end

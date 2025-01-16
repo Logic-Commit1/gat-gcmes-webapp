@@ -1,9 +1,11 @@
 class QuotationsController < ApplicationController
+  include PdfGenerator
   include Rails.application.routes.url_helpers
 
   layout 'pdf', only: :pdf_view
   before_action :set_quotation, only: %i[ show edit update void approve pending reject pdf_view download_pdf print_pdf ]
   before_action :check_user_has_signature, only: %i[ new create edit update ]
+  before_action :set_resource_for_pdf, only: %i[ download_pdf print_pdf ]
 
   # GET /quotations or /quotations.json
   def index
@@ -96,8 +98,6 @@ class QuotationsController < ApplicationController
   end
 
   def approve
-    pdf_path = @quotation.pdf_path
-
     if @quotation.approved!
       @quotation.update(approved_at: Time.now, approver: current_user)
       flash[:success] = "Quotation approved successfully!"
@@ -132,47 +132,14 @@ class QuotationsController < ApplicationController
     redirect_to @quotation
   end
 
-  def download_pdf
-    pdf_path = @quotation.pdf_path
-
-    if !File.exist?(pdf_path)
-      generate_pdf(@quotation)
-    end
-
-    send_file pdf_path, type: 'application/pdf', disposition: 'attachment'   
-  end
-
-  def print_pdf
-    pdf_path = @quotation.pdf_path
-
-    # if !File.exist?(pdf_path)
-      generate_pdf(@quotation)
-    # end
-    
-    send_file pdf_path, type: 'application/pdf', disposition: 'inline'
-  end
-
   private
-    def generate_pdf(quotation)      
-      html = render_to_string(
-        template: 'quotations/pdf_view',
-        layout: 'pdf',
-        locals: { quotation: quotation }
-      )
-      
-      # Use absolute URL for FontAwesome CSS
-      fontawesome_css_url = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" # Update to the correct version if necessary
-      application_css_url = view_context.asset_url('application.css') # Full URL for production
-
-      # Include both CSS files
-      pdf = Grover.new(html, style_tag_options: [{ url: application_css_url }, { url: fontawesome_css_url }]).to_pdf
-      quotation.save_pdf(pdf)
-
-    end
-
     # Use callbacks to share common setup or constraints between actions.
     def set_quotation
       @quotation = Quotation.find(params[:id])
+    end
+
+    def set_resource_for_pdf
+      @resource = @quotation
     end
 
     # Only allow a list of trusted parameters through.

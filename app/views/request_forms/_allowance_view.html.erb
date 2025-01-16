@@ -21,15 +21,17 @@
     </tbody>
   <% end %>
   <tr>
-    <td></td>
+    <td class="no-border"></td>
     <td>Total</td>
     <td class="align-right">PHP <%= number_with_precision(request_form.total, precision: 2, delimiter: ',') %></td>
-    <td></td>
+    <td class="no-border"></td>
   </tr>
 </table>
 <p style="display: inline-block;">
   <strong>Travel Date:</strong>
-  <%= request_form.start_travel_date&.strftime("%B %d") %> to <%= request_form.end_travel_date&.strftime("%B %d") %>
+  <% if request_form.start_travel_date.present? && request_form.end_travel_date.present? %>
+    <%= request_form.start_travel_date&.strftime("%B %d") %> to <%= request_form.end_travel_date&.strftime("%B %d") %>
+  <% end %>
 </p>
 <p style="display: inline-block; margin-left: 30px;">
   <strong>Destination:</strong>
@@ -47,9 +49,9 @@
   <tbody>
     <tr>
       <td><%= request_form.remarks %></td>
-      <td class="align-right">PHP <%= number_with_precision(request_form.fuel_gauge, precision: 2, delimiter: ',') %></td>
-      <td class="align-right">PHP <%= number_with_precision(request_form.easy_trip_balance, precision: 2, delimiter: ',') %></td>
-      <td class="align-right">PHP <%= number_with_precision(request_form.sweep_balance, precision: 2, delimiter: ',') %></td>
+      <td class="align-right"><% if request_form.fuel_gauge.present? %>PHP <%= number_with_precision(request_form.fuel_gauge, precision: 2, delimiter: ',') %><% end %></td>
+      <td class="align-right"><% if request_form.easy_trip_balance.present? %>PHP <%= number_with_precision(request_form.easy_trip_balance, precision: 2, delimiter: ',') %><% end %></td>
+      <td class="align-right"><% if request_form.sweep_balance.present? %>PHP <%= number_with_precision(request_form.sweep_balance, precision: 2, delimiter: ',') %><% end %></td>
     </tr>
   </tbody>
 </table>
@@ -66,15 +68,19 @@
   <tbody>
     <tr>
       <td>
-        <%#= image_tag "#{request.base_url}/assets/fake-signature.png", style: "width: 100px; height: 40px;" %>
+        <% if @request_form.user&.signature&.attached? %>
+          <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@request_form.user.signature.download)}", class: "signature-image") %>
+        <% end %>
         <p><%= @request_form.created_by %></p>
       </td>
       <td></td>
       <td></td>
-      <% if !@request_form.approved? %>
+      <% if @request_form.approved? %>
         <td>
-          <%= image_tag "#{request.base_url}/assets/fake-signature.png", class: "signature-image" %>
-          <p>Robert D. Bautista</p>
+          <% if @request_form.approver&.signature&.attached? %>
+            <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@request_form.approver.signature.download)}", class: "signature-image") %>
+          <% end %>
+          <p><%= @request_form.approver&.full_name %></p>
         </td>
       <% else %>
         <td></td>
@@ -82,25 +88,3 @@
     </tr>
   </tbody>
 </table>
-<!--
-  <p>
-    <strong>Requester:</strong>
-    <%= request_form.requester %>
-  </p>
-  <p>
-    <strong>Checker:</strong>
-    <%= request_form.checker %>
-  </p>
-  <p>
-    <strong>Procurer:</strong>
-    <%= request_form.procurer %>
-  </p>
-  <p>
-    <strong>Pre approver:</strong>
-    <%= request_form.pre_approver %>
-  </p>
-  <p>
-    <strong>Approver:</strong>
-    <%= request_form.approver %>
-  </p>
-  -->

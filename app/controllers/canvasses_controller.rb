@@ -1,7 +1,10 @@
 class CanvassesController < ApplicationController
+  include PdfGenerator
+  
   layout 'pdf', only: :pdf_view
 
-  before_action :set_canvass, only: %i[ show edit update approve pending void pdf_view ]
+  before_action :set_canvass, only: %i[ show edit update approve pending void pdf_view download_pdf print_pdf ]
+  before_action :set_resource_for_pdf, only: %i[ download_pdf print_pdf ]
 
   # GET /canvasses or /canvasses.json
   def index
@@ -99,7 +102,7 @@ class CanvassesController < ApplicationController
 
   def approve
     if @canvass.approved!
-      @canvass.update(approved_at: Time.now, approver: current_user.full_name)
+      @canvass.update(approved_at: Time.now, approver: current_user)
       flash[:success] = "Canvass approved successfully!"
     else
       flash[:error] = "Failed to approve canvass."
@@ -119,27 +122,14 @@ class CanvassesController < ApplicationController
   end
 
   private
-    def generate_pdf(canvass)
-      html = render_to_string(
-        template: 'canvasses/pdf_view',
-        layout: 'pdf',
-        locals: { canvass: canvass }
-      )
-      
-      # Use absolute URL for FontAwesome CSS
-      fontawesome_css_url = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" # Update to the correct version if necessary
-      application_css_url = view_context.asset_url('application.css') # Full URL for production
-
-      # Include both CSS files
-      pdf = Grover.new(html, style_tag_options: [{ url: application_css_url }, { url: fontawesome_css_url }]).to_pdf
-      canvass.save_pdf(pdf)
+    def set_resource_for_pdf
+      @resource = @canvass
     end
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_canvass
       @canvass = Canvass.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def canvass_params
       params.require(:canvass).permit(:uid, :company_id, :project_id, :description, :quantity, :unit, :suppliers,
       products_attributes: [ :id, :name, :quantity, :unit, :price, :discount, :brand, :description, :specs, :terms, :remarks, :image, :quotation_id, :canvass_id, :request_form_id, :purchase_order_id, :_destroy, :supplier_id, :_destroy ]

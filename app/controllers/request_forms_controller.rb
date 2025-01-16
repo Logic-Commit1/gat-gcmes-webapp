@@ -1,8 +1,11 @@
 class RequestFormsController < ApplicationController
+  include PdfGenerator
+  
   layout 'pdf', only: :pdf_view
 
-  before_action :set_request_form, only: %i[ show edit update approve pending void pdf_view ]
+  before_action :set_request_form, only: %i[ show edit update approve pending void pdf_view download_pdf print_pdf ]
   before_action :check_user_has_signature, only: %i[ new create edit update ]
+  before_action :set_resource_for_pdf, only: %i[ download_pdf print_pdf ]
 
   # GET /request_forms or /request_forms.json
   def index
@@ -102,7 +105,7 @@ class RequestFormsController < ApplicationController
 
   def approve
     if @request_form.approved!
-      @request_form.update(approved_at: Time.now, approver: current_user.full_name)
+      @request_form.update(approved_at: Time.now, approver: current_user)
       flash[:success] = "Request form approved successfully!"
     else
       flash[:error] = "Failed to approve request form."
@@ -157,37 +160,27 @@ class RequestFormsController < ApplicationController
   end
 
   private
-    def generate_pdf(request_form)
-      html = render_to_string(
-        template: 'request_forms/pdf_view',
-        layout: 'pdf',
-        locals: { request_form: request_form }
+    
+  # Use callbacks to share common setup or constraints between actions.
+  def set_request_form
+    @request_form = RequestForm.find(params[:id])
+  end
+
+  def set_resource_for_pdf
+    @resource = @request_form
+  end
+
+  # Only allow a list of trusted parameters through.
+  def request_form_params
+    params.require(:request_form).permit(
+      :uid, :request_type, :vehicle, :start_travel_date, :end_travel_date, :destination, :total,
+      :remarks, :fuel_gauge, :easy_trip_balance, :sweep_balance,
+      :requester, :checker, :procurer, :pre_approver, :approver,
+      :canvass_id, :quotation_id, :company_id, :project_id,
+      particulars_attributes: [ :id, :name, :allowance, :quotation_id, :canvass_id, :request_form_id, :purchase_order_id, :_destroy, :remarks ],
+      products_attributes: [ :id, :name, :quantity, :unit, :price, :discount, :brand, :description, :specs, :terms, :remarks, :image, :quotation_id, :canvass_id, :request_form_id, :purchase_order_id, :_destroy ]
       )
-      
-      # Use absolute URL for FontAwesome CSS
-      fontawesome_css_url = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" # Update to the correct version if necessary
-      application_css_url = view_context.asset_url('application.css') # Full URL for production
-
-      # Include both CSS files
-      pdf = Grover.new(html, style_tag_options: [{ url: application_css_url }, { url: fontawesome_css_url }]).to_pdf
-      request_form.save_pdf(pdf)
-    end
-    # Use callbacks to share common setup or constraints between actions.
-    def set_request_form
-      @request_form = RequestForm.find(params[:id])
-    end
-
-    # Only allow a list of trusted parameters through.
-    def request_form_params
-      params.require(:request_form).permit(
-        :uid, :request_type, :vehicle, :start_travel_date, :end_travel_date, :destination, :total,
-        :remarks, :fuel_gauge, :easy_trip_balance, :sweep_balance,
-        :requester, :checker, :procurer, :pre_approver, :approver,
-        :canvass_id, :quotation_id, :company_id, :project_id,
-        particulars_attributes: [ :id, :name, :allowance, :quotation_id, :canvass_id, :request_form_id, :purchase_order_id, :_destroy, :remarks ],
-        products_attributes: [ :id, :name, :quantity, :unit, :price, :discount, :brand, :description, :specs, :terms, :remarks, :image, :quotation_id, :canvass_id, :request_form_id, :purchase_order_id, :_destroy ]
-        )
-      rescue
-        {}
-    end
+    rescue
+      {}
+  end
 end

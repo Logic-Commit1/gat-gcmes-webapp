@@ -27,6 +27,8 @@
       </tr>
     </tbody>
   </table>
+  <br>
+  <p><strong>Terms:</strong> <%= @purchase_order.terms %></p>
   <table>
     <thead>
       <tr>
@@ -50,13 +52,13 @@
         </tr>
       <% end %>
       <tr>
-        <td colspan="4" ></td>
+        <td class="no-border" colspan="4" ></td>
         <td class="align-right">Total</td>
         <td class="align-right">PHP <%= number_with_precision(@purchase_order.total, precision: 2, delimiter: ',') %></td>
       </tr>
     </tbody>
   </table>
-  <p><strong>Terms:</strong> <%= @purchase_order.terms %></p>
+  
   <br>
   <br>
   <br>
@@ -72,14 +74,19 @@
     <tbody>
       <tr>
         <td>
+          <% if @purchase_order.user.signature.attached? %>
+            <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@purchase_order.user.signature.download)}", class: "signature-image") %>
+          <% end %>
           <p><%= @purchase_order.created_by %></p>
         </td>
         <td></td>
         <td></td>
-        <% if !@purchase_order.approved? %>
+        <% if @purchase_order.approved? %>
           <td>
-            <%= image_tag "#{request.base_url}/assets/fake-signature.png", class: "signature-image" %>
-            <p>Robert D. Bautista</p>
+            <% if @purchase_order.approver&.signature&.attached? %>
+              <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@purchase_order.approver.signature.download)}", class: "signature-image") %>
+            <% end %>
+            <p><%= @purchase_order.approver.full_name %></p>
           </td>
         <% else %>
           <td></td>

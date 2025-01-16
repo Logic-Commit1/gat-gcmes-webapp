@@ -6,6 +6,7 @@ class PurchaseOrder < ApplicationRecord
   belongs_to :project
   belongs_to :request_form, optional: true
   belongs_to :user
+  belongs_to :approver, class_name: 'User', optional: true
   # belongs_to :employee
 
   has_many :products, dependent: :destroy, inverse_of: :purchase_order
@@ -32,6 +33,15 @@ class PurchaseOrder < ApplicationRecord
   
   before_save :set_uid
   before_save :set_total
+
+  def pdf_path
+    Rails.root.join('tmp/purchase_orders', "#{uid}.pdf")
+  end
+
+  def save_pdf(pdf_content)
+    FileUtils.mkdir_p(File.dirname(pdf_path))
+    File.open(pdf_path, 'wb') { |file| file.write(pdf_content) }
+  end
 
   def set_uid
     return if self.uid.present?

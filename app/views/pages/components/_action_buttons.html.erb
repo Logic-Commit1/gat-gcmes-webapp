@@ -38,12 +38,12 @@
           data-dropdown-target="menu">
           <div class="flex flex-col">
             <div>
-              <%= link_to download_pdf_quotation_path, data: { turbo: false } do %>
+              <%= link_to send("download_pdf_#{document.class.name.underscore}_path", document), data: { turbo: false } do %>
                 <i class="fa-regular fa-file-pdf"></i>Download PDF
               <% end %>
             </div>
             <div>
-              <%= link_to print_pdf_quotation_path, target: "_blank" do %>
+              <%= link_to send("print_pdf_#{document.class.name.underscore}_path", document), target: "_blank" do %>
                 <i class="fa-solid fa-print"></i>Print
               <% end %>
             </div>

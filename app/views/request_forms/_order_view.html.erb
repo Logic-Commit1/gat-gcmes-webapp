@@ -14,7 +14,8 @@
       <th style="width: 5%">SN</th>
       <th style="width: 40%">Item</th>
       <th style="width: 10%">Quantity</th>
-      <th style="width: 10%">Unit</th>
+      <th style="width: 10%">U/M</th>
+      <th style="width: 10%">Unit Price</th>
       <th style="width: 20%">Estimated Amount</th>
     </tr>
   </thead>
@@ -24,15 +25,14 @@
         <td class="align-center"><%= index + 1 %></td>
         <td><%= p.description %></td>
         <td class="align-right"><%= p.quantity %></td>
-        <td><%= p.unit %></td>
+        <td class="align-right"><%= p.unit %></td>
         <td class="align-right"><% if index == 0 %>PHP<% end %> <%= number_with_precision(p.price, precision: 2, delimiter: ',') %></td>
+        <td class="align-right">PHP <%= number_with_precision(p.total, precision: 2, delimiter: ',') %></td>
       </tr>
     <% end %>
     <tr>
-      <td></td>
-      <td>Total</td>
-      <td></td>
-      <td></td>
+      <td colspan="4" class="no-border"></td>
+      <td class="align-right">Total</td>
       <td class="align-right">PHP <%= number_with_precision(request_form.total, precision: 2, delimiter: ',') %></td>
     </tr>
   </tbody>
@@ -43,7 +43,7 @@
     <tr>
       <th>Requested by</th>
       <th>Checked by</th>
-      <th>Procurer</th>
+      <th>Procurement</th>
       <th>Pre-approved by</th>
       <th>Approved by</th>
     </tr>
@@ -51,15 +51,20 @@
   <tbody>
     <tr>
       <td>
-        <p><%= @request_form.created_by %></p>
+        <% if @request_form.user&.signature&.attached? %>
+          <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@request_form.user.signature.download)}", class: "signature-image") %>
+        <% end %>
+        <p><%= @request_form.user&.full_name %></p>
       </td>
       <td></td>
       <td></td>
       <td></td>
-      <% if !@request_form.approved? %>
+      <% if @request_form.approved? %>
         <td>
-          <%= image_tag "#{request.base_url}/assets/fake-signature.png", class: "signature-image" %>
-          <p>Robert D. Bautista</p>
+          <% if @request_form.approver&.signature&.attached? %>
+            <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@request_form.approver.signature.download)}", class: "signature-image") %>
+          <% end %>
+          <p><%= @request_form.approver&.full_name %></p>
         </td>
       <% else %>
         <td></td>

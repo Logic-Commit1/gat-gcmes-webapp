@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   resources :purchase_orders do
     member do
       get 'pdf_view'
+      get 'print_pdf'
+      get 'download_pdf'
       patch :approve
       patch :reject
       patch :pending
@@ -38,6 +40,8 @@ Rails.application.routes.draw do
       patch :reject
       patch :pending
       delete :void
+      get 'print_pdf'
+      get 'download_pdf'
     end
   end
   resources :canvasses do
@@ -47,6 +51,8 @@ Rails.application.routes.draw do
       patch :reject
       patch :pending
       delete :void
+      get 'print_pdf'
+      get 'download_pdf'
     end
   end
 

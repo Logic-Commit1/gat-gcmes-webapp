@@ -1,7 +1,10 @@
 class PurchaseOrdersController < ApplicationController
+  include PdfGenerator
+  
   layout 'pdf', only: :pdf_view
-  before_action :set_purchase_order, only: %i[ show edit update approve pending void pdf_view ]
+  before_action :set_purchase_order, only: %i[ show edit update approve pending void pdf_view download_pdf print_pdf ]
   before_action :check_user_has_signature, only: %i[ new create edit update ]
+  before_action :set_resource_for_pdf, only: %i[ download_pdf print_pdf ]
 
   # GET /purchase_orders or /purchase_orders.json
   def index
@@ -100,7 +103,7 @@ class PurchaseOrdersController < ApplicationController
 
   def approve
     if @purchase_order.approved!
-      @purchase_order.update(approved_at: Time.now, approver: current_user.full_name)
+      @purchase_order.update(approved_at: Time.now, approver: current_user)
       flash[:success] = "Purchase order approved successfully!"
     else
       flash[:error] = "Failed to approve purchase order."
@@ -120,23 +123,27 @@ class PurchaseOrdersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_purchase_order
-      @purchase_order = PurchaseOrder.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_purchase_order
+    @purchase_order = PurchaseOrder.find(params[:id])
+  end
+  
+  def set_resource_for_pdf
+    @resource = @purchase_order
+  end
 
-    # Only allow a list of trusted parameters through.
-    def purchase_order_params
-      params.require(:purchase_order).permit(:uid, :employee_id, :terms, :total, :discount, :requester, :checker, :pre_approver, :approver, :company_id, :supplier_id, :project_id, :request_form_id,
-      products_attributes: [
-        :id, :name, :quantity, :unit, :price, :discount, :brand, 
-        :description, :specs, :terms, :remarks, :image, 
-        :quotation_id, :canvass_id, :request_form_id, :purchase_order_id,
-        :_destroy,
-        specs_attributes: [:id, :name, :value, :_destroy]
-      ]
-      )
-    rescue
-      {}
-      end
+  # Only allow a list of trusted parameters through.
+  def purchase_order_params
+    params.require(:purchase_order).permit(:uid, :employee_id, :terms, :total, :discount, :requester, :checker, :pre_approver, :approver, :company_id, :supplier_id, :project_id, :request_form_id,
+    products_attributes: [
+      :id, :name, :quantity, :unit, :price, :discount, :brand, 
+      :description, :specs, :terms, :remarks, :image, 
+      :quotation_id, :canvass_id, :request_form_id, :purchase_order_id,
+      :_destroy,
+      specs_attributes: [:id, :name, :value, :_destroy]
+    ]
+    )
+  rescue
+    {}
+  end
 end
