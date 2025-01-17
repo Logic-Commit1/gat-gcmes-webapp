@@ -32,7 +32,7 @@ class User < ApplicationRecord
   validate :email_must_be_whitelisted, on: :create
   validates :department, presence: true, on: :create
   validate :acceptable_signature, on: :update
-
+  validates :position, presence: true, on: :create
   scope :search_by_term, ->(query) {
     return all unless query.present?
     
@@ -98,6 +98,7 @@ class User < ApplicationRecord
       errors.add(:email, "is not authorized to register")
     else
       self.department = employee.department
+      self.position = employee.position
     end
   end
 end

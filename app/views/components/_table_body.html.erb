@@ -59,7 +59,8 @@
             <tr>
               <td><%= employee.first_name&.titleize %> <%= employee.last_name&.titleize %></td>
               <td><%= employee.department&.capitalize %></td>
-              <td><%= employee.email %></td>
+              
+              <td><%= employee.position&.titleize %></td>
               <td><%= employee.role&.capitalize %></td>
               <% if employee.manager? %>
                 <td></td>

@@ -83,7 +83,7 @@
         <span>Approve</span>
       <% end %>
     <% end %>
-    <% if document.class.name != "Project" && document.approved? %>
+    <% if document.class.name != "Project" && document.approved? && current_user.manager? %>
       <%= button_to send("pending_#{document.class.name.underscore}_path", document), 
                 method: :patch, 
                 class: "button flex items-center white", 

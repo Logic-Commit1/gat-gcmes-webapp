@@ -109,3 +109,40 @@
     }
   }
 }
+
+.pdf-preview-container {
+  margin: 1rem 0;
+
+  .pdf-preview-link {
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+      .pdf-preview-button {
+        background-color: #f0f0f0;
+      }
+    }
+  }
+
+  .pdf-preview-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: white;
+    transition: background-color 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    i {
+      color: #dc2626;
+      font-size: 1.25rem;
+    }
+
+    span {
+      font-weight: 500;
+      color: #374151;
+    }
+  }
+}

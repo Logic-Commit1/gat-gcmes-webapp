@@ -74,7 +74,7 @@
     <tbody>
       <tr>
         <td>
-          <% if @purchase_order.user.signature.attached? %>
+          <% if @purchase_order.user&.signature&.attached? %>
             <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@purchase_order.user.signature.download)}", class: "signature-image") %>
           <% end %>
           <p><%= @purchase_order.created_by %></p>

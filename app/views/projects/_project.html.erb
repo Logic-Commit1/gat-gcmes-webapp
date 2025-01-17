@@ -56,12 +56,23 @@
     </div>
     <div class="project-details">
       <p>
+        <span class="semibold">PO Number:</span>
+        <%= project.po_number %>
+      </p>
+    </div>
+    <div class="project-details">
+      <p>
         <% if project.client_po.attached? %>
-          <iframe src="<%= rails_blob_path(project.client_po, disposition: 'inline') %>"
-                width="650px"
-                height="700px"
-                frameborder="0">
-          </iframe>
+          <div class="pdf-preview-container">
+            <%= link_to rails_blob_path(project.client_po, disposition: 'inline'), 
+                        target: '_blank',
+                        class: 'pdf-preview-link' do %>
+              <div class="pdf-preview-button">
+                <i class="fas fa-file-pdf"></i>
+                <span>View Client PO</span>
+              </div>
+            <% end %>
+          </div>
         <% end %>
       </p>
     </div>

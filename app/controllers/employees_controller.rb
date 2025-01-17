@@ -139,6 +139,7 @@ class EmployeesController < ApplicationController
         :contact_number, 
         :email,
         :department,
+        :position,
         contacts_attributes: [:id, :name, :_destroy, emails: [], contact_numbers: []]
       )
     end

@@ -52,16 +52,16 @@
       <tr>
         <td>
           <% if @canvass.user&.signature&.attached? %>
-            <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@canvass.user.signature.download)}", class: "signature-image") %>
+            <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@canvass.user&.signature&.download)}", class: "signature-image") %>
           <% end %>
           <p><%= @canvass.created_by %></p>
         </td>
         <% if @canvass.approved? %>
           <td>
             <% if @canvass.approver&.signature&.attached? %>
-              <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@canvass.approver.signature.download)}", class: "signature-image") %>
+              <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@canvass.approver&.signature&.download)}", class: "signature-image") %>
             <% end %>
-            <p><%= @canvass.approver.full_name %></p>
+            <p><%= @canvass.approver&.full_name %></p>
           </td>
         <% else %>
           <td></td>

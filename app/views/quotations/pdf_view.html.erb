@@ -129,16 +129,16 @@
         <td></td>
         <td>
           <% if @quotation.user&.signature&.attached? %>
-            <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@quotation.user.signature.download)}", class: "signature-image") %>
+            <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@quotation.user&.signature&.download)}", class: "signature-image") %>
           <% end %>
           <p><%= @quotation.user&.first_name&.titleize %> <%= @quotation.user&.last_name&.titleize %></p>
         </td>
         <% if @quotation.approved? %>
           <td>
             <% if @quotation.approver&.signature&.attached? %>
-              <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@quotation.approver.signature.download)}", class: "signature-image") %>
+              <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@quotation.approver&.signature&.download)}", class: "signature-image") %>
             <% end %>
-            <p><%= @quotation.approver.full_name %></p>
+            <p><%= @quotation.approver&.full_name %></p>
           </td>
         <% else %>
           <td></td>

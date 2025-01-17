@@ -15,6 +15,10 @@
       <%= form.text_field :email, placeholder: "john@goldenarrow.ph" %>
     </div>
     <div class="field">
+      <%= form.label :position, style: "display: block" %>
+      <%= form.text_field :position, placeholder: "Technical Support" %>
+    </div>
+    <div class="field">
       <%= form.label :department, style: "display: block" %>
       <div class="select-container">
         <%= form.select :department, Employee.departments.keys.map { |d| [d.titleize, d] }, { prompt: "Select Department" } %>

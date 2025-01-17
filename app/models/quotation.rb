@@ -2,7 +2,7 @@ class Quotation < ApplicationRecord
   belongs_to :client
   belongs_to :company
   belongs_to :project
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :approver, class_name: 'User', optional: true
   
   has_many :products, dependent: :destroy, inverse_of: :quotation

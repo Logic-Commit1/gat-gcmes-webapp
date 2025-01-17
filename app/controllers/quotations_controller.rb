@@ -105,8 +105,8 @@ class QuotationsController < ApplicationController
     pdf_path = @quotation.pdf_path
 
     if @quotation.pending!
-      generate_pdf(@quotation)
-      send_file pdf_path, type: 'application/pdf', disposition: 'inline'
+      # generate_pdf(@quotation)
+      # send_file pdf_path, type: 'application/pdf', disposition: 'inline'
       flash[:success] = "Quotation pending successfully!"
     else
       flash[:error] = "Failed to pending quotation."

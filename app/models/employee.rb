@@ -4,7 +4,8 @@ class Employee < ApplicationRecord
 
     # enum :status, [ :pending, :approved, :rejected ]
     enum :department, [ :operation, :accounting, :purchasing, :sales, :warehouse ]
-    
+    validates :position, presence: true
     validates :email, presence: true, uniqueness: true
     validates :department, presence: true
+
 end
