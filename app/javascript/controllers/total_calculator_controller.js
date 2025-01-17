@@ -13,7 +13,6 @@ export default class extends Controller {
 
   connect() {
     if (this.hasAllowanceTotalTarget) {
-      console.log("Allowance Total Target")
       this.calculateAllowanceTotal()
     } else {
       this.calculate()

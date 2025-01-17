@@ -4,7 +4,6 @@ export default class extends Controller {
   static targets = ["menu"]
 
   connect() {
-    console.log("Dropdown Controller connected")
     this.menuVisible = false
     this.bindClickOutside = this.clickOutside.bind(this)
   }

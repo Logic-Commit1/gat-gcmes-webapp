@@ -47,14 +47,11 @@ export default class extends Controller {
     const unitValue = document.querySelector(
       'select[name="canvass[unit]"]'
     ).value
-    const brandValue = document.querySelector(
-      'input[name="canvass[brand]"]'
-    ).value
+
     this.descriptionFieldTargets.forEach(
       (field) => (field.value = descriptionValue)
     )
     this.quantityFieldTargets.forEach((field) => (field.value = quantityValue))
     this.unitFieldTargets.forEach((field) => (field.value = unitValue))
-    this.brandFieldTargets.forEach((field) => (field.value = brandValue))
   }
 }

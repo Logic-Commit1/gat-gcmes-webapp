@@ -49,7 +49,6 @@ export default class extends Controller {
     const selectedRequestFormIds = Array.from(
       this.requestFormSelectTarget.selectedOptions
     ).map((option) => option.value)
-    console.log("Selected Request Form IDs:", selectedRequestFormIds)
 
     this.fetchItemsofRequestForm(selectedRequestFormIds)
 

@@ -4,9 +4,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["projectSelect"]
 
-  connect() {
-    console.log("connect project select controller")
-  }
+  connect() {}
 
   showHiddenDivs() {
     const hiddenDivs = document.querySelectorAll(".hidden")

@@ -96,8 +96,6 @@ export default class extends Controller {
         )
       ).slice(0, 5)
 
-      console.log(rows)
-
       if (rows.length === 0) {
         event.preventDefault()
         this.itemsErrorTarget.classList.remove("hidden")
@@ -165,8 +163,6 @@ export default class extends Controller {
             'td:not([data-nested-form-target="target"])'
           )
         ).slice(0, 4)
-
-        console.log(rows)
 
         if (rows.length === 0) {
           event.preventDefault()

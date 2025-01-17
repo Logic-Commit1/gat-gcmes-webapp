@@ -2,7 +2,8 @@
   <% if %w[client supplier].include?(document.class.name.underscore) %>
     <%= button_to send("edit_#{document.class.name.underscore}_path", document), 
                 method: :get, 
-                class: "button flex items-center white" do %>
+                class: "button black flex items-center white-bg",
+                style: "margin-right: 5px;" do %>
       <i class="fa-regular fa-edit"></i>
       <span>Edit</span>
     <% end %>
@@ -18,7 +19,7 @@
     <% if document.class.name != "Project" && !document.approved? %>
       <%= button_to send("edit_#{document.class.name.underscore}_path", document), 
                 method: :get, 
-                class: "button black flex items-center white",
+                class: "button black flex items-center white-bg",
                 style: "margin-right: 5px;" do %>
         <i class="fa-regular fa-edit"></i>
         <span>Edit</span>
@@ -29,7 +30,7 @@
         <button 
           type="button" 
           data-action="click->dropdown#toggleMenu"
-          class="button black flex items-center white">
+          class="button black flex items-center white-bg">
           <i class="fa-regular fa-file"></i>
           <span>PDF/Print</span>
         </button>
@@ -55,8 +56,8 @@
     <i class="fa-regular fa-comment"></i>
     <span>Comments</span>
   </button> %>
-    <% if document.class.name == "Project" %>
-      <button class="button flex items-center white">
+    <% if document.class.name == "Project" && (document.user == current_user || current_user.manager?) %>
+      <button class="button flex items-center white-bg">
         <%= link_to send("edit_#{document.class.name.underscore}_path", document) do %>
           <i class="fa-regular fa-edit"></i>
           <span>Edit</span>
