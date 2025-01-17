@@ -1,46 +1,91 @@
+<% if current_user.manager? %>
+  <style>
+    .supplier-row {
+      cursor: pointer;
+
+    }
+
+    .supplier-row:hover {
+      border: 2px solid rgb(255, 85, 85) !important;
+    }
+
+    .supplier-row.selected {
+      border: 2px solid rgb(255, 85, 85);
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const rows = document.querySelectorAll('.supplier-row');
+      const form = document.querySelector('form');
+      const hiddenInput = document.querySelector('input[name="selected_supplier"]');
+
+      rows.forEach(row => {
+        row.addEventListener('click', function() {
+          // Remove selected class from all rows
+          rows.forEach(r => {
+            r.classList.remove('selected');
+            r.style.border = '';
+          });
+
+          // Add selected class to clicked row
+          this.classList.add('selected');
+          this.style.border = '2px solid rgb(255, 85, 85)';
+
+          // Update hidden input value and submit form
+          hiddenInput.value = this.dataset.supplier;
+          form.submit();
+        });
+      });
+    });
+  </script>
+<% end %>
 <div class="pdf-container">
-  <header>
+  <header class="flex space-between items-center">
     <% if @canvass.company.gat? %>
-      <%= render 'components/pdf/gat_old_header' %>
+      <%#= render 'components/pdf/gat_old_header' %>
+      <%= render 'components/pdf/header', document: @canvass %>
     <% end %>
     <% if @canvass.company.gcmes? %>
-      <%= render 'components/pdf/gcmes_old_header' %>
+      <%#= render 'components/pdf/gcmes_old_header' %>
+      <%= render 'components/pdf/header', document: @canvass %>
     <% end %>
   </header>
   <p class="description"><strong>Product Description:</strong> <%= @canvass.description %></p>
   <p class="quantity-unit"><strong>Quantity:</strong> <%= @canvass.quantity %> <%= @canvass.unit %></p>
-  <% @canvass.suppliers.each do |product_info| %>
-    <% product_info.each do |description, suppliers| %>
-      <table class="canvass-table" border="1" style="width: 100%; border-collapse: collapse;">
-        <thead>
-          <tr>
-            <th>Supplier Name</th>
-            <th>Price</th>
-            <th>Brand</th>
-            <th>Terms</th>
-            <th>Remarks</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% suppliers.each do |supplier_info| %>
-            <% supplier_info.each do |supplier_name, details| %>
-              <tr>
-                <td><%= supplier_name %></td>
-                <td><%= details[0] %></td>
-                <!-- Brand -->
-                <td><%= details[1] %></td>
-                <!-- Price -->
-                <td><%= details[2] %></td>
-                <!-- Terms -->
-                <td><%= details[3] %></td>
-                <!-- Remarks -->
-              </tr>
+  <%= form_with(url: select_supplier_canvass_path(@canvass), method: :patch, local: true) do |f| %>
+    <% @canvass.suppliers.each do |product_info| %>
+      <% product_info.each do |description, suppliers| %>
+        <table class="canvass-table" border="1" style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr>
+              <th>Supplier Name</th>
+              <th>Price</th>
+              <th>Brand</th>
+              <th>Terms</th>
+              <th>Remarks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% suppliers.each do |supplier_info| %>
+              <% supplier_info.each do |supplier_name, details| %>
+                <tr class="supplier-row <%= details[4] ? 'selected' : '' %>" 
+                    data-supplier="<%= supplier_name %>" 
+                    style="<%= details[4] ? 'border: 2px solid rgb(255, 115, 115);' : '' %>">
+                  <td><%= supplier_name %></td>
+                  <td class="align-right">PHP <%= number_with_precision(details[0].to_f, precision: 2, delimiter: ',') %></td>
+                  <td class="align-right"><%= details[1] %></td>
+                  <td class="align-right"><%= details[2] %></td>
+                  <td><%= details[3] %></td>
+                </tr>
+              <% end %>
             <% end %>
-          <% end %>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      <% end %>
     <% end %>
+    <%= f.hidden_field :selected_supplier %>
   <% end %>
+  <br>
   <table class="signatures-table">
     <thead>
       <tr>

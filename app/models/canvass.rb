@@ -35,7 +35,7 @@ class Canvass < ApplicationRecord
   }
 
   before_save :set_uid
-  before_save :set_suppliers
+  before_save :set_suppliers, if: :should_update_suppliers?
   before_destroy :delete_pdf
 
   def set_uid 
@@ -44,6 +44,10 @@ class Canvass < ApplicationRecord
     year_str = Time.now.year.to_s[2, 2]
     count = Canvass.count
     self.uid = "#{company_code}-CAN-#{year_str}-#{(count+1).to_s.rjust(3, '0')}"
+  end
+
+  def should_update_suppliers?
+    new_record? || products.any? { |product| product.changed? } || products.any?(&:marked_for_destruction?)
   end
 
   def set_suppliers
@@ -58,7 +62,7 @@ class Canvass < ApplicationRecord
       # Create an array to hold each supplier's data
       suppliers_array = products.map do |product|
         {
-          product.supplier.name => [product.price, product.brand, product.terms, product.remarks]
+          product.supplier.name => [product.price, product.brand, product.terms, product.remarks, false]
         }
       end
 

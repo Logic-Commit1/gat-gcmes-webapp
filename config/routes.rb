@@ -46,13 +46,13 @@ Rails.application.routes.draw do
   end
   resources :canvasses do
     member do
-      get 'pdf_view'
+      get :pdf_view
       patch :approve
-      patch :reject
       patch :pending
       delete :void
-      get 'print_pdf'
-      get 'download_pdf'
+      get :download_pdf
+      get :print_pdf
+      patch :select_supplier
     end
   end
 

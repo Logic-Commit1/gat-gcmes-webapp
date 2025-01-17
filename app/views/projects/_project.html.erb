@@ -1,32 +1,3 @@
-<!--
-<div id="<%= dom_id project %>">
-  <p>
-    <strong>Uid:</strong>
-    <%= project.uid %>
-  </p>
-  <p>
-    <strong>Client:</strong>
-    <%= project.client.name %>
-  </p>
-  <p>
-    <strong>Status:</strong>
-    <%= project.status %>
-  </p>
-  <p>
-    <% if project.client_po.attached? %>
-      <%= link_to project.client_po, rails_blob_path(project.client_po, disposition: 'attachment') %>
-    <% end %>
-  </p>
-  <p>
-    <strong>Amount:</strong>
-    <%= project.amount %>
-  </p>
-  <p>
-    <strong>Payment:</strong>
-    <%= project.payment %>
-  </p>
-</div>
--->
 <div class="page document-page show-page project-page" id="<%= dom_id project %>">
   <%= render 'pages/components/show_header', document: project %>
   <br>

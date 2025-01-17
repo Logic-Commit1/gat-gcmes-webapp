@@ -3,8 +3,9 @@ class CanvassesController < ApplicationController
   
   layout 'pdf', only: :pdf_view
 
-  before_action :set_canvass, only: %i[ show edit update approve pending void pdf_view download_pdf print_pdf ]
+  before_action :set_canvass, only: %i[ show edit update approve pending void pdf_view download_pdf print_pdf select_supplier ]
   before_action :set_resource_for_pdf, only: %i[ download_pdf print_pdf ]
+  before_action :ensure_manager, only: [:select_supplier]
 
   # GET /canvasses or /canvasses.json
   def index
@@ -116,7 +117,36 @@ class CanvassesController < ApplicationController
     redirect_to @canvass
   end
 
+  def select_supplier
+    selected_supplier = params[:selected_supplier]
+    
+    # Update the suppliers array to mark the selected supplier
+    updated_suppliers = @canvass.suppliers.map do |product_info|
+      product_info.map do |description, suppliers|
+        suppliers_with_selection = suppliers.map do |supplier_info|
+          supplier_info.transform_values do |details|
+            details[4] = supplier_info.keys.first == selected_supplier  # Update the last element
+            details
+          end
+        end
+        { description => suppliers_with_selection }
+      end
+    end.flatten
+
+    if @canvass.update(suppliers: updated_suppliers)
+      redirect_to pdf_view_canvass_path(@canvass), notice: 'Supplier selected successfully'
+    else
+      redirect_to pdf_view_canvass_path(@canvass), alert: 'Failed to select supplier'
+    end
+  end
+
   private
+    def ensure_manager
+      unless current_user.manager?
+        redirect_to pdf_view_canvass_path(@canvass), alert: 'Only managers can select suppliers'
+      end
+    end
+
     def set_resource_for_pdf
       @resource = @canvass
     end

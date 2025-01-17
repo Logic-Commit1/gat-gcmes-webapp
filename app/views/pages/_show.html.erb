@@ -1,6 +1,9 @@
 <div class="show-page">
   <%= render 'pages/components/show_header', document: document %>
-  <p id="document-uid"><%= document.uid %></p>
+  <div class="">
+    <p style="display:inline-block;" id="document-uid"><%= document.uid %></p>
+    <div style="margin: 0 0 6px 10px;" class="status-dot <%= document.status.downcase %>"></div>
+  </div>  
   <%= render 'pages/components/action_buttons', document: document %>
   <!--
   -->
