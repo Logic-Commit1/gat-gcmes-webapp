@@ -8,7 +8,7 @@ class Project < ApplicationRecord
   has_many :purchase_orders
   has_many :canvasses
   
-  has_one_attached :client_po
+  has_one_attached :client_po, dependent: :destroy
 
   enum :payment, [ "50% downpayment", "30 days", "Paid" ]
   enum :status, [ "Ongoing", "Served", "Cancelled" ]

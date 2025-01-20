@@ -44,6 +44,14 @@ class ClientsController < ApplicationController
   def edit
   end
 
+  # Check if code exists
+  def check_code
+    exists = Client.where.not(id: params[:id])
+                  .where("LOWER(code) = LOWER(?)", params[:code])
+                  .exists?
+    render json: { exists: exists }
+  end
+
   # POST /clients or /clients.json
   def create
     @client = Client.new(client_params)

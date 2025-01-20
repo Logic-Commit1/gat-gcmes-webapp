@@ -14,8 +14,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = resource
 
     if @user.update(account_update_params)
-    #   set_flash_message :notice, :updated
-      flash[:notice] = "Profile updated successfully"
+      # set_flash_message :notice, :updated, first_name: @user.first_name
       # Sign in the user bypassing validation in case their password changed
       redirect_to profile_path
     #   bypass_sign_in @user
@@ -35,5 +34,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def configure_account_update_params
     devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :mobile_number])
+  end
+
+  def set_flash_message(key, kind, options = {})
+    options[:first_name] = resource.first_name if resource&.first_name.present?
+    super
   end
 end 

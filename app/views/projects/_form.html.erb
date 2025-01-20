@@ -35,7 +35,11 @@
         <div class="field">
           <%= form.label :client_id, style: "display: block" %>
           <div class="select-container">
-            <%= form.collection_select :client_id, Company.find(project.company_id).clients, :id, :name, 
+            <%= form.collection_select :client_id,
+            project.new_record? ? [] : 
+                  (project.gat? ? Client.all.select(&:gat?) : 
+                   project.gcmes? ? Client.all.select(&:gcmes?) : []),
+            :id, :name, 
                 { prompt: "Select Client" }, 
                 data: { 
                   company_select_target: "clientSelect",

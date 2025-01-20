@@ -8,7 +8,7 @@ class Product < ApplicationRecord
   has_many :specs, dependent: :destroy, inverse_of: :product
   accepts_nested_attributes_for :specs, allow_destroy: true, reject_if: :all_blank
 
-  has_one_attached :image
+  has_one_attached :image, dependent: :destroy
 
   before_save :compute_total_amount
 

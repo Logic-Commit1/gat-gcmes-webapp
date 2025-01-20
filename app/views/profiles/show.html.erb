@@ -27,7 +27,7 @@
         </div>
         <div class="profile-field">
           <label>Department:</label>
-          <p><%= current_user.department&.capitalize || 'n/a' %></p>
+          <p><%= current_user.department&.humanize&.titleize || 'n/a' %></p>
         </div>
         <div class="profile-field">
           <label>Member Since:</label>

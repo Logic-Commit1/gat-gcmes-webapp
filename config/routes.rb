@@ -77,6 +77,7 @@ Rails.application.routes.draw do
     member do
       delete :destroy
     end
+    get 'check_code', on: :collection
   end
 
 

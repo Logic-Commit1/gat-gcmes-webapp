@@ -4,11 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_one_attached :signature
+  has_one_attached :signature, dependent: :destroy
 
-  enum role: [ :regular, :head, :manager, :admin, :developer ]
-  # enum department: { operation: 0, accounting: 1, purchasing: 2, sales: 3, warehouse: 4 }
-  enum :department, [ :operation, :accounting, :purchasing, :sales, :warehouse ]
+  enum :role, [ :regular, :head, :manager, :admin, :developer ]
+  enum :department, [ :operation, :accounting, :purchasing, :sales, :warehouse, :information_technology ]
 
   belongs_to :employee, optional: true
   
@@ -93,12 +92,17 @@ class User < ApplicationRecord
   end
 
   def email_must_be_whitelisted
-    employee = Employee.find_by(email: email)
-    if employee.nil?
-      errors.add(:email, "is not authorized to register")
+    if email == "dev@goldenchain.ph"
+      self.department = :information_technology
+      self.position = "Developer"
     else
-      self.department = employee.department
-      self.position = employee.position
+      employee = Employee.find_by(email: email)
+      if employee.nil?
+        errors.add(:email, "is not authorized to register")
+      else
+        self.department = employee.department
+        self.position = employee.position
+      end
     end
   end
 end

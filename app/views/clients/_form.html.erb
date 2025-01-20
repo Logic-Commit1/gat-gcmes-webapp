@@ -1,7 +1,9 @@
 <div class="form-container">
   <%= form_with(model: client, html: { autocomplete: "off" }, data: {
-  controller: "nested-form",
-  nested_form_wrapper_selector_value: '.nested-form-wrapper'
+  controller: "nested-form form-validation",
+  nested_form_wrapper_selector_value: '.nested-form-wrapper',
+  form_validation_target: "form",
+  action: "submit->form-validation#validateClientForm"
 }) do |form| %>
     <% if client.errors.any? %>
       <div style="color: red">
@@ -21,33 +23,58 @@
             <%= form.radio_button :company_id, company.id, data: { action: "company-select#showHiddenDivs" } %> <%= company.code %>
           <% end %>
         </div>
+        <div class="error-message hidden" data-form-validation-target="companyError">
+          Please select a company
+        </div>
       </div>
-      <div class="<%= '' if client.new_record? %>">
+      <div class="<%= 'hidden' if client.new_record? %>">
         <div class="field">
           <%= form.label :name, style: "display: block" %>
-          <%= form.text_field :name, placeholder: 'Philippine Span Asia Carrier Corporation' %>
+          <%= form.text_field :name, placeholder: 'Philippine Span Asia Carrier Corporation', 
+            data: { form_validation_target: "nameInput" } %>
+          <div class="error-message hidden" data-form-validation-target="nameError">
+            Please enter a name
+          </div>
         </div>
-        <div class="field">
+        <div class="field" data-controller="inline-validation" 
+             data-inline-validation-check-url-value="<%= check_code_clients_path %>"
+             data-inline-validation-current-value-value="<%= client.code %>"
+             data-inline-validation-form-validation-outlet="#client-form">
           <%= form.label :code, style: "display: block" %>
-          <%= form.text_field :code, placeholder: 'PSACC' %>
+          <%= form.text_field :code, placeholder: 'PSACC',
+              data: { 
+                form_validation_target: "codeInput",
+                inline_validation_target: "input",
+                action: "input->inline-validation#inputChanged"
+              } %>
+          <div class="error-message hidden" data-form-validation-target="codeError">
+            Please enter a code
+          </div>
+          <div class="error-message hidden" data-inline-validation-target="error">
+            This code is already taken
+          </div>
         </div>
         <div class="field">
           <%= form.label :address, style: "display: block" %>
-          <%= form.text_area :address, placeholder: 'Sulpicio Go Street, Cebu City' %>
+          <%= form.text_area :address, placeholder: 'Sulpicio Go Street, Cebu City',
+            data: { form_validation_target: "addressInput" } %>
+          <div class="error-message hidden" data-form-validation-target="addressError">
+            Please enter an address
+          </div>
         </div>
         <div class="field">
           <%= form.label :tin, style: "display: block" %>
           <%= form.text_field :tin, placeholder: '1234567890' %>
         </div>
         <div class="separator"></div>
-        <div id="contact-table-section">
+        <div id="contact-table-section" data-form-validation-target="contactsTable">
           <p class="semibold" style="margin-bottom: 10px;">Contact Table</p>
           <table class="contact-table">
             <thead>
               <tr id="table-header">
                 <th style="width: 20%;">Name</th>
-                <th style="width: 15%;">Emails</th>
-                <th style="width: 15%;">Contact Numbers</th>
+                <th style="width: 15%;">Email</th>
+                <th style="width: 15%;">Contact Number</th>
                 <th style="width: 3%;"></th>
               </tr>
             </thead>
@@ -61,6 +88,9 @@
             <%= render "clients/contact_fields", f: contact_fields %>
           <% end %>
           <div data-nested-form-target="target"></div>
+          <div class="error-message hidden" data-form-validation-target="contactsError">
+            Please add at least one contact and fill in all required fields
+          </div>
           <%= link_to '<i class="fas fa-plus"></i> Add Contact'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#add" } %>
         </div>
         <div>
