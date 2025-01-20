@@ -66,5 +66,4 @@ class SpecsController < ApplicationController
     def spec_params
       params.require(:spec).permit(:name, :value, :product_id)
     end
-  end
 end
