@@ -31,3 +31,6 @@ plugin :tmp_restart
 
 # Only use a pidfile when requested
 pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
+
+workers ENV.fetch("WEB_CONCURRENCY") {4}
+preload_app!
