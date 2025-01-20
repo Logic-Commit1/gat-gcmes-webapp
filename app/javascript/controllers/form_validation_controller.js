@@ -49,19 +49,9 @@ export default class extends Controller {
     "contactsError",
   ]
 
-  static values = {
-    checkCodeUrl: String,
-    currentCode: String,
-  }
-
   connect() {
     this.clearErrors()
     this.inlineValidationValid = true
-    this.debouncedValidateCode = this.debounce(
-      this.validateCode.bind(this),
-      300
-    )
-    this.codeIsValid = true
   }
 
   clearErrors() {
@@ -476,12 +466,6 @@ export default class extends Controller {
       isValid = false
     }
 
-    // Check if code is valid (not duplicate)
-    if (!this.codeIsValid) {
-      event.preventDefault()
-      isValid = false
-    }
-
     // Validate company selection
     if (this.hasCompanySelectTarget) {
       const selectedCompany = this.element.querySelector(
@@ -499,6 +483,14 @@ export default class extends Controller {
       event.preventDefault()
       this.nameInputTarget.classList.add("field-error")
       this.nameErrorTarget.classList.remove("hidden")
+      isValid = false
+    }
+
+    // Validate code
+    if (this.hasCodeInputTarget && !this.codeInputTarget.value.trim()) {
+      event.preventDefault()
+      this.codeInputTarget.classList.add("field-error")
+      this.codeErrorTarget.classList.remove("hidden")
       isValid = false
     }
 
@@ -544,62 +536,5 @@ export default class extends Controller {
     }
 
     return isValid
-  }
-
-  // Code validation methods
-  validateCode() {
-    if (!this.hasCodeInputTarget) return
-
-    const value = this.codeInputTarget.value.trim()
-
-    // Skip validation if empty or unchanged
-    if (!value || value === this.currentCodeValue) {
-      this.hideCodeError()
-      this.codeIsValid = true
-      return
-    }
-
-    fetch(`${this.checkCodeUrlValue}?code=${encodeURIComponent(value)}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.exists) {
-          this.showCodeError()
-          this.codeInputTarget.classList.add("field-error")
-          this.codeIsValid = false
-        } else {
-          this.hideCodeError()
-          this.codeInputTarget.classList.remove("field-error")
-          this.codeIsValid = true
-        }
-      })
-  }
-
-  codeInputChanged() {
-    this.debouncedValidateCode()
-  }
-
-  showCodeError() {
-    if (this.hasCodeDuplicateErrorTarget) {
-      this.codeDuplicateErrorTarget.classList.remove("hidden")
-    }
-  }
-
-  hideCodeError() {
-    if (this.hasCodeDuplicateErrorTarget) {
-      this.codeDuplicateErrorTarget.classList.add("hidden")
-    }
-  }
-
-  // Debounce helper
-  debounce(func, wait) {
-    let timeout
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout)
-        func(...args)
-      }
-      clearTimeout(timeout)
-      timeout = setTimeout(later, wait)
-    }
   }
 }
