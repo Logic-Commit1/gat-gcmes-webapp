@@ -1,0 +1,78 @@
+<div class="form-container">
+  <%= form_with(model: company, html: { autocomplete: "off" }, data: {
+    controller: "form-validation",
+    form_validation_target: "form",
+    action: "submit->form-validation#validateCompanyForm"
+  }) do |form| %>
+    <% if company.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(company.errors.count, "error") %> prohibited this company from being saved:</h2>
+        <ul>
+          <% company.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="field">
+      <%= form.label :name, style: "display: block" %>
+      <%= form.text_field :name, placeholder: 'Golden Arrow Trading',
+        data: { form_validation_target: "nameInput" } %>
+      <div class="error-message hidden" data-form-validation-target="nameError">
+        Please enter a name
+      </div>
+    </div>
+    <div class="field" data-controller="inline-validation" 
+         data-inline-validation-check-url-value="<%= check_code_companies_path if defined?(check_code_companies_path) %>"
+         data-inline-validation-current-value-value="<%= company.code %>"
+         data-inline-validation-form-validation-outlet="#company-form">
+      <%= form.label :code, style: "display: block" %>
+      <%= form.text_field :code, placeholder: 'GAT',
+          data: { 
+            form_validation_target: "codeInput",
+            inline_validation_target: "input",
+            action: "input->inline-validation#inputChanged"
+          } %>
+      <div class="error-message hidden" data-form-validation-target="codeError">
+        Please enter a code
+      </div>
+      <div class="error-message hidden" data-inline-validation-target="error">
+        This code is already taken
+      </div>
+    </div>
+    <div class="field">
+      <%= form.label :address, style: "display: block" %>
+      <%= form.text_area :address, placeholder: '17 San Lorenzo Street, Maysilo, Malabon City, Philippines, 1477',
+        data: { form_validation_target: "addressInput" } %>
+      <div class="error-message hidden" data-form-validation-target="addressError">
+        Please enter an address
+      </div>
+    </div>
+    <div class="field">
+      <%= form.label :tin, style: "display: block" %>
+      <%= form.text_field :tin, placeholder: '1234567890' %>
+    </div>
+    <div class="field">
+      <%= form.label :contact_numbers_string, "Contact Numbers", style: "display: block" %>
+      <%= form.text_field :contact_numbers_string, placeholder: '09123456789, 09987654321',
+        data: { form_validation_target: "contactNumbersInput" } %>
+      <div class="error-message hidden" data-form-validation-target="contactNumbersError">
+        Please enter at least one contact number
+      </div>
+    </div>
+    <div class="field">
+      <%= form.label :emails_string, "Emails", style: "display: block" %>
+      <%= form.text_field :emails_string, placeholder: 'email@example.com, another@example.com',
+        data: { form_validation_target: "emailsInput" } %>
+      <div class="error-message hidden" data-form-validation-target="emailsError">
+        Please enter at least one email
+      </div>
+    </div>
+    <div>
+      <%= form.submit %>
+    </div>
+    <div class="text-center">
+      <%= link_to 'Cancel', company.persisted? ? company_path(company) : companies_path %>
+    </div>
+  <% end %>
+</div>

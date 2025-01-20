@@ -1,43 +1,73 @@
 class CompaniesController < ApplicationController
-    def show
-        @company = Company.find(params[:id])
-      end
-      
-      def clients
-        company = Company.find(params[:id])
-        clients = company.clients.select(:id, :name) # Only select necessary fields
-        render json: clients
-      end
+  before_action :set_company, only: [:edit, :update, :destroy, :clients, :suppliers, :order_request_forms, :projects, :canvasses, :quotations]
 
-      def suppliers
-        company = Company.find(params[:id])
-        suppliers = company.suppliers.select(:id, :name) # Only select necessary fields
-        render json: suppliers
-      end
+  def new
+    @company = Company.new
+  end
 
-      def order_request_forms
-        company = Company.find(params[:id])
-        order_request_forms = company.request_forms.Order.select(:id, :uid) # Only select necessary fields
-        render json: order_request_forms
-      end
+  def edit
+  end
 
-      def projects
-        company = Company.find(params[:id])
-        projects = company.projects.select(:id, :uid) # Only select necessary fields
-        render json: projects
-      end
+  def create
+    @company = Company.new(company_params)
 
-      def canvasses
-        company = Company.find(params[:id])
-        canvasses = company.canvasses.select(:id, :uid) # Only select necessary fields
-        render json: canvasses
-      end
+    if @company.save
+      redirect_to new_company_path, notice: 'Company was successfully created.'
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
 
-      def quotations
-        company = Company.find(params[:id])
-        quotations = company.quotations.select(:id, :uid) # Only select necessary fields
-        render json: quotations
-      end
+  def update
+    if @company.update(company_params)
+      redirect_to @company, notice: 'Company was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
 
-      
+  def destroy
+    @company.destroy
+    redirect_to companies_url, notice: 'Company was successfully deleted.'
+  end
+
+  def clients
+    clients = @company.clients.select(:id, :name)
+    render json: clients
+  end
+
+  def suppliers
+    suppliers = @company.suppliers.select(:id, :name)
+    render json: suppliers
+  end
+
+  def order_request_forms
+    order_request_forms = @company.request_forms.Order.select(:id, :uid)
+    render json: order_request_forms
+  end
+
+  def projects
+    projects = @company.projects.select(:id, :uid)
+    render json: projects
+  end
+
+  def canvasses
+    canvasses = @company.canvasses.select(:id, :uid)
+    render json: canvasses
+  end
+
+  def quotations
+    quotations = @company.quotations.select(:id, :uid)
+    render json: quotations
+  end
+
+  private
+
+  def set_company
+    @company = Company.find(params[:id])
+  end
+
+  def company_params
+    params.require(:company).permit(:name, :code, :address, :tin, :contact_numbers_string, :emails_string)
+  end
 end
