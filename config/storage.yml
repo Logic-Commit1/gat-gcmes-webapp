@@ -38,6 +38,5 @@ cloudflare:
   secret_access_key: <%= Rails.application.credentials.dig(:cloudflare, :secret_access_key) %>
   region: auto
   bucket: <%= Rails.application.credentials.dig(:cloudflare, :bucket) %>
-  force_path_style: true # Important for R2 compatibility
-  upload:
-    checksum: false
+  request_checksum_calculation: "when_required"
+  response_checksum_validation: "when_required"

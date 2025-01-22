@@ -1,1 +1,8 @@
-Rails.application.config.active_storage.checksum_type = :none
+Rails.application.configure do
+  config.after_initialize do
+    ActiveStorage::Current.url_options = {
+      host: 'goldenchain.onrender.com',
+      protocol: 'https'
+    }
+  end
+end

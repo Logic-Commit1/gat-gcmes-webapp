@@ -9,19 +9,13 @@ class ProfilesController < ApplicationController
     if params[:user][:signature].present?
       # Remove any existing signature first
       current_user.signature.purge if current_user.signature.attached?
-      
-      # Create a blob parameters hash without checksum
-      blob_params = {
-        io: params[:user][:signature],
-        filename: params[:user][:signature].original_filename,
-        content_type: params[:user][:signature].content_type,
-        identify: false,
-        service_name: :cloudflare  # Specify the storage service explicitly
-      }
-      
-      # Attach new signature
-      current_user.signature.attach(blob_params)
-      
+  
+      # Attach new signature using ActiveStorage attach method
+      current_user.signature.attach(params[:user][:signature])
+  
+      # Ensure Cloudflare R2 does not enforce checksum
+      current_user.signature.blob.update!(checksum: nil)
+  
       # Generate variant after successful attachment
       if current_user.signature.attached?
         current_user.signature.variant(resize_to_limit: [300, 100]).processed

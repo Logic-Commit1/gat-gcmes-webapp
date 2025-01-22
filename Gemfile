@@ -38,7 +38,7 @@ gem 'paranoia'
 # Pagination
 gem 'pagy'
 
-gem "aws-sdk-s3", require: false
+gem "aws-sdk-s3", '1.177.0'
 
 
 # Use Redis adapter to run Action Cable in production
