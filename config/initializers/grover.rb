@@ -1,6 +1,7 @@
 Grover.configure do |config|
   config.options = {
     # executable_path: Gem.loaded_specs['puppeteer-ruby'].full_gem_path + "/lib/puppeteer-ruby/puppeteer/.local-chromium/linux-xxxx/chrome-linux/chrome"
+    executable_path: '/opt/render/.cache/puppeteer/chrome/linux-131.0.6778.87/chrome-linux64/chrome',
     format: 'A4',
     margin: {
       top: '1cm',
@@ -24,10 +25,4 @@ Grover.configure do |config|
   # Set environment-specific root URL
   config.root_url = Rails.env.production? ? 'https://goldenchain.onrender.com' : 'http://localhost:3000'
   
-  if Rails.env.production?
-    config.options.merge!({
-      launch_args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
-      executable_path: `which chrome`.strip
-    })
-  end
 end
