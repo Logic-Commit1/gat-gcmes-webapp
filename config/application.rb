@@ -25,7 +25,8 @@ module Gat
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Add Grover middleware
-    config.middleware.use Grover::Middleware, root_url: 'http://localhost:3000'
-
+    config.middleware.use Grover::Middleware, root_url: Rails.env.production? ? 'https://goldenchain.onrender.com' : 'http://localhost:3000'
+    config.active_storage.analyzer = :vips
+    config.active_storage.variant_processor = :vips
   end
 end

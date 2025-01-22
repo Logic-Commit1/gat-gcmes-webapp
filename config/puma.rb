@@ -33,5 +33,5 @@ plugin :tmp_restart
 pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
 
 # Increase worker timeout
-workers ENV.fetch("WEB_CONCURRENCY") { 2 }
-worker_timeout 3600 if ENV.fetch("RAILS_ENV", "development") == "production"
+# workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+# worker_timeout 3600 if ENV.fetch("RAILS_ENV", "development") == "production"

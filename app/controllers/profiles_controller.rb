@@ -1,5 +1,7 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_user!
+  skip_before_action :verify_authenticity_token
+
 
   def show
     @user = current_user
@@ -14,8 +16,9 @@ class ProfilesController < ApplicationController
       current_user.signature.attach(params[:user][:signature])
   
       # Ensure Cloudflare R2 does not enforce checksum
-      current_user.signature.blob.update!(checksum: nil)
+      # current_user.signature.blob.update!(checksum: nil) if Rails.env.production?
   
+      # binding.pry
       # Generate variant after successful attachment
       if current_user.signature.attached?
         current_user.signature.variant(resize_to_limit: [300, 100]).processed
