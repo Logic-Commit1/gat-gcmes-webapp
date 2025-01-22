@@ -7,4 +7,14 @@ module.exports = {
     skipDownload: false,
   },
   cacheDirectory: "/opt/render/.cache/puppeteer",
+  // Add launch options for production environment
+  browserLaunchOptions: {
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage",
+      "--disable-gpu",
+    ],
+    headless: "new",
+  },
 }

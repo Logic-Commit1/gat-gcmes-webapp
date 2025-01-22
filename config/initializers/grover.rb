@@ -26,7 +26,8 @@ Grover.configure do |config|
   
   if Rails.env.production?
     config.options.merge!({
-      launch_args: ['--no-sandbox']
+      launch_args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+      executable_path: `which chrome`.strip
     })
   end
 end
