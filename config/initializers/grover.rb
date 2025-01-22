@@ -20,10 +20,12 @@ Grover.configure do |config|
   config.use_jpeg_middleware = true
   config.use_pdf_middleware = false
 
-  if Rails.env.production?
-    config.options[:executable_path] = '/usr/bin/google-chrome'
-  end
-
   # Set environment-specific root URL
   config.root_url = Rails.env.production? ? 'https://goldenchain.onrender.com' : 'http://localhost:3000'
+  
+  if Rails.env.production?
+    config.options.merge!({
+      launch_args: ['--no-sandbox']
+    })
+  end
 end
