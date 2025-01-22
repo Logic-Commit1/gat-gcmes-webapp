@@ -2,23 +2,23 @@
 # exit on error
 set -o errexit
 
-# Install Puppeteer globally
-# npm install puppeteer
-# npm install puppeteer-core
+npm install
+
+# Install Chromium (used by Puppeteer)
+npx puppeteer browsers install chrome || { echo "Failed to install Chrome"; exit 1; }
+
+# Check if Chrome is installed
+if [[ -f "$PUPPETEER_CACHE_DIR/chrome/chrome" ]]; then
+  echo "Chrome has been successfully installed."
+else
+  echo "Chrome installation failed or Chrome not found."
+  exit 1
+fi
 
 export PUPPETEER_CACHE_DIR=${PUPPETEER_CACHE_DIR:-$XDG_CACHE_HOME/puppeteer}
 
 # Log the cache path
 echo "Puppeteer Cache Directory: $PUPPETEER_CACHE_DIR"
-
-# Install Chromium (used by Puppeteer)
-npx puppeteer browsers install chrome
-
-# Echo to verify if Puppeteer is installed and Chrome is available
-# echo "Puppeteer installed and Chrome is being fetched..."
-rm -rf package-lock.json node_modules
-npm install
-npm list
 
 # Store/pull Puppeteer cache with build cache
 # if [[ ! -d $PUPPETEER_CACHE_DIR ]]; then 
