@@ -129,7 +129,11 @@
         <td></td>
         <td>
           <% if @quotation.user&.signature&.attached? %>
-            <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@quotation.user&.signature&.download)}", class: "signature-image") %>
+            <% begin %>
+              <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@quotation.user&.signature&.download)}", class: "signature-image") %>
+              <% rescue ActiveStorage::FileNotFoundError %>
+              <% @quotation.user.signature.purge if @quotation.user.signature.attached? %>
+            <% end %>
           <% end %>
           <p><%= @quotation.user&.first_name&.titleize %> <%= @quotation.user&.last_name&.titleize %></p>
         </td>
