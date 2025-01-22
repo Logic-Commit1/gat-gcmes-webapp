@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # exit on error
 set -o errexit
+export PUPPETEER_CACHE_DIR=${PUPPETEER_CACHE_DIR:-$XDG_CACHE_HOME/puppeteer}
 
 npm install
 
@@ -15,7 +16,6 @@ else
   exit 1
 fi
 
-export PUPPETEER_CACHE_DIR=${PUPPETEER_CACHE_DIR:-$XDG_CACHE_HOME/puppeteer}
 
 # Log the cache path
 echo "Puppeteer Cache Directory: $PUPPETEER_CACHE_DIR"
