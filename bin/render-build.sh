@@ -20,15 +20,17 @@ rm -rf package-lock.json node_modules
 npm install
 npm list
 
-cp --help
-
 # Store/pull Puppeteer cache with build cache
 if [[ ! -d $PUPPETEER_CACHE_DIR ]]; then 
   echo "...Copying Puppeteer Cache from Build Cache" 
   cp -R $XDG_CACHE_HOME/puppeteer/ $PUPPETEER_CACHE_DIR || { echo "Failed to copy Puppeteer cache"; exit 1; }
 else 
   echo "...Storing Puppeteer Cache in Build Cache" 
-  cp -R $PUPPETEER_CACHE_DIR $XDG_CACHE_HOME || { echo "Failed to store Puppeteer cache"; exit 1; }
+  if [[ "$PUPPETEER_CACHE_DIR" != "$XDG_CACHE_HOME" ]]; then
+    cp -R $PUPPETEER_CACHE_DIR $XDG_CACHE_HOME || { echo "Failed to store Puppeteer cache"; exit 1; }
+  else
+    echo "Source and destination are the same. Skipping copy."
+  fi
 fi
 
 bundle install
