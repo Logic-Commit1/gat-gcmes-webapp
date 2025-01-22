@@ -40,7 +40,8 @@
           <label>E-Signature</label>
           <div class="signature-container">
             <% if current_user.signature.attached? %>
-              <%= image_tag("data:image/png;base64,#{Base64.strict_encode64(current_user.signature.download)}", 
+              <%#binding.pry%>
+              <%= image_tag(current_user.signature.url, 
                   class: "signature-preview", 
                   id: "existing-signature",
                   style: "height: 100px;"
