@@ -8,14 +8,6 @@ npm install
 # Install Chromium (used by Puppeteer)
 npx puppeteer browsers install chrome || { echo "Failed to install Chrome"; exit 1; }
 
-# Check if Chrome is installed
-if [[ -f "$PUPPETEER_CACHE_DIR/chrome/chrome" ]]; then
-  echo "Chrome has been successfully installed."
-else
-  echo "Chrome installation failed or Chrome not found."
-  exit 1
-fi
-
 
 # Log the cache path
 echo "Puppeteer Cache Directory: $PUPPETEER_CACHE_DIR"
