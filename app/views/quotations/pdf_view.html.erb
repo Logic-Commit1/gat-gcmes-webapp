@@ -66,13 +66,17 @@
           </tr>
         <% end %>
         <% if p.image.attached? %>
-          <tr>
-            <td></td>
-            <td style="text-align: center;" colspan="2">
-              <% image_data = p.image.download %>
-              <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(image_data)}", style: "width: 100px; height: 100px;") %>
-            </td>
-          </tr>
+          <% begin %>
+            <tr>
+              <td></td>
+              <td style="text-align: center;" colspan="2">
+                <% image_data = p.image.download %>
+                <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(image_data)}", style: "width: 100px; height: 100px;") %>
+              </td>
+            </tr>
+            <% rescue ActiveStorage::FileNotFoundError %>
+            <% p.image.purge if p.image.attached? %>
+          <% end %>
         <% end %>
         <tr>
           <td colspan="6"></td>

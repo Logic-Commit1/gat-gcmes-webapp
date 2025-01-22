@@ -80,5 +80,5 @@ production:
 production:
   <<: *default
   database: gat_production
-  username: gat
+  username: gat_production_user
   password: <%= Rails.application.credentials.dig(:gat_database, :password) %>
