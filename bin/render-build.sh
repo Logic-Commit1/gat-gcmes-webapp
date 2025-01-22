@@ -3,7 +3,8 @@
 set -o errexit
 
 # Install Puppeteer globally
-npm install puppeteer --global
+npm install puppeteer
+npm install puppeteer-core
 
 # Install Chromium (used by Puppeteer)
 npx puppeteer browsers install chrome
@@ -11,13 +12,15 @@ npx puppeteer browsers install chrome
 # Echo to verify if Puppeteer is installed and Chrome is available
 echo "Puppeteer installed and Chrome is being fetched..."
 
-# Check if the Chrome executable is available in Puppeteer's installed path
-CHROME_PATH="/opt/render/.cache/puppeteer/chrome/linux-131.0.6778.87/chrome-linux64/chrome"
-if [ -f "$CHROME_PATH" ]; then
-    echo "Chrome installed at $CHROME_PATH"
-    export PUPPETEER_EXECUTABLE_PATH="$CHROME_PATH"
-else
-    echo "Chrome installation failed or not found at $CHROME_PATH"
+npm list
+
+# Store/pull Puppeteer cache with build cache
+if [[ ! -d $PUPPETEER_CACHE_DIR ]]; then 
+  echo "...Copying Puppeteer Cache from Build Cache" 
+  cp -R $XDG_CACHE_HOME/puppeteer/ $PUPPETEER_CACHE_DIR
+else 
+  echo "...Storing Puppeteer Cache in Build Cache" 
+  cp -R $PUPPETEER_CACHE_DIR $XDG_CACHE_HOME
 fi
 
 bundle install
