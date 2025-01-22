@@ -9,8 +9,11 @@ npm install
 npx puppeteer browsers install chrome || { echo "Failed to install Chrome"; exit 1; }
 
 
+ls -l /opt/render/.cache/puppeteer/chrome/linux-131.0.6778.87/chrome-linux64/chrome
 # Log the cache path
 echo "Puppeteer Cache Directory: $PUPPETEER_CACHE_DIR"
+
+
 
 # Store/pull Puppeteer cache with build cache
 # if [[ ! -d $PUPPETEER_CACHE_DIR ]]; then 
