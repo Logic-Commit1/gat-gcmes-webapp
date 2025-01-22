@@ -26,6 +26,9 @@ else
   exit 1
 fi
 
+CHROME_VERSION=$("$CHROME_PATH" --version)
+echo "Installed Chrome version: $CHROME_VERSION"
+
 # Echo to verify if Puppeteer is installed and Chrome is available
 rm -rf package-lock.json node_modules
 npm install
