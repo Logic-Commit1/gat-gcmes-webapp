@@ -5,6 +5,9 @@ set -o errexit
 curl -fsSL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o chrome.deb
 apt-get update && apt-get install -y ./chrome.deb
 
+# Verify Chrome installation
+google-chrome-stable --version || echo "Chrome installation failed"
+
 bundle install
 bundle exec rails assets:precompile
 bundle exec rails assets:clean
