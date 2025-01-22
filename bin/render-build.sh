@@ -11,7 +11,8 @@ set -o errexit
 
 # Echo to verify if Puppeteer is installed and Chrome is available
 # echo "Puppeteer installed and Chrome is being fetched..."
-
+rm -rf package-lock.json node_modules
+npm install
 npm list
 
 # # Store/pull Puppeteer cache with build cache
