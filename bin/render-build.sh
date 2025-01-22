@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 # exit on error
 set -o errexit
+
+rm -rf package-lock.json node_modules
+npm install
+npm list
+
 export PUPPETEER_CACHE_DIR=${PUPPETEER_CACHE_DIR:-$XDG_CACHE_HOME/puppeteer}
 
 # Log the cache path
@@ -10,7 +15,7 @@ echo "Puppeteer Cache Directory: $PUPPETEER_CACHE_DIR"
 export PUPPETEER_CHROME_REVISION=131.0.6778.204
 
 # Install Chromium (used by Puppeteer)
-npx puppeteer browsers install chrome || { echo "Failed to install Chrome"; exit 1; }
+npx puppeteer browsers install chrome
 
 # Check if Chrome is installed
 CHROME_PATH="$PUPPETEER_CACHE_DIR/chrome/linux-$PUPPETEER_CHROME_REVISION/chrome-linux64/chrome"
@@ -29,26 +34,10 @@ else
   exit 1
 fi
 
-CHROME_VERSION=$("$CHROME_PATH" --version)
+
+CHROME_VERSION=$("/opt/render/.cache/puppeteer/chrome/linux-131.0.6778.204/chrome-linux64/chrome" --version)
 echo "Installed Chrome version: $CHROME_VERSION"
 
-# Echo to verify if Puppeteer is installed and Chrome is available
-rm -rf package-lock.json node_modules
-npm install
-npm list
-
-# Store/pull Puppeteer cache with build cache
-# if [[ ! -d $PUPPETEER_CACHE_DIR ]]; then 
-#   echo "...Copying Puppeteer Cache from Build Cache" 
-#   cp -R $XDG_CACHE_HOME/puppeteer/ $PUPPETEER_CACHE_DIR || { echo "Failed to copy Puppeteer cache"; exit 1; }
-# else 
-#   echo "...Storing Puppeteer Cache in Build Cache" 
-#   if [[ "$PUPPETEER_CACHE_DIR" != "$XDG_CACHE_HOME" ]]; then
-#     cp -R $PUPPETEER_CACHE_DIR $XDG_CACHE_HOME || { echo "Failed to store Puppeteer cache"; exit 1; }
-#   else
-#     echo "Source and destination are the same. Skipping copy."
-#   fi
-# fi
 
 bundle install
 bundle exec rails assets:precompile
@@ -59,3 +48,8 @@ bundle exec rails assets:clean
 # Uncomment the following line:
 
 bundle exec rails db:migrate
+
+echo "Checking for Chrome executable at: /opt/render/.cache/puppeteer/chrome/linux-131.0.6778.204/chrome-linux64/"
+ls -l /opt/render/.cache/puppeteer/chrome/linux-131.0.6778.204/chrome-linux64/
+
+chmod +x /opt/render/.cache/puppeteer/chrome/linux-131.0.6778.204/chrome-linux64/chrome
