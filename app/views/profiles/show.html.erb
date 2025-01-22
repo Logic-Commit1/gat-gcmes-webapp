@@ -40,14 +40,27 @@
           <label>E-Signature</label>
           <div class="signature-container">
             <% if current_user.signature.attached? %>
-              <%#binding.pry%>
-              <%#= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@quotation.user&.signature&.download)}", class: "signature-image") %>
-              <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(current_user.signature.download)}", 
-                  class: "signature-preview", 
-                  id: "existing-signature",
-                  style: "height: 100px;"
-                  )%>
-              <%= link_to "Remove Signature", remove_signature_path, 'data-turbo-method': :delete, class: "remove-signature-link" %>
+              <% begin %>
+                <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(current_user.signature.download)}", 
+                    class: "signature-preview", 
+                    id: "existing-signature",
+                    style: "height: 100px;"
+                    )%>
+                <%= link_to "Remove Signature", remove_signature_path, 'data-turbo-method': :delete, class: "remove-signature-link" %>
+                <% rescue ActiveStorage::FileNotFoundError %>
+                <% current_user.signature.purge if current_user.signature.attached? %>
+                <%= form_for(current_user, url: '/profile', method: :patch, as: :user, class: "signature-form", data: { controller: "signature-upload" }) do |f| %>
+                  <div class="signature-upload">
+                    <%= f.file_field :signature, data: { 
+                      signature_upload_target: "input",
+                      action: "change->signature-upload#toggleButton"
+                    } %>
+                    <%= button_tag type: 'submit', class: "signature-submit hidden", data: { signature_upload_target: "button" } do %>
+                      <span>Upload</span>
+                    <% end %>
+                  </div>
+                <% end %>
+              <% end %>
             <% else %>
               <%= form_for(current_user, url: '/profile', method: :patch, as: :user, class: "signature-form", data: { controller: "signature-upload" }) do |f| %>
                 <div class="signature-upload">
