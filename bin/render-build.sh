@@ -6,6 +6,11 @@ set -o errexit
 # npm install puppeteer
 # npm install puppeteer-core
 
+export PUPPETEER_CACHE_DIR=${PUPPETEER_CACHE_DIR:-$XDG_CACHE_HOME/puppeteer}
+
+# Log the cache path
+echo "Puppeteer Cache Directory: $PUPPETEER_CACHE_DIR"
+
 # Install Chromium (used by Puppeteer)
 npx puppeteer browsers install chrome
 
@@ -14,6 +19,8 @@ npx puppeteer browsers install chrome
 rm -rf package-lock.json node_modules
 npm install
 npm list
+
+cp --help
 
 # Store/pull Puppeteer cache with build cache
 if [[ ! -d $PUPPETEER_CACHE_DIR ]]; then 
