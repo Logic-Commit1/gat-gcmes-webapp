@@ -7,7 +7,7 @@ set -o errexit
 # npm install puppeteer-core
 
 # Install Chromium (used by Puppeteer)
-# npx puppeteer browsers install chrome
+npx puppeteer browsers install chrome
 
 # Echo to verify if Puppeteer is installed and Chrome is available
 # echo "Puppeteer installed and Chrome is being fetched..."
@@ -18,10 +18,10 @@ npm list
 # Store/pull Puppeteer cache with build cache
 if [[ ! -d $PUPPETEER_CACHE_DIR ]]; then 
   echo "...Copying Puppeteer Cache from Build Cache" 
-  cp -R $XDG_CACHE_HOME/puppeteer/ $PUPPETEER_CACHE_DIR
+  cp -R $XDG_CACHE_HOME/puppeteer/ $PUPPETEER_CACHE_DIR || { echo "Failed to copy Puppeteer cache"; exit 1; }
 else 
   echo "...Storing Puppeteer Cache in Build Cache" 
-  cp -R $PUPPETEER_CACHE_DIR $XDG_CACHE_HOME
+  cp -R $PUPPETEER_CACHE_DIR $XDG_CACHE_HOME || { echo "Failed to store Puppeteer cache"; exit 1; }
 fi
 
 bundle install
