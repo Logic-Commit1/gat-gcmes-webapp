@@ -2,11 +2,17 @@
 # exit on error
 set -o errexit
 
-curl -fsSL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o chrome.deb
-apt-get update && apt-get install -y ./chrome.deb
+npm install puppeteer --global
+npx puppeteer browsers install chrome
+echo "Puppeteer installed and Chrome is being fetched..."
 
-# Verify Chrome installation
-google-chrome-stable --version || echo "Chrome installation failed"
+# Check if the Chrome executable is available
+if command -v google-chrome-stable &> /dev/null
+then
+    echo "Chrome is installed successfully."
+else
+    echo "Chrome installation failed or not found."
+fi
 
 bundle install
 bundle exec rails assets:precompile

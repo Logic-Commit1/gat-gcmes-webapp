@@ -1,6 +1,6 @@
 Grover.configure do |config|
   config.options = {
-    executable_path: '/usr/bin/google-chrome-stable',
+    # executable_path: Gem.loaded_specs['puppeteer-ruby'].full_gem_path + "/lib/puppeteer-ruby/puppeteer/.local-chromium/linux-xxxx/chrome-linux/chrome"
     format: 'A4',
     margin: {
       top: '1cm',
