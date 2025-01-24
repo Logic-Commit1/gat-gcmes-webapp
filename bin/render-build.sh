@@ -12,7 +12,10 @@ export PUPPETEER_CACHE_DIR=${PUPPETEER_CACHE_DIR:-$XDG_CACHE_HOME/puppeteer}
 echo "Puppeteer Cache Directory: $PUPPETEER_CACHE_DIR"
 
 # Install Chromium (used by Puppeteer)
-export PUPPETEER_CHROME_REVISION=131.0.6778.204
+export PUPPETEER_CHROME_REVISION=131.0.6778.87
+
+# Install Chromium (used by Puppeteer)
+npx @puppeteer/browsers install chrome@131.0.6778.87
 
 # Check if Chrome is installed
 CHROME_PATH="$PUPPETEER_CACHE_DIR/chrome/linux-$PUPPETEER_CHROME_REVISION/chrome-linux64/chrome"
