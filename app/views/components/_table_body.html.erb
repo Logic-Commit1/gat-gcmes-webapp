@@ -46,8 +46,8 @@
         <% documents&.each do |project| %>
           <tr onclick="window.location='<%= project_path(project) %>'" style="cursor: pointer">
             <td><%= project.uid %></td>
-            <td><%= project.client.code %></td>
-            <td><%#= number_to_currency(project.total) %></td>
+            <td><%= project.client.name %></td>
+            <td><%= number_to_currency(project.amount, unit: "₱") %></td>
             <td><%= project.created_at.strftime("%B %d, %Y") %></td>
             <td><span class="status <%= project.status&.downcase %>"><%= project.status&.capitalize %></span></td>
           </tr>

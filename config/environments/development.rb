@@ -33,11 +33,11 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  config.active_storage.resolve_model_to_route = :rails_storage_proxy
-  config.active_storage.url_options = {
-    host: 'localhost:3000',
-    protocol: 'http'
-  }
+  # config.active_storage.resolve_model_to_route = :rails_storage_proxy
+  # config.active_storage.url_options = {
+  #   host: 'localhost:3000',
+  #   protocol: 'http'
+  # }
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false

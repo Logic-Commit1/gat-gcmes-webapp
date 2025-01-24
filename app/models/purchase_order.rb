@@ -60,7 +60,7 @@ class PurchaseOrder < ApplicationRecord
 
     company_code = self.company.code
     supplier_code = self.supplier.code
-    count = PurchaseOrder.where(company_id: self.company_id).count
+    count = self.company.purchase_orders.count
     
     self.uid = "#{company_code}_#{supplier_code}_#{(count+1).to_s.rjust(5, '0')}"
   end

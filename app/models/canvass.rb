@@ -1,5 +1,6 @@
 class Canvass < ApplicationRecord
   # acts_as_paranoid
+  attr_accessor :skip_suppliers_callback
 
   belongs_to :company
   belongs_to :project
@@ -42,11 +43,12 @@ class Canvass < ApplicationRecord
     return if self.uid.present?
     company_code = self.company.code
     year_str = Time.now.year.to_s[2, 2]
-    count = Canvass.count
+    count = self.company.canvasses.count
     self.uid = "#{company_code}-CAN-#{year_str}-#{(count+1).to_s.rjust(3, '0')}"
   end
 
   def should_update_suppliers?
+    return false if skip_suppliers_callback
     new_record? || products.any? { |product| product.changed? } || products.any?(&:marked_for_destruction?)
   end
 

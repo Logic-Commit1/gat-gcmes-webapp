@@ -48,7 +48,7 @@ class Project < ApplicationRecord
     company_code = self.company.code
 
     year_str = Time.now.year
-    count = self.client.quotations.count
+    count = self.company.projects.count
     self.uid = "#{company_code}_PROJ#{year_str}_#{(count+1).to_s.rjust(4, '0')}"
   end
    

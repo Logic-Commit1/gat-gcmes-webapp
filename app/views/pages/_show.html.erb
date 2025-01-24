@@ -44,8 +44,8 @@
               <p><%= document.project.po_number.presence || "—" %></p>
             </div>
             <div class="project-payment">
-              <p>Payment</p>
-              <p><%= number_to_currency(document.project.payment, unit: "₱") %></p>
+              <p>Payment Term</p>
+              <p><%= document.project.payment %></p>
             </div>
           </div>
         </div>

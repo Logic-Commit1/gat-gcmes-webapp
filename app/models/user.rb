@@ -29,7 +29,7 @@ class User < ApplicationRecord
                             message: "must be valid (e.g., 09123456789 or 0912 345 6789)" 
                           }
   validate :email_must_be_whitelisted, on: :create
-  validates :department, presence: true, on: :create
+  # validates :department, presence: true, on: :create
   validate :acceptable_signature, on: :update
   validates :position, presence: true, on: :create
   scope :search_by_term, ->(query) {
@@ -95,6 +95,13 @@ class User < ApplicationRecord
     if email == "dev@goldenchain.ph"
       self.department = :information_technology
       self.position = "Developer"
+      self.role = :developer
+    elsif email == "admin@goldenchain.com.ph"
+      self.role = :admin
+      self.position = "Admin"
+    elsif email == "rdb@goldenchain.com.ph"
+      self.role = :manager
+      self.position = "General Manager"
     else
       employee = Employee.find_by(email: email)
       if employee.nil?

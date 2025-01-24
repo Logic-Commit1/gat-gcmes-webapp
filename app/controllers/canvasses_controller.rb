@@ -134,9 +134,9 @@ class CanvassesController < ApplicationController
     end.flatten
 
     if @canvass.update(suppliers: updated_suppliers)
-      redirect_to pdf_view_canvass_path(@canvass), notice: 'Supplier selected successfully'
+      redirect_to pdf_view_canvass_path(@canvass)
     else
-      redirect_to pdf_view_canvass_path(@canvass), alert: 'Failed to select supplier'
+      redirect_to pdf_view_canvass_path(@canvass)
     end
   end
 
