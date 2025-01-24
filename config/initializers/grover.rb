@@ -1,6 +1,6 @@
 Grover.configure do |config|
   config.options = {
-    # executable_path: '/opt/render/.cache/puppeteer/chrome/linux-131.0.6778.204/chrome-linux64/chrome',
+    executable_path: '/opt/render/project/src/chrome/linux-131.0.6778.87/chrome-linux64/chrome',
     format: 'A4',
     margin: {
       top: '1cm',
