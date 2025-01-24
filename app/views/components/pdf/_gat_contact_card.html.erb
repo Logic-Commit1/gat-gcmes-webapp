@@ -7,11 +7,9 @@
     <p class="flex items-center"><i class="fa-solid fa-envelope" style="margin-right: 8px;"></i><span><%= document.company.emails.join(', ') %></span></p>
   </div>
   <div class="logo">
-    <% if Rails.env.development? %>
-      <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(File.read(Rails.root.join('app/assets/images/gat-logo.png')))}", class: "gat-logo") %>
-    <% else %>
-      <%= image_tag("gat-logo.png", class: 'gat-logo') %>
-    <% end %>
+    <% image_path = Rails.root.join('app/assets/images/gat-logo.png') %>
+    <% image_data = Base64.strict_encode64(File.read(image_path)) %>
+    <%= image_tag "data:image/jpg;base64,#{image_data}", class: 'gat-logo' %>
     <p>GOLDEN ARROW TRADING</p>
   </div>
 </div>

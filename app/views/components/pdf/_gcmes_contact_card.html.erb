@@ -7,7 +7,8 @@
     <p class="flex items-center"><i class="fa-solid fa-envelope" style="margin-right: 8px;"></i><span><%= document.company.emails.join(', ') %></span></p>
   </div>
   <div class="logo">
-    <% document.company%>
-    <%= image_tag "gcmes-logo.png", class: 'gcmes-logo' %>
+    <% image_path = Rails.root.join('app/assets/images/gcmes-logo.png') %>
+    <% image_data = Base64.strict_encode64(File.read(image_path)) %>
+    <%= image_tag "data:image/jpg;base64,#{image_data}", class: 'gcmes-logo' %>
   </div>
 </div>
