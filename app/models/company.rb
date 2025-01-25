@@ -5,6 +5,7 @@ class Company < ApplicationRecord
   has_many :projects
   has_many :request_forms
   has_many :canvasses
+  has_many :purchase_orders
 
   validates :name, presence: true
   validates :code, presence: true, uniqueness: true

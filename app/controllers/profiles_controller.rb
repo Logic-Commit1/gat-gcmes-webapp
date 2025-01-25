@@ -18,7 +18,6 @@ class ProfilesController < ApplicationController
       # Ensure Cloudflare R2 does not enforce checksum
       # current_user.signature.blob.update!(checksum: nil) if Rails.env.production?
   
-      # binding.pry
       # Generate variant after successful attachment
       if current_user.signature.attached?
         current_user.signature.variant(resize_to_limit: [300, 100]).processed

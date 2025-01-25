@@ -1,6 +1,7 @@
 Particular.destroy_all
 Product.destroy_all
 RequestForm.destroy_all
+PurchaseOrder.destroy_all
 Quotation.destroy_all
 Canvass.destroy_all
 Project.destroy_all
@@ -176,4 +177,35 @@ particular_b = Particular.create(
   name: "Installation",
   allowance: 2500.00,
   remarks: "Including basic setup"
+)
+
+RequestForm.create(
+  company: project_a.company,
+  project: project_a,
+  user: user,
+  request_type: 'Allowance',
+  particulars: [particular_a, particular_b],
+  start_travel_date: Date.today,
+  end_travel_date: Date.today + 1,
+  destination: "Manila",
+  vehicle: "Hilux",
+)
+
+RequestForm.create(
+  company: project_a.company,
+  project: project_a,
+  user: user,
+  request_type: 'Order',
+  canvass: canvass_a,
+  quotation: quotation_a,
+  products: [product_a, product_b]
+)
+
+PurchaseOrder.create(
+  company: project_a.company,
+  project: project_a,
+  user: user,
+  supplier: supplier_a,
+  products: [product_a, product_b],
+  terms: '30 days',
 )
