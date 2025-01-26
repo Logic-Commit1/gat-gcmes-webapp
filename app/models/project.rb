@@ -46,10 +46,9 @@ class Project < ApplicationRecord
     return if self.uid.present?
 
     company_code = self.company.code
-
     year_str = Time.now.year
-    count = self.company.projects.count
-    self.uid = "#{company_code}_PROJ#{year_str}_#{(count+1).to_s.rjust(4, '0')}"
+    sequence = DocumentSequence.next_sequence('project', company_code)
+    self.uid = "#{company_code}_PROJ#{year_str}_#{sequence.to_s.rjust(4, '0')}"
   end
    
   def gat?

@@ -55,8 +55,8 @@ class Quotation < ApplicationRecord
     return if self.uid.present?
     client_code = self.client.code
     year_str = Time.now.year.to_s[2, 2]
-    count = self.client.quotations.count
-    self.uid = "#{client_code}#{year_str}-#{(count+1).to_s.rjust(3, '0')}"
+    sequence = DocumentSequence.next_sequence('quotation', client.code)
+    self.uid = "#{client_code}#{year_str}-#{sequence.to_s.rjust(3, '0')}"
   end
 
   def pdf_path

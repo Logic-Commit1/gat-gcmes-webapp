@@ -60,9 +60,9 @@ class PurchaseOrder < ApplicationRecord
 
     company_code = self.company.code
     supplier_code = self.supplier.code
-    count = self.company.purchase_orders.count
+    sequence = DocumentSequence.next_sequence('purchase_order', supplier_code)
     
-    self.uid = "#{company_code}_#{supplier_code}_#{(count+1).to_s.rjust(5, '0')}"
+    self.uid = "#{company_code}_#{supplier_code}_#{sequence.to_s.rjust(5, '0')}"
   end
 
   def set_total

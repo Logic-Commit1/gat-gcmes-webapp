@@ -99,6 +99,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_24_084723) do
     t.index ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable"
   end
 
+  create_table "document_sequences", force: :cascade do |t|
+    t.string "document_type"
+    t.string "company_code"
+    t.integer "last_sequence"
+    t.integer "year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_type", "company_code", "year"], name: "unique_document_sequence", unique: true
+  end
+
   create_table "employees", force: :cascade do |t|
     t.string "name"
     t.string "contact_number"
