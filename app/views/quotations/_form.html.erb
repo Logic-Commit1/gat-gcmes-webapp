@@ -25,6 +25,20 @@
         </div>
       </div>
       <div class="<%= 'hidden' if quotation.new_record? %>">
+        <div id="type-field">
+          <div class="separator"></div>
+          <div class="field">
+            <%= form.label :type %>
+            <div>
+              <% Quotation.humanized_quotation_types.each_with_index do |type, index| %>
+                <%= form.radio_button :quotation_type, Quotation.quotation_types.keys[index], data: { form_validation_target: "typeRadio" } %> <%= type %>
+              <% end %>
+            </div>
+            <div class="error-message hidden" data-form-validation-target="typeError">
+              Please select a type
+            </div>
+          </div>
+        </div>
         <div class="separator"></div>
         <div>
           <div class="field <%= 'hidden' if quotation.new_record? %>" data-company-select-target="projectSelectField">

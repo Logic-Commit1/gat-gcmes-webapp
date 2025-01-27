@@ -5,7 +5,7 @@
   <div class="project-card">
     <div class="project-name mb-4">
       <%= project.uid %>
-      <div style="margin-bottom: 5px;" class="status-dot <%= project.status.downcase %>"></div>
+      <div class="status-dot <%= project.status.downcase %>" style="margin-bottom: 5px;"></div>
     </div>
     <div class="project-details">
       <p>
@@ -32,20 +32,18 @@
       </p>
     </div>
     <div class="project-details">
-      <p>
-        <% if project.client_po.attached? %>
-          <div class="pdf-preview-container">
-            <%= link_to rails_blob_path(project.client_po, disposition: 'inline'), 
-                        target: '_blank',
-                        class: 'pdf-preview-link' do %>
-              <div class="pdf-preview-button">
-                <i class="fas fa-file-pdf"></i>
-                <span>View Client PO</span>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-      </p>
+      <% if project.client_po.attached? %>
+        <div class="pdf-preview-container">
+          <%= link_to rails_blob_path(project.client_po, disposition: 'inline'), 
+                      target: '_blank',
+                      class: 'pdf-preview-link' do %>
+            <div class="pdf-preview-button">
+              <i class="fas fa-file-pdf"></i>
+              <span>View Client PO</span>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </div>
   <div class="related-documents grid with-4-columns baseline">
@@ -53,108 +51,152 @@
       <div class="linked-documents-header">
         <p>Quotations</p>
       </div>
-      <% if project.quotations.any? %>
-        <div class="linked-documents-body">
+      <div class="linked-documents-body">
+        <% if project.quotations.any? %>
           <% project.quotations.each do |quotation| %>
-            <div class='document-link'>
+            <div class="document-link">
               <%= link_to quotation.uid, quotation %>
-              <% status_color = case quotation.status
-                               when 'approved' then 'bg-green-500'
-                               when 'rejected' then 'bg-red-500'
-                               else 'bg-orange-500'
-                               end %>
               <div class="status-dot <%= quotation.status %>"></div>
             </div>
           <% end %>
-        </div>
-      <% else %>
-        <!--
-        <div class="linked-documents-body">
-          <p>
-            No Quotations
-          </p>
-        </div>
-      -->
-      <% end %>
+        <% end %>
+      </div>
     </div>
     <div class="linked-documents">
       <div class="linked-documents-header">
-        <p>
-          Canvasses
-        </p>
+        <p>Canvasses</p>
       </div>
-      <% if project.canvasses.any? %>
-        <div class="linked-documents-body">
+      <div class="linked-documents-body">
+        <% if project.canvasses.any? %>
           <% project.canvasses.each do |canvass| %>
-            <div class='document-link'>
+            <div class="document-link">
               <%= link_to canvass.uid, canvass %>
-              <% status_color = case canvass.status
-                               when 'approved' then 'bg-green-500'
-                               when 'rejected' then 'bg-red-500'
-                               else 'bg-orange-500'
-                               end %>
               <div class="status-dot <%= canvass.status %>"></div>
             </div>
           <% end %>
-        </div>
-      <% else %>
-        <!--
-        <div class="linked-documents-body">
-          <p>
-            No Canvasses
-          </p>
-        </div>
-      -->
-      <% end %>
+        <% end %>
+      </div>
     </div>
     <div class="linked-documents">
       <div class="linked-documents-header">
-        <p>
-          Request Forms
-        </p>
+        <p>Request Forms</p>
       </div>
-      <% if project.request_forms.any? %>
-        <div class="linked-documents-body">
+      <div class="linked-documents-body">
+        <% if project.request_forms.any? %>
           <% project.request_forms.each do |request_form| %>
-            <div class='document-link'>
+            <div class="document-link">
               <%= link_to request_form.uid, request_form %>
-              <% status_color = case request_form.status
-                               when 'approved' then 'bg-green-500'
-                               when 'rejected' then 'bg-red-500'
-                               else 'bg-orange-500'
-                               end %>
               <div class="status-dot <%= request_form.status %>"></div>
             </div>
           <% end %>
-        </div>
-      <% else %>
-        <div class="linked-documents-body">
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
     <div class="linked-documents">
       <div class="linked-documents-header">
-        <p>
-          Purchase Orders
-        </p>
+        <p>Purchase Orders</p>
       </div>
-      <% if project.purchase_orders.any? %>
-        <div class="linked-documents-body">
+      <div class="linked-documents-body">
+        <% if project.purchase_orders.any? %>
           <% project.purchase_orders.each do |purchase_order| %>
-            <div class='document-link'>
+            <div class="document-link">
               <%= link_to purchase_order.uid, purchase_order %>
-              <% status_color = case purchase_order.status
-                               when 'approved' then 'bg-green-500'
-                               when 'rejected' then 'bg-red-500'
-                               else 'bg-orange-500'
-                               end %>
               <div class="status-dot <%= purchase_order.status %>"></div>
             </div>
           <% end %>
-        </div>
-      <% else %>
-        <div class="linked-documents-body">
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
+  <br>
+  <div class="grid with-4-columns baseline">
+    <% if project.required_work_acceptance_count > 0 %>
+      <div class="linked-documents">
+        <div class="linked-documents-header">
+          <p>Work Acceptance</p>
+        </div>
+        <div class="linked-documents-body">
+          <% if project.work_acceptance_files.attached? %>
+            <div class="attached-files mt-2">
+              <% project.work_acceptance_files.each do |file| %>
+                <div class="document-link" style="display: inline-block;">
+                  <%= link_to rails_blob_path(file, disposition: 'inline'), 
+                            target: '_blank',
+                            class: 'pdf-preview-link' do %>
+                    <div class="document-link-button">
+                      <span><%= file.filename.to_s.capitalize %></span>
+                    </div>
+                  <% end %>
+                </div>
+                <%= link_to "Remove", 
+                            purge_attachment_project_path(project, attachment_type: 'work_acceptance', attachment_id: file.id),
+                            'data-turbo-method': :delete,
+                            class: "remove-file-link",
+                            style: "margin-left: 0.2rem;",
+                            data: { turbo_confirm: "Are you sure you want to remove this file?" } %>
+              <% end %>
+            </div>
+          <% end %>
+          <% if project.required_work_acceptance_count > 0 && !project.work_acceptance_complete? %>
+            <%= form_with(model: project, local: true, class: "file-upload-form", data: { controller: "file-upload" }) do |f| %>
+              <div class="file-input-container">
+                <%= f.file_field :work_acceptance_files, 
+                                multiple: true, 
+                                direct_upload: true, 
+                                accept: "image/png,image/jpeg,application/pdf", 
+                                data: { file_upload_target: "input", action: "change->file-upload#toggleButton" } %>
+              </div>
+              <%= button_tag type: 'submit', class: "file-upload-button hidden", data: { file_upload_target: "button" } do %>
+                <span>Upload WA</span>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <% if project.required_delivery_receipt_count > 0 %>
+      <div class="linked-documents">
+        <div class="linked-documents-header">
+          <p>Delivery Receipt</p>
+        </div>
+        <div class="linked-documents-body">
+          <% if project.delivery_receipt_files.attached? %>
+            <div class="attached-files mt-2">
+              <% project.delivery_receipt_files.each do |file| %>
+                <div class="document-link" style="display: inline-block;">
+                  <%= link_to rails_blob_path(file, disposition: 'inline'), 
+                          target: '_blank',
+                          class: 'pdf-preview-link' do %>
+                    <div class="document-link-button">
+                      <span><%= file.filename.to_s.capitalize %></span>
+                    </div>
+                  <% end %>
+                </div>
+                <%= link_to "Remove", 
+                          purge_attachment_project_path(project, attachment_type: 'delivery_receipt', attachment_id: file.id),
+                          'data-turbo-method': :delete,
+                          class: "remove-file-link",
+                          style: "margin-left: 0.2rem;",
+                          data: { turbo_confirm: "Are you sure you want to remove this file?" } %>
+              <% end %>
+            </div>
+          <% end %>
+          <% if project.required_delivery_receipt_count > 0 && !project.delivery_receipt_complete? %>
+            <%= form_with(model: project, local: true, class: "file-upload-form", data: { controller: "file-upload" }) do |f| %>
+              <div class="file-input-container">
+                <%= f.file_field :delivery_receipt_files,
+                              multiple: true,
+                              direct_upload: true,
+                              accept: "image/png,image/jpeg,application/pdf",
+                              data: { file_upload_target: "input", action: "change->file-upload#toggleButton" } %>
+              </div>
+              <%= button_tag type: 'submit', class: "file-upload-button hidden", data: { file_upload_target: "button" } do %>
+                <span>Upload DR</span>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

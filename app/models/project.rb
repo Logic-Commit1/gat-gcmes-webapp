@@ -9,9 +9,11 @@ class Project < ApplicationRecord
   has_many :canvasses
   
   has_one_attached :client_po, dependent: :destroy
+  has_many_attached :work_acceptance_files, dependent: :destroy
+  has_many_attached :delivery_receipt_files, dependent: :destroy
 
   enum :payment, [ "50% downpayment", "30 days", "Paid" ]
-  enum :status, [ "Ongoing", "Served", "Cancelled" ]
+  enum :status, [ "ongoing", "served", "cancelled" ]
 
   # Scopes
   scope :latest_first, -> { order(created_at: :desc) }
@@ -40,6 +42,7 @@ class Project < ApplicationRecord
     where("DATE(projects.created_at) = ?", Date.parse(date))
   }
 
+  # Callbacks
   before_save :set_uid
 
   def set_uid 
@@ -58,4 +61,41 @@ class Project < ApplicationRecord
   def gcmes?
     self.company.code.downcase == 'gcmes'
   end
+
+  def required_work_acceptance_count
+    quotations.where(quotation_type: ['service', 'service_and_supply']).count
+  end
+
+  def required_delivery_receipt_count
+    quotations.where(quotation_type: ['supply', 'service_and_supply']).count
+  end
+
+  def remaining_work_acceptance_count
+    required = required_work_acceptance_count
+    attached = work_acceptance_files.count
+    [required - attached, 0].max
+  end
+
+  def remaining_delivery_receipt_count
+    required = required_delivery_receipt_count
+    attached = delivery_receipt_files.count
+    [required - attached, 0].max
+  end
+
+  def work_acceptance_complete?
+    remaining_work_acceptance_count == 0
+  end
+
+  def delivery_receipt_complete?
+    remaining_delivery_receipt_count == 0
+  end
+
+  def check_and_update_status
+    if work_acceptance_complete? && delivery_receipt_complete?
+      update_column(:status, 'served') unless served?
+    else
+      update_column(:status, 'ongoing') unless ongoing?
+    end
+  end
 end
+

@@ -57,21 +57,44 @@ class QuotationsController < ApplicationController
    def create
     @quotation = Quotation.new(quotation_params)
     @quotation.user = current_user
-    if @quotation.save
-      # generate_pdf(@quotation)
-      redirect_to @quotation
-    else
-      render :new, status: :unprocessable_entity
+
+    respond_to do |format|
+      if @quotation.save
+        # Trigger project status check if project is linked
+        @quotation.project.check_and_update_status if @quotation.project.present?
+
+        format.html { redirect_to quotation_url(@quotation), notice: "Quotation was successfully created." }
+        format.json { render :show, status: :created, location: @quotation }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @quotation.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   # PATCH/PUT /quotations/1 or /quotations/1.json
   def update
-    if @quotation.update(quotation_params)
-      # generate_pdf(@quotation)
-      redirect_to @quotation
-    else
-      render :edit
+    respond_to do |format|
+      if @quotation.update(quotation_params)
+        # Check if project association changed
+        project_changed = @quotation.saved_change_to_project_id?
+        old_project_id = @quotation.project_id_before_last_save
+        
+        # Update status for both old and new projects if changed
+        if project_changed
+          Project.find(old_project_id).check_and_update_status if old_project_id
+          @quotation.project.check_and_update_status if @quotation.project.present?
+        else
+          # Update current project's status
+          @quotation.project.check_and_update_status if @quotation.project.present?
+        end
+
+        format.html { redirect_to quotation_url(@quotation), notice: "Quotation was successfully updated." }
+        format.json { render :show, status: :ok, location: @quotation }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @quotation.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -140,7 +163,7 @@ class QuotationsController < ApplicationController
       params.require(:quotation).permit(
         :uid, :company_id, :project_id, :client_id, :attention, :vessel, :subject, :user_id,
         :remarks, :payment, :lead_time, :warranty, :sub_total,
-        :total, :vat, :additional_conditions, :preparer, :approver, :discount, :discount_rate,
+        :total, :vat, :additional_conditions, :preparer, :approver, :discount, :discount_rate, :quotation_type,
         products_attributes: [
           :id, :name, :quantity, :unit, :price, :discount, :brand, 
           :description, :specs, :terms, :remarks, :image, 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_24_084723) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_26_120226) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -231,6 +231,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_24_084723) do
     t.bigint "user_id"
     t.datetime "approved_at"
     t.bigint "approver_id"
+    t.integer "quotation_type"
     t.index ["approver_id"], name: "index_quotations_on_approver_id"
     t.index ["client_id"], name: "index_quotations_on_client_id"
     t.index ["company_id"], name: "index_quotations_on_company_id"

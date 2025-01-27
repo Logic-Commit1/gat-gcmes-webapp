@@ -11,6 +11,7 @@ class Quotation < ApplicationRecord
 
   enum :payment, [ "50% downpayment", "30 days", "Paid" ]
   enum :status, [ :pending, :approved, :rejected ]
+  enum :quotation_type, [ :service, :supply, :service_and_supply ]
 
   before_save :set_uid
   before_save :compute_totals_quotation
@@ -66,6 +67,14 @@ class Quotation < ApplicationRecord
   def save_pdf(pdf_content)
     FileUtils.mkdir_p(File.dirname(pdf_path))
     File.open(pdf_path, 'wb') { |file| file.write(pdf_content) }
+  end
+
+  def self.humanized_quotation_types
+    quotation_types.keys.map do |type|
+      type_parts = type.split('_').map(&:capitalize)
+      type_parts[1] = type_parts[1].downcase if type_parts[1] == "And" # Ensure "and" is not capitalized
+      type_parts.join(' ')
+    end
   end
 
   private

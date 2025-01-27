@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: %i[ show edit update destroy ]
+  before_action :set_project, only: %i[ show edit update destroy purge_attachment ]
 
   # GET /projects or /projects.json
   def index
@@ -53,6 +53,21 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1 or /projects/1.json
   def update
     @project.user = current_user
+    
+    # Handle file attachments
+    if project_params[:work_acceptance_files].present?
+      @project.work_acceptance_files.attach(project_params[:work_acceptance_files])
+      @project.check_and_update_status
+      return redirect_to @project, notice: 'Work acceptance files were successfully uploaded.'
+    end
+
+    if project_params[:delivery_receipt_files].present?
+      @project.delivery_receipt_files.attach(project_params[:delivery_receipt_files])
+      @project.check_and_update_status
+      return redirect_to @project, notice: 'Delivery receipt files were successfully uploaded.'
+    end
+
+    # Handle other updates
     respond_to do |format|
       if @project.update(project_params)
         format.html { redirect_to project_url(@project), notice: "Project was successfully updated." }
@@ -74,6 +89,19 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def purge_attachment
+    attachment = params[:attachment_type] == 'work_acceptance' ? @project.work_acceptance_files : @project.delivery_receipt_files
+    attachment.find(params[:attachment_id]).purge
+    
+    # Trigger status check after purging
+    @project.check_and_update_status
+
+    respond_to do |format|
+      format.html { redirect_to @project, notice: 'File was successfully removed.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
@@ -82,6 +110,6 @@ class ProjectsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def project_params
-      params.require(:project).permit(:company, :uid, :client_po, :client_id, :status, :amount, :payment, :company_id, :po_number, :user_id)
+      params.require(:project).permit(:company, :uid, :client_po, :client_id, :status, :amount, :payment, :company_id, :po_number, :user_id, work_acceptance_files: [], delivery_receipt_files: [])
     end
 end

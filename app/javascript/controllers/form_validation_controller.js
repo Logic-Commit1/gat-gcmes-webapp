@@ -15,6 +15,8 @@ export default class extends Controller {
     "itemsError",
     "particularsTable",
     "particularsError",
+    "quotationTypeRadio",
+    "quotationTypeError",
     "clientSelect",
     "clientError",
     "subjectInput",
@@ -76,6 +78,17 @@ export default class extends Controller {
   validateQuotationForm(event) {
     this.clearErrors()
     let isValid = true
+
+    // Validate type
+    if (
+      this.hasTypeRadioTarget &&
+      !document.querySelector('input[name="quotation[quotation_type]"]:checked')
+    ) {
+      event.preventDefault()
+      this.quotationTypeRadioTarget.classList.add("field-error")
+      this.quotationTypeErrorTarget.classList.remove("hidden")
+      isValid = false
+    }
 
     // Validate project selection
     if (this.hasProjectSelectTarget && !this.projectSelectTarget.value) {

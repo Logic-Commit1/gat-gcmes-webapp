@@ -93,6 +93,7 @@ product_c = Product.create(
 quotation_a = Quotation.create(
   client: client_a,
   company: gat,
+  quotation_type: 'supply',
   project: project_a,
   attention: "Mr. John Smith",
   vessel: "MV Pacific",
@@ -111,6 +112,7 @@ quotation_a = Quotation.create(
 quotation_b = Quotation.create(
   client: client_b,
   company: gcmes,
+  quotation_type: 'supply',
   project: project_b,
   attention: "Ms. Sarah Johnson",
   vessel: "MV Atlantic",
@@ -121,6 +123,31 @@ quotation_b = Quotation.create(
   vat: 800.00,
   user: user,
   products: [product_c]
+)
+
+quotation_c = Quotation.create(
+  client: client_c,
+  company: gat,
+  quotation_type: 'service_and_supply',
+  project: project_c,
+  attention: "Mr. John Smith",
+  vessel: "MV Pacific",
+  subject: "Engine Parts Supply",
+  remarks: "Urgent delivery needed",
+  payment: 0,
+  lead_time: "2-3 weeks",
+  warranty: "1 year standard warranty",
+  vat: 1200.00,
+  user: user,
+  products: [product_a, product_b]
+)
+quotation_d = Quotation.create(
+  client: client_d,
+  company: gat,
+  quotation_type: 'supply',
+  project: project_d,
+  user: user,
+  products: [product_a, product_b]
 )
 
 # Create Canvasses

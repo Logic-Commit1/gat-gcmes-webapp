@@ -11,9 +11,9 @@ export default class extends Controller {
       const reader = new FileReader()
 
       reader.onload = (e) => {
-        const previewImage = document.getElementById("signature-preview")
+        const previewImage = document.getElementById("file-preview")
         const previewContainer = document.getElementById(
-          "signature-preview-container"
+          "file-preview-container"
         )
 
         previewImage.src = e.target.result

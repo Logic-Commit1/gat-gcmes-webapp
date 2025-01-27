@@ -72,7 +72,11 @@ Rails.application.routes.draw do
 
     end
   end
-  resources :projects
+  resources :projects do
+    member do
+      delete :purge_attachment
+    end
+  end
   resources :clients do
     member do
       delete :destroy

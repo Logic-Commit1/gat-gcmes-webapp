@@ -88,10 +88,8 @@ form .field {
   margin-bottom: 2rem;
 }
 
-form #company-field {
-  input[type="radio"]:nth-of-type(2) {
-    margin-left: 1rem;
-  }
+form #company-field input[type="radio"]:nth-of-type(2) {
+  margin-left: 1rem;
 }
 
 .form-container {
@@ -162,5 +160,73 @@ form #company-field {
       padding-top: 8px;
       font-weight: bold;
     }
+  }
+
+  #type-field {
+    input[type="radio"] {
+      &:not(:first-of-type) {
+        margin-left: 1rem;
+      }
+    }
+  }
+}
+
+.file-upload-form {
+  margin-bottom: 1rem;
+}
+
+.file-input-container {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.file-input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.875rem;
+  max-width: 400px;
+}
+
+.file-upload-button {
+  // padding: 0.5rem 0.75rem;
+  padding: 0.25rem 0.5rem !important;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.6rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  max-width: 80px;
+
+  &:hover {
+    filter: brightness(95%);
+  }
+}
+
+.attached-files {
+  .document-link {
+    display: flex;
+    align-items: baseline;
+  }
+}
+
+.remove-button {
+  background-color: #dc2626;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: none;
+  font-size: 12px;
+  margin-left: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #b91c1c;
   }
 }
