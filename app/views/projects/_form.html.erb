@@ -60,7 +60,10 @@
         </div>
         <div class="field">
           <%= form.label :client_po, "Client's P.O.", style: "display: block" %>
-          <%= form.file_field :client_po %>
+          <%= form.file_field :client_po, data: { form_validation_target: "clientPoInput" } %>
+          <div class="error-message hidden" data-form-validation-target="clientPoError">
+            Please upload a valid client's P.O.
+          </div>
         </div>
         <!--
         <div class="separator"></div>

@@ -7,6 +7,8 @@ export default class extends Controller {
     "projectError",
     "poNumberInput",
     "poNumberError",
+    "clientPoInput",
+    "clientPoError",
     "canvassSelect",
     "canvassError",
     "quotationSelect",
@@ -444,6 +446,14 @@ export default class extends Controller {
       event.preventDefault()
       this.poNumberInputTarget.classList.add("field-error")
       this.poNumberErrorTarget.classList.remove("hidden")
+      isValid = false
+    }
+
+    // Validate client PO
+    if (this.hasClientPoInputTarget && !this.clientPoInputTarget.value) {
+      event.preventDefault()
+      this.clientPoInputTarget.classList.add("field-error")
+      this.clientPoErrorTarget.classList.remove("hidden")
       isValid = false
     }
 
