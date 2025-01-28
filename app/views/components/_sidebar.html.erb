@@ -56,18 +56,22 @@
         </p>
       <% end %>
       <!-- Link to Clients -->
-      <%= link_to clients_path, class: 'in-text no-underline' do %>
-        <p class="nav-btn <%= 'active' if current_page?(clients_path) %>">
-          <span class="icon"><i class="fa-solid fa-user"></i></span>
-          Clients
-        </p>
+      <% if current_user.sales? || current_user.developer? %>
+        <%= link_to clients_path, class: 'in-text no-underline' do %>
+          <p class="nav-btn <%= 'active' if current_page?(clients_path) %>">
+            <span class="icon"><i class="fa-solid fa-user"></i></span>
+            Clients
+          </p>
+        <% end %>
       <% end %>
       <!-- Link to Suppliers -->
-      <%= link_to suppliers_path, class: 'in-text no-underline' do %>
-        <p class="nav-btn <%= 'active' if current_page?(suppliers_path) %>">
-          <span class="icon"><i class="fa-solid fa-truck"></i></span>
-          Suppliers
-        </p>
+      <% if current_user.purchasing? || current_user.developer? %>
+        <%= link_to suppliers_path, class: 'in-text no-underline' do %>
+          <p class="nav-btn <%= 'active' if current_page?(suppliers_path) %>">
+            <span class="icon"><i class="fa-solid fa-truck"></i></span>
+            Suppliers
+          </p>
+        <% end %>
       <% end %>
       <!-- Link to Employees 
       -->
