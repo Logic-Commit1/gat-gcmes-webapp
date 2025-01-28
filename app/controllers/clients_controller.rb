@@ -106,6 +106,7 @@ class ClientsController < ApplicationController
         :company_id, 
         contacts_attributes: [
           :id, 
+          :salutation,
           :name, 
           { emails: [] }, 
           { contact_numbers: [] }, 

@@ -15,7 +15,7 @@
         <tbody>
           <% client.contacts.each do |contact| %>
             <tr>
-              <td><%= contact.name %></td>
+              <td> <%= contact.salutation %> <%= contact.name.capitalize %></td>
               <td><%= contact.contact_numbers.join(', ') %></td>
               <td> <%= contact.emails.join(', ') %><%= mail_to contact.emails.first, '<i class="far fa-envelope" style="margin-left: 5px;"></i>'.html_safe %></td>
             </tr>

@@ -2,6 +2,9 @@
   <table class="contact-table">
     <tbody>
       <tr>
+        <td style="width: 8%;">
+          <%= f.collection_select :salutation, Contact::SALUTATIONS, :to_s, :to_s, { prompt: 'Select' }, { class: 'form-select' } %>
+        </td>
         <td style="width: 20%;">
           <%= f.text_field :name, placeholder: 'Juan Dela Cruz' %>
         </td>
