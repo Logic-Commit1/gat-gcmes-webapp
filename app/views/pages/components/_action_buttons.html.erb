@@ -1,22 +1,15 @@
 <div class="action-buttons flex flex-start">
-  <% if %w[client supplier].include?(document.class.name.underscore) %>
-    <%= button_to send("edit_#{document.class.name.underscore}_path", document), 
-                method: :get, 
-                class: "button black flex items-center white-bg",
-                style: "margin-right: 5px;" do %>
-      <i class="fa-regular fa-edit"></i>
-      <span>Edit</span>
-    <% end %>
-    <%= button_to send("#{document.class.name.underscore}_path", document), 
-                method: :delete, 
-                class: "button flex items-center white", 
-                style: "background-color: var(--danger-color);", 
-                data: { turbo_confirm: "Are you sure you want to delete '#{document.name}'?" } do %>
-      <i class="fa-regular fa-trash-can"></i>
-      <span class="white">Delete</span>
+  <% if %w[quotation canvass request_form purchase_order].include?(document.class.name.underscore) && document.deleted? %>
+    <%= button_to send("unvoid_#{document.class.name.underscore}_path", document), 
+              method: :patch, 
+              class: "button flex items-center white", 
+              style: "background-color: var(--success-color);", 
+              data: { turbo_confirm: "Are you sure you want to restore '#{document.uid}'?" } do %>
+      <i class="fa-solid fa-trash-arrow-up"></i>
+      <span class="white">Restore</span>
     <% end %>
   <% else %>
-    <% if document.class.name != "Project" && !document.approved? %>
+    <% if %w[client supplier].include?(document.class.name.underscore) %>
       <%= button_to send("edit_#{document.class.name.underscore}_path", document), 
                 method: :get, 
                 class: "button black flex items-center white-bg",
@@ -24,75 +17,94 @@
         <i class="fa-regular fa-edit"></i>
         <span>Edit</span>
       <% end %>
-    <% end %>
-    <% if document.class.name != "Project" %>
-      <div data-controller="dropdown" class="relative inline-block text-left">
-        <button 
-          type="button" 
-          data-action="click->dropdown#toggleMenu"
-          class="button black flex items-center white-bg">
-          <i class="fa-regular fa-file"></i>
-          <span>PDF/Print</span>
-        </button>
-        <div 
-          class="pdf-dropdown hidden" 
-          data-dropdown-target="menu">
-          <div class="flex flex-col">
-            <div>
-              <%= link_to send("download_pdf_#{document.class.name.underscore}_path", document), data: { turbo: false } do %>
-                <i class="fa-regular fa-file-pdf"></i>Download PDF
-              <% end %>
-            </div>
-            <div>
-              <%= link_to send("print_pdf_#{document.class.name.underscore}_path", document), target: "_blank" do %>
-                <i class="fa-solid fa-print"></i>Print
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
-    <% end %>
-    <%# <button class="button flex items-center" style="background-color: white;">
-    <i class="fa-regular fa-comment"></i>
-    <span>Comments</span>
-  </button> %>
-    <% if document.class.name == "Project" && (document.user == current_user || current_user.manager?) %>
-      <button class="button flex items-center white-bg">
-        <%= link_to send("edit_#{document.class.name.underscore}_path", document) do %>
+      <%= button_to send("#{document.class.name.underscore}_path", document), 
+                method: :delete, 
+                class: "button flex items-center white", 
+                style: "background-color: var(--danger-color);", 
+                data: { turbo_confirm: "Are you sure you want to delete '#{document.name}'?" } do %>
+        <i class="fa-regular fa-trash-can"></i>
+        <span class="white">Delete</span>
+      <% end %>
+    <% else %>
+      <% if document.class.name != "Project" && !document.approved? %>
+        <%= button_to send("edit_#{document.class.name.underscore}_path", document), 
+                method: :get, 
+                class: "button black flex items-center white-bg",
+                style: "margin-right: 5px;" do %>
           <i class="fa-regular fa-edit"></i>
           <span>Edit</span>
         <% end %>
-      </button>
-    <%end%>
-    <% if document.class.name != "Project" && !document.approved? && document.user == current_user %>
-      <%= button_to send("void_#{document.class.name.underscore}_path", document), 
+      <% end %>
+      <% if document.class.name != "Project" %>
+        <div data-controller="dropdown" class="relative inline-block text-left">
+          <button 
+          type="button" 
+          data-action="click->dropdown#toggleMenu"
+            class="button black flex items-center white-bg">
+            <i class="fa-regular fa-file"></i>
+            <span>PDF/Print</span>
+          </button>
+          <div 
+          class="pdf-dropdown hidden" 
+          data-dropdown-target="menu">
+            <div class="flex flex-col">
+              <div>
+                <%= link_to send("download_pdf_#{document.class.name.underscore}_path", document), data: { turbo: false } do %>
+                  <i class="fa-regular fa-file-pdf"></i>Download PDF
+                <% end %>
+              </div>
+              <div>
+                <%= link_to send("print_pdf_#{document.class.name.underscore}_path", document), target: "_blank" do %>
+                  <i class="fa-solid fa-print"></i>Print
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <%# <button class="button flex items-center" style="background-color: white;">
+    <i class="fa-regular fa-comment"></i>
+    <span>Comments</span>
+  </button> %>
+      <% if document.class.name == "Project" && (document.user == current_user || current_user.manager?) %>
+        <button class="button flex items-center white-bg">
+          <%= link_to send("edit_#{document.class.name.underscore}_path", document) do %>
+            <i class="fa-regular fa-edit"></i>
+            <span>Edit</span>
+          <% end %>
+        </button>
+      <%end%>
+      <% if document.class.name != "Project" && !document.approved? && document.user == current_user %>
+        <%= button_to send("void_#{document.class.name.underscore}_path", document), 
                 method: :delete, 
                 class: "button flex items-center white", 
                 style: "background-color: var(--danger-color);", 
                 data: { turbo_confirm: "Are you sure you want to void '#{document.uid}'?" } do %>
-        <i class="fa-regular fa-trash-can"></i>
-        <span class="white">Void</span>
+          <i class="fa-regular fa-trash-can"></i>
+          <span class="white">Void</span>
+        <% end %>
       <% end %>
-    <% end %>
-    <% if document.class.name != "Project" && !document.approved? && (current_user.manager?) %>
-      <%= button_to send("approve_#{document.class.name.underscore}_path", document), 
+      <% if document.class.name != "Project" && !document.approved? && (current_user.manager?) %>
+        <%= button_to send("approve_#{document.class.name.underscore}_path", document), 
                 method: :patch, 
                 class: "button flex items-center white", 
                 id: "btn-approve", 
                 data: { turbo_confirm: "Are you sure you want to approve '#{document.uid}'?" } do %>
-        <i class="fa-regular fa-circle-check"></i>
-        <span>Approve</span>
+          <i class="fa-regular fa-circle-check"></i>
+          <span>Approve</span>
+        <% end %>
       <% end %>
-    <% end %>
-    <% if document.class.name != "Project" && document.approved? && current_user.manager? %>
-      <%= button_to send("pending_#{document.class.name.underscore}_path", document), 
+      <% if document.class.name != "Project" && document.approved? && current_user.manager? %>
+        <%= button_to send("pending_#{document.class.name.underscore}_path", document), 
                 method: :patch, 
                 class: "button flex items-center white", 
                 id: "btn-reject", 
                 data: { turbo_confirm: "Are you sure you want to unapprove '#{document.uid}'?" } do %>
-        <i class="fa-regular fa-circle-xmark"></i>
-        <span>Unapprove</span>
+          <i class="fa-regular fa-circle-xmark"></i>
+          <span>Unapprove</span>
+        <% end %>
       <% end %>
     <% end %>
+    <!-- Unvoid Button for Voided Documents -->
   <% end %>
 </div>

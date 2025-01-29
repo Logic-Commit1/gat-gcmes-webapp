@@ -81,6 +81,13 @@
           Employees
         </p>
       <% end %>
+      <!-- Link to Voided Documents -->
+      <%= link_to voided_documents_path, class: 'in-text no-underline' do %>
+        <p class="nav-btn <%= 'active' if current_page?(voided_documents_path) %>">
+          <span class="icon"><i class="fa-solid fa-trash"></i></span>
+          Voided Documents
+        </p>
+      <% end %>
     </nav>
     <!-- Footer -->
     <footer id="actions">

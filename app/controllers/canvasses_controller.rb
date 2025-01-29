@@ -1,5 +1,6 @@
 class CanvassesController < ApplicationController
   include PdfGenerator
+  include Voidable
   
   layout 'pdf', only: :pdf_view
 
@@ -152,7 +153,11 @@ class CanvassesController < ApplicationController
     end
 
     def set_canvass
-      @canvass = Canvass.find(params[:id])
+      begin
+        @canvass = Canvass.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        @canvass = Canvass.with_deleted.find(params[:id])
+      end
     end
 
     def canvass_params

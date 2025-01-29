@@ -1,6 +1,6 @@
 <!-- Landing Page -->
 <div class="page">
-  <p class="title"><%= title %></p>
+  <p class="title"><%= title unless title == "Voided Documents" %></p>
   <!-- Dashboard Cards -->
   <%# if ["Employees", "Clients", "Suppliers"].include?(title) %>
   <%# <div id="counts" class="row"> %>

@@ -1,6 +1,7 @@
 <%= turbo_frame_tag "#{title.downcase.gsub(' ', '_')}_table", class: "document-table" do %>
   <table class="document-table" data-table-filter-target="table">
     <tbody>
+
       <% if title == "Quotations" %>
         <% documents&.each do |quotation| %>
           <tr onclick="window.location='<%= quotation_path(quotation) %>'" style="cursor: pointer">
@@ -103,6 +104,15 @@
             <td><%= client.address %></td>
             <td><%= client.company.code %></td>
             <td><%= client.created_at.strftime("%B %d, %Y") %></td>
+          </tr>
+        <% end %>
+      <% elsif title == "Voided Documents" %>
+        <% documents&.each do |document| %>
+          <tr onclick="window.location='<%= polymorphic_path(document) %>'" style="cursor: pointer">
+            <td><%= document.uid %></td>
+            <td><%= document.class.name.underscore.titleize %></td>
+            <td><%= document.deleted_at.strftime("%B %d, %Y") %></td>
+            <td><%= document.created_at.strftime("%B %d, %Y") %></td>
           </tr>
         <% end %>
       <% end %>

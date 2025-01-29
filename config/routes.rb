@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       patch :reject
       patch :pending
       delete :void
+      patch :unvoid
     end
   end
   resources :particulars
@@ -40,6 +41,7 @@ Rails.application.routes.draw do
       patch :reject
       patch :pending
       delete :void
+      patch :unvoid
       get 'print_pdf'
       get 'download_pdf'
     end
@@ -50,6 +52,7 @@ Rails.application.routes.draw do
       patch :approve
       patch :pending
       delete :void
+      patch :unvoid
       get :download_pdf
       get :print_pdf
       patch :select_supplier
@@ -66,10 +69,9 @@ Rails.application.routes.draw do
       patch :reject
       patch :pending
       delete :void
+      patch :unvoid
       get 'print_pdf'
       get 'download_pdf'
-      
-
     end
   end
   resources :projects do
@@ -94,9 +96,11 @@ Rails.application.routes.draw do
     get 'quotations', on: :member
   end
 
-
-
-  
+  resources :voided_documents, only: [:index] do
+    member do
+      patch :unvoid
+    end
+  end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

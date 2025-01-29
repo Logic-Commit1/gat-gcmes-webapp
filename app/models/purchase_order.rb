@@ -1,5 +1,5 @@
 class PurchaseOrder < ApplicationRecord
-  # acts_as_paranoid
+  acts_as_paranoid
   
   belongs_to :company
   belongs_to :supplier
@@ -42,6 +42,8 @@ class PurchaseOrder < ApplicationRecord
     where("DATE(purchase_orders.created_at) = ?", Date.parse(date))
   }
   scope :latest_first, -> { order(created_at: :desc) }
+  scope :voided, -> { where.not(deleted_at: nil) }
+  scope :active, -> { where(deleted_at: nil) }
   
   before_save :set_uid
   before_save :set_total

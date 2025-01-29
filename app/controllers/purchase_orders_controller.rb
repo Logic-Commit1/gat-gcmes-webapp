@@ -1,5 +1,6 @@
 class PurchaseOrdersController < ApplicationController
   include PdfGenerator
+  include Voidable
   
   layout 'pdf', only: :pdf_view
   before_action :set_purchase_order, only: %i[ show edit update approve pending void pdf_view download_pdf print_pdf ]
@@ -119,7 +120,11 @@ class PurchaseOrdersController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_purchase_order
-    @purchase_order = PurchaseOrder.find(params[:id])
+    begin
+      @purchase_order = PurchaseOrder.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      @purchase_order = PurchaseOrder.with_deleted.find(params[:id])
+    end
   end
   
   def set_resource_for_pdf

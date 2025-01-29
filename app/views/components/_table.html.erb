@@ -4,7 +4,6 @@
   data-table-filter-url-value="<%= request.path %>">
   <div class="header">
     <p id="title"><%= title %></p>
- <span>Voided <%= title %></span>
     <div class="search-bar">
       <%# unless title == "Employees" || title == "Suppliers" || title == "Clients" %>
       <input type="date" 
@@ -77,6 +76,11 @@
           <th>Address</th>
           <th>Company</th>
           <th>Creation Date</th>
+        <% elsif title == "Voided Documents" %>
+          <th>Reference Number</th>
+          <th>Document Type</th>
+          <th>Deletion Date</th>
+          <th>Original Creation Date</th>
         <% end %>
       </tr>
     </thead>

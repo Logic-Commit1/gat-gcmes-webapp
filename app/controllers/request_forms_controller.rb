@@ -1,5 +1,6 @@
 class RequestFormsController < ApplicationController
   include PdfGenerator
+  include Voidable
   
   layout 'pdf', only: :pdf_view
 
@@ -157,7 +158,11 @@ class RequestFormsController < ApplicationController
     
   # Use callbacks to share common setup or constraints between actions.
   def set_request_form
-    @request_form = RequestForm.find(params[:id])
+    begin
+      @request_form = RequestForm.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      @request_form = RequestForm.with_deleted.find(params[:id])
+    end
   end
 
   def set_resource_for_pdf

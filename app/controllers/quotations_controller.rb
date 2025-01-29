@@ -1,6 +1,7 @@
 class QuotationsController < ApplicationController
-  include PdfGenerator
   include Rails.application.routes.url_helpers
+  include PdfGenerator
+  include Voidable
 
   layout 'pdf', only: :pdf_view
   before_action :set_quotation, only: %i[ show edit update void approve pending reject pdf_view download_pdf print_pdf ]
@@ -151,7 +152,11 @@ class QuotationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quotation
-      @quotation = Quotation.find(params[:id])
+      begin
+        @quotation = Quotation.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        @quotation = Quotation.with_deleted.find(params[:id])
+      end
     end
 
     def set_resource_for_pdf

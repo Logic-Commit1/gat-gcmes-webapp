@@ -1,5 +1,5 @@
 class Canvass < ApplicationRecord
-  # acts_as_paranoid
+  acts_as_paranoid
   attr_accessor :skip_suppliers_callback
 
   belongs_to :company
@@ -14,6 +14,8 @@ class Canvass < ApplicationRecord
 
   # Scopes
   scope :latest_first, -> { order(created_at: :desc) }
+  scope :voided, -> { where.not(deleted_at: nil) }
+  scope :active, -> { where(deleted_at: nil) }
   
   scope :search_by_term, ->(query) {
     return all unless query.present?
