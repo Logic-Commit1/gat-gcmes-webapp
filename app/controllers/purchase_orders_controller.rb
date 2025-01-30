@@ -120,12 +120,13 @@ class PurchaseOrdersController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_purchase_order
-    begin
-      @purchase_order = PurchaseOrder.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
+    if current_user.admin? || current_user.developer?
       @purchase_order = PurchaseOrder.with_deleted.find(params[:id])
+    else
+      @purchase_order = PurchaseOrder.find(params[:id])
     end
   end
+
   
   def set_resource_for_pdf
     @resource = @purchase_order

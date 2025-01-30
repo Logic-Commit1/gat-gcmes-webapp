@@ -62,7 +62,11 @@ class ProductsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
-      @product = Product.find(params[:id])
+      if current_user.admin? || current_user.developer?
+        @product = Product.with_deleted.find(params[:id])
+      else
+        @product = Product.find(params[:id])
+      end
     end
 
     # Only allow a list of trusted parameters through.
@@ -70,8 +74,8 @@ class ProductsController < ApplicationController
       params.require(:product).permit(
         :name, :quantity, :unit, :price, :brand, :description, :specs, :terms, :remarks, :image, :quotation_id, :canvass_id, :supplier_id, 
         specs_attributes: [:id, :name, :value, :_destroy]
-        )
-      rescue
-        {}
+      )
+    rescue
+      {}
     end
 end

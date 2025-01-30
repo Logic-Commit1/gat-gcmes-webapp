@@ -1,5 +1,13 @@
 <div class="action-buttons flex flex-start">
-  <% if %w[quotation canvass request_form purchase_order].include?(document.class.name.underscore) && document.deleted? %>
+  <% if %w[quotation canvass request_form purchase_order].include?(document.class.name.underscore) && document.deleted? && (current_user.admin? || current_user.developer?) %>
+    <%= button_to send("delete_#{document.class.name.underscore}_path", document), 
+              method: :delete, 
+              class: "button flex items-center white", 
+              style: "background-color: var(--danger-color);", 
+              data: { turbo_confirm: "Are you sure you want to permanently delete '#{document.uid}'?" } do %>
+      <i class="fa-regular fa-trash-can"></i>
+      <span class="white">Delete</span>
+    <% end %>
     <%= button_to send("unvoid_#{document.class.name.underscore}_path", document), 
               method: :patch, 
               class: "button flex items-center white", 
@@ -26,13 +34,15 @@
         <span class="white">Delete</span>
       <% end %>
     <% else %>
-      <% if document.class.name != "Project" && !document.approved? %>
-        <%= button_to send("edit_#{document.class.name.underscore}_path", document), 
-                method: :get, 
+      <% if document.user == current_user %>
+        <% if document.class.name != "Project" && !document.approved? %>
+          <%= button_to send("edit_#{document.class.name.underscore}_path", document), 
+                  method: :get, 
                 class: "button black flex items-center white-bg",
                 style: "margin-right: 5px;" do %>
-          <i class="fa-regular fa-edit"></i>
-          <span>Edit</span>
+            <i class="fa-regular fa-edit"></i>
+            <span>Edit</span>
+          <% end %>
         <% end %>
       <% end %>
       <% if document.class.name != "Project" %>
@@ -66,6 +76,7 @@
     <i class="fa-regular fa-comment"></i>
     <span>Comments</span>
   </button> %>
+      <%# Project document %>
       <% if document.class.name == "Project" && (document.user == current_user || current_user.manager?) %>
         <button class="button flex items-center white-bg">
           <%= link_to send("edit_#{document.class.name.underscore}_path", document) do %>

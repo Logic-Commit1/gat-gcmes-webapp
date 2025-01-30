@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_28_044946) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_30_022216) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -127,6 +127,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_044946) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "remarks"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_particulars_on_deleted_at"
     t.index ["request_form_id"], name: "index_particulars_on_request_form_id"
   end
 
@@ -150,7 +152,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_044946) do
     t.bigint "supplier_id"
     t.bigint "request_form_id"
     t.bigint "purchase_order_id"
+    t.datetime "deleted_at"
     t.index ["canvass_id"], name: "index_products_on_canvass_id"
+    t.index ["deleted_at"], name: "index_products_on_deleted_at"
     t.index ["purchase_order_id"], name: "index_products_on_purchase_order_id"
     t.index ["quotation_id"], name: "index_products_on_quotation_id"
     t.index ["request_form_id"], name: "index_products_on_request_form_id"
@@ -292,6 +296,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_044946) do
     t.bigint "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_specs_on_deleted_at"
     t.index ["product_id"], name: "index_specs_on_product_id"
   end
 

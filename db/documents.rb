@@ -46,6 +46,42 @@ tool_set_specs = [
   Spec.create(name: "Case", value: "Metal box")
 ]
 
+hydraulic_pump_specs = [
+  Spec.create(name: "Flow Rate", value: "50 GPM"),
+  Spec.create(name: "Pressure Rating", value: "3000 PSI"),
+  Spec.create(name: "Drive Type", value: "Direct")
+]
+
+air_compressor_specs = [
+  Spec.create(name: "Capacity", value: "100 CFM"),
+  Spec.create(name: "Tank Size", value: "120 Gallons"),
+  Spec.create(name: "Motor Power", value: "15 HP")
+]
+
+welding_machine_specs = [
+  Spec.create(name: "Current Range", value: "20-250A"),
+  Spec.create(name: "Duty Cycle", value: "60%"),
+  Spec.create(name: "Input Power", value: "230V")
+]
+
+generator_specs = [
+  Spec.create(name: "Power Output", value: "50 KVA"),
+  Spec.create(name: "Fuel Type", value: "Diesel"),
+  Spec.create(name: "Phase", value: "Three Phase")
+]
+
+valve_set_specs = [
+  Spec.create(name: "Size Range", value: "2-6 inches"),
+  Spec.create(name: "Material", value: "Stainless Steel"),
+  Spec.create(name: "Pressure Class", value: "Class 300")
+]
+
+safety_equipment_specs = [
+  Spec.create(name: "Type", value: "Full Set"),
+  Spec.create(name: "Standards", value: "OSHA Compliant"),
+  Spec.create(name: "Size", value: "Universal")
+]
+
 # Create Products and associate with quotations
 product_a = Product.create(
   name: "Engine Bearing",
@@ -87,6 +123,90 @@ product_c = Product.create(
   # quotation: quotation_b,
   supplier: supplier_c,
   total: 7000.00
+)
+
+product_d = Product.create(
+  name: "Industrial Hydraulic Pump",
+  quantity: 2,
+  unit: "units",
+  price: 8500.00,
+  brand: "Parker",
+  description: "High-pressure hydraulic pump for marine applications",
+  specs: hydraulic_pump_specs,
+  terms: "1 year manufacturer warranty",
+  remarks: "Includes installation manual",
+  supplier: supplier_b,
+  total: 17000.00
+)
+
+product_e = Product.create(
+  name: "Industrial Air Compressor",
+  quantity: 1,
+  unit: "unit",
+  price: 12500.00,
+  brand: "Atlas Copco",
+  description: "Heavy-duty marine grade air compressor",
+  specs: air_compressor_specs,
+  terms: "2 years warranty with service",
+  remarks: "Includes starter kit",
+  supplier: supplier_d,
+  total: 12500.00
+)
+
+product_f = Product.create(
+  name: "Marine Welding Machine",
+  quantity: 3,
+  unit: "units",
+  price: 4500.00,
+  brand: "Lincoln Electric",
+  description: "Professional marine welding equipment",
+  specs: welding_machine_specs,
+  terms: "1 year warranty",
+  remarks: "Includes basic accessories",
+  supplier: supplier_c,
+  total: 13500.00
+)
+
+product_g = Product.create(
+  name: "Diesel Generator",
+  quantity: 1,
+  unit: "unit",
+  price: 25000.00,
+  brand: "Cummins",
+  description: "Marine grade backup power generator",
+  specs: generator_specs,
+  terms: "2 years warranty",
+  remarks: "Includes ATS panel",
+  supplier: supplier_e,
+  total: 25000.00
+)
+
+product_h = Product.create(
+  name: "Marine Valve Set",
+  quantity: 5,
+  unit: "sets",
+  price: 3200.00,
+  brand: "Crane",
+  description: "Complete set of marine-grade valves",
+  specs: valve_set_specs,
+  terms: "1 year warranty",
+  remarks: "With certification documents",
+  supplier: supplier_b,
+  total: 16000.00
+)
+
+product_i = Product.create(
+  name: "Safety Equipment Package",
+  quantity: 4,
+  unit: "sets",
+  price: 2800.00,
+  brand: "3M",
+  description: "Complete marine safety equipment set",
+  specs: safety_equipment_specs,
+  terms: "6 months warranty",
+  remarks: "SOLAS compliant",
+  supplier: supplier_a,
+  total: 11200.00
 )
 
 # Create Quotations before Products
@@ -141,13 +261,62 @@ quotation_c = Quotation.create(
   user: user,
   products: [product_a, product_b]
 )
+
 quotation_d = Quotation.create(
   client: client_d,
-  company: gat,
+  company: gcmes,
   quotation_type: 'supply',
   project: project_d,
+  attention: "Mr. Robert Chen",
+  vessel: "MV Oriental",
+  subject: "Hydraulic System Components",
+  remarks: "Priority shipping required",
+  payment: 0,
+  lead_time: "1-2 weeks",
+  warranty: "2 years manufacturer warranty",
+  vat: 2500.00,
+  additional_conditions: "Installation support available",
+  preparer: "Mike Wilson",
   user: user,
-  products: [product_a, product_b]
+  products: [product_d, product_h]
+)
+
+quotation_e = Quotation.create(
+  client: client_e,
+  company: gat,
+  quotation_type: 'service_and_supply',
+  project: project_e,
+  attention: "Ms. Emily Rodriguez",
+  vessel: "MV Navigator",
+  subject: "Power Generation Equipment",
+  remarks: "Technical support required during installation",
+  payment: 1,
+  lead_time: "3-4 weeks",
+  warranty: "2 years comprehensive warranty",
+  vat: 3000.00,
+  additional_conditions: "Includes commissioning service",
+  preparer: "David Thompson",
+  user: user,
+  products: [product_g, product_e]
+)
+
+quotation_f = Quotation.create(
+  client: client_a,
+  company: gcmes,
+  quotation_type: 'service_and_supply',
+  project: project_a,
+  attention: "Mr. James Wilson",
+  vessel: "MV Pacific Star",
+  subject: "Welding and Safety Equipment",
+  remarks: "Safety certification required",
+  payment: 2,
+  lead_time: "1 week",
+  warranty: "1 year standard warranty",
+  vat: 1800.00,
+  additional_conditions: "Training included for welding equipment",
+  preparer: "Lisa Anderson",
+  user: user,
+  products: [product_f, product_i]
 )
 
 # Create Canvasses

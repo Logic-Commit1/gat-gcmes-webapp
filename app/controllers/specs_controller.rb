@@ -59,7 +59,11 @@ class SpecsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_spec
-      @spec = Spec.find(params[:id])
+      if current_user.admin? || current_user.developer?
+        @spec = Spec.with_deleted.find(params[:id])
+      else
+        @spec = Spec.find(params[:id])
+      end
     end
   
     # Only allow a list of trusted parameters through.

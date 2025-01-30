@@ -152,10 +152,10 @@ class QuotationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quotation
-      begin
-        @quotation = Quotation.find(params[:id])
-      rescue ActiveRecord::RecordNotFound
+      if current_user.admin? || current_user.developer?
         @quotation = Quotation.with_deleted.find(params[:id])
+      else
+        @quotation = Quotation.find(params[:id])
       end
     end
 

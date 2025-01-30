@@ -1,4 +1,6 @@
 class Product < ApplicationRecord
+  acts_as_paranoid
+
   belongs_to :quotation, optional: true
   belongs_to :canvass, optional: true
   belongs_to :supplier, optional: true
@@ -12,6 +14,8 @@ class Product < ApplicationRecord
 
   before_save :compute_total_amount
 
+  # after_restore :restore_specs
+
   UNITS_OF_MEASUREMENT = ['g', 'kg', 'pc', 'unit', 'ltr', 'ml'].freeze
 
   def compute_total_amount
@@ -20,6 +24,12 @@ class Product < ApplicationRecord
     else
       self.total = 0
     end
+  end
+
+  private
+
+  def restore_specs
+    specs.with_deleted.each(&:restore)
   end
 
 end

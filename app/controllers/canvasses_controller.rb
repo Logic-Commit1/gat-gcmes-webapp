@@ -153,10 +153,10 @@ class CanvassesController < ApplicationController
     end
 
     def set_canvass
-      begin
-        @canvass = Canvass.find(params[:id])
-      rescue ActiveRecord::RecordNotFound
+      if current_user.admin? || current_user.developer?
         @canvass = Canvass.with_deleted.find(params[:id])
+      else
+        @canvass = Canvass.find(params[:id])
       end
     end
 

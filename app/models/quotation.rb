@@ -18,6 +18,8 @@ class Quotation < ApplicationRecord
   before_save :set_uid
   before_save :compute_totals_quotation
 
+  # after_restore :restore_products
+
   # Scopes
   scope :latest_first, -> { order(created_at: :desc) }
   scope :voided, -> { where.not(deleted_at: nil) }
@@ -102,5 +104,9 @@ class Quotation < ApplicationRecord
     if products.reject(&:marked_for_destruction?).empty?
       errors.add(:base, "At least one product item must be added")
     end
+  end
+
+  def restore_products
+    products.with_deleted.each(&:restore)
   end
 end

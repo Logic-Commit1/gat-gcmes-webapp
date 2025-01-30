@@ -25,6 +25,15 @@ module Voidable
     end
   end
 
+  def delete
+    @record = find_with_deleted
+    @record.really_destroy!
+    respond_to do |format|
+      format.html { redirect_to voided_documents_path, notice: "#{@record.uid} was permanently deleted." }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
   def find_with_deleted

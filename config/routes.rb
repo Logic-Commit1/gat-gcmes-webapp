@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       patch :pending
       delete :void
       patch :unvoid
+      delete :delete
     end
   end
   resources :particulars
@@ -42,6 +43,7 @@ Rails.application.routes.draw do
       patch :pending
       delete :void
       patch :unvoid
+      delete :delete
       get 'print_pdf'
       get 'download_pdf'
     end
@@ -56,6 +58,7 @@ Rails.application.routes.draw do
       get :download_pdf
       get :print_pdf
       patch :select_supplier
+      delete :delete
     end
   end
 
@@ -72,6 +75,7 @@ Rails.application.routes.draw do
       patch :unvoid
       get 'print_pdf'
       get 'download_pdf'
+      delete :delete
     end
   end
   resources :projects do
@@ -99,6 +103,7 @@ Rails.application.routes.draw do
   resources :voided_documents, only: [:index] do
     member do
       patch :unvoid
+      delete :delete
     end
   end
 

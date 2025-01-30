@@ -158,10 +158,10 @@ class RequestFormsController < ApplicationController
     
   # Use callbacks to share common setup or constraints between actions.
   def set_request_form
-    begin
-      @request_form = RequestForm.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
+    if current_user.admin? || current_user.developer?
       @request_form = RequestForm.with_deleted.find(params[:id])
+    else
+      @request_form = RequestForm.find(params[:id])
     end
   end
 

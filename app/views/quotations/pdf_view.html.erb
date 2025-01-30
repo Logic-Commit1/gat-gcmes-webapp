@@ -44,7 +44,8 @@
       </tr>
     </thead>
     <tbody>
-      <% @quotation.products.each_with_index do |p, index| %>
+      <% products = @quotation.deleted? ? @quotation.products.with_deleted : @quotation.products %>
+      <% products.each_with_index do |p, index| %>
         <tr>
           <td style="border: 1px solid black;"><%= index + 1 %></td>
           <td colspan="2"><%= p.name %></td>
@@ -58,7 +59,8 @@
           <td>BRAND</td>
           <td><%= p.brand %></td>
         </tr>
-        <% p.specs.each do |spec| %>
+        <% specs = p.deleted? ? p.specs.with_deleted : p.specs %>
+        <% specs.each do |spec| %>
           <tr>
             <td></td>
             <td><%= spec.name&.capitalize %></td>
