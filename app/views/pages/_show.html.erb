@@ -21,35 +21,37 @@
       frameborder="0"
       >
     </iframe>
-    <div class="linked-documents">
-      <%= link_to project_path(document.project), class: "project-card" do %>
-        <header>
-          <%= document.project.uid %>
-        </header>
-        <hr>
-        <div class="project-details">
-          <div class="flex space-between">
-            <div class="project-client">
-              <p>Client</p>
-              <p><%= document.project.client.name %></p>
+    <% if document.project.present? %>
+      <div class="linked-documents">
+        <%= link_to project_path(document.project), class: "project-card" do %>
+          <header>
+            <%= document.project.uid %>
+          </header>
+          <hr>
+          <div class="project-details">
+            <div class="flex space-between">
+              <div class="project-client">
+                <p>Client</p>
+                <p><%= document.project.client.name %></p>
+              </div>
+              <div class="project-amount">
+                <p>Amount</p>
+                <p><%= number_to_currency(document.project.amount, unit: "₱") %></p>
+              </div>
             </div>
-            <div class="project-amount">
-              <p>Amount</p>
-              <p><%= number_to_currency(document.project.amount, unit: "₱") %></p>
+            <div class="flex space-between">
+              <div class="project-po-number">
+                <p>PO Number</p>
+                <p><%= document.project.po_number.presence || "—" %></p>
+              </div>
+              <div class="project-payment">
+                <p>Payment Term</p>
+                <p><%= document.project.payment %></p>
+              </div>
             </div>
           </div>
-          <div class="flex space-between">
-            <div class="project-po-number">
-              <p>PO Number</p>
-              <p><%= document.project.po_number.presence || "—" %></p>
-            </div>
-            <div class="project-payment">
-              <p>Payment Term</p>
-              <p><%= document.project.payment %></p>
-            </div>
-          </div>
-        </div>
-      <% end %>
-    </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
