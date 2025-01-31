@@ -2,7 +2,8 @@
   <%= form_with(model: project, html: { autocomplete: "off" }, data: {
     controller: 'form-validation',
     form_validation_target: "form",
-    action: 'submit->form-validation#validateProjectForm'
+    action: 'submit->form-validation#validateProjectForm',
+    project_id: project.persisted? ? project.id : nil
   }) do |form| %>
     <% if project.errors.any? %>
       <div style="color: red">
@@ -30,6 +31,14 @@
         </div>
       </div>
       <div class="<%= 'hidden' if project.new_record? %>">
+        <div class="separator"></div>
+        <div class="field">
+          <%= form.label :supervisor, style: "display: block" %>
+          <%= form.text_field :supervisor, data: { form_validation_target: "supervisorInput" } %>
+          <div class="error-message hidden" data-form-validation-target="supervisorError">
+            Please enter name of project supervisor
+          </div>
+        </div>
         <div class="separator"></div>
         <p class="semibold" style="margin-bottom: 10px;">Client Details</p>
         <div class="field">
@@ -82,7 +91,7 @@
         <p class="semibold" style="margin-bottom: 10px;">Payment Information</p>
         <div class="field">
           <%= form.label :amount, style: "display: block" %>
-          <%= form.number_field :amount, data: { form_validation_target: "amountInput" }, onwheel: "return false" %>
+          <%= form.number_field :amount, step: "0.01", data: { form_validation_target: "amountInput" }, onwheel: "return false" %>
           <div class="error-message hidden" data-form-validation-target="amountError">
             Please enter a valid amount
           </div>

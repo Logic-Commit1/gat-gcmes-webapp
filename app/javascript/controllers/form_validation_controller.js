@@ -9,6 +9,8 @@ export default class extends Controller {
     "poNumberError",
     "clientPoInput",
     "clientPoError",
+    "supervisorInput",
+    "supervisorError",
     "canvassSelect",
     "canvassError",
     "quotationSelect",
@@ -433,6 +435,14 @@ export default class extends Controller {
       }
     }
 
+    // Validate supervisor
+    if (this.hasSupervisorInputTarget && !this.supervisorInputTarget.value) {
+      event.preventDefault()
+      this.supervisorInputTarget.classList.add("field-error")
+      this.supervisorErrorTarget.classList.remove("hidden")
+      isValid = false
+    }
+
     // Validate client selection
     if (this.hasClientSelectTarget && !this.clientSelectTarget.value) {
       event.preventDefault()
@@ -450,11 +460,14 @@ export default class extends Controller {
     }
 
     // Validate client PO
-    if (this.hasClientPoInputTarget && !this.clientPoInputTarget.value) {
-      event.preventDefault()
-      this.clientPoInputTarget.classList.add("field-error")
-      this.clientPoErrorTarget.classList.remove("hidden")
-      isValid = false
+    if (this.hasClientPoInputTarget) {
+      const isNewRecord = !this.formTarget.dataset.projectId
+      if (isNewRecord && !this.clientPoInputTarget.value) {
+        event.preventDefault()
+        this.clientPoInputTarget.classList.add("field-error")
+        this.clientPoErrorTarget.classList.remove("hidden")
+        isValid = false
+      }
     }
 
     // Validate amount

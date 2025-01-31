@@ -1,3 +1,16 @@
+Quotation.with_deleted.each do |quotation|
+  quotation.really_destroy!
+end
+PurchaseOrder.with_deleted.each do |purchase_order|
+  purchase_order.really_destroy!
+end
+RequestForm.with_deleted.each do |request_form|
+  request_form.really_destroy!
+end
+Canvass.with_deleted.each do |canvass|
+  canvass.really_destroy!
+end
+Project.destroy_all
 Contact.destroy_all
 Client.destroy_all
 Supplier.destroy_all
@@ -8,7 +21,7 @@ gat = Company.create!(name: "Golden Arrow Trading", code: "GAT", address: "17 Sa
 gcmes = Company.create!(name: "Golden Chain Marine Engineering Services", code: "GCMES", address: "17 San Lorenzo Sc. San Vicente, Maysilo, Malabon City, Philippines, 1477", contact_numbers: ["09123456789"], emails: ["sales@gcmes.com"])
 
 # Create client contacts
-client_a_contact = Contact.create(name: "CA Contact", emails: ["sales@ca.com"], contact_numbers: ["09123456789"])
+client_a_contact = Contact.create(name: "NCSMC Contact", emails: ["sales@ncsmc.com"], contact_numbers: ["09123456789"])
 client_b_contact = Contact.create(name: "CB Contact", emails: ["sales@cb.com"], contact_numbers: ["09123456789"])
 client_c_contact = Contact.create(name: "CC Contact", emails: ["sales@cc.com"], contact_numbers: ["09123456789"])
 client_d_contact = Contact.create(name: "CD Contact", emails: ["sales@cd.com"], contact_numbers: ["09123456789"])
@@ -23,7 +36,7 @@ supplier_e_contact = Contact.create(name: "SE Contact", emails: ["sales@se.com"]
 
 # Create clients and associate with companies
 # GAT clients
-gat.clients.create!(name: "Client A", code: "CA", address: "123 Katipunan Avenue, Quezon City, Metro Manila", contacts: [client_a_contact])
+gat.clients.create!(name: "NARRA CREWING AND SHIP MANAGEMENT CORPORATION ", code: "NCSMC", address: "3rd Flr. VIP BLDG. 1140 ROXAS BLVD Cor., NUESTRA SRA. DE GULA, Brgt. 667 Zone 072, ERMITA MANILA. MM", contacts: [client_a_contact])
 gat.clients.create!(name: "Client B", code: "CB", address: "456 Shaw Boulevard, Mandaluyong City, Metro Manila", contacts: [client_b_contact])
 gat.clients.create!(name: "Client C", code: "CC", address: "789 Ayala Avenue, Makati City, Metro Manila", contacts: [client_c_contact])
 
