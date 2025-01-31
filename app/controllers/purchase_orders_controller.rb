@@ -92,8 +92,14 @@ class PurchaseOrdersController < ApplicationController
   # end
 
   def void
-    @purchase_order.destroy
-    redirect_to purchase_orders_path, notice: 'Purchase order was successfully voided.'
+    @purchase_order.update(deleted_by: current_user)
+    if @purchase_order.destroy
+      flash[:success] = 'Purchase order was successfully voided.'
+      redirect_to purchase_orders_path
+    else
+      flash[:error] = 'Failed to void purchase order.'
+      redirect_to @purchase_order
+    end
   end
 
   def approve

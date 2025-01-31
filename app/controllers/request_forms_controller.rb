@@ -94,8 +94,14 @@ class RequestFormsController < ApplicationController
   # end
 
   def void
-    @request_form.destroy
-    redirect_to request_forms_path, notice: 'Request form was successfully voided.'
+    @request_form.update(deleted_by: current_user)
+    if @request_form.destroy
+      flash[:success] = 'Request form was successfully voided.'
+      redirect_to request_forms_path
+    else
+      flash[:error] = 'Failed to void request form.'
+      redirect_to @request_form
+    end
   end
 
   def approve

@@ -109,10 +109,10 @@
       <% elsif title == "Voided Documents" %>
         <% documents&.each do |document| %>
           <tr onclick="window.location='<%= polymorphic_path(document) %>'" style="cursor: pointer">
-            <td><%= document.uid %></td>
             <td><%= document.class.name.underscore.titleize %></td>
-            <td><%= document.deleted_at.strftime("%B %d, %Y") %></td>
-            <td><%= document.created_at.strftime("%B %d, %Y") %></td>
+            <td><%= document.uid %></td>
+            <td><%= document.deleted_at.strftime("%b %d, %Y - %I:%M %p") %></td>
+            <td><%= document.deleted_by&.full_name %></td>
           </tr>
         <% end %>
       <% end %>

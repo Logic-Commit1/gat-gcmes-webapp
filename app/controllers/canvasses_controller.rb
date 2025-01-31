@@ -93,8 +93,14 @@ class CanvassesController < ApplicationController
   # end
 
   def void
-    @canvass.destroy
-    redirect_to canvasses_path, notice: 'Canvass was successfully voided.'
+    @canvass.update(deleted_by: current_user)
+    if @canvass.destroy
+      flash[:success] = 'Canvass was successfully voided.'
+      redirect_to canvasses_path
+    else
+      flash[:error] = 'Failed to void canvass.'
+      redirect_to @canvass
+    end
   end
 
   def approve

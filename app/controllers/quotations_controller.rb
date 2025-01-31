@@ -109,9 +109,14 @@ class QuotationsController < ApplicationController
   #   end
   # end
   def void
-    @quotation.destroy
-    flash[:success] = 'Quotation was successfully voided.'
-    redirect_to quotations_path
+    @quotation.update(deleted_by: current_user)
+    if @quotation.destroy
+      flash[:success] = 'Quotation was successfully voided.'
+      redirect_to quotations_path
+    else
+      flash[:error] = 'Failed to void quotation.'
+      redirect_to @quotation
+    end
   end
 
   def approve
