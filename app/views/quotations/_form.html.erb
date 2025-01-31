@@ -31,10 +31,10 @@
             <%= form.label :type %>
             <div>
               <% Quotation.humanized_quotation_types.each_with_index do |type, index| %>
-                <%= form.radio_button :quotation_type, Quotation.quotation_types.keys[index], data: { form_validation_target: "typeRadio" } %> <%= type %>
+                <%= form.radio_button :quotation_type, Quotation.quotation_types.keys[index], data: { form_validation_target: "quotationTypeRadio" } %> <%= type %>
               <% end %>
             </div>
-            <div class="error-message hidden" data-form-validation-target="typeError">
+            <div class="error-message hidden" data-form-validation-target="quotationTypeError">
               Please select a type
             </div>
           </div>
@@ -42,7 +42,7 @@
         <div class="separator"></div>
         <div>
           <div class="field <%= 'hidden' if quotation.new_record? %>" data-company-select-target="projectSelectField">
-            <%= form.label :project_id %>
+            <%= form.label :project_id, "Project (Optional)" %>
             <div class="select-container">
               <%= form.collection_select :project_id,
                 quotation.new_record? ? [] : 
@@ -52,12 +52,8 @@
                 { prompt: "Select Project"}, 
                 data: { 
                   company_select_target: "projectSelect",
-                  form_validation_target: "projectSelect"
                 } %>
               <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
-            </div>
-            <div class="error-message hidden" data-form-validation-target="projectError">
-              Please select a project
             </div>
           </div>
           <div class="separator"></div>
@@ -85,11 +81,17 @@
           </div>
           <div class="field">
             <%= form.label :attention, "Attention" %>
-            <%= form.text_field :attention %>
+            <%= form.text_field :attention, data: { form_validation_target: "attentionInput" } %>
+            <div class="error-message hidden" data-form-validation-target="attentionError">
+              Please enter an attention
+            </div>
           </div>
           <div class="field">
             <%= form.label :vessel, "Vessel" %>
-            <%= form.text_field :vessel %>
+            <%= form.text_field :vessel, data: { form_validation_target: "vesselInput" } %>
+            <div class="error-message hidden" data-form-validation-target="vesselError">
+              Please enter a vessel
+            </div>
           </div>
           <div class="separator"></div>
           <div class="field">

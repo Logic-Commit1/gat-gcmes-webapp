@@ -21,6 +21,10 @@ export default class extends Controller {
     "particularsError",
     "quotationTypeRadio",
     "quotationTypeError",
+    "attentionInput",
+    "attentionError",
+    "vesselInput",
+    "vesselError",
     "clientSelect",
     "clientError",
     "subjectInput",
@@ -85,7 +89,7 @@ export default class extends Controller {
 
     // Validate type
     if (
-      this.hasTypeRadioTarget &&
+      this.hasQuotationTypeRadioTarget &&
       !document.querySelector('input[name="quotation[quotation_type]"]:checked')
     ) {
       event.preventDefault()
@@ -94,19 +98,30 @@ export default class extends Controller {
       isValid = false
     }
 
-    // Validate project selection
-    if (this.hasProjectSelectTarget && !this.projectSelectTarget.value) {
-      event.preventDefault()
-      this.projectSelectTarget.classList.add("field-error")
-      this.projectErrorTarget.classList.remove("hidden")
-      isValid = false
-    }
-
     // Validate client selection
     if (this.hasClientSelectTarget && !this.clientSelectTarget.value) {
       event.preventDefault()
       this.clientSelectTarget.classList.add("field-error")
       this.clientErrorTarget.classList.remove("hidden")
+      isValid = false
+    }
+
+    // Validate attention
+    if (
+      this.hasAttentionInputTarget &&
+      !this.attentionInputTarget.value.trim()
+    ) {
+      event.preventDefault()
+      this.attentionInputTarget.classList.add("field-error")
+      this.attentionErrorTarget.classList.remove("hidden")
+      isValid = false
+    }
+
+    // Validate vessel
+    if (this.hasVesselInputTarget && !this.vesselInputTarget.value.trim()) {
+      event.preventDefault()
+      this.vesselInputTarget.classList.add("field-error")
+      this.vesselErrorTarget.classList.remove("hidden")
       isValid = false
     }
 
