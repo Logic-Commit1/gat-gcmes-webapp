@@ -57,6 +57,8 @@ export default class extends Controller {
     "addressError",
     "contactsTable",
     "contactsError",
+    "quotationSelect",
+    "quotationError",
   ]
 
   connect() {
@@ -458,13 +460,20 @@ export default class extends Controller {
       isValid = false
     }
 
-    // Validate client selection
-    if (this.hasClientSelectTarget && !this.clientSelectTarget.value) {
+    if (this.hasQuotationSelectTarget && !this.quotationSelectTarget.value) {
       event.preventDefault()
-      this.clientSelectTarget.classList.add("field-error")
-      this.clientErrorTarget.classList.remove("hidden")
+      this.quotationSelectTarget.classList.add("field-error")
+      this.quotationErrorTarget.classList.remove("hidden")
       isValid = false
     }
+
+    // Validate client selection
+    // if (this.hasClientSelectTarget && !this.clientSelectTarget.value) {
+    //   event.preventDefault()
+    //   this.clientSelectTarget.classList.add("field-error")
+    //   this.clientErrorTarget.classList.remove("hidden")
+    //   isValid = false
+    // }
 
     // Validate PO number
     if (this.hasPoNumberInputTarget && !this.poNumberInputTarget.value.trim()) {

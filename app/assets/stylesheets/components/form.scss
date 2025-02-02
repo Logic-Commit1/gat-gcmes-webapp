@@ -69,6 +69,11 @@ form .select-container {
   // width: 500px;
   width: auto;
   max-width: 400px;
+
+  .ss-values,
+  .ss-list {
+    margin-bottom: 0;
+  }
 }
 
 .error-message {

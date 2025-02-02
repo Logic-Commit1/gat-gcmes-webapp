@@ -114,6 +114,7 @@ export default class extends Controller {
       "Select Quotation",
       "uid"
     )
+    this.showHiddenDivs()
   }
 
   fetchAndUpdateOptions(

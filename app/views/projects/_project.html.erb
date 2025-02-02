@@ -15,18 +15,6 @@
     </div>
     <div class="project-details">
       <p>
-        <span class="semibold">Amount:</span>
-        PHP <%= number_with_precision(project.amount, precision: 2, delimiter: ',') %>
-      </p>
-    </div>
-    <div class="project-details">
-      <p>
-        <span class="semibold">Terms:</span>
-        <%= project.payment %>
-      </p>
-    </div>
-    <div class="project-details">
-      <p>
         <span class="semibold">PO Number:</span>
         <%= project.po_number %>
       </p>
@@ -44,6 +32,30 @@
           <% end %>
         </div>
       <% end %>
+    </div>
+    <div class="project-details">
+      <p>
+        <span class="semibold">Supervisor:</span>
+        <%= project.supervisor %>
+      </p>
+    </div>
+    <div class="project-details">
+      <p>
+        <span class="semibold">Vessel:</span>
+        <%= project.quotations.first.vessel %>
+      </p>
+    </div>
+    <div class="project-details">
+      <p>
+        <span class="semibold">Amount:</span>
+        PHP <%= number_with_precision(project.amount, precision: 2, delimiter: ',') %>
+      </p>
+    </div>
+    <div class="project-details">
+      <p>
+        <span class="semibold">Terms:</span>
+        <%= project.payment %>
+      </p>
     </div>
   </div>
   <div class="related-documents grid with-4-columns baseline">

@@ -1,6 +1,6 @@
 <div class="form-container">
   <%= form_with(model: project, html: { autocomplete: "off" }, data: {
-    controller: 'form-validation',
+    controller: 'form-validation slim',
     form_validation_target: "form",
     action: 'submit->form-validation#validateProjectForm',
     project_id: project.persisted? ? project.id : nil
@@ -21,7 +21,7 @@
         <div>
           <% Company.all.each do |company| %>
             <%= form.radio_button :company_id, company.id, data: { 
-              action: "company-select#selectCompanyForClient",
+              action: "company-select#selectCompanyForQuotations",
               form_validation_target: "companySelect"
             } %> <%= company.code %>
           <% end %>
@@ -33,33 +33,27 @@
       <div class="<%= 'hidden' if project.new_record? %>">
         <div class="separator"></div>
         <div class="field">
-          <%= form.label :supervisor, style: "display: block" %>
-          <%= form.text_field :supervisor, data: { form_validation_target: "supervisorInput" } %>
-          <div class="error-message hidden" data-form-validation-target="supervisorError">
-            Please enter name of project supervisor
+          <%= form.label :quotation_ids, "Quotations" %>
+          <div class="select-container">
+            <%= form.collection_select :quotation_ids, 
+            project.new_record? ? [] : 
+              (project.gat? ? Quotation.all.select(&:gat?) : 
+               project.gcmes? ? Quotation.all.select(&:gcmes?) : []),
+            :id, :uid,
+            {},
+            { multiple: true, 
+              data: { 
+                slim_target: 'field', 
+                company_select_target: "quotationSelect", 
+                form_validation_target: "quotationSelect"
+              } 
+            } %>
+          </div>
+          <div class="error-message hidden" data-form-validation-target="quotationError">
+            Please select at least one quotation
           </div>
         </div>
         <div class="separator"></div>
-        <p class="semibold" style="margin-bottom: 10px;">Client Details</p>
-        <div class="field">
-          <%= form.label :client_id, style: "display: block" %>
-          <div class="select-container">
-            <%= form.collection_select :client_id,
-            project.new_record? ? [] : 
-                  (project.gat? ? Client.all.select(&:gat?) : 
-                   project.gcmes? ? Client.all.select(&:gcmes?) : []),
-            :id, :name, 
-                { prompt: "Select Client" }, 
-                data: { 
-                  company_select_target: "clientSelect",
-                  form_validation_target: "clientSelect"
-                } %>
-            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
-          </div>
-          <div class="error-message hidden" data-form-validation-target="clientError">
-            Please select a client
-          </div>
-        </div>
         <div class="field">
           <%= form.label :po_number, "PO Number", style: "display: block" %>
           <%= form.text_field :po_number, data: { form_validation_target: "poNumberInput" } %>
@@ -74,19 +68,14 @@
             Please upload a valid client's P.O.
           </div>
         </div>
-        <!--
         <div class="separator"></div>
-        <p class="semibold" style="margin-bottom: 10px;">Linked Documents</p>
         <div class="field">
-          <%= form.label :quotation_id, style: "display: block" %>
-          <div class="select-container">
-            <%= form.collection_select :quotation_id, Quotation.all, :id, :uid, 
-                { prompt: "Select Quotation" }, 
-                data: { company_select_target: "clientSelect" } %>
-            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
+          <%= form.label :supervisor, style: "display: block" %>
+          <%= form.text_field :supervisor, data: { form_validation_target: "supervisorInput" } %>
+          <div class="error-message hidden" data-form-validation-target="supervisorError">
+            Please enter name of project supervisor
           </div>
         </div>
-        -->
         <div class="separator"></div>
         <p class="semibold" style="margin-bottom: 10px;">Payment Information</p>
         <div class="field">

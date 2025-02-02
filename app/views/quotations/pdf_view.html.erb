@@ -22,16 +22,16 @@
       </tr>
       <tr>
         <td>Attention</td>
-        <td><%= @quotation.attention&.capitalize %></td>
+        <td><%= @quotation.attention&.titleize %></td>
       </tr>
       <tr>
         <td>Vessel</td>
-        <td><%= @quotation.vessel&.capitalize %></td>
+        <td><%= @quotation.vessel&.upcase %></td>
       </tr>
     </tbody>
   </table>
-  <strong>Subject:</strong>
-  <%= @quotation.subject %>
+  <strong style="display: inline-block; width: 100%;">Subject:</strong>
+  <%= simple_format(@quotation.subject) %>
   <table id="products-table">
     <thead>
       <tr>
@@ -111,12 +111,18 @@
 <div id="terms-container">
   <p><strong>TERMS AND CONDITIONS</strong></p>
   <div id="terms-details">
-    <div><strong>Lead time</strong></div>
-    <div><%= @quotation.lead_time %></div>
-    <div><strong>Warranty</strong></div>
-    <div><%= @quotation.warranty %></div>
-    <div><strong>Payment</strong></div>
-    <div><%= @quotation.payment %></div>
+    <% if @quotation.lead_time.present? %>
+      <div><strong>Lead time</strong></div>
+      <div><%= @quotation.lead_time %></div>
+    <% end %>
+    <% if @quotation.warranty.present? %>
+      <div><strong>Warranty</strong></div>
+      <div><%= @quotation.warranty %></div>
+    <% end %>
+    <% if @quotation.payment.present? %>
+      <div><strong>Payment</strong></div>
+      <div><%= @quotation.payment %></div>
+    <% end %>
   </div>
 </div>
 <br>

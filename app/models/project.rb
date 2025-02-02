@@ -43,6 +43,7 @@ class Project < ApplicationRecord
   }
 
   # Callbacks
+  before_validation :set_client_from_quotation
   before_save :set_uid
 
   def set_uid 
@@ -96,6 +97,13 @@ class Project < ApplicationRecord
     else
       update_column(:status, 'ongoing') unless ongoing?
     end
+  end
+
+  private
+
+  def set_client_from_quotation
+    return if quotations.empty?
+    self.client = quotations.first.client
   end
 end
 
