@@ -30,8 +30,7 @@
       </tr>
     </tbody>
   </table>
-  <strong style="display: inline-block; width: 100%;">Subject:</strong>
-  <%= simple_format(@quotation.subject) %>
+  <p><strong>Subject:</strong> <%= @quotation.subject %></p>
   <table id="products-table">
     <thead>
       <tr>
@@ -47,33 +46,35 @@
       <% products = @quotation.deleted? ? @quotation.products.with_deleted : @quotation.products %>
       <% products.each_with_index do |p, index| %>
         <tr>
-          <td style="border: 1px solid black;"><%= index + 1 %></td>
+          <td class="align-center" style="border: 1px solid black;"><%= index + 1 %></td>
           <td colspan="2"><%= p.name %></td>
           <td class="align-right"><%= p.quantity %></td>
           <td class="align-right"><%= p.unit %></td>
           <td class="align-right">PHP <%= number_with_precision(p.price, precision: 2, delimiter: ',') %></td>
           <td class="align-right">PHP <%= number_with_precision(p.total, precision: 2, delimiter: ',') %></td>
         </tr>
+        <% specs = p.deleted? ? p.specs.with_deleted : p.specs %>
+        <% scopes = p.deleted? ? p.scopes.with_deleted : p.scopes %>
         <tr>
           <td></td>
-          <td>BRAND</td>
-          <td><%= p.brand %></td>
-        </tr>
-        <% specs = p.deleted? ? p.specs.with_deleted : p.specs %>
-        <% specs.each do |spec| %>
-          <tr>
-            <td></td>
-            <td><%= spec.name&.capitalize %></td>
-            <td><%= spec.value&.capitalize %></td>
-          </tr>
-        <% end %>
-        <tr>
-          <td colspan="7">
-            <% scopes = p.deleted? ? p.scopes.with_deleted : p.scopes %>
-            <% scopes.each do |scope| %>
-              <%= scope.name&.capitalize %>
-            <% end %>
-          </td>
+          <% if specs.any? %>
+            <td colspan="2">
+              <strong>SPECS</strong><br>
+              <br>
+              <% specs.each do |spec| %>
+                <%= spec.name&.capitalize %>: <%= spec.value&.capitalize %><br>
+              <% end %>
+            </td>
+          <% end %>
+          <% if scopes.any? %>
+            <td colspan="2">
+              <strong>SCOPE OF WORK</strong><br>
+              <br>
+              <% scopes.each do |scope| %>
+                <p>* <%= scope.name&.capitalize %></p>
+              <% end %>
+            </td>
+          <% end %>
         </tr>
         <% if p.image.attached? %>
           <% begin %>
@@ -95,6 +96,7 @@
     <% end %>
   </tbody>
 </table>
+<%#binding.pry%>
 <table id="totals-table">
   <tr>
     <td><strong>SUB TOTAL</strong></td>
@@ -123,6 +125,10 @@
       <div><strong>Lead time</strong></div>
       <div><%= @quotation.lead_time %></div>
     <% end %>
+    <% if @quotation.duration.present? %>
+      <div><strong>Duration</strong></div>
+      <div><%= @quotation.duration %></div>
+    <% end %>
     <% if @quotation.warranty.present? %>
       <div><strong>Warranty</strong></div>
       <div><%= @quotation.warranty %></div>
@@ -135,7 +141,8 @@
 </div>
 <br>
 <div>
-  <div class="align-center">Note: This document is not valid without manager&rsquo;s signature</div>
+  <%# <div class="align-center">Note: This document is not valid without manager&rsquo;s signature</div> %>
+  <div class="align-center">For further information please don't hesitate lo contact us</div>
   <table class="signatures-table">
     <thead>
       <tr>

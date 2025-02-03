@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_02_093125) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_03_070743) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -176,6 +176,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_02_093125) do
     t.string "po_number", null: false
     t.bigint "user_id"
     t.string "supervisor"
+    t.string "sales_invoice"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["company_id"], name: "index_projects_on_company_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
@@ -246,6 +247,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_02_093125) do
     t.integer "quotation_type"
     t.string "deleted_by"
     t.bigint "deleted_by_id"
+    t.string "duration"
     t.index ["approver_id"], name: "index_quotations_on_approver_id"
     t.index ["client_id"], name: "index_quotations_on_client_id"
     t.index ["company_id"], name: "index_quotations_on_company_id"
@@ -308,6 +310,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_02_093125) do
     t.bigint "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_scopes_on_deleted_at"
     t.index ["product_id"], name: "index_scopes_on_product_id"
   end
 

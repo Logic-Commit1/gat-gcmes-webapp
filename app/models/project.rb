@@ -45,6 +45,7 @@ class Project < ApplicationRecord
   # Callbacks
   before_validation :set_client_from_quotation
   before_save :set_uid
+  after_update :check_sales_invoice
 
   def set_uid 
     return if self.uid.present?
@@ -105,5 +106,8 @@ class Project < ApplicationRecord
     return if quotations.empty?
     self.client = quotations.first.client
   end
-end
 
+  def check_sales_invoice
+    served! if sales_invoice.present? && sales_invoice_previously_changed?
+  end
+end

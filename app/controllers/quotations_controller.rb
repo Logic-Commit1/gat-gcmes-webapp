@@ -173,7 +173,7 @@ class QuotationsController < ApplicationController
       params.require(:quotation).permit(
         :uid, :company_id, :project_id, :client_id, :attention, :vessel, :subject, :user_id,
         :remarks, :payment, :lead_time, :warranty, :sub_total,
-        :total, :vat, :additional_conditions, :preparer, :approver, :discount, :discount_rate, :quotation_type,
+        :total, :vat, :additional_conditions, :preparer, :approver, :discount, :discount_rate, :duration,
         
         products_attributes: [
           :id, :name, :quantity, :unit, :price, :discount, :brand, 

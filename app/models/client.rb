@@ -19,13 +19,15 @@ class Client < ApplicationRecord
 
     def process_arrays
         # Convert comma-separated strings to arrays
-        contacts.each do |contact|
-            if contact.emails.is_a?(String)
-                contact.emails = contact.emails.split(',').map(&:strip)
+        if contacts.present?
+            contacts.each do |contact|
+                if contact.emails.is_a?(String)
+                    contact.emails = contact.emails.split(',').map(&:strip)
             end
-        
-            if contact.contact_numbers.is_a?(String)
-                contact.contact_numbers = contact.contact_numbers.split(',').map(&:strip)
+            
+                if contact.contact_numbers.is_a?(String)
+                    contact.contact_numbers = contact.contact_numbers.split(',').map(&:strip)
+                end
             end
         end
     end

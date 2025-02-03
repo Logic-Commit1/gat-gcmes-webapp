@@ -60,7 +60,11 @@ class ScopesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_scope
-      @scope = Scope.find(params[:id])
+      if current_user.admin? || current_user.developer?
+        @scope = Scope.with_deleted.find(params[:id])
+      else
+        @scope = Scope.find(params[:id])
+      end
     end
 
     # Only allow a list of trusted parameters through.

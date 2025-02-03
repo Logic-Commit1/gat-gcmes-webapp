@@ -32,12 +32,12 @@ class CompaniesController < ApplicationController
   end
 
   def clients
-    clients = @company.clients.select(:id, :name)
+    clients = @company.clients.select(:id, :name).order(:name)
     render json: clients
   end
 
   def suppliers
-    suppliers = @company.suppliers.select(:id, :name)
+    suppliers = @company.suppliers.select(:id, :name).order(:name)
     render json: suppliers
   end
 
@@ -47,7 +47,7 @@ class CompaniesController < ApplicationController
   end
 
   def projects
-    projects = @company.projects.select(:id, :uid)
+    projects = @company.projects.select(:id, :uid).order(created_at: :desc)
     render json: projects
   end
 

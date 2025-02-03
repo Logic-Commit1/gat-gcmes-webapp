@@ -141,7 +141,7 @@ export default class extends Controller {
         this.itemsTableTarget.querySelectorAll(
           'td:not([data-nested-form-target="target"])'
         )
-      ).slice(0, 5)
+      ).slice(0, 4)
 
       if (rows.length === 0) {
         event.preventDefault()
@@ -153,10 +153,6 @@ export default class extends Controller {
         rows.forEach((row) => {
           const inputs = row.querySelectorAll("input, select")
           inputs.forEach((input) => {
-            // Skip validation for brand input field
-            if (input.name && input.name.includes("[brand]")) {
-              return
-            }
             if (!input.value || input.value.trim() === "") {
               input.classList.add("field-error")
               hasItemErrors = true
@@ -567,37 +563,37 @@ export default class extends Controller {
     }
 
     // Validate contacts table
-    if (this.hasContactsTableTarget) {
-      const rows = this.contactsTableTarget.querySelectorAll(
-        'tr:not([data-nested-form-target="target"])'
-      )
+    // if (this.hasContactsTableTarget) {
+    //   const rows = this.contactsTableTarget.querySelectorAll(
+    //     'tr:not([data-nested-form-target="target"])'
+    //   )
 
-      if (rows.length === 0) {
-        event.preventDefault()
-        this.contactsErrorTarget.classList.remove("hidden")
-        isValid = false
-      } else {
-        let hasContactErrors = false
+    //   if (rows.length === 0) {
+    //     event.preventDefault()
+    //     this.contactsErrorTarget.classList.remove("hidden")
+    //     isValid = false
+    //   } else {
+    //     let hasContactErrors = false
 
-        rows.forEach((row) => {
-          const inputs = row.querySelectorAll("input")
-          inputs.forEach((input) => {
-            if (!input.value || input.value.trim() === "") {
-              input.classList.add("field-error")
-              hasContactErrors = true
-            } else {
-              input.classList.remove("field-error")
-            }
-          })
-        })
+    //     rows.forEach((row) => {
+    //       const inputs = row.querySelectorAll("input")
+    //       inputs.forEach((input) => {
+    //         if (!input.value || input.value.trim() === "") {
+    //           input.classList.add("field-error")
+    //           hasContactErrors = true
+    //         } else {
+    //           input.classList.remove("field-error")
+    //         }
+    //       })
+    //     })
 
-        if (hasContactErrors) {
-          event.preventDefault()
-          this.contactsErrorTarget.classList.remove("hidden")
-          isValid = false
-        }
-      }
-    }
+    //     if (hasContactErrors) {
+    //       event.preventDefault()
+    //       this.contactsErrorTarget.classList.remove("hidden")
+    //       isValid = false
+    //     }
+    //   }
+    // }
 
     return isValid
   }

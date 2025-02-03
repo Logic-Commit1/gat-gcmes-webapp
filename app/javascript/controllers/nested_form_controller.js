@@ -23,9 +23,9 @@ export default class extends NestedForm {
       return
     }
 
-    // Clone the template and replace the `NEW_RECORD` placeholder with a unique timestamp
+    // Clone the template and replace the `NEW_SPEC_RECORD` placeholder with a unique timestamp
     const content = template.innerHTML.replace(
-      /NEW_RECORD/g,
+      /NEW_SPEC_RECORD/g,
       new Date().getTime()
     )
 
@@ -76,28 +76,54 @@ export default class extends NestedForm {
     this.showHiddenScopeTitles(event)
 
     // Find the closest nested form wrapper for the current product
-    const targetWrapper = event.currentTarget.closest(".nested-form-wrapper")
+    const productWrapper = event.currentTarget.closest(".nested-form-wrapper")
+
+    // Find the index of the current product
+    const productIndexInput = productWrapper.querySelector(
+      'input[name^="quotation[products_attributes]"]'
+    )
+    if (!productIndexInput) {
+      console.error("Could not determine the product index")
+      return
+    }
+
+    // Extract product index from the input name (e.g., "quotation[products_attributes][0][name]")
+    const match = productIndexInput.name.match(
+      /quotation\[products_attributes]\[([0-9]+)]/
+    )
+    if (!match) {
+      console.error("Could not extract product index")
+      return
+    }
+
+    // Generate a truly unique index for the new scope
+    const uniqueScopeIndex = `${new Date().getTime().toString()}`
 
     // Locate the template for scopes
-    const template = targetWrapper.querySelector(
+    const template = productWrapper.querySelector(
       '[data-nested-form-target="scope-template"]'
     )
-
     if (!template) {
       console.error("Template not found for scopes")
       return
     }
 
-    // Clone the template and replace the `NEW_RECORD` placeholder with a unique timestamp
-    const content = template.innerHTML.replace(
-      /NEW_RECORD/g,
-      new Date().getTime()
-    )
+    // Create a deep copy of the template's content
+    let content = template.innerHTML
+    console.log("previouscontent", content)
+
+    // Ensure all instances of `NEW_SCOPE_RECORD` are replaced properly
+    content = content.replace(/NEW_SCOPE_RECORD/g, uniqueScopeIndex)
+
+    // Debugging logs
+    console.log("uniqueScopeIndex:", uniqueScopeIndex)
+    console.log("Final content after replacement:", content)
 
     // Insert the content into the target within the product's scope
-    const target = targetWrapper.querySelector(
+    const target = productWrapper.querySelector(
       '[data-nested-form-target="scope-target"]'
     )
+
     if (target) {
       target.insertAdjacentHTML("beforeend", content)
     }

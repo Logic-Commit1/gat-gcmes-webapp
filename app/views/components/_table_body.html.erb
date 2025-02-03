@@ -17,8 +17,6 @@
         <% documents&.each do |form| %>
           <tr onclick="window.location='<%= request_form_path(form) %>'" style="cursor: pointer">
             <td><%= form.uid %></td>
-            <td><%= form.quotation&.uid %></td>
-            <td><%= form.canvass&.uid %></td>
             <td><%= number_to_currency(form.total, unit: "₱") %></td>
             <td><%= form.created_at.strftime("%B %d, %Y") %></td>
             <td><span class="status <%= form.status %>"><%= form.status.capitalize %></span></td>

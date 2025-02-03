@@ -24,7 +24,7 @@
           <% end %>
         </div>
       </div>
-      <div class="<%= '' if quotation.new_record? %>">
+      <div class="<%= 'hidden' if quotation.new_record? %>">
         <div class="separator"></div>
         <div>
           <div class="field <%= 'hidden' if quotation.new_record? %>" data-company-select-target="projectSelectField">
@@ -94,8 +94,7 @@
               <thead>
                 <tr id="table-header">
                   <th style="width: 30%;">ITEM DETAIL</th>
-                  <th style="width: 15%;">BRAND</th>
-                  <th style="width: 10%;">QUANTITY</th>
+                  <th class="align-right" style="width: 10%;">QUANTITY</th>
                   <th style="width: 10%;">U/M</th>
                   <th style="width: 15%;">UNIT PRICE</th>
                   <th style="width: 15%;">IMAGE</th>
@@ -148,6 +147,10 @@
               <div class="field">
                 <%= form.label :lead_time, class: "label" %>
                 <%= form.text_field :lead_time %>
+              </div>
+              <div class="field">
+                <%= form.label :duration, class: "label" %>
+                <%= form.text_field :duration %>
               </div>
               <div class="field">
                 <%= form.label :warranty, class: "label" %>
