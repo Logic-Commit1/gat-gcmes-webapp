@@ -93,12 +93,12 @@
             <table class="quotation-product-table">
               <thead>
                 <tr id="table-header">
-                  <th style="width: 30%;">ITEM DETAIL</th>
+                  <th style="width: 40%;">ITEM DESCRIPTION</th>
                   <th class="align-right" style="width: 10%;">QUANTITY</th>
                   <th style="width: 10%;">U/M</th>
                   <th style="width: 15%;">UNIT PRICE</th>
                   <th style="width: 15%;">IMAGE</th>
-                  <th style="width: 10%;"></th>
+                  <th style="width: 5%;"></th>
                 </tr>
               </thead>
             </table>
@@ -110,7 +110,7 @@
             <%= form.fields_for :products do |product_fields| %>
               <%= render "quotations/quotation_product_form", f: product_fields %>
             <% end %>
-            <div data-nested-form-target="target"></div>
+            <div style="margin-top: -15px;" data-nested-form-target="target"></div>
             <%= link_to '<i class="fas fa-plus"></i> Add Item'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#add" } %>
             <div class="error-message hidden" data-form-validation-target="itemsError">
               Please add at least one item and fill in all required fields

@@ -55,17 +55,17 @@
         </div>
         <div class="separator"></div>
         <div class="field">
-          <%= form.label :po_number, "PO Number", style: "display: block" %>
-          <%= form.text_field :po_number, data: { form_validation_target: "poNumberInput" } %>
-          <div class="error-message hidden" data-form-validation-target="poNumberError">
-            Please enter a valid PO number
-          </div>
-        </div>
-        <div class="field">
           <%= form.label :client_po, "Client's P.O.", style: "display: block" %>
           <%= form.file_field :client_po, data: { form_validation_target: "clientPoInput" } %>
           <div class="error-message hidden" data-form-validation-target="clientPoError">
             Please upload a valid client's P.O.
+          </div>
+        </div>
+        <div class="field">
+          <%= form.label :po_number, "PO Number", style: "display: block" %>
+          <%= form.text_field :po_number, data: { form_validation_target: "poNumberInput" } %>
+          <div class="error-message hidden" data-form-validation-target="poNumberError">
+            Please enter a valid PO number
           </div>
         </div>
         <div class="separator"></div>
@@ -97,6 +97,40 @@
             Please select a payment term
           </div>
         </div>
+        <% if project.persisted? %>
+          <div class="separator"></div>
+          <p class="semibold" style="margin-bottom: 10px;">Attached Files</p>
+          <div class="field">
+            <%= form.label :work_acceptance_files, "Work Acceptance", style: "display: block" %>
+            <% if project.work_acceptance_files.attached? %>
+              <div>
+                <% project.work_acceptance_files.each do |file| %>
+                  <div>
+                    <%= file.filename %>
+                    <%= button_to "Remove", purge_attachment_project_path(project, attachment_type: 'work_acceptance', attachment_id: file.id), method: :delete, class: "delete-button" %>
+                  </div>
+                <% end %>
+              </div>
+            <% else %>
+              <p>No work acceptance files attached</p>
+            <% end %>
+          </div>
+          <div class="field">
+            <%= form.label :delivery_receipt_files, "Delivery Receipt", style: "display: block" %>
+            <% if project.delivery_receipt_files.attached? %>
+              <div>
+                <% project.delivery_receipt_files.each do |file| %>
+                  <div>
+                    <%= file.filename %>
+                    <%= button_to "Remove", purge_attachment_project_path(project, attachment_type: 'delivery_receipt', attachment_id: file.id), method: :delete, class: "delete-button" %>
+                  </div>
+                <% end %>
+              </div>
+            <% else %>
+              <p>No delivery receipt files attached</p>
+            <% end %>
+          </div>
+        <% end %>
         <div>
           <%= form.submit %>
         </div>
@@ -104,6 +138,5 @@
           <%= link_to 'Cancel', project.persisted? ? project_path(project) : projects_path %>
         </div>
       </div>
-    </div>
-  <% end %>
-</div>
+    <% end %>
+  </div>

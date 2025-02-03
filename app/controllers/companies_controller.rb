@@ -57,7 +57,7 @@ class CompaniesController < ApplicationController
   end
 
   def quotations
-    quotations = @company.quotations.select(:id, :uid)
+    quotations = @company.quotations.select(:id, :uid).order(created_at: :desc)
     render json: quotations
   end
 

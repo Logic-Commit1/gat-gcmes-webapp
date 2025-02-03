@@ -9,29 +9,19 @@
     </div>
     <div class="project-details">
       <p>
-        <span class="semibold">Client:</span>
-        <%= project.client.name %>
+        <span class="semibold">PO Number:</span>
+        <% if project.client_po.attached? %>
+          <%= link_to project.po_number, rails_blob_path(project.client_po, disposition: 'inline'), target: '_blank', class: 'text-decoration-none', style: 'color: var(--button-color);' %>
+        <% else %>
+          <%= link_to project.po_number, '#', class: 'text-decoration-none', style: 'color: var(--button-color);' %>
+        <% end %>
       </p>
     </div>
     <div class="project-details">
       <p>
-        <span class="semibold">PO Number:</span>
-        <%= project.po_number %>
+        <span class="semibold">Client:</span>
+        <%= project.client.name %>
       </p>
-    </div>
-    <div class="project-details">
-      <% if project.client_po.attached? %>
-        <div class="pdf-preview-container">
-          <%= link_to rails_blob_path(project.client_po, disposition: 'inline'), 
-                      target: '_blank',
-                      class: 'pdf-preview-link' do %>
-            <div class="pdf-preview-button">
-              <i class="fas fa-file-pdf"></i>
-              <span>View Client PO</span>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
     </div>
     <div class="project-details">
       <p>
@@ -122,60 +112,21 @@
   </div>
   <br>
   <div class="grid with-4-columns baseline">
-    <% if project.required_work_acceptance_count > 0 %>
+    <% if project.requires_delivery_receipt? %>
       <div class="linked-documents">
         <div class="linked-documents-header">
-          <p>Work Acceptance</p>
-        </div>
-        <div class="linked-documents-body">
-          <% if project.work_acceptance_files.attached? %>
-            <div class="attached-files mt-2">
-              <% project.work_acceptance_files.each do |file| %>
-                <div class="document-link" style="display: inline-block;">
-                  <%= link_to rails_blob_path(file, disposition: 'inline'), 
-                            target: '_blank',
-                            class: 'pdf-preview-link' do %>
-                    <div class="document-link-button">
-                      <span><%= file.filename.to_s.capitalize %></span>
-                    </div>
-                  <% end %>
-                </div>
-                <%= link_to "Remove", 
-                            purge_attachment_project_path(project, attachment_type: 'work_acceptance', attachment_id: file.id),
-                            'data-turbo-method': :delete,
-                            class: "remove-file-link",
-                            style: "margin-left: 0.2rem;",
-                            data: { turbo_confirm: "Are you sure you want to remove this file?" } %>
-              <% end %>
-            </div>
-          <% end %>
-          <% if project.required_work_acceptance_count > 0 && !project.work_acceptance_complete? %>
-            <%= form_with(model: project, local: true, class: "file-upload-form", data: { controller: "file-upload" }) do |f| %>
-              <div class="file-input-container">
-                <%= f.file_field :work_acceptance_files, 
-                                multiple: true, 
-                                direct_upload: true, 
-                                accept: "image/png,image/jpeg,application/pdf", 
-                                data: { file_upload_target: "input", action: "change->file-upload#toggleButton" } %>
-              </div>
-              <%= button_tag type: 'submit', class: "file-upload-button hidden", data: { file_upload_target: "button" } do %>
-                <span>Upload WA</span>
-              <% end %>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-    <% if project.required_delivery_receipt_count > 0 %>
-      <div class="linked-documents">
-        <div class="linked-documents-header">
-          <p>Delivery Receipt</p>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <p>Delivery Receipt</p>
+            <label for="delivery_receipt_files_<%= project.id %>" class="upload-button">
+              <i style="color: var(--button-color);" class="fas fa-square-plus"></i>
+            </label>
+          </div>
         </div>
         <div class="linked-documents-body">
           <% if project.delivery_receipt_files.attached? %>
             <div class="attached-files mt-2">
               <% project.delivery_receipt_files.each do |file| %>
-                <div class="document-link" style="display: inline-block;">
+                <div class="document-link">
                   <%= link_to rails_blob_path(file, disposition: 'inline'), 
                           target: '_blank',
                           class: 'pdf-preview-link' do %>
@@ -184,7 +135,7 @@
                     </div>
                   <% end %>
                 </div>
-                <%= link_to "Remove", 
+                <%#= link_to "Remove", 
                           purge_attachment_project_path(project, attachment_type: 'delivery_receipt', attachment_id: file.id),
                           'data-turbo-method': :delete,
                           class: "remove-file-link",
@@ -193,18 +144,68 @@
               <% end %>
             </div>
           <% end %>
-          <% if project.required_delivery_receipt_count > 0 && !project.delivery_receipt_complete? %>
-            <%= form_with(model: project, local: true, class: "file-upload-form", data: { controller: "file-upload" }) do |f| %>
-              <div class="file-input-container">
-                <%= f.file_field :delivery_receipt_files,
+          <%= form_with(model: project, local: true, class: "file-upload-form", data: { controller: "file-upload" }) do |f| %>
+            <div class="file-input-container" style="display: none;">
+              <%= f.file_field :delivery_receipt_files,
                               multiple: true,
                               direct_upload: true,
                               accept: "image/png,image/jpeg,application/pdf",
+                              id: "delivery_receipt_files_#{project.id}",
                               data: { file_upload_target: "input", action: "change->file-upload#toggleButton" } %>
-              </div>
-              <%= button_tag type: 'submit', class: "file-upload-button hidden", data: { file_upload_target: "button" } do %>
-                <span>Upload DR</span>
+            </div>
+            <%= button_tag type: 'submit', class: "file-upload-button hidden", data: { file_upload_target: "button" } do %>
+              <span>Upload DR</span>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <% if project.requires_work_acceptance? %>
+      <div class="linked-documents">
+        <div class="linked-documents-header" style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <p>Work Acceptance</p>
+            <label for="work_acceptance_files_<%= project.id %>" class="upload-button">
+              <i style="color: var(--button-color);" class="fas fa-square-plus"></i>
+            </label>
+          </div>
+        </div>
+        <div class="linked-documents-body">
+          <% if project.work_acceptance_files.attached? %>
+            <div class="attached-files mt-2">
+              <% project.work_acceptance_files.each do |file| %>
+                <div class="document-link">
+                  <%= link_to rails_blob_path(file, disposition: 'inline'), 
+                            target: '_blank',
+                            class: 'pdf-preview-link' do %>
+                    <div class="document-link-button">
+                      <span><%= file.filename.to_s.capitalize %></span>
+                    </div>
+                  <% end %>
+                </div>
+                <%#= link_to "Remove", 
+                            purge_attachment_project_path(project, attachment_type: 'work_acceptance', attachment_id: file.id),
+                            'data-turbo-method': :delete,
+                            class: "remove-file-link",
+                            style: "margin-left: 0.2rem;",
+                            data: { turbo_confirm: "Are you sure you want to remove this file?" } %>
               <% end %>
+            </div>
+          <% end %>
+          <%= form_with(model: project, local: true, class: "file-upload-form", data: { controller: "file-upload" }) do |f| %>
+            <div class="file-input-container" style="display: none;">
+              <%= f.file_field :work_acceptance_files, 
+                                multiple: true, 
+                                direct_upload: true, 
+                                accept: "image/png,image/jpeg,application/pdf",
+                                id: "work_acceptance_files_#{project.id}",
+                                data: { 
+                                  file_upload_target: "input", 
+                                  action: "change->file-upload#toggleButton" 
+                                } %>
+            </div>
+            <%= button_tag type: 'submit', class: "file-upload-button hidden", data: { file_upload_target: "button" } do %>
+              <span>Upload WA</span>
             <% end %>
           <% end %>
         </div>
@@ -212,6 +213,7 @@
     <% end %>
   </div>
   <br>
+  <!--
   <div class="sales-invoice-form">
     <%= form_with(model: project, local: true) do |f| %>
       <div class="form-group">
@@ -221,6 +223,7 @@
       <%= f.submit "Update Sales Invoice", class: "btn btn-primary mt-2" %>
     <% end %>
   </div>
+  -->
   <style>
     .sales-invoice-form {
       max-width: 400px;
@@ -263,6 +266,10 @@
 
     .mt-2 {
       margin-top: 0.5rem;
+    }
+
+    .upload-button {
+      cursor: pointer;
     }
   </style>
 </div>

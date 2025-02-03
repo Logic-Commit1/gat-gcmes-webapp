@@ -53,17 +53,15 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1 or /projects/1.json
   def update
     @project.user = current_user
-    
+
     # Handle file attachments
     if project_params[:work_acceptance_files].present?
       @project.work_acceptance_files.attach(project_params[:work_acceptance_files])
-      @project.check_and_update_status
       return redirect_to @project, notice: 'Work acceptance files were successfully uploaded.'
     end
 
     if project_params[:delivery_receipt_files].present?
       @project.delivery_receipt_files.attach(project_params[:delivery_receipt_files])
-      @project.check_and_update_status
       return redirect_to @project, notice: 'Delivery receipt files were successfully uploaded.'
     end
 
@@ -94,7 +92,7 @@ class ProjectsController < ApplicationController
     attachment.find(params[:attachment_id]).purge
     
     # Trigger status check after purging
-    @project.check_and_update_status
+    # @project.check_and_update_status
 
     respond_to do |format|
       format.html { redirect_to @project, notice: 'File was successfully removed.' }

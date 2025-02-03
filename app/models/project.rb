@@ -64,41 +64,49 @@ class Project < ApplicationRecord
     self.company.code.downcase == 'gcmes'
   end
 
-  def required_work_acceptance_count
-    quotations.where(quotation_type: ['service', 'service_and_supply']).count
+  # def required_work_acceptance_count
+  #   quotations.where(quotation_type: ['service', 'service_and_supply']).count
+  # end
+
+  # def required_delivery_receipt_count
+  #   quotations.where(quotation_type: ['supply', 'service_and_supply']).count
+  # end
+
+  def requires_work_acceptance?
+    quotations.joins(products: :scopes).exists?
   end
 
-  def required_delivery_receipt_count
-    quotations.where(quotation_type: ['supply', 'service_and_supply']).count
+  def requires_delivery_receipt?
+    quotations.joins(products: :specs).exists?
   end
 
-  def remaining_work_acceptance_count
-    required = required_work_acceptance_count
-    attached = work_acceptance_files.count
-    [required - attached, 0].max
-  end
+  # def remaining_work_acceptance_count
+  #   required = required_work_acceptance_count
+  #   attached = work_acceptance_files.count
+  #   [required - attached, 0].max
+  # end
 
-  def remaining_delivery_receipt_count
-    required = required_delivery_receipt_count
-    attached = delivery_receipt_files.count
-    [required - attached, 0].max
-  end
+  # def remaining_delivery_receipt_count
+  #   required = required_delivery_receipt_count
+  #   attached = delivery_receipt_files.count
+  #   [required - attached, 0].max
+  # end
 
-  def work_acceptance_complete?
-    remaining_work_acceptance_count == 0
-  end
+  # def work_acceptance_complete?
+  #   remaining_work_acceptance_count == 0
+  # end
 
-  def delivery_receipt_complete?
-    remaining_delivery_receipt_count == 0
-  end
+  # def delivery_receipt_complete?
+  #   remaining_delivery_receipt_count == 0
+  # end
 
-  def check_and_update_status
-    if work_acceptance_complete? && delivery_receipt_complete?
-      update_column(:status, 'served') unless served?
-    else
-      update_column(:status, 'ongoing') unless ongoing?
-    end
-  end
+  # def check_and_update_status
+  #   if work_acceptance_complete? && delivery_receipt_complete?
+  #     update_column(:status, 'served') unless served?
+  #   else
+  #     update_column(:status, 'ongoing') unless ongoing?
+  #   end
+  # end
 
   private
 
