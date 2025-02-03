@@ -17,7 +17,7 @@
     <% end %>
     <div data-controller="company-select">
       <div class="field flex" id="company-field">
-        <%= form.label :company, style: "display: block" %>
+        <%= form.label :company, "Company <span class='required'>*</span>".html_safe, style: "display: block" %>
         <div>
           <% Company.all.each do |company| %>
             <%= form.radio_button :company_id, company.id, data: { 
@@ -30,10 +30,10 @@
           Please select a company
         </div>
       </div>
-      <div class="<%= 'hidden' if project.new_record? %>">
+      <div class="<%= '' if project.new_record? %>">
         <div class="separator"></div>
         <div class="field">
-          <%= form.label :quotation_ids, "Quotations" %>
+          <%= form.label :quotation_ids, "Quotations <span class='required'>*</span>".html_safe %>
           <div class="select-container">
             <%= form.collection_select :quotation_ids, 
             project.new_record? ? [] : 
@@ -54,39 +54,74 @@
           </div>
         </div>
         <div class="separator"></div>
+        <p class="semibold" style="margin-bottom: 10px;">Client's P.O. Details</p>
         <div class="field">
-          <%= form.label :client_po, "Client's P.O.", style: "display: block" %>
+          <%= form.label :client_po, "Client's P.O. <span class='required'>*</span>".html_safe, style: "display: block" %>
           <%= form.file_field :client_po, data: { form_validation_target: "clientPoInput" } %>
           <div class="error-message hidden" data-form-validation-target="clientPoError">
             Please upload a valid client's P.O.
           </div>
         </div>
         <div class="field">
-          <%= form.label :po_number, "PO Number", style: "display: block" %>
+          <%= form.label :po_number, "PO Number <span class='required'>*</span>".html_safe, style: "display: block" %>
           <%= form.text_field :po_number, data: { form_validation_target: "poNumberInput" } %>
           <div class="error-message hidden" data-form-validation-target="poNumberError">
             Please enter a valid PO number
           </div>
         </div>
+        <div class="field" data-controller="flatpickr">
+          <label>Job Date</label>
+          <div class="flex travel-date-fields">
+            <div>
+              <%= form.label :start_date, 'Start Date', style: "display: block" %>
+              <%= form.datetime_field :start_date, class: "start_date" %>
+            </div>
+            <div>
+              <%= form.label :end_date, 'End Date', style: "display: block"   %>
+              <%= form.datetime_field :end_date, class: "end_date" %>
+            </div>
+          </div>
+        </div>
         <div class="separator"></div>
+        <p class="semibold" style="margin-bottom: 10px;">Project Personnel</p>
         <div class="field">
-          <%= form.label :supervisor, style: "display: block" %>
+          <%= form.label :supervisor, "Supervisor/In-Charge <span class='required'>*</span>".html_safe, style: "display: block" %>
           <%= form.text_field :supervisor, data: { form_validation_target: "supervisorInput" } %>
           <div class="error-message hidden" data-form-validation-target="supervisorError">
             Please enter name of project supervisor
           </div>
         </div>
-        <div class="separator"></div>
-        <p class="semibold" style="margin-bottom: 10px;">Payment Information</p>
         <div class="field">
-          <%= form.label :amount, style: "display: block" %>
+          <%= form.label :technical_team, "Technical Team", style: "display: block" %>
+          <div class="select-container">
+            <%= form.select :technical_team, 
+              [],
+              {},
+              { 
+                multiple: true, 
+                class: 'technical-team-select',
+                data: { 
+                  controller: 'slim',
+                  slim_target: 'field',
+                  form_validation_target: "technicalTeamInput"
+                } 
+              } %>
+          </div>
+          <div class="error-message hidden" data-form-validation-target="technicalTeamError">
+            Please enter technical team members
+          </div>
+        </div>
+        <div class="separator"></div>
+        <p class="semibold" style="margin-bottom: 10px;">Payment Details</p>
+        <div class="field">
+          <%= form.label :amount, "Amount <span class='required'>*</span>".html_safe, style: "display: block" %>
           <%= form.number_field :amount, step: "0.01", data: { form_validation_target: "amountInput" }, onwheel: "return false" %>
           <div class="error-message hidden" data-form-validation-target="amountError">
             Please enter a valid amount
           </div>
         </div>
         <div class="field">
-          <%= form.label :payment, 'Payment Term', style: "display: block" %>
+          <%= form.label :payment, "Payment Term <span class='required'>*</span>".html_safe, style: "display: block" %>
           <div class="select-container">
             <%= form.select :payment, [['50% downpayment', '50% downpayment'], ['30 days', '30 days'], ['Paid', 'Paid']], 
               { prompt: "Select Payment Term" },

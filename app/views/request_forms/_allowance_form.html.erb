@@ -37,18 +37,18 @@
     </div>
   </div>
   <div class="separator"></div>
-  <div class="" data-controller="flatpickr">
+  <div>
     <div class="">
-      <div class="field">
+      <div class="field" data-controller="flatpickr">
         <label>Travel Date</label>
         <div class="flex travel-date-fields">
           <div>
             <%= form.label :start_travel_date, 'Start Date', style: "display: block" %>
-            <%= form.datetime_field :start_travel_date, class: "start_travel_date" %>
+            <%= form.datetime_field :start_travel_date, class: "start_date" %>
           </div>
           <div>
             <%= form.label :end_travel_date, 'End Date', style: "display: block"   %>
-            <%= form.datetime_field :end_travel_date, class: "end_travel_date" %>
+            <%= form.datetime_field :end_travel_date, class: "end_date" %>
           </div>
         </div>
       </div>

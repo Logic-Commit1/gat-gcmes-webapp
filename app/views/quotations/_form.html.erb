@@ -28,7 +28,7 @@
         <div class="separator"></div>
         <div>
           <div class="field <%= 'hidden' if quotation.new_record? %>" data-company-select-target="projectSelectField">
-            <%= form.label :project_id, "Project (Optional)" %>
+            <%= form.label :project_id %>
             <div class="select-container">
               <%= form.collection_select :project_id,
                 quotation.new_record? ? [] : 
@@ -47,7 +47,7 @@
             <% if quotation.new_record? %>
               <div class="semibold">Client Details</div>
               <div class="field">
-                <%= form.label :client_id %>
+                <%= form.label :client_id, "Client <span class='required'>*</span>".html_safe %>
                 <div class="select-container">
                   <%= form.collection_select :client_id, [], :id, :name, 
                     { prompt: "Select Client" }, 
@@ -66,14 +66,14 @@
             <% end %>
           </div>
           <div class="field">
-            <%= form.label :attention, "Attention" %>
+            <%= form.label :attention, "Attention <span class='required'>*</span>".html_safe %>
             <%= form.text_field :attention, data: { form_validation_target: "attentionInput" } %>
             <div class="error-message hidden" data-form-validation-target="attentionError">
               Please enter an attention
             </div>
           </div>
           <div class="field">
-            <%= form.label :vessel, "Vessel" %>
+            <%= form.label :vessel, "Vessel <span class='required'>*</span>".html_safe %>
             <%= form.text_field :vessel, data: { form_validation_target: "vesselInput" } %>
             <div class="error-message hidden" data-form-validation-target="vesselError">
               Please enter a vessel
@@ -81,7 +81,7 @@
           </div>
           <div class="separator"></div>
           <div class="field">
-            <%= form.label :subject, "Subject" %>
+            <%= form.label :subject, "Subject <span class='required'>*</span>".html_safe %>
             <%= form.text_area :subject, data: { form_validation_target: "subjectInput" } %>
             <div class="error-message hidden" data-form-validation-target="subjectError">
               Please enter a subject

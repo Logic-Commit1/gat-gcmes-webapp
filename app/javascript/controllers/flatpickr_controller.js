@@ -4,8 +4,8 @@ import flatpickr from "flatpickr"
 // Connects to data-controller="flatpickr"
 export default class extends Controller {
   connect() {
-    let startDateElement = document.querySelector(".start_travel_date")
-    let endDateElement = document.querySelector(".end_travel_date")
+    let startDateElement = document.querySelector(".start_date")
+    let endDateElement = document.querySelector(".end_date")
 
     let startDatePicker = flatpickr(startDateElement, {
       dateFormat: "Y-m-d",
