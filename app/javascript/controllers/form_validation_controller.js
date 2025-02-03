@@ -153,6 +153,10 @@ export default class extends Controller {
         rows.forEach((row) => {
           const inputs = row.querySelectorAll("input, select")
           inputs.forEach((input) => {
+            // Skip validation for brand input field
+            if (input.name && input.name.includes("[brand]")) {
+              return
+            }
             if (!input.value || input.value.trim() === "") {
               input.classList.add("field-error")
               hasItemErrors = true
