@@ -174,12 +174,14 @@ class QuotationsController < ApplicationController
         :uid, :company_id, :project_id, :client_id, :attention, :vessel, :subject, :user_id,
         :remarks, :payment, :lead_time, :warranty, :sub_total,
         :total, :vat, :additional_conditions, :preparer, :approver, :discount, :discount_rate, :quotation_type,
+        
         products_attributes: [
           :id, :name, :quantity, :unit, :price, :discount, :brand, 
           :description, :specs, :terms, :remarks, :image, 
           :quotation_id, :canvass_id, :request_form_id, :purchase_order_id, 
           :_destroy,
-          specs_attributes: [:id, :name, :value, :_destroy]
+          specs_attributes: [:id, :name, :value, :_destroy],
+          scopes_attributes: [:id, :name, :_destroy]
         ]
       )
     rescue

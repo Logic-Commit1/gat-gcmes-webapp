@@ -67,6 +67,14 @@
             <td><%= spec.value&.capitalize %></td>
           </tr>
         <% end %>
+        <tr>
+          <td colspan="7">
+            <% scopes = p.deleted? ? p.scopes.with_deleted : p.scopes %>
+            <% scopes.each do |scope| %>
+              <%= scope.name&.capitalize %>
+            <% end %>
+          </td>
+        </tr>
         <% if p.image.attached? %>
           <% begin %>
             <tr>

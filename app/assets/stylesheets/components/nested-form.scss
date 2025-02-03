@@ -55,14 +55,14 @@
 
   #spec-title {
     display: grid;
-    grid-template-columns: 0.4fr 0.4fr 1fr;
+    grid-template-columns: 1.4fr 1.4fr 0.2fr;
     align-items: flex-end;
     gap: 10px;
   }
 
   .nested-spec-form {
     display: grid;
-    grid-template-columns: 0.4fr 0.4fr 1fr;
+    grid-template-columns: 1.4fr 1.4fr 0.2fr;
     align-items: center;
     column-gap: 10px;
 
@@ -70,6 +70,13 @@
       //   max-width: 350px;
       border: 1px solid #ccc;
     }
+  }
+
+  .nested-scope-form {
+    display: grid;
+    grid-template-columns: 1fr 0.2fr;
+    align-items: center;
+    column-gap: 10px;
   }
 }
 
@@ -126,7 +133,7 @@
 
   .nested-spec-form {
     display: grid;
-    grid-template-columns: 0.4fr 0.4fr 1fr;
+    // grid-template-columns: 0.4fr 0.4fr 1fr;
     align-items: center;
     column-gap: 10px;
 
@@ -190,7 +197,7 @@
 
   .nested-spec-form {
     display: grid;
-    grid-template-columns: 0.4fr 0.4fr 1fr;
+    // grid-template-columns: 0.4fr 0.4fr 1fr;
     align-items: center;
     column-gap: 10px;
 

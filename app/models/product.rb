@@ -8,7 +8,9 @@ class Product < ApplicationRecord
   belongs_to :purchase_order, optional: true
 
   has_many :specs, dependent: :destroy, inverse_of: :product
+  has_many :scopes, dependent: :destroy, inverse_of: :product
   accepts_nested_attributes_for :specs, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :scopes, allow_destroy: true, reject_if: :all_blank
 
   has_one_attached :image, dependent: :destroy
 

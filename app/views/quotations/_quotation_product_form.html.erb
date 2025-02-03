@@ -20,28 +20,54 @@
       </tr>
       <tr>
         <td colspan="7" style="position: relative; padding: 10px;">
-          <%= link_to '<i class="fas fa-plus"></i> Add Spec'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#addSpec" }, style: "position: absolute; left: 15px; bottom: 5px" %>
-          <div class="hidden" id="spec-title">
-            <p>Specification</p>
-            <p>Value</p>
-          </div>
-          <%= f.fields_for :specs do |spec_fields| %>
-            <div class="nested-spec-form">
-              <div>
-                <%= spec_fields.text_field :name, style: "border: 1px solid #ccc;" %>
+          <div style="display: flex; gap: 70px;">
+            <!-- Specs Column -->
+            <div style="position: relative; margin-bottom: 0px; height: 100%;">
+              <%= link_to '<i class="fas fa-plus"></i> Add Spec'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#addSpec" }, style: "position: absolute; bottom: -10px" %>
+              <div class="hidden" id="spec-title">
+                <p>Specification</p>
+                <p>Value</p>
               </div>
-              <div>
-                <%= spec_fields.text_field :value, style: "border: 1px solid #ccc;" %>
-              </div>
-              <div>
-                <% unless f.object == f.object.quotation&.products&.first&.specs&.first %>
-                  <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#removeSpec" } %>
-                <% end %>
-              </div>
-              <%= spec_fields.hidden_field :_destroy %>
+              <%= f.fields_for :specs do |spec_fields| %>
+                <div class="nested-spec-form">
+                  <div>
+                    <%= spec_fields.text_field :name, style: "border: 1px solid #ccc;" %>
+                  </div>
+                  <div>
+                    <%= spec_fields.text_field :value, style: "border: 1px solid #ccc;" %>
+                  </div>
+                  <div>
+                    <% unless f.object == f.object.quotation&.products&.first&.specs&.first %>
+                      <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#removeSpec" } %>
+                    <% end %>
+                  </div>
+                  <%= spec_fields.hidden_field :_destroy %>
+                </div>
+              <% end %>
+              <div data-nested-form-target="spec-target"></div>
             </div>
-          <% end %>
-          <div data-nested-form-target="spec-target"></div>
+            <!-- Scopes Column  -->
+            <div style="position: relative; margin-bottom: 0px; height: 100%;">
+              <%= link_to '<i class="fas fa-plus"></i> Add Scope'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#addScope" }, style: "position: absolute; bottom: -10px" %>
+              <div class="hidden" id="scope-title">
+                <p>Scope of Work</p>
+              </div>
+              <%= f.fields_for :scopes do |scope_fields| %>
+                <div class="nested-scope-form">
+                  <div>
+                    <%= scope_fields.text_field :name, style: "border: 1px solid #ccc;" %>
+                  </div>
+                  <div>
+                    <% unless f.object == f.object.quotation&.products&.first&.scopes&.first %>
+                      <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#removeScope" } %>
+                    <% end %>
+                  </div>
+                  <%= scope_fields.hidden_field :_destroy %>
+                </div>
+              <% end %>
+              <div data-nested-form-target="scope-target"></div>
+            </div>
+          </div>
         </td>
       </tr>
     </tbody>
@@ -61,6 +87,19 @@
           <% end %>
         </div>
         <%= spec_fields.hidden_field :_destroy %>
+      </div>
+    <% end %>
+  </template>
+  <template data-nested-form-target="scope-template">
+    <%= f.fields_for :scopes, Scope.new, child_index: 'NEW_RECORD' do |scope_fields| %>
+      <div class="nested-scope-form">
+        <div>
+          <%= scope_fields.text_field :name, style: "border: 1px solid #ccc;" %>
+        </div>
+        <div>
+          <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#removeScope" } %>
+        </div>
+        <%= scope_fields.hidden_field :_destroy %>
       </div>
     <% end %>
   </template>
