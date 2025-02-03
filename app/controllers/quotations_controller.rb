@@ -78,17 +78,17 @@ class QuotationsController < ApplicationController
     respond_to do |format|
       if @quotation.update(quotation_params)
         # Check if project association changed
-        project_changed = @quotation.saved_change_to_project_id?
-        old_project_id = @quotation.project_id_before_last_save
+        # project_changed = @quotation.saved_change_to_project_id?
+        # old_project_id = @quotation.project_id_before_last_save
         
-        # Update status for both old and new projects if changed
-        if project_changed
-          Project.find(old_project_id).check_and_update_status if old_project_id
-          @quotation.project.check_and_update_status if @quotation.project.present?
-        else
-          # Update current project's status
-          @quotation.project.check_and_update_status if @quotation.project.present?
-        end
+        # # Update status for both old and new projects if changed
+        # if project_changed
+        #   Project.find(old_project_id).check_and_update_status if old_project_id
+        #   @quotation.project.check_and_update_status if @quotation.project.present?
+        # else
+        #   # Update current project's status
+        #   @quotation.project.check_and_update_status if @quotation.project.present?
+        # end
 
         format.html { redirect_to quotation_url(@quotation), notice: "Quotation was successfully updated." }
         format.json { render :show, status: :ok, location: @quotation }

@@ -17,7 +17,7 @@
     <% end %>
     <div data-controller="company-select">
       <div class="field flex" id="company-field">
-        <%= form.label :company, "Company <span class='required'>*</span>".html_safe, style: "display: block" %>
+        <%= form.label :company, style: "display: block" %>
         <div>
           <% Company.all.each do |company| %>
             <%= form.radio_button :company_id, company.id, data: { 
@@ -30,43 +30,27 @@
           Please select a company
         </div>
       </div>
-      <div class="<%= '' if project.new_record? %>">
+      <div class="<%= 'hidden' if project.new_record? %>">
         <div class="separator"></div>
         <div class="field">
-          <%= form.label :quotation_ids, "Quotations <span class='required'>*</span>".html_safe %>
-          <div class="select-container">
+          <%= form.label :quotation_ids, "Quotations" %>
+          <div style="margin-bottom: 0;" class="select-container">
             <%= form.collection_select :quotation_ids, 
-            project.new_record? ? [] : 
-              (project.gat? ? Quotation.all.select(&:gat?) : 
-               project.gcmes? ? Quotation.all.select(&:gcmes?) : []),
-            :id, :uid,
-            {},
-            { multiple: true, 
-              data: { 
-                slim_target: 'field', 
-                company_select_target: "quotationSelect", 
-                form_validation_target: "quotationSelect"
-              } 
-            } %>
+        project.new_record? ? [] : 
+          (project.gat? ? Quotation.all.select(&:gat?) : 
+           project.gcmes? ? Quotation.all.select(&:gcmes?) : []),
+        :id, :uid,
+        {},
+        { multiple: true, 
+          data: { 
+            slim_target: 'field', 
+            company_select_target: "quotationSelect", 
+            form_validation_target: "quotationSelect"
+          } 
+        } %>
           </div>
           <div class="error-message hidden" data-form-validation-target="quotationError">
             Please select at least one quotation
-          </div>
-        </div>
-        <div class="separator"></div>
-        <p class="semibold" style="margin-bottom: 10px;">Client's P.O. Details</p>
-        <div class="field">
-          <%= form.label :client_po, "Client's P.O. <span class='required'>*</span>".html_safe, style: "display: block" %>
-          <%= form.file_field :client_po, data: { form_validation_target: "clientPoInput" } %>
-          <div class="error-message hidden" data-form-validation-target="clientPoError">
-            Please upload a valid client's P.O.
-          </div>
-        </div>
-        <div class="field">
-          <%= form.label :po_number, "PO Number <span class='required'>*</span>".html_safe, style: "display: block" %>
-          <%= form.text_field :po_number, data: { form_validation_target: "poNumberInput" } %>
-          <div class="error-message hidden" data-form-validation-target="poNumberError">
-            Please enter a valid PO number
           </div>
         </div>
         <div class="field" data-controller="flatpickr">
@@ -83,9 +67,24 @@
           </div>
         </div>
         <div class="separator"></div>
-        <p class="semibold" style="margin-bottom: 10px;">Project Personnel</p>
         <div class="field">
-          <%= form.label :supervisor, "Supervisor/In-Charge <span class='required'>*</span>".html_safe, style: "display: block" %>
+          <%= form.label :client_po, "Client's P.O.", style: "display: block" %>
+          <%= form.file_field :client_po, data: { form_validation_target: "clientPoInput" } %>
+          <div class="error-message hidden" data-form-validation-target="clientPoError">
+            Please upload a valid client's P.O.
+          </div>
+        </div>
+        <div class="field">
+          <%= form.label :po_number, "PO Number", style: "display: block" %>
+          <%= form.text_field :po_number, data: { form_validation_target: "poNumberInput" } %>
+          <div class="error-message hidden" data-form-validation-target="poNumberError">
+            Please enter a valid PO number
+          </div>
+        </div>
+        <div class="separator"></div>
+        <%# <p class="semibold" style="margin-bottom: 10px;">Project Personnel</p> %>
+        <div class="field">
+          <%= form.label :supervisor, "Supervisor/In-Charge", style: "display: block" %>
           <%= form.text_field :supervisor, data: { form_validation_target: "supervisorInput" } %>
           <div class="error-message hidden" data-form-validation-target="supervisorError">
             Please enter name of project supervisor
@@ -95,77 +94,39 @@
           <%= form.label :technical_team, "Technical Team", style: "display: block" %>
           <div class="select-container">
             <%= form.select :technical_team, 
-              [],
-              {},
-              { 
-                multiple: true, 
-                class: 'technical-team-select',
-                data: { 
-                  controller: 'slim',
-                  slim_target: 'field',
-                  form_validation_target: "technicalTeamInput"
-                } 
-              } %>
-          </div>
-          <div class="error-message hidden" data-form-validation-target="technicalTeamError">
-            Please enter technical team members
+            [],
+            {},
+            { 
+              multiple: true, 
+              class: 'technical-team-select',
+              data: { 
+                controller: 'slim',
+                slim_target: 'field',
+              } 
+            } %>
           </div>
         </div>
         <div class="separator"></div>
-        <p class="semibold" style="margin-bottom: 10px;">Payment Details</p>
+        <%# <p class="semibold" style="margin-bottom: 10px;">Payment Details</p> %>
         <div class="field">
-          <%= form.label :amount, "Amount <span class='required'>*</span>".html_safe, style: "display: block" %>
+          <%= form.label :amount, style: "display: block" %>
           <%= form.number_field :amount, step: "0.01", data: { form_validation_target: "amountInput" }, onwheel: "return false" %>
           <div class="error-message hidden" data-form-validation-target="amountError">
             Please enter a valid amount
           </div>
         </div>
         <div class="field">
-          <%= form.label :payment, "Payment Term <span class='required'>*</span>".html_safe, style: "display: block" %>
+          <%= form.label :payment, "Payment Term", style: "display: block" %>
           <div class="select-container">
             <%= form.select :payment, [['50% downpayment', '50% downpayment'], ['30 days', '30 days'], ['Paid', 'Paid']], 
-              { prompt: "Select Payment Term" },
-              { data: { form_validation_target: "paymentSelect" } } %>
+          { prompt: "Select Payment Term" },
+          { data: { form_validation_target: "paymentSelect" } } %>
             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" class="svg-inline--fa fa-caret-down fa-w-10 icon select-status-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg>
           </div>
           <div class="error-message hidden" data-form-validation-target="paymentError">
             Please select a payment term
           </div>
         </div>
-        <% if project.persisted? %>
-          <div class="separator"></div>
-          <p class="semibold" style="margin-bottom: 10px;">Attached Files</p>
-          <div class="field">
-            <%= form.label :work_acceptance_files, "Work Acceptance", style: "display: block" %>
-            <% if project.work_acceptance_files.attached? %>
-              <div>
-                <% project.work_acceptance_files.each do |file| %>
-                  <div>
-                    <%= file.filename %>
-                    <%= button_to "Remove", purge_attachment_project_path(project, attachment_type: 'work_acceptance', attachment_id: file.id), method: :delete, class: "delete-button" %>
-                  </div>
-                <% end %>
-              </div>
-            <% else %>
-              <p>No work acceptance files attached</p>
-            <% end %>
-          </div>
-          <div class="field">
-            <%= form.label :delivery_receipt_files, "Delivery Receipt", style: "display: block" %>
-            <% if project.delivery_receipt_files.attached? %>
-              <div>
-                <% project.delivery_receipt_files.each do |file| %>
-                  <div>
-                    <%= file.filename %>
-                    <%= button_to "Remove", purge_attachment_project_path(project, attachment_type: 'delivery_receipt', attachment_id: file.id), method: :delete, class: "delete-button" %>
-                  </div>
-                <% end %>
-              </div>
-            <% else %>
-              <p>No delivery receipt files attached</p>
-            <% end %>
-          </div>
-        <% end %>
         <div>
           <%= form.submit %>
         </div>
@@ -175,3 +136,4 @@
       </div>
     <% end %>
   </div>
+</div>

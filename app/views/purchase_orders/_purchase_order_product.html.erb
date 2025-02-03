@@ -3,19 +3,19 @@
     <tbody>
       <tr data-new-record="<%= f.object.new_record? %>">
         <td style="width: 30%;">
-          <%= f.text_field :name, class: "required" %>
+          <%= f.text_field :name %>
         </td>
         <td style="width: 15%;">
-          <%= f.number_field :quantity, class: "required align-right", data: { action: "input->total-calculator#calculate" }, onwheel: "return false" %>
+          <%= f.number_field :quantity, class: "align-right", data: { action: "input->total-calculator#calculate" }, onwheel: "return false" %>
         </td>
         <td style="width: 15%;">
           <%= f.select :unit,
                   options_for_select([['Select Unit', '']] + ApplicationRecord::UNIT_OF_MEASUREMENTS.map { |unit| [unit, unit] }, f.object.unit),
                   { include_blank: false },
-                  { class: "required align-right" } %>
+                  { class: "align-right" } %>
         </td>
         <td style="width: 15%;" >
-          <%= f.number_field :price, placeholder: "0.00", class: "required align-right", data: { action: "input->total-calculator#calculate" }, onwheel: "return false" %>
+          <%= f.number_field :price, placeholder: "0.00", class: "align-right", data: { action: "input->total-calculator#calculate" }, onwheel: "return false" %>
         </td>
         <td style="width: 3%; text-align: center; vertical-align: middle;">
           <% if f.object.purchase_order&.products&.first != f.object %>

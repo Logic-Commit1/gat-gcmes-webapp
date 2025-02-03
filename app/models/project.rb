@@ -45,6 +45,7 @@ class Project < ApplicationRecord
   # Callbacks
   before_validation :set_client_from_quotation
   before_save :set_uid
+  before_save :clean_technical_team
   after_update :check_sales_invoice
 
   def set_uid 
@@ -109,6 +110,10 @@ class Project < ApplicationRecord
   # end
 
   private
+
+  def clean_technical_team
+    self.technical_team = technical_team.reject(&:blank?) if technical_team.is_a?(Array)
+  end
 
   def set_client_from_quotation
     return if quotations.empty?

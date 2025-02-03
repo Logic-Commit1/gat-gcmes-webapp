@@ -41,7 +41,7 @@
         <% if @request_form.Order? %>
           <div class="link-documents-section <%= 'hidden' if @request_form.new_record? %>" data-company-select-target="linkDocumentsSection">
             <div class="separator"></div>
-            <div class="semibold">Link Documents</div>
+            <div style="margin-bottom: 16px;" class="semibold">Link Documents</div>
             <div class="field">
               <%= form.label :canvass_id %>
               <div class="select-container">

@@ -45,7 +45,7 @@
           <div class="separator"></div>
           <div id="client-section">
             <% if quotation.new_record? %>
-              <div class="semibold">Client Details</div>
+              <%# <div class="semibold">Client Details</div> %>
               <div class="field">
                 <%= form.label :client_id, "Client <span class='required'>*</span>".html_safe %>
                 <div class="select-container">
@@ -89,7 +89,7 @@
           </div>
           <div class="separator"></div>
           <div id="item-table-section" data-controller="total-calculator">
-            <p class="semibold" style="margin-bottom: 10px;">Item Table</p>
+            <p class="semibold" style="margin-bottom: 16px;">Item Table</p>
             <table class="quotation-product-table">
               <thead>
                 <tr id="table-header">
@@ -142,7 +142,7 @@
           </div>
           <div class="separator"></div>
           <div id="terms-and-conditions-section">
-            <div class="semibold">Terms and Conditions</div>
+            <div style="margin-bottom: 16px;" class="semibold">Terms and Conditions</div>
             <div>
               <div class="field">
                 <%= form.label :lead_time, class: "label" %>
