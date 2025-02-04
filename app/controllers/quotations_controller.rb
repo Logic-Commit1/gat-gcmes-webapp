@@ -45,9 +45,6 @@ class QuotationsController < ApplicationController
   def new
     @quotation = Quotation.new(quotation_params)
     @quotation.products.build
-    # @quotation.products.each do |product|
-    #   product.specs.build
-    # end
   end
 
   # GET /quotations/1/edit

@@ -120,8 +120,8 @@
         <%= button_to send("void_#{document.class.name.underscore}_path", document), 
                 method: :delete, 
                 class: "button flex items-center white", 
-                style: "background-color: var(--danger-color);", 
-                data: { turbo_confirm: "Are you sure you want to void '#{document.uid}'?" } do %>
+                style: "background-color: var(--danger-color);",
+                data: { turbo: false, controller: "confirmation", action: "click->confirmation#confirm", uid: document.uid } do %>
           <i class="fa-regular fa-trash-can"></i>
           <span class="white">Void</span>
         <% end %>
