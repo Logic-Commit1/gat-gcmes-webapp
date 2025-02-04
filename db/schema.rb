@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_03_154009) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_04_063127) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -180,6 +180,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_03_154009) do
     t.jsonb "technical_team", default: []
     t.datetime "start_date"
     t.datetime "end_date"
+    t.datetime "served_at"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["company_id"], name: "index_projects_on_company_id"
     t.index ["user_id"], name: "index_projects_on_user_id"

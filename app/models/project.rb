@@ -121,6 +121,30 @@ class Project < ApplicationRecord
   end
 
   def check_sales_invoice
-    served! if sales_invoice.present? && sales_invoice_previously_changed?
+    return unless saved_change_to_sales_invoice?
+
+    begin
+      if sales_invoice.present?
+        # Only update to served if not already served to avoid unnecessary updates
+        unless served?
+          update_columns(
+            status: Project.statuses['served'],
+            served_at: Time.current
+          )
+        end
+      else
+        # Only update to ongoing if not already ongoing
+        unless ongoing?
+          update_columns(
+            status: :ongoing,
+            served_at: nil
+          )
+        end
+      end
+    rescue => e
+      Rails.logger.error "Error updating project status: #{e.message}"
+      # Re-raise the error to ensure it's caught by the application's error handling
+      raise
+    end
   end
 end

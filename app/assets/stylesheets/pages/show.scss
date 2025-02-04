@@ -52,6 +52,32 @@
         }
       }
     }
+
+    .si-cr-dropdown {
+      position: absolute;
+      width: 260px;
+      top: 38px;
+      left: 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+      font-size: 14px;
+
+      div {
+        margin-bottom: 0;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 4px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+    }
   }
 
   &.client-page,

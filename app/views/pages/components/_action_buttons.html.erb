@@ -78,12 +78,43 @@
   </button> %>
       <%# Project document %>
       <% if document.class.name == "Project" && (document.user == current_user || current_user.manager?) %>
-        <button class="button flex items-center white-bg">
-          <%= link_to send("edit_#{document.class.name.underscore}_path", document) do %>
-            <i class="fa-regular fa-edit"></i>
-            <span>Edit</span>
-          <% end %>
-        </button>
+        <%= button_to send("edit_#{document.class.name.underscore}_path", document), 
+                  method: :get, 
+                class: "button black flex items-center white-bg",
+                style: "margin-right: 5px;" do %>
+          <i class="fa-regular fa-edit"></i>
+          <span>Edit</span>
+        <% end %>
+      <%end%>
+      <% if document.class.name == "Project" && !document.served? && (document.user == current_user || current_user.manager?) %>
+        <div data-controller="dropdown" class="relative inline-block text-left">
+          <button 
+          type="button" 
+          id="btn-approve"
+          data-action="click->dropdown#toggleMenu"
+            class="button white flex items-center ">
+            <i class="fa-regular fa-check-circle"></i>
+            <span>Mark as Served</span>
+          </button>
+          <div 
+          class="si-cr-dropdown hidden" 
+          data-dropdown-target="menu">
+            <div class="flex flex-col">
+              <%= form_with(model: document, local: true) do |f| %>
+                <div class="flex flex-col p-2">
+                  <%= f.label :sales_invoice, "SI/CR", class: "mb-1 s-text" %>
+                  <i class="fas fa-info-circle tooltip-icon">
+                    <span class="tooltiptext">Entering SI/CR will mark this project as "Served"</span>
+                  </i>
+                  <div class="flex flex-row column-gap-6">
+                    <%= f.text_field :sales_invoice, class: "form-control mb-2 s-text" %>
+                    <%= f.submit "Enter", style: "font-size: 12px; padding: 6px 10px; height: fit-content; flex: 0.5;", class: "s-text" %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
       <%end%>
       <% if document.class.name != "Project" && !document.approved? && document.user == current_user %>
         <%= button_to send("void_#{document.class.name.underscore}_path", document), 

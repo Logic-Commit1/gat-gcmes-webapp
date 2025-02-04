@@ -127,6 +127,13 @@
             Please select a payment term
           </div>
         </div>
+        <% if project.persisted? && project.sales_invoice.present? %>
+          <div class="separator"></div>
+          <div class="field">
+            <%= form.label :sales_invoice, "SI/CR", style: "display: block" %>
+            <%= form.text_field :sales_invoice %>
+          </div>
+        <% end %>
         <div>
           <%= form.submit %>
         </div>
