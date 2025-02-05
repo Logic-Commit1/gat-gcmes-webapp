@@ -1,4 +1,4 @@
-<div class="form-container">
+<div class="form-container" data-controller="form-exit-prevention">
   <%= form_with(model: purchase_order, html: { autocomplete: "off" }, data: {
     controller: 'purchase-order nested-form form-validation', 
     nested_form_wrapper_selector_value: '.nested-form-wrapper',
