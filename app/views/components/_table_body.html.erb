@@ -52,31 +52,31 @@
           </tr>
         <% end %>
       <% elsif title == "Employees" %>
-
-        <% documents&.each do |employee| %>
-          <% unless employee.information_technology? %>
-            <tr>
-              <td><%= employee.first_name&.titleize %> <%= employee.last_name&.titleize %></td>
-              <td><%= employee.department&.humanize&.titleize %></td>
-              
-              <td><%= employee.position&.titleize %></td>
-              <td><%= employee.role&.capitalize %></td>
-              <% if employee.manager? %>
-                <td></td>
-              <% else %>
-                <td>
-                  <%= link_to promote_employee_path(employee), class: "btn btn-sm", id: "btn-approve", style: "text-decoration: none; color: white; font-size: 12px;", data: { turbo_method: :patch, turbo_confirm: "Are you sure you want to promote #{employee.first_name.titleize} #{employee.last_name.titleize}?" } do %>
-                    <i class="fas fa-arrow-up"></i> Promote
-                  <% end %>
-                  <%= link_to demote_employee_path(employee), class: "btn btn-sm", id: "btn-reject", style: "text-decoration: none; color: white; font-size: 12px;", data: { turbo_method: :patch, turbo_confirm: "Are you sure you want to demote #{employee.first_name.titleize} #{employee.last_name.titleize}?" } do %>
-                    <i class="fas fa-arrow-down"></i> Demote
-                  <% end %>
-                </td>
-              <% end %>
-            </tr>
+        <% if current_user.admin? || current_user.developer? %>
+          <% documents&.each do |employee| %>
+            <% unless employee.information_technology? %>
+              <tr>
+                <td><%= employee.first_name&.titleize %> <%= employee.last_name&.titleize %></td>
+                <td><%= employee.department&.humanize&.titleize %></td>
+                
+                <td><%= employee.position&.titleize %></td>
+                <td><%= employee.role&.capitalize %></td>
+                <% if employee.manager? %>
+                  <td></td>
+                <% else %>
+                  <td>
+                    <%= link_to promote_employee_path(employee), class: "btn btn-sm", id: "btn-approve", style: "text-decoration: none; color: white; font-size: 12px;", data: { turbo_method: :patch, turbo_confirm: "Are you sure you want to promote #{employee.first_name.titleize} #{employee.last_name.titleize}?" } do %>
+                      <i class="fas fa-arrow-up"></i> Promote
+                    <% end %>
+                    <%= link_to demote_employee_path(employee), class: "btn btn-sm", id: "btn-reject", style: "text-decoration: none; color: white; font-size: 12px;", data: { turbo_method: :patch, turbo_confirm: "Are you sure you want to demote #{employee.first_name.titleize} #{employee.last_name.titleize}?" } do %>
+                      <i class="fas fa-arrow-down"></i> Demote
+                    <% end %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
           <% end %>
         <% end %>
-        
       <% elsif title == "Whitelisted Employees" %>
         <% documents&.each do |employee| %>
           <tr>

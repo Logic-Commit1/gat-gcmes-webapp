@@ -1,4 +1,6 @@
 class EmployeesController < ApplicationController
+  include Authorizable
+  before_action :authorize_admin!
   before_action :set_employee, only: %i[ show edit update destroy ]
   before_action :set_user, only: %i[ promote demote ]
 

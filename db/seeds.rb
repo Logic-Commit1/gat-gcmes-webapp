@@ -15,6 +15,8 @@ Contact.destroy_all
 Client.destroy_all
 Supplier.destroy_all
 Company.destroy_all
+Employee.destroy_all
+User.where.not(id: User.first&.id).destroy_all
 
 # Create companies
 gat = Company.create!(name: "Golden Arrow Trading", code: "GAT", address: "17 San Lorenzo Sc. San Vicente, Maysilo, Malabon City, Philippines, 1477", contact_numbers: ["09123456789"], emails: ["sales@gat.com"])
@@ -22,10 +24,10 @@ gcmes = Company.create!(name: "Golden Chain Marine Engineering Services", code: 
 
 # Create client contacts
 client_a_contact = Contact.create(name: "NCSMC Contact", emails: ["sales@ncsmc.com"], contact_numbers: ["09123456789"])
-client_b_contact = Contact.create(name: "CB Contact", emails: ["sales@cb.com"], contact_numbers: ["09123456789"])
-client_c_contact = Contact.create(name: "CC Contact", emails: ["sales@cc.com"], contact_numbers: ["09123456789"])
-client_d_contact = Contact.create(name: "CD Contact", emails: ["sales@cd.com"], contact_numbers: ["09123456789"])
-client_e_contact = Contact.create(name: "CE Contact", emails: ["sales@ce.com"], contact_numbers: ["09123456789"])
+client_b_contact = Contact.create(name: "FSC Contact", emails: ["sales@fsc.com"], contact_numbers: ["09123456789"])
+client_c_contact = Contact.create(name: "NFC Contact", emails: ["sales@nfc.com"], contact_numbers: ["09123456789"])
+client_d_contact = Contact.create(name: "SPAN Contact", emails: ["sales@span.com"], contact_numbers: ["09123456789"])
+client_e_contact = Contact.create(name: "LSC Contact", emails: ["sales@lsc.com"], contact_numbers: ["09123456789"])
 
 # Create supplier contacts
 supplier_a_contact = Contact.create(name: "SA Contact", emails: ["sales@sa.com"], contact_numbers: ["09123456789"])
@@ -37,12 +39,12 @@ supplier_e_contact = Contact.create(name: "SE Contact", emails: ["sales@se.com"]
 # Create clients and associate with companies
 # GAT clients
 gat.clients.create!(name: "NARRA CREWING AND SHIP MANAGEMENT CORPORATION ", code: "NCSMC", address: "3rd Flr. VIP BLDG. 1140 ROXAS BLVD Cor., NUESTRA SRA. DE GULA, Brgt. 667 Zone 072, ERMITA MANILA. MM", contacts: [client_a_contact])
-gat.clients.create!(name: "Client B", code: "CB", address: "456 Shaw Boulevard, Mandaluyong City, Metro Manila", contacts: [client_b_contact])
-gat.clients.create!(name: "Client C", code: "CC", address: "789 Ayala Avenue, Makati City, Metro Manila", contacts: [client_c_contact])
+gat.clients.create!(name: "FRABELLE SHIPYARD CORPORATION", code: "FSC", address: "456 Shaw Boulevard, Mandaluyong City, Metro Manila", contacts: [client_b_contact])
+gat.clients.create!(name: "NEWPORT FISHING CORPORATION", code: "NFC", address: "789 Ayala Avenue, Makati City, Metro Manila", contacts: [client_c_contact])
 
 # GCMES clients  
-gcmes.clients.create!(name: "Client D", code: "CD", address: "321 EDSA, Pasay City, Metro Manila", contacts: [client_d_contact])
-gcmes.clients.create!(name: "Client E", code: "CE", address: "987 Taft Avenue, Manila City, Metro Manila", contacts: [client_e_contact])
+gcmes.clients.create!(name: "PHILIPPINE SPAN ASIA CARRIER CORP.", code: "SPAN", address: "321 EDSA, Pasay City, Metro Manila", contacts: [client_d_contact])
+gcmes.clients.create!(name: "LORENZO SHIPPING CORPORATION", code: "LSC", address: "987 Taft Avenue, Manila City, Metro Manila", contacts: [client_e_contact])
 
 # GAT suppliers
 gat.suppliers.create!(name: "Supplier A", code: "SA", address: "246 Ortigas Avenue, San Juan City, Metro Manila", contacts: [supplier_a_contact])
@@ -52,3 +54,29 @@ gat.suppliers.create!(name: "Supplier C", code: "SC", address: "864 Commonwealth
 # GCMES suppliers
 gcmes.suppliers.create!(name: "Supplier D", code: "SD", address: "753 Roxas Boulevard, Pasay City, Metro Manila", contacts: [supplier_d_contact])
 gcmes.suppliers.create!(name: "Supplier E", code: "SE", address: "159 España Boulevard, Manila City, Metro Manila", contacts: [supplier_e_contact])
+
+# Create employees
+
+[
+  { department: :operation, position: "Operation Officer", email: "operation@goldenchain.ph" },
+  { department: :accounting, position: "Auditor", email: "accounting@goldenchain.ph" },
+  { department: :purchasing, position: "Purchasing Officer", email: "purchasing@goldenchain.ph" },
+  { department: :sales, position: "Sales Officer", email: "sales@goldenchain.ph" },
+  { department: :warehouse, position: "Warehouse Officer", email: "warehouse@goldenchain.ph" }
+].each do |employee_data|
+  Employee.create!(employee_data)
+end
+
+# Create users
+
+Employee.all.each do |employee|
+  User.create!(
+    first_name: "Mr.",
+    last_name: employee.position,
+    email: employee.email,
+    mobile_number: "09123456789",
+    password: "123123",
+    password_confirmation: "123123",
+  )
+end
+

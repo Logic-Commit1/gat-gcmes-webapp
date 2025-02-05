@@ -75,11 +75,13 @@
       <% end %>
       <!-- Link to Employees 
       -->
-      <%= link_to employees_path, class: 'in-text no-underline' do %>
-        <p class="nav-btn <%= 'active' if current_page?(employees_path) %>">
-          <span class="icon"><i class="fa-solid fa-user-group"></i></span>
-          Employees
-        </p>
+      <% if current_user.admin? || current_user.developer? %>
+        <%= link_to employees_path, class: 'in-text no-underline' do %>
+          <p class="nav-btn <%= 'active' if current_page?(employees_path) %>">
+            <span class="icon"><i class="fa-solid fa-user-group"></i></span>
+            Employees
+          </p>
+        <% end %>
       <% end %>
       <!-- Link to Voided Documents -->
       <% if current_user.admin? || current_user.developer? %>

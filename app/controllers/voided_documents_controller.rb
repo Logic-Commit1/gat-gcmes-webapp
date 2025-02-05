@@ -1,4 +1,6 @@
 class VoidedDocumentsController < ApplicationController
+  include Authorizable
+  before_action :authorize_admin!
   
   def index
     # Collect all voided documents from different models
