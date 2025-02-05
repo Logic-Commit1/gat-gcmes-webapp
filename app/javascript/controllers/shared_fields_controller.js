@@ -16,26 +16,19 @@ export default class extends Controller {
     this.element.addEventListener("submit", this.sync.bind(this))
   }
 
-  checkFields(event) {
-    event.preventDefault()
-    this.sync(event)
+  // checkFields(event) {
+  //   event.preventDefault()
+  //   this.sync(event)
+  // }
 
-    console.log(
-      this.descriptionFieldTargets.map((field) => field.value),
-      this.quantityFieldTargets.map((field) => field.value),
-      this.unitFieldTargets.map((field) => field.value),
-      this.brandFieldTargets.map((field) => field.value)
-    )
-  }
+  // checkValues(event) {
+  //   event.preventDefault()
 
-  checkValues(event) {
-    event.preventDefault()
-
-    const descriptionValue = this.descriptionFieldTarget.value
-    const quantityValue = this.quantityFieldTarget.value
-    const unitValue = this.unitFieldTarget.value
-    const brandValue = this.brandFieldTarget.value
-  }
+  //   const descriptionValue = this.descriptionFieldTarget.value
+  //   const quantityValue = this.quantityFieldTarget.value
+  //   const unitValue = this.unitFieldTarget.value
+  //   const brandValue = this.brandFieldTarget.value
+  // }
 
   sync() {
     const descriptionValue = document.querySelector(

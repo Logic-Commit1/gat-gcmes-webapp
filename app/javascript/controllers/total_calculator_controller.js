@@ -47,14 +47,12 @@ export default class extends Controller {
       this.vatTarget.textContent = `${this.formatNumber(vat)}`
     }
     this.totalTarget.textContent = `PHP ${this.formatNumber(total)}`
+    console.log("calculated")
   }
 
   calculateSubTotal() {
     let sum = 0
-    const rows = document.querySelectorAll(
-      '.nested-form-wrapper:not([data-nested-form-target="template"])'
-    )
-
+    const rows = document.querySelectorAll(".quotation-product-row")
     rows.forEach((row) => {
       const quantity =
         parseFloat(row.querySelector('input[name*="[quantity]"]').value) || 0

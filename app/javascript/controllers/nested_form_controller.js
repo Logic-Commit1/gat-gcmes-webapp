@@ -5,6 +5,20 @@ export default class extends NestedForm {
     super.connect()
   }
 
+  remove(event) {
+    super.remove(event)
+    requestAnimationFrame(() => {
+      const calculatorController =
+        this.application.getControllerForElementAndIdentifier(
+          document.querySelector("[data-controller~='total-calculator']"),
+          "total-calculator"
+        )
+      if (calculatorController) {
+        calculatorController.calculate()
+      }
+    })
+  }
+
   addSpec(event) {
     event.preventDefault()
 
@@ -15,7 +29,7 @@ export default class extends NestedForm {
 
     // Locate the template for specs (look within the current product wrapper)
     const template = targetWrapper.querySelector(
-      '[data-nested-form-target="template"]'
+      '[data-nested-form-target="spec-template"]'
     )
 
     if (!template) {
@@ -110,14 +124,9 @@ export default class extends NestedForm {
 
     // Create a deep copy of the template's content
     let content = template.innerHTML
-    console.log("previouscontent", content)
 
     // Ensure all instances of `NEW_SCOPE_RECORD` are replaced properly
     content = content.replace(/NEW_SCOPE_RECORD/g, uniqueScopeIndex)
-
-    // Debugging logs
-    console.log("uniqueScopeIndex:", uniqueScopeIndex)
-    console.log("Final content after replacement:", content)
 
     // Insert the content into the target within the product's scope
     const target = productWrapper.querySelector(

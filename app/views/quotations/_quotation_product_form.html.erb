@@ -1,4 +1,4 @@
-<div class="nested-form-wrapper" style="margin-bottom: 20px;" data-new-record="<%= f.object.new_record? %>">
+<div class="nested-form-wrapper quotation-product-row" style="margin-bottom: 20px;" data-new-record="<%= f.object.new_record? %>" data-controller="quotation-product-form">
   <table class="quotation-product-table" >
     <tbody>
       <tr data-form-validation-target="itemsTable">
@@ -7,10 +7,11 @@
         <td style="width: 10%;"><%= f.select :unit,
                   options_for_select([['Select Unit', '']] + ApplicationRecord::UNIT_OF_MEASUREMENTS.map { |unit| [unit, unit] }, f.object.unit),
                   { include_blank: false },
-                  { style: "text-align: right" } %></td>
+                  { style: "text-align: right; border: none;" } %></td>
         <td style="width: 15%;"><%= f.number_field :price, value: f.object.price != 0.0 ? f.object.price : nil, style: "text-align: right", placeholder: "0.00", data: { action: "input->total-calculator#calculate" }, onwheel: "return false" %></td>
         <td class="align-right" style="width: 15%;"><%= f.file_field :image %></td>
         <td style="width: 5%; text-align: center; vertical-align: middle;">
+          <%= link_to "<i class='fas fa-copy'></i>".html_safe, "#", class: "duplicate-item-button", style: "margin-right: 10px;", data: { action: "quotation-product-form#duplicate" } %>
           <% unless f.object == f.object.quotation&.products&.first %>
             <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#remove" } %>
             <%= f.hidden_field :_destroy %>
@@ -21,7 +22,7 @@
         <td colspan="7" style="position: relative; padding: 10px;">
           <div style="display: flex; gap: 50px;">
             <!-- Specs Column -->
-            <div style="position: relative; margin-bottom: 0px; height: 100%;">
+            <div class="specs-column" style="position: relative; margin-bottom: 0px; height: 100%;">
               <%= link_to '<i class="fas fa-plus"></i> Add Spec'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#addSpec" }, style: "position: absolute; bottom: -10px; font-size: 13px;" %>
               <div class="hidden" id="spec-title">
                 <p>Specification</p>
@@ -46,7 +47,7 @@
               <div data-nested-form-target="spec-target"></div>
             </div>
             <!-- Scopes Column  -->
-            <div style="position: relative; margin-bottom: 0px; height: 100%;">
+            <div class="scopes-column" style="position: relative; margin-bottom: 0px; height: 100%;">
               <%= link_to '<i class="fas fa-plus"></i> Add Scope'.html_safe, '#', class: 'add-item-button', data: { action: "nested-form#addScope" }, style: "position: absolute; bottom: -10px; font-size: 13px;" %>
               <div class="hidden" id="scope-title">
                 <p>Scope of Work</p>
@@ -71,7 +72,7 @@
       </tr>
     </tbody>
   </table>
-  <template data-nested-form-target="template">
+  <template data-nested-form-target="spec-template">
     <%= f.fields_for :specs, Spec.new, child_index: 'NEW_SPEC_RECORD' do |spec_fields| %>
       <div class="nested-spec-form">
         <div>
