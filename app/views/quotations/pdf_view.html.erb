@@ -49,7 +49,7 @@
           <td class="align-center" style="border: 1px solid black;"><%= index + 1 %></td>
           <td colspan="2"><%= p.name %></td>
           <td class="align-right"><%= p.quantity %></td>
-          <td class="align-right"><%= p.unit %></td>
+          <td class="align-right"><%= p.unit.upcase %></td>
           <td class="align-right">PHP <%= number_with_precision(p.price, precision: 2, delimiter: ',') %></td>
           <td class="align-right">PHP <%= number_with_precision(p.total, precision: 2, delimiter: ',') %></td>
         </tr>
@@ -59,10 +59,9 @@
           <td></td>
           <% if specs.any? %>
             <td colspan="2">
-              <strong>SPECS</strong><br>
-              <br>
+              <p style="margin-bottom: 6px;"><strong>SPECS</strong></p>
               <% specs.each do |spec| %>
-                <%= spec.name&.capitalize %>: <%= spec.value&.capitalize %><br>
+                <p><%= spec.name&.capitalize %> : <span style="margin-left: 2px;"><%= spec.value&.capitalize %></span></p>
               <% end %>
             </td>
           <% end %>
@@ -104,8 +103,8 @@
   </tr>
   <% if @quotation.discount > 0 %>
     <tr>
-      <td><strong>DISCOUNT</strong></td>
-      <td><strong>(<%= number_with_precision(@quotation.discount, precision: 2, delimiter: ',') %>)</strong></td>
+      <td><strong>DISCOUNT (<%= @quotation.discount_rate.to_i %>%)</strong></td>
+      <td><strong>- <%= number_with_precision(@quotation.discount, precision: 2, delimiter: ',') %></strong></td>
     </tr>
   <% end %>
   <tr>

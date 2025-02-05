@@ -20,7 +20,7 @@
         <%= form.label :company, style: "display: block" %>
         <div>
           <% Company.all.each do |company| %>
-            <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForProjects" } %> <%= company.code %>
+            <%= form.radio_button :company_id, company.id, data: { action: "company-select#selectCompanyForProjectsAndSuppliers" } %> <%= company.code %>
           <% end %>
         </div>
       </div>
@@ -107,11 +107,11 @@
             </table>
             <template data-nested-form-target="template">
               <%= form.fields_for :products, Product.new, child_index: 'NEW_RECORD' do |product_fields| %>
-                <%= render "canvasses/canvass_product_form", f: product_fields %>
+                <%= render "canvasses/canvass_product_form", f: product_fields, canvass: canvass %>
               <% end %>
             </template>
             <%= form.fields_for :products do |product_fields| %>
-              <%= render "canvasses/canvass_product_form", f: product_fields %>
+              <%= render "canvasses/canvass_product_form", f: product_fields, canvass: canvass %>
             <% end %>
             <div data-nested-form-target="target"></div>
           </div>

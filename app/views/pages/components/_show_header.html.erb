@@ -3,7 +3,7 @@
     <i class="fa-solid fa-arrow-left"></i>
     <span class="page-title"><%= document.class.name.underscore.humanize.titleize.pluralize %></span>
   </a>
-  <i class="fa-solid fa-chevron-right"></i>
+  <i style="margin-right: 16px;" class="fa-solid fa-chevron-right"></i>
   <% if %w[supplier client].include?(document.class.name.underscore) %>
     <span><%= document.name %></span>
   <% else %>

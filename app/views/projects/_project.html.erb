@@ -146,7 +146,7 @@
           <% if project.delivery_receipt_files.attached? %>
             <div class="attached-files mt-2">
               <% project.delivery_receipt_files.each do |file| %>
-                <div style="display: flex; align-items: center; gap: 0.3rem; margin-bottom: 0.3rem;">
+                <div style="display: flex; align-items: baseline; gap: 0.4rem; margin-bottom: 0.3rem;">
                   <div class="document-link">
                     <%= link_to rails_blob_path(file, disposition: 'inline'), 
                             target: '_blank',

@@ -25,7 +25,7 @@ gcmes = Company.create!(name: "Golden Chain Marine Engineering Services", code: 
 # Create client contacts
 client_a_contact = Contact.create(name: "NCSMC Contact", emails: ["sales@ncsmc.com"], contact_numbers: ["09123456789"])
 client_b_contact = Contact.create(name: "FSC Contact", emails: ["sales@fsc.com"], contact_numbers: ["09123456789"])
-client_c_contact = Contact.create(name: "NFC Contact", emails: ["sales@nfc.com"], contact_numbers: ["09123456789"])
+client_c_contact = Contact.create(name: "ASI Contact", emails: ["sales@asi.com"], contact_numbers: ["09123456789"])
 client_d_contact = Contact.create(name: "SPAN Contact", emails: ["sales@span.com"], contact_numbers: ["09123456789"])
 client_e_contact = Contact.create(name: "LSC Contact", emails: ["sales@lsc.com"], contact_numbers: ["09123456789"])
 
@@ -40,7 +40,7 @@ supplier_e_contact = Contact.create(name: "SE Contact", emails: ["sales@se.com"]
 # GAT clients
 gat.clients.create!(name: "NARRA CREWING AND SHIP MANAGEMENT CORPORATION ", code: "NCSMC", address: "3rd Flr. VIP BLDG. 1140 ROXAS BLVD Cor., NUESTRA SRA. DE GULA, Brgt. 667 Zone 072, ERMITA MANILA. MM", contacts: [client_a_contact])
 gat.clients.create!(name: "FRABELLE SHIPYARD CORPORATION", code: "FSC", address: "456 Shaw Boulevard, Mandaluyong City, Metro Manila", contacts: [client_b_contact])
-gat.clients.create!(name: "NEWPORT FISHING CORPORATION", code: "NFC", address: "789 Ayala Avenue, Makati City, Metro Manila", contacts: [client_c_contact])
+gat.clients.create!(name: "ASTRO SHIPMANAGEMENT INC.", code: "ASI", address: "789 Ayala Avenue, Makati City, Metro Manila", contacts: [client_c_contact])
 
 # GCMES clients  
 gcmes.clients.create!(name: "PHILIPPINE SPAN ASIA CARRIER CORP.", code: "SPAN", address: "321 EDSA, Pasay City, Metro Manila", contacts: [client_d_contact])
