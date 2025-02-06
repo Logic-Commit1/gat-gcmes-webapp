@@ -20,11 +20,17 @@ export default class extends Controller {
   }
 
   calculate() {
+    console.log("calculate")
     const subTotal = this.calculateSubTotal()
+    console.log("subTotal", subTotal)
     const discountPercentage = this.getDiscountPercentage()
+    console.log("discountPercentage", discountPercentage)
     const discountAmount = subTotal * (discountPercentage / 100)
+    console.log("discountAmount", discountAmount)
     const discountedSubTotal = subTotal - discountAmount
+    console.log("discountedSubTotal", discountedSubTotal)
     const vat = discountedSubTotal * 0.12
+    console.log("vat", vat)
     const total = discountedSubTotal + vat
 
     // if no discount or vat, show subtotal
@@ -51,7 +57,7 @@ export default class extends Controller {
 
   calculateSubTotal() {
     let sum = 0
-    const rows = document.querySelectorAll(".quotation-product-row")
+    const rows = document.querySelectorAll(".product-row")
     rows.forEach((row) => {
       const quantity =
         parseFloat(row.querySelector('input[name*="[quantity]"]').value) || 0
