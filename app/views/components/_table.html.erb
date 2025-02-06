@@ -30,28 +30,30 @@
           <th>Amount</th>
           <th>Date</th>
           <th>Status</th>
-        <% elsif title == "Request Forms" %>
-          <th>Reference Number</th>
-          <th>Amount</th>
-          <th>Date</th>
-          <th>Status</th>
         <% elsif title == "Canvasses" %>
-          <th>Reference Number</th>
-          <th>Item</th>
-          <th>Date</th>
-          <th>Status</th>
+          <th style="width: 10%;">Reference Number</th>
+          <th style="width: 10%;">Project</th>
+          <th style="width: 20%;">Item</th>
+          <th style="width: 10%;">Date</th>
+          <th style="width: 5%;">Status</th>
+        <% elsif title == "Request Forms" %>
+          <th style="width: 10%;">Reference Number</th>
+          <th style="width: 20%;">Client</th>
+          <th style="width: 10%;">Amount</th>
+          <th style="width: 10%;">Date</th>
+          <th style="width: 5%;">Status</th>
         <% elsif title == "Purchase Orders" %>
-          <th>Reference Number</th>
-          <th>Vendor</th>
-          <th>Amount</th>
-          <th>Date</th>
-          <th>Status</th>
+          <th style="width: 10%;">Reference Number</th>
+          <th style="width: 20%;">Vendor</th>
+          <th style="width: 10%;">Amount</th>
+          <th style="width: 10%;">Date</th>
+          <th style="width: 5%;">Status</th>
         <% elsif title == "Projects" %>
-          <th>Reference Number</th>
-          <th>Client</th>
-          <th>Amount</th>
-          <th>Date</th>
-          <th>Status</th>
+          <th style="width: 10%;">Reference Number</th>
+          <th style="width: 20%;">Client</th>
+          <th style="width: 10%;">Amount</th>
+          <th style="width: 10%;">Date</th>
+          <th style="width: 5%;">Status</th>
         <% elsif title == "Employees" %>
           <th>Name</th>
           <th>Department</th>
@@ -64,16 +66,15 @@
           <th>Department</th>
           <th>Creation Date</th>
         <% elsif title == "Suppliers" %>
-          <th>Name</th>
-          <th>Code</th>
-          <th>Address</th>
-          <th>Creation Date</th>
+          <th style="width: 25%;">Name</th>
+          <th style="width: 10%;">Code</th>
+          <th style="width: 35%;">Address</th>
+          <th style="width: 10%;">Creation Date</th>
         <% elsif title == "Clients" %>
-          <th>Name</th>
-          <th>Code</th>
-          <th>Address</th>
-          <th>Company</th>
-          <th>Creation Date</th>
+          <th style="width: 25%;">Name</th>
+          <th style="width: 10%;">Code</th>
+          <th style="width: 35%;">Address</th>
+          <th style="width: 10%;">Creation Date</th>
         <% elsif title == "Voided Documents" %>
           <th>Document Type</th>
           <th>Reference Number</th>

@@ -1,4 +1,4 @@
-<% if current_user.manager? %>
+<% if current_user.manager? && !@canvass.approved? %>
   <style>
     .supplier-row {
       cursor: pointer;
@@ -6,11 +6,14 @@
     }
 
     .supplier-row:hover {
-      border: 2px solid rgb(255, 85, 85) !important;
+      border: 2px solid rgb(255, 190, 106) !important;
+      /* border: 2px solid rgb(255, 121, 121) !important; */
+      background-color:rgb(255, 250, 228);
     }
 
     .supplier-row.selected {
-      border: 2px solid rgb(255, 85, 85);
+      /* border: 2px solid rgb(248, 255, 106); */
+      /* background-color: rgb(255, 250, 228); */
     }
   </style>
   <script>
@@ -28,8 +31,8 @@
           });
 
           // Add selected class to clicked row
-          this.classList.add('selected');
-          this.style.border = '2px solid rgb(255, 85, 85)';
+          // this.classList.add('selected');
+          // this.style.border = '2px solid var(--primary-color)';
 
           // Update hidden input value and submit form
           hiddenInput.value = this.dataset.supplier;
@@ -59,9 +62,9 @@
           <thead>
             <tr>
               <th>Supplier Name</th>
-              <th>Price</th>
-              <th>Brand</th>
-              <th>Terms</th>
+              <th class="align-right">Price</th>
+              <th class="align-right">Brand</th>
+              <th class="align-right">Terms</th>
               <th>Remarks</th>
             </tr>
           </thead>
@@ -70,7 +73,7 @@
               <% supplier_info.each do |supplier_name, details| %>
                 <tr class="supplier-row <%= details[4] ? 'selected' : '' %>" 
                     data-supplier="<%= supplier_name %>" 
-                    style="<%= details[4] ? 'border: 2px solid rgb(255, 115, 115);' : '' %>">
+                    style="<%= details[4] ? 'border: 2px solid rgb(255, 190, 106); background-color: rgb(255, 250, 228);' : '' %>">
                   <td><%= supplier_name %></td>
                   <td class="align-right">PHP <%= number_with_precision(details[0].to_f, precision: 2, delimiter: ',') %></td>
                   <td class="align-right"><%= details[1] %></td>

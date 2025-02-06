@@ -8,6 +8,7 @@ class RequestForm < ApplicationRecord
   belongs_to :purchase_order, optional: true
   belongs_to :user
   belongs_to :approver, class_name: 'User', optional: true
+  belongs_to :deleted_by, class_name: 'User', optional: true
 
   has_many :particulars, dependent: :destroy, inverse_of: :request_form
   accepts_nested_attributes_for :particulars, allow_destroy: true, reject_if: :all_blank

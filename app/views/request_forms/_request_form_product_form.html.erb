@@ -5,10 +5,10 @@
         <td style="width: 30%;">
           <%= f.text_field :description %>
         </td>
-        <td style="width: 15%;">
+        <td style="width: 10%;">
           <%= f.number_field :quantity, class: "align-right", placeholder: "0", data: { action: "input->total-calculator#calculate" }, onwheel: "return false" %>
         </td>
-        <td style="width: 15%;">
+        <td style="width: 10%;">
           <%= f.select :unit,
                   options_for_select([['Select Unit', '']] + ApplicationRecord::UNIT_OF_MEASUREMENTS.map { |unit| [unit, unit] }, f.object.unit),
                   { include_blank: false },
