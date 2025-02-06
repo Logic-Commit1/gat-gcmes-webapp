@@ -57,12 +57,12 @@ class ProjectsController < ApplicationController
     # Handle file attachments
     if project_params[:work_acceptance_files].present?
       @project.work_acceptance_files.attach(project_params[:work_acceptance_files])
-      return redirect_to @project, notice: 'Work acceptance files were successfully uploaded.'
+      return redirect_to @project, notice: 'Work acceptance file was successfully uploaded.'
     end
 
     if project_params[:delivery_receipt_files].present?
       @project.delivery_receipt_files.attach(project_params[:delivery_receipt_files])
-      return redirect_to @project, notice: 'Delivery receipt files were successfully uploaded.'
+      return redirect_to @project, notice: 'Delivery receipt file was successfully uploaded.'
     end
 
     # Handle other updates

@@ -47,7 +47,6 @@ export default class extends Controller {
       this.vatTarget.textContent = `${this.formatNumber(vat)}`
     }
     this.totalTarget.textContent = `PHP ${this.formatNumber(total)}`
-    console.log("calculated")
   }
 
   calculateSubTotal() {

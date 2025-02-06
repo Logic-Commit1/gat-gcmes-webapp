@@ -62,7 +62,8 @@ gcmes.suppliers.create!(name: "Supplier E", code: "SE", address: "159 España Bo
   { department: :accounting, position: "Auditor", email: "accounting@goldenchain.ph" },
   { department: :purchasing, position: "Purchasing Officer", email: "purchasing@goldenchain.ph" },
   { department: :sales, position: "Sales Officer", email: "sales@goldenchain.ph" },
-  { department: :warehouse, position: "Warehouse Officer", email: "warehouse@goldenchain.ph" }
+  { department: :warehouse, position: "Warehouse Officer", email: "warehouse@goldenchain.ph" },
+  { department: :admin, position: "General Manager", email: "manager@goldenchain.ph" }
 ].each do |employee_data|
   Employee.create!(employee_data)
 end

@@ -2,16 +2,16 @@
   <table class="quotation-product-table" >
     <tbody>
       <tr data-form-validation-target="itemsTable">
-        <td style="width: 40%;"><%= f.text_field :name, placeholder: "Item Description" %></td>
-        <td style="width: 10%;"><%= f.number_field :quantity, style: "text-align: right", placeholder: "0.00", data: { action: "input->total-calculator#calculate" }, onwheel: "return false" %></td>
+        <td style="width: 35%;"><%= f.text_field :name, placeholder: "Item Description" %></td>
+        <td style="width: 10%;"><%= f.number_field :quantity, style: "text-align: right", placeholder: "0", data: { action: "input->total-calculator#calculate" }, onwheel: "return false" %></td>
         <td style="width: 10%;"><%= f.select :unit,
                   options_for_select([['Select Unit', '']] + ApplicationRecord::UNIT_OF_MEASUREMENTS.map { |unit| [unit, unit] }, f.object.unit),
                   { include_blank: false },
                   { style: "text-align: right; border: none;" } %></td>
-        <td style="width: 15%;"><%= f.number_field :price, value: f.object.price != 0.0 ? f.object.price : nil, style: "text-align: right", placeholder: "0.00", data: { action: "input->total-calculator#calculate" }, onwheel: "return false" %></td>
+        <td style="width: 15%;"><%= f.number_field :price, value: f.object.price != 0.0 ? f.object.price : nil, style: "text-align: right", placeholder: "PHP 0.00", data: { action: "input->total-calculator#calculate" }, onwheel: "return false" %></td>
         <td class="align-right" style="width: 15%;"><%= f.file_field :image %></td>
-        <td style="width: 5%; text-align: center; vertical-align: middle;">
-          <%= link_to "<i class='fas fa-copy'></i>".html_safe, "#", class: "duplicate-item-button", style: "margin-right: 10px;", data: { action: "quotation-product-form#duplicate" } %>
+        <td style="width: 7%; text-align: center; vertical-align: middle;">
+          <%= link_to "<i class='fas fa-copy'></i>".html_safe, "#", class: "duplicate-item-button", data: { action: "quotation-product-form#duplicate" } %>
           <% unless f.object == f.object.quotation&.products&.first %>
             <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#remove" } %>
             <%= f.hidden_field :_destroy %>

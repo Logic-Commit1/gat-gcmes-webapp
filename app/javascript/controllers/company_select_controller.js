@@ -73,6 +73,7 @@ export default class extends Controller {
       "Select Vendor",
       "name"
     )
+    this.populateAllSupplierSelects(event.target.value)
   }
 
   selectCompanyForRequestForms(event) {
@@ -201,5 +202,23 @@ export default class extends Controller {
     }
 
     return targets.find(hasValue)
+  }
+
+  populateAllSupplierSelects(companyId) {
+    const allSupplierSelects = document.querySelectorAll(
+      '[data-company-select-target="supplierSelect"]'
+    )
+
+    allSupplierSelects.forEach((select) => {
+      if (select !== this.supplierSelectTarget) {
+        this.fetchAndUpdateOptions(
+          { target: { value: companyId } },
+          "/suppliers",
+          select,
+          "Select Vendor",
+          "name"
+        )
+      }
+    })
   }
 }

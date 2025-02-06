@@ -5,6 +5,25 @@ export default class extends NestedForm {
     super.connect()
   }
 
+  add(event) {
+    super.add(event)
+
+    // After adding a new row, populate its supplier select if we're in a canvass form
+    const companySelect = document.querySelector(
+      'input[name="canvass[company_id]"]:checked'
+    )
+    if (companySelect) {
+      const companySelectController =
+        this.application.getControllerForElementAndIdentifier(
+          companySelect.closest('[data-controller~="company-select"]'),
+          "company-select"
+        )
+      if (companySelectController) {
+        companySelectController.populateAllSupplierSelects(companySelect.value)
+      }
+    }
+  }
+
   remove(event) {
     super.remove(event)
     requestAnimationFrame(() => {
