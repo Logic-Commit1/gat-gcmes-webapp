@@ -5,12 +5,12 @@
       <% if title == "Quotations" %>
         <% documents&.each do |quotation| %>
           <tr onclick="window.location='<%= quotation_path(quotation) %>'" style="cursor: pointer">
-            <td><%= quotation.uid %></td>
+            <td style="width: 10%;"><%= quotation.uid %></td>
             <!--<td><%= quotation.client.code %></td>-->
-            <td><%= quotation.subject %></td>
-            <td><%= number_to_currency(quotation.total, unit: "₱") %></td>
-            <td><%= quotation.created_at.strftime("%B %d, %Y") %></td>
-            <td><span class="status <%= quotation.status %>"><%= quotation.status.capitalize %></span></td>
+            <td style="width: 20%;"><%= quotation.subject %></td>
+            <td style="width: 10%;"><%= number_to_currency(quotation.total, unit: "₱") %></td>
+            <td style="width: 10%;"><%= quotation.created_at.strftime("%B %d, %Y") %></td>
+            <td style="width: 5%; text-align: center;"><span class="status <%= quotation.status %>"><%= quotation.status.capitalize %></span></td>
           </tr>
         <% end %>
       <% elsif title == "Request Forms" %>

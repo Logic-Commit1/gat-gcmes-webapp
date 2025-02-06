@@ -38,15 +38,15 @@
         <th colspan="2">Description</th>
         <th class="align-right">Qty</th>
         <th class="align-right">U/M</th>
-        <th class="align-right">Unit Price</th>
-        <th style="width: 15%;" class="align-right">Total Amount</th>
+        <th style="width: 17%;" class="align-right">Unit Price</th>
+        <th style="width: 17%;" class="align-right">Total Amount</th>
       </tr>
     </thead>
     <tbody>
       <% products = @quotation.deleted? ? @quotation.products.with_deleted : @quotation.products %>
       <% products.each_with_index do |p, index| %>
         <tr>
-          <td class="align-center" style="border: 1px solid black;"><%= index + 1 %></td>
+          <td class="align-center" style="border: 1px solid #666666;"><%= index + 1 %></td>
           <td colspan="2"><%= p.name %></td>
           <td class="align-right"><%= p.quantity %></td>
           <td class="align-right"><%= p.unit.upcase %></td>
@@ -57,23 +57,23 @@
         <% scopes = p.deleted? ? p.scopes.with_deleted : p.scopes %>
         <tr>
           <td></td>
-          <% if specs.any? %>
-            <td colspan="2">
-              <p style="margin-bottom: 6px;"><strong>SPECS</strong></p>
+          <td colspan="2">
+            <% if specs.any? %>
+              <p style="margin-bottom: 6px;"><strong><u>SPECS</u></strong></p>
               <% specs.each do |spec| %>
-                <p><%= spec.name&.capitalize %> : <span style="margin-left: 2px;"><%= spec.value&.capitalize %></span></p>
+                <p><%= spec.name %> : <span style="margin-left: 2px;"><%= spec.value %></span></p>
               <% end %>
-            </td>
-          <% end %>
-          <% if scopes.any? %>
-            <td colspan="2">
-              <strong>SCOPE OF WORK</strong><br>
+            <% end %>
+            <% if specs.any? && scopes.any? %>
               <br>
+            <% end %>
+            <% if scopes.any? %>
+              <p style="margin-bottom: 6px;"><strong><u>SCOPE OF WORK</u></strong></p>
               <% scopes.each do |scope| %>
-                <p>* <%= scope.name&.capitalize %></p>
+                <p>* <%= scope.name %></p>
               <% end %>
-            </td>
-          <% end %>
+            <% end %>
+          </td>
         </tr>
         <% if p.image.attached? %>
           <% begin %>
