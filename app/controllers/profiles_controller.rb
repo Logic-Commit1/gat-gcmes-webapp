@@ -12,8 +12,14 @@ class ProfilesController < ApplicationController
       # Remove any existing signature first
       current_user.signature.purge if current_user.signature.attached?
   
-      # Attach new signature using ActiveStorage attach method
-      current_user.signature.attach(params[:user][:signature])
+      begin
+        current_user.signature.attach(params[:user][:signature])
+        Rails.logger.info "Signature attached successfully."
+      rescue => e
+        Rails.logger.error "Error attaching signature: #{e.message}"
+        redirect_to profile_path, alert: 'Failed to attach signature'
+        return
+      end
   
       # Ensure Cloudflare R2 does not enforce checksum
       # current_user.signature.blob.update!(checksum: nil) if Rails.env.production?
