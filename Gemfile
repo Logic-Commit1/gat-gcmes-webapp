@@ -22,6 +22,8 @@ gem 'devise'
 
 # PDF
 gem 'grover'
+gem 'prawn'
+gem 'prawn-table'
 
 # Code Formatter
 gem "htmlbeautifier"

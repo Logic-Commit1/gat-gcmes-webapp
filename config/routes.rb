@@ -69,6 +69,7 @@ Rails.application.routes.draw do
   resources :quotations do
     member do
       get 'pdf_view'
+      get 'pdf_preview'
       patch :approve
       patch :reject
       patch :pending

@@ -1,4 +1,5 @@
 class Quotation < ApplicationRecord
+  include Rails.application.routes.url_helpers
   acts_as_paranoid
 
   belongs_to :client
@@ -11,6 +12,8 @@ class Quotation < ApplicationRecord
   has_many :products, dependent: :destroy, inverse_of: :quotation
   has_many :request_forms
   accepts_nested_attributes_for :products, allow_destroy: true, reject_if: :all_blank
+
+  has_one_attached :pdf_report
 
   enum :payment, [ "50% downpayment", "30 days", "Paid" ]
   enum :status, [ :pending, :approved, :rejected ]
@@ -66,7 +69,7 @@ class Quotation < ApplicationRecord
   end
 
   def pdf_path
-    Rails.root.join('tmp/quotations', "#{uid}.pdf")
+    Rails.root.join('tmp/prawn/quotations', "#{uid}.pdf")
   end
 
   def save_pdf(pdf_content)
@@ -81,6 +84,28 @@ class Quotation < ApplicationRecord
       type_parts.join(' ')
     end
   end
+
+  def generate_prawn 
+    path = generate_pdf_report
+    attach_pdf_report(path)
+    # Clean up the temporary file after attaching
+    # File.delete(path) if path && File.exist?(path)
+  end
+
+  def generate_pdf_report
+    path = PrawnPdfGenerator.new(self).generate
+    path
+  end
+
+  def attach_pdf_report(path)
+    return unless path && File.exist?(path)
+    self.pdf_report.attach(
+      io: File.open(path),
+      filename: "quotation_#{uid}.pdf",
+      content_type: 'application/pdf'
+    )
+  end
+    
 
   private
 
