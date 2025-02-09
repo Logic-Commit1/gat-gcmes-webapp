@@ -116,7 +116,7 @@
           </div>
         </div>
       <%end%>
-      <% if document.class.name != "Project" && !document.approved? && document.user == current_user %>
+      <% if document.class.name != "Project" && !document.approved? && (document.user == current_user || current_user.developer?) %>
         <%= button_to send("void_#{document.class.name.underscore}_path", document), 
                 method: :delete, 
                 class: "button flex items-center white", 

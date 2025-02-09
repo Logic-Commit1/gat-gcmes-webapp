@@ -6,21 +6,21 @@
         <% documents&.each do |quotation| %>
           <tr onclick="window.location='<%= quotation_path(quotation) %>'" style="cursor: pointer">
             <td style="width: 10%;"><%= quotation.uid %></td>
-            <!--<td><%= quotation.client.code %></td>-->
+            <td style="width: 20%;"><%= quotation.client.name %></td>
             <td style="width: 20%;"><%= quotation.subject %></td>
             <td style="width: 10%;"><%= number_to_currency(quotation.total, unit: "₱") %></td>
             <td style="width: 10%;"><%= quotation.created_at.strftime("%B %d, %Y") %></td>
-            <td style="width: 5%; text-align: center;"><span class="status <%= quotation.status %>"><%= quotation.status.capitalize %></span></td>
+            <td style="width: 7%; text-align: center;"><span class="status <%= quotation.status %>"><%= quotation.status.capitalize %></span></td>
           </tr>
         <% end %>
       <% elsif title == "Request Forms" %>
         <% documents&.each do |form| %>
           <tr onclick="window.location='<%= request_form_path(form) %>'" style="cursor: pointer">
-            <td><%= form.uid %></td>
-            <td style="width: 20%;"><%= form.client.name %></td>
-            <td><%= number_to_currency(form.total, unit: "₱") %></td>
-            <td><%= form.created_at.strftime("%B %d, %Y") %></td>
-            <td><span class="status <%= form.status %>"><%= form.status.capitalize %></span></td>
+            <td style="width: 10%;"><%= form.uid %></td>
+            <td style="width: 20%;"><%= form.project.client.name %></td>
+            <td style="width: 10%;"><%= number_to_currency(form.total, unit: "₱") %></td>
+            <td style="width: 10%;"><%= form.created_at.strftime("%B %d, %Y") %></td>
+            <td style="width: 5%; text-align: center;"><span class="status <%= form.status %>"><%= form.status.capitalize %></span></td>
           </tr>
         <% end %>
       <% elsif title == "Canvasses" %>
