@@ -24,6 +24,7 @@ gem 'devise'
 gem 'grover'
 gem 'prawn'
 gem 'prawn-table'
+gem 'prawn-icon'
 
 # Code Formatter
 gem "htmlbeautifier"
