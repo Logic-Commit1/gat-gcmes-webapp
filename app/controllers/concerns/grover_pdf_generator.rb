@@ -1,6 +1,6 @@
 require 'benchmark'
 
-module PdfGenerator
+module GroverPdfGenerator
   extend ActiveSupport::Concern
 
   def download_pdf

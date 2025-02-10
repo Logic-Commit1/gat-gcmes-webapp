@@ -1,16 +1,21 @@
 require 'prawn/icon'
 
-class PrawnPdfGenerator
+module PdfGenerator
+  class Base
+    include StylingDefaults
+
     MANROPE_FONT_PATH = 'app/assets/fonts/Manrope/Manrope-Regular.ttf'
     MANROPE_SEMI_BOLD_FONT_PATH = 'app/assets/fonts/Manrope/Manrope-SemiBold.ttf'
     MANROPE_BOLD_FONT_PATH = 'app/assets/fonts/Manrope/Manrope-Bold.ttf'
+
     GAT_LOGO_PATH = 'app/assets/images/gat-logo.png'
     GCMES_LOGO_PATH = 'app/assets/images/gcmes-logo.png'
 
     def initialize(document)
-      Dir.mkdir('tmp/prawn/documents') unless Dir.exist?('tmp/prawn/documents')
       @document = document
-      @path = Rails.root.join('tmp/prawn/documents', "#{@document.uid}.pdf")
+      
+      Dir.mkdir("tmp/#{@document.class.name.underscore.pluralize}") unless Dir.exist?("tmp/#{@document.class.name.underscore.pluralize}")
+      @path = Rails.root.join("tmp/#{@document.class.name.underscore.pluralize}", "#{@document.uid}.pdf")
 
     end
 
@@ -48,16 +53,13 @@ class PrawnPdfGenerator
 
         products_table(@document)
 
-        remaining_space = @pdf.cursor
-        totals_height = 100 # Approximate height needed for totals table
-
-        if remaining_space < totals_height
+        if @pdf.cursor < 100
           @pdf.start_new_page
         else
-          @pdf.move_cursor_to totals_height # Move to height points from bottom of page
+          # @pdf.move_cursor_to 100 # Move to height points from bottom of page
+          @pdf.move_down 20
         end
 
-        # @pdf.move_down 20
 
         totals_table(@document)
 
@@ -95,6 +97,23 @@ class PrawnPdfGenerator
           bold: MANROPE_BOLD_FONT_PATH
         }
       )
+    end
+
+    def cell_style
+      { padding: default_padding, size: font_size, font: "manrope", inline_format: true, align: align, border_width: 0.5 }
+    end
+
+    def data_table(data, row_styling_count = 2)
+      @pdf.table(
+        data,
+        width: table_width, 
+        cell_style: cell_style
+      ) 
+      # do |table|
+      #   row_styling_count.times do |i|
+      #     table.row(i).style({ background_color: shaded_cell_color })
+      #   end
+      # end
     end
 
     def header
@@ -316,11 +335,11 @@ class PrawnPdfGenerator
     def draw_product_row(product, index)
       data = [
         [index + 1, product.name, product.quantity, product.unit.upcase, 
-         "PHP #{number_with_precision(product.price)}", 
-         "PHP #{number_with_precision(product.total)}"]
+        "PHP #{number_with_precision(product.price)}", 
+        "PHP #{number_with_precision(product.total)}"]
       ]
       
-      @pdf.table(data, width: @document_width, cell_style: {valign: :center}) do |t|
+      @pdf.table(data, width: @document_width) do |t|
         t.cells.padding = 8
         t.cells.borders = [:bottom, :top, :left, :right]
         apply_column_widths(t)
@@ -412,7 +431,7 @@ class PrawnPdfGenerator
         
         if document.discount > 0
           data << ["DISCOUNT (#{document.discount_rate.to_i}%)", 
-                   "- #{number_with_precision(document.discount)}"]
+                  "- #{number_with_precision(document.discount)}"]
         end
         
         data << ["12% VAT", "#{number_with_precision(document.vat)}"]
@@ -429,4 +448,5 @@ class PrawnPdfGenerator
         end
       end
     end
+  end
 end

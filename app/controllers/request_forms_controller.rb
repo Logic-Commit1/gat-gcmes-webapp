@@ -1,5 +1,5 @@
 class RequestFormsController < ApplicationController
-  include PdfGenerator
+  include GroverPdfGenerator
   include Voidable
   
   layout 'pdf', only: :pdf_view

@@ -1,7 +1,6 @@
 class QuotationsController < ApplicationController
   include Rails.application.routes.url_helpers
-  include PdfGenerator
-  # include PrawnPdfGenerator
+  include GroverPdfGenerator
   include Voidable
 
   layout 'pdf', only: :pdf_view
@@ -29,6 +28,7 @@ class QuotationsController < ApplicationController
 
   # GET /quotations/1 or /quotations/1.json
   def show
+    @quotation.generate_prawn
   end
 
   def pdf_view

@@ -93,7 +93,7 @@ class Quotation < ApplicationRecord
   end
 
   def generate_pdf_report
-    path = PrawnPdfGenerator.new(self).generate
+    path = "PdfGenerator::#{self.class}".constantize.new(self).generate
     path
   end
 
@@ -104,6 +104,8 @@ class Quotation < ApplicationRecord
       filename: "quotation_#{uid}.pdf",
       content_type: 'application/pdf'
     )
+
+    File.delete(path)
   end
     
 
