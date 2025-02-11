@@ -26,6 +26,9 @@ gem 'prawn'
 gem 'prawn-table'
 gem 'prawn-icon'
 
+# StringIO
+gem 'stringio', '3.1.0'
+
 # Code Formatter
 gem "htmlbeautifier"
 

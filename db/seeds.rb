@@ -1,11 +1,23 @@
+Spec.with_deleted.each do |spec|
+  spec.really_destroy!
+end
+Scope.with_deleted.each do |scope|
+  scope.really_destroy!
+end
+Product.with_deleted.each do |product|
+  product.really_destroy!
+end
+Particular.with_deleted.each do |particular|
+  particular.really_destroy!
+end
+RequestForm.with_deleted.each do |request_form|
+  request_form.really_destroy!
+end
 Quotation.with_deleted.each do |quotation|
   quotation.really_destroy!
 end
 PurchaseOrder.with_deleted.each do |purchase_order|
   purchase_order.really_destroy!
-end
-RequestForm.with_deleted.each do |request_form|
-  request_form.really_destroy!
 end
 Canvass.with_deleted.each do |canvass|
   canvass.really_destroy!

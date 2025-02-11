@@ -81,24 +81,31 @@ module PdfGenerator
           @document.approver.signature.purge if @document.approver.signature.attached?
         end
       end
-      
 
+      
       # Draw the table with styling
-      # @pdf.bounding_box([0, @pdf.cursor], width: @document_width) do
-        @pdf.table(data, width: @document_width) do |t|
-          t.row(0).font_style = :bold
-          t.row(0).background_color = "DDDDDD"
-          t.row(0).align = :center
-          t.row(0).borders = [:bottom, :top, :left, :right]
-          t.row(1).height = 30
-          t.row(1).borders = [:left, :right]
-          t.row(1).padding = [8, 8, 0, 8]
-          t.row(2).borders = [:left, :right, :bottom] 
-          t.row(2).padding = [0, 8, 8, 8]
-          t.row(0).padding = 8
-          t.cells.align = :center
-          # end
+      begin
+        @pdf.bounding_box([0, @pdf.cursor], width: @document_width) do
+          @pdf.table(data, width: @document_width) do |t|
+            t.row(0).font_style = :bold
+            t.row(0).background_color = "DDDDDD"
+            t.row(0).align = :center
+            t.row(0).borders = [:bottom, :top, :left, :right]
+            t.row(1).height = 30
+            t.row(1).borders = [:left, :right]
+            t.row(1).padding = [8, 8, 0, 8]
+            t.row(2).borders = [:left, :right, :bottom] 
+            t.row(2).padding = [0, 8, 8, 8]
+            t.row(0).padding = 8
+            t.cells.align = :center
+          end
         end
+      rescue => e
+        puts "Error generating signatures table:"
+        puts e.message
+        puts e.backtrace
+        raise e
+      end
 
     end
 
