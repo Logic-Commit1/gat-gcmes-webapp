@@ -68,7 +68,7 @@ module PdfGenerator
       begin
 
         if @document.user&.signature&.attached?
-          signature_from_object = @document.user.signature.variant(resize_to_limit: [110, 38])
+          signature_from_object = @document.user.signature.variant(resize_to_limit: [110, 38]).processed
           signature = StringIO.open(signature_from_object.download)
           data[1][0] = { image: signature, position: :center, scale: 0.6 }
           data[2][0] = @document.user ? "#{@document.user.first_name&.titleize} #{@document.user.last_name&.titleize}" : ""
@@ -80,7 +80,7 @@ module PdfGenerator
       # Handle approver signature (Approved by - right column)
       begin
         if @document.approved? && @document.approver&.signature&.attached?
-          approver_signature_from_object = @document.approver.signature.variant(resize_to_limit: [110, 38])
+          approver_signature_from_object = @document.approver.signature.variant(resize_to_limit: [110, 38]).processed
           approver_signature = StringIO.open(approver_signature_from_object.download)
           data[1][1] = { image: approver_signature, position: :center, scale: 0.6 }
           data[2][1] = @document.approver ? "#{@document.approver.first_name&.titleize} #{@document.approver.last_name&.titleize}" : ""
