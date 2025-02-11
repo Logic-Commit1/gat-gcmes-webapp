@@ -88,8 +88,6 @@ class Quotation < ApplicationRecord
   def generate_prawn 
     path = generate_pdf_report
     attach_pdf_report(path)
-    # Clean up the temporary file after attaching
-    # File.delete(path) if path && File.exist?(path)
   end
 
   def generate_pdf_report
@@ -101,7 +99,7 @@ class Quotation < ApplicationRecord
     return unless path && File.exist?(path)
     self.pdf_report.attach(
       io: File.open(path),
-      filename: "quotation_#{uid}.pdf",
+      filename: "#{self.class.name.underscore}_#{uid}.pdf",
       content_type: 'application/pdf'
     )
 
