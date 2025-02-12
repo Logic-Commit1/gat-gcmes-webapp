@@ -4,7 +4,7 @@ class QuotationsController < ApplicationController
   include Voidable
 
   layout 'pdf', only: :pdf_view
-  before_action :set_quotation, only: %i[ show edit update void approve pending reject pdf_view download_pdf print_pdf pdf_preview ]
+  before_action :set_quotation, only: %i[ show edit update void approve pending reject pdf_view download_pdf print_pdf ]
   before_action :check_user_has_signature, only: %i[ new create edit update ]
   before_action :set_resource_for_pdf, only: %i[ download_pdf print_pdf ]
 
@@ -51,11 +51,6 @@ class QuotationsController < ApplicationController
   def edit
   end
 
-  def pdf_preview
-    @quotation.generate_prawn
-    send_data @quotation.pdf_report, type: 'application/pdf', disposition: 'inline'
-  end
-
   # POST /quotations or /quotations.json
    def create
     @quotation = Quotation.new(quotation_params)
@@ -64,7 +59,7 @@ class QuotationsController < ApplicationController
     respond_to do |format|
       if @quotation.save
         # Trigger project status check if project is linked
-        @quotation.generate_prawn
+        # @quotation.generate_prawn
         @quotation.project.check_and_update_status if @quotation.project.present?
 
         format.html { redirect_to quotation_url(@quotation), notice: "Quotation was successfully created." }
@@ -93,7 +88,7 @@ class QuotationsController < ApplicationController
         #   @quotation.project.check_and_update_status if @quotation.project.present?
         # end
 
-        @quotation.generate_prawn
+        # @quotation.generate_prawn
 
         format.html { redirect_to quotation_url(@quotation), notice: "Quotation was successfully updated." }
         format.json { render :show, status: :ok, location: @quotation }
