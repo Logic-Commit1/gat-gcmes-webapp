@@ -96,15 +96,17 @@ class Quotation < ApplicationRecord
   end
 
   def attach_pdf_report(path)
-    return unless path && File.exist?(path)
+    return unless path && File.exist?(path) && File.size?(path) # Ensure file is not empty
+  
     self.pdf_report.attach(
-      io: File.open(path),
+      io: File.open(path, 'rb'), # 'rb' ensures it's read in binary mode
       filename: "#{self.class.name.underscore}_#{uid}.pdf",
       content_type: 'application/pdf'
     )
-
-    File.delete(path)
+  
+    File.delete(path) if File.exist?(path) # Only delete after successful attach
   end
+  
     
 
   private
