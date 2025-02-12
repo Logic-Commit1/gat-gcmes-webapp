@@ -28,7 +28,7 @@ class ProfilesController < ApplicationController
       # Generate variant after successful attachment
       if current_user.signature.attached?
         Rails.logger.info "Signature attached successfully3."
-        current_user.signature.variant(resize_to_limit: [300, 100]).processed
+        current_user.signature
       end
       Rails.logger.info "Signature attached successfully4."
     end

@@ -61,9 +61,9 @@ module PdfGenerator
       # Handle user signature (Prepared by - middle column)
       if @document.user&.signature&.attached?
         begin
-          signature_from_object = @document.user.signature.variant(resize_to_limit: [110, 38]).processed
+          signature_from_object = @document.user.signature
           signature = StringIO.open(signature_from_object.download)
-          data[1][1] = { image: signature, position: :center, scale: 0.6 }
+          data[1][1] = { image: signature, position: :center, fit: [100, 40] }
           data[2][1] = "#{@document.user&.first_name&.titleize} #{@document.user&.last_name&.titleize}"
         rescue ActiveStorage::FileNotFoundError
           @document.user.signature.purge if @document.user.signature.attached?
@@ -73,9 +73,9 @@ module PdfGenerator
       # Handle approver signature (Approved by - right column)
       if @document.approved? && @document.approver&.signature&.attached?
         begin
-          approver_signature_from_object = @document.approver.signature.variant(resize_to_limit: [110, 38]).processed
+          approver_signature_from_object = @document.approver.signature
           approver_signature = StringIO.open(approver_signature_from_object.download)
-          data[1][2] = { image: approver_signature, position: :center, scale: 0.6 }
+          data[1][2] = { image: approver_signature, position: :center, fit: [100, 45] }
           data[2][2] = "#{@document.approver&.first_name&.titleize} #{@document.approver&.last_name&.titleize}"
         rescue ActiveStorage::FileNotFoundError
           @document.approver.signature.purge if @document.approver.signature.attached?
@@ -91,11 +91,10 @@ module PdfGenerator
             t.row(0).background_color = "DDDDDD"
             t.row(0).align = :center
             t.row(0).borders = [:bottom, :top, :left, :right]
-            t.row(1).height = 30
-            t.row(1).borders = [:left, :right]
-            t.row(1).padding = [8, 8, 0, 8]
-            t.row(2).borders = [:left, :right, :bottom] 
-            t.row(2).padding = [0, 8, 8, 8]
+            t.row(1).height = 55
+            t.row(1).borders =  [:bottom, :top, :left, :right]
+            t.row(1).padding = [1, 8, 0, 8]
+            t.row(2).padding = [-20, 8, 8, 8]
             t.row(0).padding = 8
             t.cells.align = :center
           end
