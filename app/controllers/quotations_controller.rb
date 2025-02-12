@@ -28,7 +28,6 @@ class QuotationsController < ApplicationController
 
   # GET /quotations/1 or /quotations/1.json
   def show
-    # @user_signature = @quotation.user.signature.variant(resize_to_limit: [110, 38]).processed
     @quotation.generate_prawn
 
   end

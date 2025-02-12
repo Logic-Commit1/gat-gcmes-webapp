@@ -64,29 +64,21 @@ module PdfGenerator
         ["", ""]
       ]
 
-      # Handle user signature (Requested by - left column)
-      begin
-
-        if @document.user&.signature&.attached?
-          signature_from_object = @document.user.signature
-          signature = StringIO.open(signature_from_object.download)
-          data[1][0] = { image: signature, position: :center, fit: [100, 40] }
-          data[2][0] = @document.user ? "#{@document.user.first_name&.titleize} #{@document.user.last_name&.titleize}" : ""
-        end
-      rescue ActiveStorage::FileNotFoundError
-        @document.user.signature.purge if @document.user.signature.attached?
+    # Handle user signature (Requested by - left column)
+      if @document.user&.signature&.attached?
+        signature_from_object = @document.user.signature
+        signature = StringIO.open(signature_from_object.download)
+        data[1][0] = { image: signature, position: :center, fit: [100, 40] }
+        data[2][0] = @document.user ? "#{@document.user.first_name&.titleize} #{@document.user.last_name&.titleize}" : ""
       end
 
-      # Handle approver signature (Approved by - right column)
-      begin
-        if @document.approved? && @document.approver&.signature&.attached?
-          approver_signature_from_object = @document.approver.signature
-          approver_signature = StringIO.open(approver_signature_from_object.download)
-          data[1][1] = { image: approver_signature, position: :center, fit: [100, 40] }
-          data[2][1] = @document.approver ? "#{@document.approver.first_name&.titleize} #{@document.approver.last_name&.titleize}" : ""
-        end
-      rescue ActiveStorage::FileNotFoundError
-        @document.approver.signature.purge if @document.approver.signature.attached?
+    # Handle approver signature (Approved by - right column)
+    
+      if @document.approved? && @document.approver&.signature&.attached?
+        approver_signature_from_object = @document.approver.signature
+        approver_signature = StringIO.open(approver_signature_from_object.download)
+        data[1][1] = { image: approver_signature, position: :center, fit: [100, 40] }
+        data[2][1] = @document.approver ? "#{@document.approver.first_name&.titleize} #{@document.approver.last_name&.titleize}" : ""
       end
 
       @pdf.table(data, width: @document_width) do |t|

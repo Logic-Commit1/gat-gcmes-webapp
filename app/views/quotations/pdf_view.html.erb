@@ -76,17 +76,13 @@
           </td>
         </tr>
         <% if p.image.attached? %>
-          <% begin %>
-            <tr>
-              <td></td>
-              <td style="text-align: center;" colspan="2">
-                <% image_data = p.image.download %>
-                <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(image_data)}", style: "width: 100px; height: 100px;") %>
-              </td>
-            </tr>
-            <% rescue ActiveStorage::FileNotFoundError %>
-            <% p.image.purge if p.image.attached? %>
-          <% end %>
+          <tr>
+            <td></td>
+            <td style="text-align: center;" colspan="2">
+              <% image_data = p.image.download %>
+              <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(image_data)}", style: "width: 100px; height: 100px;") %>
+            </td>
+          </tr>
         <% end %>
         <tr>
           <td colspan="6"></td>
@@ -154,11 +150,11 @@
         <td></td>
         <td>
           <% if @quotation.user&.signature&.attached? %>
-            <% begin %>
-              <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@quotation.user&.signature&.download)}", class: "signature-image") %>
-              <% rescue ActiveStorage::FileNotFoundError %>
-              <% @quotation.user.signature.purge if @quotation.user.signature.attached? %>
-            <% end %>
+            <%# begin %>
+            <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(@quotation.user&.signature&.download)}", class: "signature-image") %>
+            <%# rescue ActiveStorage::FileNotFoundError %>
+            <%# @quotation.user.signature.purge if @quotation.user.signature.attached? %>
+            <%# end %>
           <% end %>
           <p><%= @quotation.user&.first_name&.titleize %> <%= @quotation.user&.last_name&.titleize %></p>
         </td>

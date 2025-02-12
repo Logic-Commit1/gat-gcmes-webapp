@@ -60,26 +60,20 @@ module PdfGenerator
 
       # Handle user signature (Prepared by - middle column)
       if @document.user&.signature&.attached?
-        begin
-          signature_from_object = @document.user.signature
-          signature = StringIO.open(signature_from_object.download)
-          data[1][1] = { image: signature, position: :center, fit: [100, 40] }
-          data[2][1] = "#{@document.user&.first_name&.titleize} #{@document.user&.last_name&.titleize}"
-        rescue ActiveStorage::FileNotFoundError
-          @document.user.signature.purge if @document.user.signature.attached?
-        end
+        signature_from_object = @document.user.signature
+        signature = StringIO.open(signature_from_object.download)
+        data[1][1] = { image: signature, position: :center, fit: [100, 40] }
+        data[2][1] = "#{@document.user&.first_name&.titleize} #{@document.user&.last_name&.titleize}"
       end
 
       # Handle approver signature (Approved by - right column)
       if @document.approved? && @document.approver&.signature&.attached?
-        begin
-          approver_signature_from_object = @document.approver.signature
-          approver_signature = StringIO.open(approver_signature_from_object.download)
-          data[1][2] = { image: approver_signature, position: :center, fit: [100, 45] }
-          data[2][2] = "#{@document.approver&.first_name&.titleize} #{@document.approver&.last_name&.titleize}"
-        rescue ActiveStorage::FileNotFoundError
-          @document.approver.signature.purge if @document.approver.signature.attached?
-        end
+
+        approver_signature_from_object = @document.approver.signature
+        approver_signature = StringIO.open(approver_signature_from_object.download)
+        data[1][2] = { image: approver_signature, position: :center, fit: [100, 45] }
+        data[2][2] = "#{@document.approver&.first_name&.titleize} #{@document.approver&.last_name&.titleize}"
+      
       end
 
       
@@ -158,8 +152,6 @@ module PdfGenerator
 
     def draw_product_image(product)
       return unless product.image.attached?
-
-      begin
         image_data = product.image.download
         image_path = "tmp/product_image_#{product.id}.jpg"
         File.binwrite(image_path, image_data)
@@ -173,9 +165,6 @@ module PdfGenerator
         end
         
         File.delete(image_path) if File.exist?(image_path)
-      rescue ActiveStorage::FileNotFoundError
-        product.image.purge if product.image.attached?
-      end
     end
 
     def apply_column_widths(table)

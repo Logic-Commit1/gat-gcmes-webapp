@@ -19,9 +19,9 @@ class ApplicationRecord < ActiveRecord::Base
     "#{user&.first_name&.titleize} #{user&.last_name&.titleize}"
   end
 
-  def user_signature
-    user&.signature&.attached? ? user.signature.variant(resize_to_limit: [300, 100]).processed : nil
-  end
+  # def user_signature
+  #   user&.signature&.attached? ? user.signature.variant(resize_to_limit: [300, 100]).processed : nil
+  # end
 
   def check_user_has_signature
     current_user&.signature&.attached?
