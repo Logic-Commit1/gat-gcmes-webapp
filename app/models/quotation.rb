@@ -92,20 +92,44 @@ class Quotation < ApplicationRecord
 
   def generate_pdf_report
     path = "PdfGenerator::#{self.class}".constantize.new(self).generate
+    Rails.logger.info "📄 PDF generated at: #{path}"
+    
+    unless File.exist?(path)
+      Rails.logger.error "🚨 ERROR: PDF file was not created!"
+    end
+    
     path
   end
+  
 
   def attach_pdf_report(path)
-    return unless path && File.exist?(path) && File.size?(path) # Ensure file is not empty
+    Rails.logger.info "📄 Attaching PDF report from: #{path}"
   
-    self.pdf_report.attach(
-      io: File.open(path, 'rb'), # 'rb' ensures it's read in binary mode
-      filename: "#{self.class.name.underscore}_#{uid}.pdf",
-      content_type: 'application/pdf'
-    )
+    unless path && File.exist?(path)
+      Rails.logger.error "🚨 ERROR: PDF file does not exist at path: #{path.inspect}"
+      return
+    end
   
-    File.delete(path) if File.exist?(path) # Only delete after successful attach
+    file_size = File.size(path) rescue 0
+    Rails.logger.info "📏 File size: #{file_size} bytes"
+  
+    if file_size.zero?
+      Rails.logger.error "🚨 ERROR: PDF file is empty!"
+      return
+    end
+  
+    File.open(path, 'rb') do |file|
+      self.pdf_report.attach(
+        io: file,
+        filename: "#{self.class.name.underscore}_#{uid}.pdf",
+        content_type: 'application/pdf'
+      )
+    end
+  
+    Rails.logger.info "✅ PDF successfully attached!"
+    File.delete(path) if File.exist?(path) # Ensure deletion only after attaching
   end
+  
   
     
 
