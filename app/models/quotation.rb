@@ -102,34 +102,39 @@ class Quotation < ApplicationRecord
   end
   
 
-  def attach_pdf_report(path)
-    Rails.logger.info "📄 Attaching PDF report from: #{path}"
-  
-    unless path && File.exist?(path)
-      Rails.logger.error "🚨 ERROR: PDF file does not exist at path: #{path.inspect}"
-      return
-    end
-  
-    file_size = File.size(path) rescue 0
-    Rails.logger.info "📏 File size: #{file_size} bytes"
-  
-    if file_size.zero?
-      Rails.logger.error "🚨 ERROR: PDF file is empty!"
-      return
-    end
-  
-    File.open(path, 'rb') do |file|
-      self.pdf_report.attach(
-        io: file,
-        filename: "#{self.class.name.underscore}_#{uid}.pdf",
-        content_type: 'application/pdf'
-      )
-    end
-  
-    Rails.logger.info "✅ PDF successfully attached!"
-    File.delete(path) if File.exist?(path) # Ensure deletion only after attaching
+def attach_pdf_report(path)
+  Rails.logger.info "📄 Attaching PDF report from: #{path}"
+
+  unless path && File.exist?(path)
+    Rails.logger.error "🚨 ERROR: PDF file does not exist at path: #{path.inspect}"
+    return
   end
-  
+
+  file_size = File.size(path) rescue 0
+  Rails.logger.info "📏 File size: #{file_size} bytes"
+
+  if file_size.zero?
+    Rails.logger.error "🚨 ERROR: PDF file is empty!"
+    return
+  end
+
+  checksum = Digest::MD5.file(path).base64digest # ✅ Ensure checksum is generated
+
+  File.open(path, 'rb') do |file|
+    self.pdf_report.attach(
+      io: file,
+      filename: "#{self.class.name.underscore}_#{uid}.pdf",
+      content_type: 'application/pdf',
+      checksum: checksum # ✅ Ensure checksum is set
+    )
+  end
+
+  save! # ✅ Ensure the record is saved after attachment
+
+  Rails.logger.info "✅ PDF successfully attached and saved!"
+  File.delete(path) if File.exist?(path) # Ensure deletion only after attaching
+end
+
   
     
 
