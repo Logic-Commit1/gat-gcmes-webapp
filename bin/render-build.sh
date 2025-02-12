@@ -2,10 +2,10 @@
 # exit on error
 set -o errexit
 
-rm -rf package-lock.json node_modules
-npm install
-npm list
-npx @puppeteer/browsers install chrome@131.0.6778.87
+# rm -rf package-lock.json node_modules
+# npm install
+# npm list
+# npx @puppeteer/browsers install chrome@131.0.6778.87
 
 
 bundle install
