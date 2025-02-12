@@ -24,9 +24,9 @@ module Gat
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    # Add Grover middleware
-    config.middleware.use Grover::Middleware, root_url: Rails.env.production? ? 'https://goldenchain.onrender.com' : 'http://localhost:3000'
-    config.active_storage.analyzer = :vips
-    config.active_storage.variant_processor = :vips
+    # config.active_storage.analyzer = :vips
+    # config.active_storage.variant_processor = :vips
+
+    
   end
 end

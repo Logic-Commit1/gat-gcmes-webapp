@@ -4,10 +4,12 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   before_action :authenticate_user!
+  before_action :set_active_storage_url_options
   before_action :configure_permitted_parameters, if: :devise_controller?
   layout :layout_by_resource
   
   protected
+
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :mobile_number])
@@ -69,5 +71,12 @@ class ApplicationController < ActionController::Base
     generate_pdf(pdf_path)
 
     send_file pdf_path, type: 'application/pdf', disposition: 'attachment'   
+  end
+
+  def set_active_storage_url_options
+    ActiveStorage::Current.url_options = {
+      host: request.base_url,
+      protocol: Rails.env.production? ? 'https' : 'http'
+    }
   end
 end
