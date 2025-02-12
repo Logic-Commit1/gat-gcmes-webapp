@@ -45,17 +45,6 @@
                     id: "existing-signature",
                     )%>
               <%= link_to "Remove Signature", remove_signature_path, 'data-turbo-method': :delete, class: "remove-file-link", style: "margin-top: 1rem;" %>
-              <%= form_for(current_user, url: '/profile', method: :patch, as: :user, class: "signature-form", data: { controller: "file-upload" }) do |f| %>
-                <div class="file-upload">
-                  <%= f.file_field :signature, data: { 
-                      file_upload_target: "input",
-                      action: "change->file-upload#toggleButton"
-                    } %>
-                  <%= button_tag type: 'submit', class: "signature-submit hidden", data: { file_upload_target: "button" } do %>
-                    <span>Upload</span>
-                  <% end %>
-                </div>
-              <% end %>
             <% else %>
               <%= form_for(current_user, url: '/profile', method: :patch, as: :user, class: "signature-form", data: { controller: "file-upload" }) do |f| %>
                 <div class="file-upload">
