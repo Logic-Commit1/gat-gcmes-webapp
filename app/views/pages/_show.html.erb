@@ -11,8 +11,8 @@
   <%#binding.pry%>
     <iframe 
       src="<%= case document.class.name.underscore
-                when 'quotation' then url_for(document.pdf_report)
-                when 'canvass' then url_for(document.pdf_report)
+                when 'quotation' then pdf_view_quotation_path(document)
+                when 'canvass' then pdf_view_canvass_path(document)
                 when 'request_form' then pdf_view_request_form_path(document)
                 when 'purchase_order' then pdf_view_purchase_order_path(document)
                 else '#' # Fallback or default case

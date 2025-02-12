@@ -1,5 +1,5 @@
 class CanvassesController < ApplicationController
-  include GroverPdfGenerator
+  include PrawnPdfGenerator
   include Voidable
   
   layout 'pdf', only: :pdf_view
@@ -31,7 +31,6 @@ class CanvassesController < ApplicationController
 
   # GET /canvasses/1 or /canvasses/1.json
   def show
-    @canvass.generate_prawn
   end
 
   def pdf_view

@@ -1,5 +1,5 @@
 class PurchaseOrdersController < ApplicationController
-  include GroverPdfGenerator
+  include PrawnPdfGenerator
   include Voidable
   
   layout 'pdf', only: :pdf_view
