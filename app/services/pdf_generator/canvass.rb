@@ -64,21 +64,30 @@ module PdfGenerator
         ["", ""]
       ]
 
-    # Handle user signature (Requested by - left column)
-      if @document.user&.signature&.attached?
-        signature_from_object = @document.user.signature
-        signature = StringIO.open(signature_from_object.download)
-        data[1][0] = { image: signature, position: :center, fit: [100, 40] }
-        data[2][0] = @document.user ? "#{@document.user.first_name&.titleize} #{@document.user.last_name&.titleize}" : ""
+      # Handle user signature (Requested by - left column)
+      begin
+        if @document.user&.signature&.attached?
+          signature_from_object = @document.user.signature
+          signature = StringIO.open(signature_from_object.download)
+          data[1][0] = { image: signature, position: :center, fit: [100, 40] }
+          data[2][0] = @document.user ? "#{@document.user.first_name&.titleize} #{@document.user.last_name&.titleize}" : ""
+        end
+      rescue ActiveStorage::FileNotFoundError => e
+        Rails.logger.error "Error loading user signature: #{e.message}"
+        @document.user.signature.purge if @document.user.signature.attached?
       end
 
-    # Handle approver signature (Approved by - right column)
-    
-      if @document.approved? && @document.approver&.signature&.attached?
-        approver_signature_from_object = @document.approver.signature
-        approver_signature = StringIO.open(approver_signature_from_object.download)
-        data[1][1] = { image: approver_signature, position: :center, fit: [100, 40] }
-        data[2][1] = @document.approver ? "#{@document.approver.first_name&.titleize} #{@document.approver.last_name&.titleize}" : ""
+      # Handle approver signature (Approved by - right column)
+      begin
+        if @document.approved? && @document.approver&.signature&.attached?
+          approver_signature_from_object = @document.approver.signature
+          approver_signature = StringIO.open(approver_signature_from_object.download)
+          data[1][1] = { image: approver_signature, position: :center, fit: [100, 40] }
+          data[2][1] = @document.approver ? "#{@document.approver.first_name&.titleize} #{@document.approver.last_name&.titleize}" : ""
+        end
+      rescue ActiveStorage::FileNotFoundError => e
+        Rails.logger.error "Error loading approver signature: #{e.message}"
+        @document.approver.signature.purge if @document.approver.signature.attached?
       end
 
       @pdf.table(data, width: @document_width) do |t|
@@ -92,6 +101,7 @@ module PdfGenerator
         t.row(2).padding = [-20, 8, 8, 8]
         t.row(0).padding = 8
         t.cells.align = :center
+
       end
     end
 
