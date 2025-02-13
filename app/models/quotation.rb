@@ -13,7 +13,7 @@ class Quotation < ApplicationRecord
   has_many :request_forms
   accepts_nested_attributes_for :products, allow_destroy: true, reject_if: :all_blank
 
-  has_one_attached :pdf_report
+  # has_one_attached :pdf_report
 
   enum :payment, [ "50% downpayment", "30 days", "Paid" ]
   enum :status, [ :pending, :approved, :rejected ]
@@ -85,51 +85,51 @@ class Quotation < ApplicationRecord
     end
   end
 
-  def generate_prawn 
-    path = generate_pdf_report
-    attach_pdf_report(path)
-  end
+  # def generate_prawn 
+  #   path = generate_pdf_report
+  #   attach_pdf_report(path)
+  # end
 
-  def generate_pdf_report
-    path = "PdfGenerator::#{self.class}".constantize.new(self).generate
-    Rails.logger.info "📄 PDF generated at: #{path}"
+  # def generate_pdf_report
+  #   path = "PdfGenerator::#{self.class}".constantize.new(self).generate
+  #   Rails.logger.info "📄 PDF generated at: #{path}"
     
-    unless File.exist?(path)
-      Rails.logger.error "🚨 ERROR: PDF file was not created!"
-    end
+  #   unless File.exist?(path)
+  #     Rails.logger.error "🚨 ERROR: PDF file was not created!"
+  #   end
     
-    path
-  end
+  #   path
+  # end
 
-  def attach_pdf_report(path)
-    Rails.logger.info "📄 Attaching PDF report from: #{path}"
+  # def attach_pdf_report(path)
+  #   Rails.logger.info "📄 Attaching PDF report from: #{path}"
   
-    unless path && File.exist?(path)
-      Rails.logger.error "🚨 ERROR: PDF file does not exist at path: #{path.inspect}"
-      return
-    end
+  #   unless path && File.exist?(path)
+  #     Rails.logger.error "🚨 ERROR: PDF file does not exist at path: #{path.inspect}"
+  #     return
+  #   end
   
-    file_size = File.size(path) rescue 0
-    Rails.logger.info "📏 File size: #{file_size} bytes"
+  #   file_size = File.size(path) rescue 0
+  #   Rails.logger.info "📏 File size: #{file_size} bytes"
   
-    if file_size.zero?
-      Rails.logger.error "🚨 ERROR: PDF file is empty!"
-      return
-    end
+  #   if file_size.zero?
+  #     Rails.logger.error "🚨 ERROR: PDF file is empty!"
+  #     return
+  #   end
   
-    File.open(path, 'rb') do |file|
-      self.pdf_report.attach(
-        io: file,
-        filename: "#{self.class.name.underscore}_#{uid}.pdf",
-        content_type: 'application/pdf'
-      )
-    end
+  #   File.open(path, 'rb') do |file|
+  #     self.pdf_report.attach(
+  #       io: file,
+  #       filename: "#{self.class.name.underscore}_#{uid}.pdf",
+  #       content_type: 'application/pdf'
+  #     )
+  #   end
   
-    save! # ✅ Ensure record is saved after attaching
+  #   save! # ✅ Ensure record is saved after attaching
   
-    Rails.logger.info "✅ PDF successfully attached and saved!"
-    File.delete(path) if File.exist?(path) # Ensure deletion only after attaching
-  end    
+  #   Rails.logger.info "✅ PDF successfully attached and saved!"
+  #   File.delete(path) if File.exist?(path) # Ensure deletion only after attaching
+  # end    
 
   private
 

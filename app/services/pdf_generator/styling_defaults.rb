@@ -17,7 +17,8 @@ module PdfGenerator
     # end
     
     def default_padding
-      [1, 2, 4, 2]
+      # [1, 2, 4, 2]
+      [8, 8, 8, 8]
     end
     
     # def shaded_cell_color

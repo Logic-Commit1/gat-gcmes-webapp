@@ -22,7 +22,7 @@ module PdfGenerator
     def generate
       Prawn::Document.generate(
         @path,
-        margin: 20,
+        margin: 30,
         page_layout: :portrait,
         page_size: 'A4',
         compress: true,
@@ -48,8 +48,6 @@ module PdfGenerator
         if @document.class.name == "Quotation" || @document.class.name == "PurchaseOrder"
           customer_details
         end
-
-  
 
         if @document.class.name == "Quotation" || @document.class.name == "PurchaseOrder"
           subject_line
@@ -106,21 +104,19 @@ module PdfGenerator
     end
 
     def cell_style
-      { padding: default_padding, size: font_size, font: "manrope", inline_format: true, align: align, border_width: 0.5 }
+      { padding: default_padding, size: font_size, inline_format: true, align: align, border_width: 0.5 }
     end
 
-    def data_table(data, row_styling_count = 2)
-      @pdf.table(
-        data,
-        width: table_width, 
-        cell_style: cell_style
-      ) 
-      # do |table|
-      #   row_styling_count.times do |i|
-      #     table.row(i).style({ background_color: shaded_cell_color })
-      #   end
-      # end
-    end
+    # def data_table(data, width = nil, styling = nil)
+    #   width = @document_width if width.nil?
+    #   styling = styling.nil? ? cell_style : styling
+
+    #   @pdf.table(
+    #     data,
+    #     width: width,
+    #     styling
+    #   )
+    # end
 
     def header
       # Contact details section
@@ -131,35 +127,27 @@ module PdfGenerator
         @pdf.fill_color "000000"
 
         # Contact details with padding
-        # @pdf.font('manrope', size: 8) do
-          @pdf.bounding_box([8, 76], width: 244, height: 76) do
-            # @pdf.icon "<icon size='8'>fas-location-dot</icon>", inline_format: true
-            # @pdf.text_box "#{@document.company.address}", padding_left: 80
-
+        @pdf.bounding_box([8, 76], width: 244, height: 76) do
             address_data = [[@pdf.table_icon('fas-location-dot'), "#{@document.company.address}"],
                             [@pdf.table_icon('fas-phone'), "#{@document.company.contact_numbers.join(' | ')}"],
                             [@pdf.table_icon('fas-envelope'),"#{@document.company.emails.join(', ')}"] ]
-            @pdf.table(
-              address_data,
-              width: 244,
-              cell_style: {
-                border_width: 0,
-                padding: [3, 2],
-                size: 8
-              },
-              column_widths: {
-                0 => 20,
-                1 => 224
-              }
-            ) do |table|
-              table.column(0).style(align: :center, valign: :center)
-            end
-            # @pdf.move_down 8
-            # @pdf.icon "<icon size='8'>fas-phone</icon> ", inline_format: true
-            # @pdf.move_down 8
-            # @pdf.icon "<icon size='8'>fas-envelope</icon> #{@document.company.emails.join(', ')}", inline_format: true
+
+          @pdf.table(
+            address_data,
+            width: 244,
+            cell_style: {
+              border_width: 0,
+              padding: [3, 2],
+              size: 8
+            },
+            column_widths: {
+              0 => 20,
+              1 => 224
+            }
+          ) do |table|
+            table.column(0).style(align: :center, valign: :center)
           end
-        # end
+        end
       end
 
       # Logo section
@@ -175,20 +163,18 @@ module PdfGenerator
         @pdf.image logo_path, at: [24.5, logo_y_position], width: 76, height: 40
 
         # Company name
-        # @pdf.font('manrope', size: 10, style: :bold) do
-          @pdf.fill_color "f5db07"
-          company_name = @document.company.code.downcase == "gat" ? "GOLDEN ARROW TRADING" : ""
-          @pdf.text_box company_name,
-            at: [0, 22.5],
-            width: 120,
-            align: :center,
-            style: :bold
-        # end
+        @pdf.fill_color "f5db07"
+        company_name = @document.company.code.downcase == "gat" ? "GOLDEN ARROW TRADING" : ""
+        @pdf.text_box company_name,
+          at: [0, 22.5],
+          width: 120,
+          align: :center,
+          style: :bold
         @pdf.fill_color "000000"
       end
 
       # Document name and uid
-      @pdf.bounding_box([410, @pdf.cursor + 80], width: 145, height: 84) do
+      @pdf.bounding_box([390, @pdf.cursor + 80], width: 145, height: 84) do
         @pdf.move_down 10
 
         @pdf.text "#{@document.class.name.titleize}", size: 20, style: :bold, align: :right

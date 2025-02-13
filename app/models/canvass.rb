@@ -11,7 +11,7 @@ class Canvass < ApplicationRecord
   has_many :request_forms
   accepts_nested_attributes_for :products, allow_destroy: true, reject_if: :all_blank
 
-  has_one_attached :pdf_report
+  # has_one_attached :pdf_report
 
   enum :status, [ :pending, :approved, :rejected ]
 
@@ -90,26 +90,26 @@ class Canvass < ApplicationRecord
     File.open(pdf_path, 'wb') { |file| file.write(pdf_content) }
   end
 
-  def generate_prawn 
-    path = generate_pdf_report
-    attach_pdf_report(path)
-  end
+  # def generate_prawn 
+  #   path = generate_pdf_report
+  #   attach_pdf_report(path)
+  # end
 
-  def generate_pdf_report
-    path = "PdfGenerator::#{self.class}".constantize.new(self).generate
-    path
-  end
+  # def generate_pdf_report
+  #   path = "PdfGenerator::#{self.class}".constantize.new(self).generate
+  #   path
+  # end
 
-  def attach_pdf_report(path)
-    return unless path && File.exist?(path)
-    self.pdf_report.attach(
-      io: File.open(path),
-      filename: "#{self.class.name.underscore}_#{uid}.pdf",
-      content_type: 'application/pdf'
-    )
+  # def attach_pdf_report(path)
+  #   return unless path && File.exist?(path)
+  #   self.pdf_report.attach(
+  #     io: File.open(path),
+  #     filename: "#{self.class.name.underscore}_#{uid}.pdf",
+  #     content_type: 'application/pdf'
+  #   )
 
-    File.delete(path)
-  end
+  #   File.delete(path)
+  # end
 
   private
 
