@@ -91,6 +91,7 @@ module PdfGenerator
             t.row(2).padding = [-20, 8, 8, 8]
             t.row(0).padding = 8
             t.cells.align = :center
+            t.cells.border_width = 0.5
           end
         end
       rescue => e
@@ -111,6 +112,7 @@ module PdfGenerator
         t.row(0).font_style = :bold
         t.row(0).background_color = "F3F9FF"
         t.cells.padding = 8
+        t.cells.border_width = 0.5
         t.cells.borders = [:bottom, :top, :left, :right]
         apply_column_widths(t)
         t.columns(2..6).align = :right
@@ -127,6 +129,7 @@ module PdfGenerator
       @pdf.table(data, width: @document_width) do |t|
         t.cells.padding = 8
         t.cells.borders = [:bottom, :top, :left, :right]
+        t.cells.border_width = 0.5
         apply_column_widths(t)
         t.column(0).align = :center
         t.column(1).align = :left
@@ -144,6 +147,7 @@ module PdfGenerator
       
       @pdf.table([[nil, content, "", "", "", "", ""]], width: @document_width) do |t|
         t.cells.padding = 8
+        t.cells.border_width = 0.5
         t.cells.borders = []
         t.column(1).borders = [:bottom, :top, :left, :right]
         apply_column_widths(t)

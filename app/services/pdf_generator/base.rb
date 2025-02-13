@@ -54,6 +54,9 @@ module PdfGenerator
         end
 
 
+        # if @document.class.name == "RequestForm"
+        #   generate_specific
+        # end
 
         products_table
 
@@ -202,6 +205,7 @@ module PdfGenerator
           t.row(0).background_color = "DDDDDD"
           t.cells.padding = 8
           t.cells.borders = [:bottom, :top, :left, :right]
+          t.cells.border_width = 0.5
           t.column(0).width = @document_width * 0.2
         end
       end

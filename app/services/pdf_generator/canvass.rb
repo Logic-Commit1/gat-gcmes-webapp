@@ -50,7 +50,7 @@ module PdfGenerator
             end
           end
         end
-        @pdf.move_down 10
+        @pdf.move_down 20
       end
     end
 
@@ -101,7 +101,7 @@ module PdfGenerator
         t.row(2).padding = [-20, 8, 8, 8]
         t.row(0).padding = 8
         t.cells.align = :center
-
+        t.cells.border_width = 0.5
       end
     end
 
@@ -117,6 +117,7 @@ module PdfGenerator
         t.cells.borders = [:bottom, :top, :left, :right]
         apply_column_widths(t)
         t.columns(1..4).align = :right
+        t.cells.border_width = 0.5
         # t.column(4).align = :left
       end
     end
@@ -134,6 +135,7 @@ module PdfGenerator
         t.columns(1..4).align = :right
         
         # Apply styling for selected supplier
+
         if details[4]  # If supplier is selected
           t.cells.background_color = "FFFAE4"  # Light yellow background
           t.cells.border_width = 0.5
@@ -154,6 +156,7 @@ module PdfGenerator
             cell.border_bottom_width = 2
           end
         else
+          t.cells.borders = [:bottom, :left, :right] 
           t.cells.border_color = "000000"
           t.cells.border_width = 0.5
         end

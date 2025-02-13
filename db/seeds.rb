@@ -93,3 +93,5 @@ Employee.all.each do |employee|
   )
 end
 
+u = User.find_by(email: "manager@goldenchain.ph")
+u.manager!
