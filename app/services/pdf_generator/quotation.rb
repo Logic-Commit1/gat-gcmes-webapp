@@ -43,9 +43,15 @@ module PdfGenerator
       draw_products_header
       
       products.each_with_index do |product, index|
-        if @pdf.cursor < 100
+        # Calculate total height needed for this product row
+        required_height = calculate_product_row_height(product)
+        
+        # Check if we need to move to next page (adding some padding)
+        if @pdf.cursor < (required_height + 20)
           @pdf.start_new_page
+          draw_products_header
         end
+        
         draw_product_row(product, index)
         @pdf.move_down 10
       end
@@ -171,6 +177,7 @@ module PdfGenerator
         t.cells.borders = [:bottom, :top, :left, :right]
         apply_column_widths(t)
         t.columns(2..6).align = :right
+        t.column(0).align = :center
       end
     end
 
@@ -261,6 +268,31 @@ module PdfGenerator
       end
 
       content
+    end
+
+    def calculate_product_row_height(product)
+      total_height = 0
+      
+      # Height for main product row (using cell padding of 7)
+      total_height += 14 # Basic cell padding (7 * 2)
+      
+      # Calculate height for specs and scopes if present
+      specs = product.deleted? ? product.specs.with_deleted : product.specs
+      scopes = product.deleted? ? product.scopes.with_deleted : product.scopes
+      
+      if specs.any? || scopes.any?
+        content = build_specs_and_scopes_content(specs, scopes)
+        # Calculate height of text box with content
+        text_height = @pdf.height_of(content, width: @document_width * 0.5)
+        total_height += text_height + 14 # Add cell padding
+      end
+      
+      # Add height for product image if present
+      if product.image.attached?
+        total_height += 114 # Image height (100) + cell padding (14)
+      end
+      
+      total_height
     end
 
   end
