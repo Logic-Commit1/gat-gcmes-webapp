@@ -1,36 +1,40 @@
 module PdfGenerator
   class Quotation < Base
-    def generate_specific
-      # lines_table(@report.lines)
-    end
-
-    # def lines_table(lines)
-    #   return if lines.empty?
-
-    #   items_table_data = [
-    #     ["Serial No", "Description", "Component", "Quantity", "Job Number", "Result"]
-    #   ]
-
-    #   lines.each do |line|
-    #     items_table_data << [ 
-    #       line[:serial_number], 
-    #       (line[:equipment] unless line.family == "Child"), 
-    #       line[:parts],
-    #       line[:quantity],
-    #       line[:job_number],
-    #       set_color(line[:results])
-    #     ]
-    #   end
-
-    #   @pdf.text "TEST ITEMS", size: font_size, align: :left, style: :bold
-
-    #   data_table(items_table_data, 1)
-
-    #   @pdf.move_down 5
-    # end
 
     def specific_sub_header
-      @pdf.text "Date Requested: #{@document.created_at.strftime("%B %d, %Y")}", align: :right
+      @pdf.text "<b>Date Requested:</b> #{@document.created_at.strftime("%B %d, %Y")}", align: :right, inline_format: true
+      @pdf.move_down 5
+    end
+
+    def client_details
+      data = [
+        [{content: "Client Details", colspan: 2}],
+        ["Company Name", @document.client.name],
+        ["Business Address", @document.client.address],
+        ["Attention", @document.attention&.titleize],
+        ["Vessel", @document.vessel&.upcase]
+      ]
+
+      @pdf.bounding_box([0, @pdf.cursor], width: @document_width) do
+        @pdf.table(data, width: @document_width) do |t|
+          t.row(0).font_style = :bold
+          t.row(0).align = :center
+          t.row(0).background_color = "F3F9FF"
+          t.cells.padding = 7
+          t.cells.borders = [:bottom, :top, :left, :right]
+          t.cells.border_width = 0.5
+          t.column(0).width = @document_width * 0.2
+        end
+      end
+      
+      @pdf.move_down 10
+
+      subject_line
+    end
+
+    def subject_line
+      @pdf.text "Subject: #{@document.subject}", style: :bold
+      @pdf.move_down 5
     end
 
     def products_table
@@ -39,11 +43,65 @@ module PdfGenerator
       draw_products_header
       
       products.each_with_index do |product, index|
+        if @pdf.cursor < 100
+          @pdf.start_new_page
+        end
         draw_product_row(product, index)
-        draw_specs_and_scopes(product)
-        draw_product_image(product)
         @pdf.move_down 10
       end
+    end
+
+    def totals_table
+      # Position the table at the right side by calculating offset from right margin
+      table_width = 180
+      x_position = @document_width - table_width + 20
+      
+      @pdf.bounding_box([x_position, @pdf.cursor], width: table_width) do
+        data = [["SUB TOTAL", "PHP #{number_with_precision(@document.sub_total)}"]]
+        
+        if @document.discount > 0
+          data << ["DISCOUNT (#{@document.discount_rate.to_i}%)", 
+                  "- #{number_with_precision(@document.discount)}"]
+        end
+        
+        data << ["12% VAT", "#{number_with_precision(@document.vat)}"]
+        data << ["TOTAL", "PHP #{number_with_precision(@document.total)}"]
+
+        @pdf.table(data, width: table_width - 20) do |t|
+          t.cells.padding = [2, 7]
+          t.cells.borders = []
+          t.cells.font_style = :semi_bold
+          t.column(1).align = :right
+          t.row(-1).borders = [:top] # Add top border to last row
+          t.row(-1).background_color = "F8D251"
+          t.row(-1).text_color = "D60000"
+        end
+      end
+
+      @pdf.move_down 10
+    end
+
+    def terms_and_conditions
+      @pdf.text "TERMS AND CONDITIONS", style: :bold
+      @pdf.move_down 10
+
+      terms = []
+      terms << ["Lead time", @document.lead_time] if @document.lead_time.present?
+      terms << ["Duration", @document.duration] if @document.duration.present?
+      terms << ["Warranty", @document.warranty] if @document.warranty.present?
+      terms << ["Payment", @document.payment] if @document.payment.present?
+
+      @pdf.table(terms, width: @document_width) do |t|
+        t.cells.borders = []
+        t.cells.padding = [2, 0]
+        # t.cells.borders = []
+        t.column(0).font_style = :semi_bold
+        t.column(0).width = 55
+        # t.column(0).padding_left = 0
+        # t.column(0).align = :left
+      end
+
+      @pdf.move_down 10
     end
 
     def signatures_table
@@ -68,21 +126,19 @@ module PdfGenerator
 
       # Handle approver signature (Approved by - right column)
       if @document.approved? && @document.approver&.signature&.attached?
-
         approver_signature_from_object = @document.approver.signature
         approver_signature = StringIO.open(approver_signature_from_object.download)
+
         data[1][2] = { image: approver_signature, position: :center, fit: [100, 45] }
         data[2][2] = "#{@document.approver&.first_name&.titleize} #{@document.approver&.last_name&.titleize}"
-      
       end
-
       
       # Draw the table with styling
       begin
         @pdf.bounding_box([0, @pdf.cursor], width: @document_width) do
           @pdf.table(data, width: @document_width) do |t|
             t.row(0).font_style = :bold
-            t.row(0).background_color = "DDDDDD"
+            t.row(0).background_color = "F3F9FF"
             t.row(0).align = :center
             t.row(0).borders = [:bottom, :top, :left, :right]
             t.row(1).height = 55
@@ -100,7 +156,6 @@ module PdfGenerator
         puts e.backtrace
         raise e
       end
-
     end
 
     private
@@ -111,7 +166,7 @@ module PdfGenerator
       @pdf.table(headers, width: @document_width) do |t|
         t.row(0).font_style = :bold
         t.row(0).background_color = "F3F9FF"
-        t.cells.padding = 8
+        t.cells.padding = 7
         t.cells.border_width = 0.5
         t.cells.borders = [:bottom, :top, :left, :right]
         apply_column_widths(t)
@@ -127,7 +182,7 @@ module PdfGenerator
       ]
       
       @pdf.table(data, width: @document_width) do |t|
-        t.cells.padding = 8
+        t.cells.padding = 7
         t.cells.borders = [:bottom, :top, :left, :right]
         t.cells.border_width = 0.5
         apply_column_widths(t)
@@ -135,6 +190,8 @@ module PdfGenerator
         t.column(1).align = :left
         t.columns(2..6).align = :right
       end
+
+      draw_specs_and_scopes(product)
     end
 
     def draw_specs_and_scopes(product)
@@ -146,12 +203,15 @@ module PdfGenerator
       content = build_specs_and_scopes_content(specs, scopes)
       
       @pdf.table([[nil, content, "", "", "", "", ""]], width: @document_width) do |t|
-        t.cells.padding = 8
+        t.cells.padding = 7
         t.cells.border_width = 0.5
         t.cells.borders = []
         t.column(1).borders = [:bottom, :top, :left, :right]
         apply_column_widths(t)
       end
+
+      draw_product_image(product)
+
     end
 
     def draw_product_image(product)
@@ -162,7 +222,7 @@ module PdfGenerator
         
         @pdf.table([[nil, { image: image_path, position: :left, fit: [100, 100] }, 
                     "", "", "", "", ""]], width: @document_width) do |t|
-          t.cells.padding = 8
+          t.cells.padding = 7
           t.cells.borders = []
           t.column(1).borders = [:bottom, :left, :right]
           apply_column_widths(t)
@@ -177,6 +237,30 @@ module PdfGenerator
       table.column(2).width = 30
       table.column(3).width = 40
       table.columns(4).width = (@document_width) * 0.16
+    end
+
+    def build_specs_and_scopes_content(specs, scopes)
+      content = ""
+      
+      if specs.any?
+        content += "SPECS:\n\n"
+        specs.each do |spec|
+          content += "#{spec.name} : #{spec.value}\n"
+        end
+      end
+
+      if specs.any? && scopes.any?
+        content += "\n"
+      end
+
+      if scopes.any?
+        content += "SCOPE OF WORK\n\n"
+        scopes.each do |scope|
+          content += "* #{scope.name}\n"
+        end
+      end
+
+      content
     end
 
   end

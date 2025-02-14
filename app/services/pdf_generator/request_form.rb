@@ -1,7 +1,6 @@
 module PdfGenerator
   class RequestForm < Base
     def products_table
-      project_details
       if @document.Allowance?
         allowance_table
       else
@@ -10,12 +9,6 @@ module PdfGenerator
     end
 
     def specific_sub_header
-      # @pdf.text "Date Requested: #{@document.created_at.strftime("%B %d, %Y")}", align: :right
-    end
-
-    private
-
-    def project_details
       @pdf.table([
         [
           { content: "<b>Project:</b> #{@document.project.uid}", borders: [], inline_format: true, padding: 0 },
@@ -23,11 +16,10 @@ module PdfGenerator
         ]
       ], width: @document_width)
 
-      @pdf.move_down 6
+      @pdf.move_down 5
     end
 
     def travel_details
-      @pdf.move_down 8
 
       if @document.start_travel_date.present? && @document.end_travel_date.present?
         travel_date = "#{@document.start_travel_date.strftime("%B %d")} to #{@document.end_travel_date.strftime("%B %d")}"
@@ -58,10 +50,11 @@ module PdfGenerator
       @pdf.table(headers, width: @document_width) do |t|
         t.row(0).font_style = :bold
         t.row(0).background_color = "F3F9FF"
-        t.cells.padding = 8
+        t.cells.padding = 7
         t.cells.border_width = 0.5
         t.cells.borders = [:bottom, :top, :left, :right]
         apply_allowance_column_widths(t)
+        t.column(0).align = :center
         t.column(2).align = :right
       end
 
@@ -74,7 +67,7 @@ module PdfGenerator
         ]
         
         @pdf.table(data, width: @document_width) do |t|
-          t.cells.padding = 8
+          t.cells.padding = 7
           t.cells.border_width = 0.5
           t.cells.borders = [:bottom, :top, :left, :right]
           apply_allowance_column_widths(t)
@@ -87,12 +80,14 @@ module PdfGenerator
       @pdf.table([
         ["", "Total", "PHP #{number_with_precision(@document.total, precision: 2, delimiter: ',')}", ""]
       ], width: @document_width) do |t|
-        t.cells.padding = 8
+        t.cells.padding = 7
         t.cells.border_width = 0.5
         apply_allowance_column_widths(t)
         t.column(2).align = :right
         t.columns([3]).borders = []
       end
+      
+      @pdf.move_down 8
 
       if @document.Allowance?
         travel_details
@@ -115,7 +110,7 @@ module PdfGenerator
       ]], width: @document_width) do |t|
         t.row(0).font_style = :bold
         t.row(0).background_color = "F3F9FF"
-        t.cells.padding = 8
+        t.cells.padding = 7
         t.cells.border_width = 0.5
         t.cells.borders = [:bottom, :top, :left, :right]
         t.columns(1..3).align = :right
@@ -128,10 +123,11 @@ module PdfGenerator
       @pdf.table(headers, width: @document_width) do |t|
         t.row(0).font_style = :bold
         t.row(0).background_color = "F3F9FF"
-        t.cells.padding = 8
+        t.cells.padding = 7
         t.cells.border_width = 0.5
         t.cells.borders = [:bottom, :top, :left, :right]
         apply_order_column_widths(t)
+        t.column(0).align = :center
         t.column(2..5).align = :right
       end
 
@@ -146,7 +142,7 @@ module PdfGenerator
         ]
         
         @pdf.table(data, width: @document_width) do |t|
-          t.cells.padding = 8
+          t.cells.padding = 7
           t.cells.border_width = 0.5
           t.cells.borders = [:bottom, :top, :left, :right]
           apply_order_column_widths(t)
@@ -159,7 +155,7 @@ module PdfGenerator
       @pdf.table([
         ["", "", "", "", "Total", "PHP #{number_with_precision(@document.total, precision: 2, delimiter: ',')}"]
       ], width: @document_width) do |t|
-        t.cells.padding = 8
+        t.cells.padding = 7
         t.cells.border_width = 0.5
         apply_order_column_widths(t)
         t.column(4..5).align = :right
@@ -168,7 +164,7 @@ module PdfGenerator
     end
 
     def signatures_table
-      @pdf.move_down 20
+      @pdf.move_down 30
       
       data = @document.Allowance? ? 
         [["Requested by", "Checked by", "Pre-approved by", "Approved by"], ["", "", "", ""], ["", "", "", ""]] :
@@ -189,13 +185,13 @@ module PdfGenerator
 
       @pdf.table(data, width: @document_width) do |t|
         t.row(0).font_style = :bold
-        t.row(0).background_color = "DDDDDD"
+        t.row(0).background_color = "F3F9FF"
         t.cells.align = :center
-        t.cells.padding = 8
+        t.cells.padding = 7
         t.cells.border_width = 0.5
         t.row(1).height = 55
-        t.row(1).padding = [1, 8, 0, 8]
-        t.row(2).padding = [-20, 8, 8, 8]
+        t.row(1).padding = [1, 7, 0, 7]
+        t.row(2).padding = [-20, 7, 7, 7]
         apply_signatures_column_widths(t)
       end
     end

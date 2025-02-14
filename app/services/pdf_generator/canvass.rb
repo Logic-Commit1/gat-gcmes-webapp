@@ -1,39 +1,10 @@
 module PdfGenerator
   class Canvass < Base
-    def generate_specific
-      # lines_table(@report.lines)
-    end
-
-    # def lines_table(lines)
-    #   return if lines.empty?
-
-    #   items_table_data = [
-    #     ["Serial No", "Description", "Component", "Quantity", "Job Number", "Result"]
-    #   ]
-
-    #   lines.each do |line|
-    #     items_table_data << [ 
-    #       line[:serial_number], 
-    #       (line[:equipment] unless line.family == "Child"), 
-    #       line[:parts],
-    #       line[:quantity],
-    #       line[:job_number],
-    #       set_color(line[:results])
-    #     ]
-    #   end
-
-    #   @pdf.text "TEST ITEMS", size: font_size, align: :left, style: :bold
-
-    #   data_table(items_table_data, 1)
-
-    #   @pdf.move_down 5
-    # end
 
     def specific_sub_header
-      @pdf.text "<b>Description:</b> #{@document.description}", align: :left, inline_format: true
+      @pdf.text "Description: #{@document.description}", align: :left, inline_format: true
       @pdf.move_down 2
-      @pdf.text "<b>Quantity:</b> #{@document.quantity} #{@document.unit}", align: :left, inline_format: true
-      @pdf.move_down 5
+      @pdf.text "Quantity: #{@document.quantity} #{@document.unit}", align: :left, inline_format: true
       # @pdf.text "Date Requested: #{@document.created_at.strftime("%B %d, %Y")}", align: :right
     end
 
@@ -113,7 +84,7 @@ module PdfGenerator
       @pdf.table(headers, width: @document_width) do |t|
         t.row(0).font_style = :bold
         t.row(0).background_color = "F3F9FF"
-        t.cells.padding = 8
+        t.cells.padding = 7
         t.cells.borders = [:bottom, :top, :left, :right]
         apply_column_widths(t)
         t.columns(1..4).align = :right
@@ -128,7 +99,7 @@ module PdfGenerator
       ]
       
       @pdf.table(data, width: @document_width) do |t|
-        t.cells.padding = 8
+        t.cells.padding = 7
         t.cells.borders = [:bottom, :top, :left, :right]
         apply_column_widths(t)
         t.column(0).align = :left
