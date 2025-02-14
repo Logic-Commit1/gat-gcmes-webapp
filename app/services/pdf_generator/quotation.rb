@@ -89,13 +89,13 @@ module PdfGenerator
 
     def terms_and_conditions
       @pdf.text "TERMS AND CONDITIONS", style: :bold
-      @pdf.move_down 10
+      @pdf.move_down 5
 
       terms = []
       terms << ["Lead time", @document.lead_time] if @document.lead_time.present?
       terms << ["Duration", @document.duration] if @document.duration.present?
       terms << ["Warranty", @document.warranty] if @document.warranty.present?
-      terms << ["Payment", @document.payment] if @document.payment.present?
+      terms << ["Payment", @document.payment.present? ? @document.payment : "n/a"]
 
       @pdf.table(terms, width: @document_width) do |t|
         t.cells.borders = []

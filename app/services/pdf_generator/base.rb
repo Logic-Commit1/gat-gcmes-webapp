@@ -52,16 +52,19 @@ module PdfGenerator
           if @pdf.cursor < totals_height
             @pdf.start_new_page
           end
+
           totals_table
-        end
 
-        terms_height = 100 # Approximate height for terms
-        if @pdf.cursor < terms_height
-          @pdf.start_new_page
+          terms_height = 100 # Approximate height for terms
+          if @pdf.cursor < terms_height
+            @pdf.start_new_page
+          end
+          
+          terms_and_conditions
         end
-        terms_and_conditions
+        
 
-        signatures_height = 110 # Approximate height for signatures
+        signatures_height = @document.class.name == "PurchaseOrder" ? 150 : 110 # Approximate height for signatures
         if @pdf.cursor < signatures_height
           @pdf.start_new_page
         end

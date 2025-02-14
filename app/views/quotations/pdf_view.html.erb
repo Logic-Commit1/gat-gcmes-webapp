@@ -55,26 +55,28 @@
         </tr>
         <% specs = p.deleted? ? p.specs.with_deleted : p.specs %>
         <% scopes = p.deleted? ? p.scopes.with_deleted : p.scopes %>
-        <tr>
-          <td></td>
-          <td colspan="2">
-            <% if specs.any? %>
-              <p style="margin-bottom: 6px;"><strong><u>SPECS</u></strong></p>
-              <% specs.each do |spec| %>
-                <p><%= spec.name %> : <span style="margin-left: 2px;"><%= spec.value %></span></p>
+        <% if specs.any? || scopes.any? %>
+          <tr>
+            <td></td>
+            <td colspan="2">
+              <% if specs.any? %>
+                <p style="margin-bottom: 6px;"><strong><u>SPECS</u></strong></p>
+                <% specs.each do |spec| %>
+                  <p><%= spec.name %> : <span style="margin-left: 2px;"><%= spec.value %></span></p>
+                <% end %>
               <% end %>
-            <% end %>
-            <% if specs.any? && scopes.any? %>
-              <br>
-            <% end %>
-            <% if scopes.any? %>
-              <p style="margin-bottom: 6px;"><strong><u>SCOPE OF WORK</u></strong></p>
-              <% scopes.each do |scope| %>
-                <p>* <%= scope.name %></p>
+              <% if specs.any? && scopes.any? %>
+                <br>
               <% end %>
-            <% end %>
-          </td>
-        </tr>
+              <% if scopes.any? %>
+                <p style="margin-bottom: 6px;"><strong><u>SCOPE OF WORK</u></strong></p>
+                <% scopes.each do |scope| %>
+                  <p>* <%= scope.name %></p>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
         <% if p.image.attached? %>
           <tr>
             <td></td>
@@ -111,7 +113,7 @@
     <td><strong>PHP <%= number_with_precision(@quotation.total, precision: 2, delimiter: ',') %></strong></td>
   </tr>
 </table>
-<br>
+<div class="clear-fix"></div>
 <div id="terms-container">
   <p><strong>TERMS AND CONDITIONS</strong></p>
   <div id="terms-details">
@@ -127,10 +129,8 @@
       <div><strong>Warranty</strong></div>
       <div><%= @quotation.warranty %></div>
     <% end %>
-    <% if @quotation.payment.present? %>
-      <div><strong>Payment</strong></div>
-      <div><%= @quotation.payment %></div>
-    <% end %>
+    <div><strong>Payment</strong></div>
+    <div><% if @quotation.payment.present? %><%= @quotation.payment %><% else %>n/a<% end %></div>
   </div>
 </div>
 <br>

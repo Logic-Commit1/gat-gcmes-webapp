@@ -2,10 +2,12 @@ module PdfGenerator
   class Canvass < Base
 
     def specific_sub_header
-      @pdf.text "Description: #{@document.description}", align: :left, inline_format: true
+      @pdf.text "<b>Description:</b> #{@document.description}", align: :left, inline_format: true
       @pdf.move_down 2
-      @pdf.text "Quantity: #{@document.quantity} #{@document.unit}", align: :left, inline_format: true
+      @pdf.text "<b>Quantity:</b> #{@document.quantity} #{@document.unit}", align: :left, inline_format: true
       # @pdf.text "Date Requested: #{@document.created_at.strftime("%B %d, %Y")}", align: :right
+
+      @pdf.move_down 5
     end
 
     def products_table

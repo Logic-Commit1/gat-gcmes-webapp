@@ -40,6 +40,8 @@ module PdfGenerator
 
     def terms
       @pdf.text "<b>Terms:</b> #{@document.terms}", inline_format: true
+
+      @pdf.move_down 5
     end
 
 
