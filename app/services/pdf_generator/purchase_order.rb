@@ -44,8 +44,6 @@ module PdfGenerator
       @pdf.move_down 5
     end
 
-
-
     def products_table
       headers = [["SN", "Subject Description", "Quantity", "U/M", "Unit Price", "Estimated Amount"]]
       
@@ -152,7 +150,6 @@ module PdfGenerator
       end
     end
       
-
     def apply_order_column_widths(table)
       total_width = @document_width
       

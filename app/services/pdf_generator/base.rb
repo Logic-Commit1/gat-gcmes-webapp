@@ -106,14 +106,17 @@ module PdfGenerator
     #   )
     # end
 
+
+
     def header
       # Contact details section
       @pdf.bounding_box([0, @pdf.cursor], width: 224, height: 68) do
-        # Fill background with orange gradient (closest approximation in PDF)
-        @pdf.fill_color "fdae4e"
-        @pdf.fill_rectangle [0, 84], 224, 68
-        @pdf.fill_color "000000"
+        # Draw the gradient background before adding content
+        @pdf.fill_gradient [0, @pdf.cursor], [224, @pdf.cursor - 68], 'ffdb57', 'fdae4e'
+        @pdf.fill_rectangle [0, @pdf.cursor + 16], 224, 68 # Fill with gradient
 
+        # Reset fill color for text
+        @pdf.fill_color "000000"
         # Contact details with padding
         @pdf.bounding_box([0, 82], width: 224, height: 76) do
           address_data = [[@pdf.table_icon('fas-location-dot'), "#{@document.company.address[0..66]}\n#{@document.company.address[67..]}"],

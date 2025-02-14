@@ -5,8 +5,6 @@ module PdfGenerator
       @pdf.text "<b>Description:</b> #{@document.description}", align: :left, inline_format: true
       @pdf.move_down 2
       @pdf.text "<b>Quantity:</b> #{@document.quantity} #{@document.unit}", align: :left, inline_format: true
-      # @pdf.text "Date Requested: #{@document.created_at.strftime("%B %d, %Y")}", align: :right
-
       @pdf.move_down 5
     end
 
@@ -27,9 +25,7 @@ module PdfGenerator
       end
     end
 
-    def signatures_table
-      # @pdf.move_down 20
-      
+    def signatures_table      
       # Initialize base data structure with headers and empty cells
       data = [
         ["Requested by", "Approved by"],

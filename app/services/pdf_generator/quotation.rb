@@ -33,7 +33,7 @@ module PdfGenerator
     end
 
     def subject_line
-      @pdf.text "Subject: #{@document.subject}", style: :bold
+      @pdf.text "<b>Subject:</b> #{@document.subject}", inline_format: true
       @pdf.move_down 5
     end
 
@@ -209,7 +209,7 @@ module PdfGenerator
 
       content = build_specs_and_scopes_content(specs, scopes)
       
-      @pdf.table([[nil, content, "", "", "", "", ""]], width: @document_width) do |t|
+      @pdf.table([[nil, { content: content, inline_format: true }, "", "", "", "", ""]], width: @document_width) do |t|
         t.cells.padding = 7
         t.cells.border_width = 0.5
         t.cells.borders = []
@@ -218,7 +218,6 @@ module PdfGenerator
       end
 
       draw_product_image(product)
-
     end
 
     def draw_product_image(product)
@@ -250,7 +249,7 @@ module PdfGenerator
       content = ""
       
       if specs.any?
-        content += "SPECS:\n\n"
+        content += "<b><u><color rgb='646464'>SPECS:</color></u></b>\n\n"
         specs.each do |spec|
           content += "#{spec.name} : #{spec.value}\n"
         end
@@ -261,7 +260,7 @@ module PdfGenerator
       end
 
       if scopes.any?
-        content += "SCOPE OF WORK\n\n"
+        content += "<b><u><color rgb='646464'>SCOPE OF WORK</color></u></b>\n\n"
         scopes.each do |scope|
           content += "* #{scope.name}\n"
         end
