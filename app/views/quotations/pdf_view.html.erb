@@ -100,7 +100,8 @@
   </tr>
   <% if @quotation.discount > 0 %>
     <tr>
-      <td><strong>DISCOUNT (<%= @quotation.discount_rate.to_i %>%)</strong></td>
+      <%#binding.pry%>
+      <td><strong>DISCOUNT (<%= @quotation.discount_rate %>%)</strong></td>
       <td><strong>- <%= number_with_precision(@quotation.discount, precision: 2, delimiter: ',') %></strong></td>
     </tr>
   <% end %>
