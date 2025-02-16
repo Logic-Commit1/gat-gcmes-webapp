@@ -42,7 +42,7 @@ class Canvass < ApplicationRecord
 
   before_save :set_uid
   before_save :set_suppliers, if: :should_update_suppliers?
-  before_destroy :delete_pdf
+  # before_destroy :delete_pdf
 
   def set_uid 
     return if self.uid.present?
