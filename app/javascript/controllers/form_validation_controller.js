@@ -178,63 +178,44 @@ export default class extends Controller {
     let isValid = true
 
     // Validate project selection (common for both types)
-    if (this.hasProjectSelectTarget && !this.projectSelectTarget.value) {
-      event.preventDefault()
-      this.projectSelectTarget.classList.add("field-error")
-      this.projectErrorTarget.classList.remove("hidden")
-      isValid = false
-    }
+    // if (this.hasProjectSelectTarget && !this.projectSelectTarget.value) {
+    //   event.preventDefault()
+    //   this.projectSelectTarget.classList.add("field-error")
+    //   this.projectErrorTarget.classList.remove("hidden")
+    //   isValid = false
+    // }
 
-    // Validate Order type specific fields
-    if (this.hasCanvassSelectTarget && this.hasQuotationSelectTarget) {
-      // Validate canvass
-      if (!this.canvassSelectTarget.value) {
+    // Validate items table
+    if (this.hasItemsTableTarget) {
+      const rows = Array.from(
+        this.itemsTableTarget.querySelectorAll(
+          'td:not([data-nested-form-target="target"])'
+        )
+      ).slice(0, 4)
+
+      if (rows.length === 0) {
         event.preventDefault()
-        this.canvassSelectTarget.classList.add("field-error")
-        this.canvassErrorTarget.classList.remove("hidden")
+        this.itemsErrorTarget.classList.remove("hidden")
         isValid = false
-      }
+      } else {
+        let hasItemErrors = false
 
-      // Validate quotation
-      if (!this.quotationSelectTarget.value) {
-        event.preventDefault()
-        this.quotationSelectTarget.classList.add("field-error")
-        this.quotationErrorTarget.classList.remove("hidden")
-        isValid = false
-      }
+        rows.forEach((row) => {
+          const inputs = row.querySelectorAll("input, select")
+          inputs.forEach((input) => {
+            if (!input.value || input.value.trim() === "") {
+              input.classList.add("field-error")
+              hasItemErrors = true
+            } else {
+              input.classList.remove("field-error")
+            }
+          })
+        })
 
-      // Validate items table
-      if (this.hasItemsTableTarget) {
-        const rows = Array.from(
-          this.itemsTableTarget.querySelectorAll(
-            'td:not([data-nested-form-target="target"])'
-          )
-        ).slice(0, 4)
-
-        if (rows.length === 0) {
+        if (hasItemErrors) {
           event.preventDefault()
           this.itemsErrorTarget.classList.remove("hidden")
           isValid = false
-        } else {
-          let hasItemErrors = false
-
-          rows.forEach((row) => {
-            const inputs = row.querySelectorAll("input, select")
-            inputs.forEach((input) => {
-              if (!input.value || input.value.trim() === "") {
-                input.classList.add("field-error")
-                hasItemErrors = true
-              } else {
-                input.classList.remove("field-error")
-              }
-            })
-          })
-
-          if (hasItemErrors) {
-            event.preventDefault()
-            this.itemsErrorTarget.classList.remove("hidden")
-            isValid = false
-          }
         }
       }
     }
@@ -283,12 +264,12 @@ export default class extends Controller {
     let isValid = true
 
     // Validate project selection
-    if (this.hasProjectSelectTarget && !this.projectSelectTarget.value) {
-      event.preventDefault()
-      this.projectSelectTarget.classList.add("field-error")
-      this.projectErrorTarget.classList.remove("hidden")
-      isValid = false
-    }
+    // if (this.hasProjectSelectTarget && !this.projectSelectTarget.value) {
+    //   event.preventDefault()
+    //   this.projectSelectTarget.classList.add("field-error")
+    //   this.projectErrorTarget.classList.remove("hidden")
+    //   isValid = false
+    // }
 
     // Validate supplier selection
     if (this.hasSupplierSelectTarget && !this.supplierSelectTarget.value) {
@@ -358,14 +339,6 @@ export default class extends Controller {
   validateCanvassForm(event) {
     this.clearErrors()
     let isValid = true
-
-    // Validate project selection
-    if (this.hasProjectSelectTarget && !this.projectSelectTarget.value) {
-      event.preventDefault()
-      this.projectSelectTarget.classList.add("field-error")
-      this.projectErrorTarget.classList.remove("hidden")
-      isValid = false
-    }
 
     // Validate description
     if (

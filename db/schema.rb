@@ -53,7 +53,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_04_063127) do
     t.string "unit"
     t.datetime "deleted_at"
     t.integer "status", default: 0
-    t.bigint "project_id", null: false
+    t.bigint "project_id"
     t.bigint "user_id"
     t.string "approver"
     t.datetime "approved_at"
@@ -203,7 +203,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_04_063127) do
     t.bigint "employee_id"
     t.bigint "request_form_id"
     t.datetime "deleted_at"
-    t.bigint "project_id", null: false
+    t.bigint "project_id"
     t.integer "status", default: 0
     t.bigint "user_id"
     t.datetime "approved_at"
@@ -286,7 +286,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_04_063127) do
     t.bigint "canvass_id"
     t.bigint "quotation_id"
     t.bigint "company_id", null: false
-    t.bigint "project_id", null: false
+    t.bigint "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "start_travel_date"

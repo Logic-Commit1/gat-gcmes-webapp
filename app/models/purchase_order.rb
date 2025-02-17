@@ -3,7 +3,7 @@ class PurchaseOrder < ApplicationRecord
   
   belongs_to :company
   belongs_to :supplier
-  belongs_to :project
+  belongs_to :project, optional: true
   belongs_to :request_form, optional: true
   belongs_to :user
   belongs_to :approver, class_name: 'User', optional: true

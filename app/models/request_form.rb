@@ -4,7 +4,7 @@ class RequestForm < ApplicationRecord
   belongs_to :canvass, optional: true
   belongs_to :quotation, optional: true
   belongs_to :company
-  belongs_to :project
+  belongs_to :project, optional: true
   belongs_to :purchase_order, optional: true
   belongs_to :user
   belongs_to :approver, class_name: 'User', optional: true
