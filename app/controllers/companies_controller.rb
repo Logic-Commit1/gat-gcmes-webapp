@@ -47,17 +47,17 @@ class CompaniesController < ApplicationController
   end
 
   def projects
-    projects = @company.projects.select(:id, :uid).order(created_at: :desc)
+    projects = @company.projects.ongoing.select(:id, :uid).order(created_at: :desc)
     render json: projects
   end
 
   def canvasses
-    canvasses = @company.canvasses.select(:id, :uid)
+    canvasses = @company.canvasses.approved.select(:id, :uid).order(created_at: :desc)
     render json: canvasses
   end
 
   def quotations
-    quotations = @company.quotations.select(:id, :uid).order(created_at: :desc)
+    quotations = @company.quotations.approved.select(:id, :uid).order(created_at: :desc)
     render json: quotations
   end
 

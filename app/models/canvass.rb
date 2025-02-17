@@ -6,6 +6,7 @@ class Canvass < ApplicationRecord
   belongs_to :project, optional: true
   belongs_to :user
   belongs_to :approver, class_name: 'User', optional: true
+  belongs_to :rejector, class_name: 'User', optional: true
   belongs_to :deleted_by, class_name: 'User', optional: true
   has_many :products, dependent: :destroy, inverse_of: :canvass
   has_many :request_forms

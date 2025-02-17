@@ -7,6 +7,7 @@ class PurchaseOrder < ApplicationRecord
   belongs_to :request_form, optional: true
   belongs_to :user
   belongs_to :approver, class_name: 'User', optional: true
+  belongs_to :rejector, class_name: 'User', optional: true
   belongs_to :deleted_by, class_name: 'User', optional: true
   # belongs_to :employee
 

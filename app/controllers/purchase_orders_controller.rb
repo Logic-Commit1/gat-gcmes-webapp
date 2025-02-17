@@ -4,7 +4,7 @@ class PurchaseOrdersController < ApplicationController
   include Voidable
   
   layout 'pdf', only: :pdf_view
-  before_action :set_purchase_order, only: %i[ show edit update approve pending void pdf_view download_pdf print_pdf ]
+  before_action :set_purchase_order, only: %i[ show edit update approve pending reject void pdf_view download_pdf print_pdf ]
   before_action :check_user_has_signature, only: %i[ new create edit update ]
   before_action :set_resource_for_pdf, only: %i[ download_pdf print_pdf ]
 
@@ -119,6 +119,17 @@ class PurchaseOrdersController < ApplicationController
       flash[:success] = "Purchase order pending successfully!"
     else
       flash[:error] = "Failed to pending purchase order."
+    end
+
+    redirect_to @purchase_order
+  end
+
+  def reject
+    if @purchase_order.rejected!
+      @purchase_order.update(rejected_at: Time.now, rejector: current_user)
+      flash[:success] = "Purchase order rejected successfully!"
+    else
+      flash[:error] = "Failed to reject purchase order."
     end
 
     redirect_to @purchase_order

@@ -126,24 +126,42 @@
           <span class="white">Void</span>
         <% end %>
       <% end %>
-      <% if document.class.name != "Project" && !document.approved? && (current_user.manager?) %>
-        <%= button_to send("approve_#{document.class.name.underscore}_path", document), 
-                method: :patch, 
-                class: "button flex items-center white", 
-                id: "btn-approve", 
-                data: { turbo_confirm: "Are you sure you want to approve '#{document.uid}'?" } do %>
-          <i class="fa-regular fa-circle-check"></i>
-          <span>Approve</span>
-        <% end %>
-      <% end %>
-      <% if document.class.name != "Project" && document.approved? && current_user.manager? %>
-        <%= button_to send("pending_#{document.class.name.underscore}_path", document), 
-                method: :patch, 
-                class: "button flex items-center white", 
-                id: "btn-reject", 
-                data: { turbo_confirm: "Are you sure you want to unapprove '#{document.uid}'?" } do %>
-          <i class="fa-regular fa-circle-xmark"></i>
-          <span>Unapprove</span>
+      <% if document.class.name != "Project" && current_user.manager? %>
+        <% if document.pending? %>
+          <%= button_to send("reject_#{document.class.name.underscore}_path", document), 
+                  method: :patch, 
+                  class: "button flex items-center white", 
+                  id: "btn-reject", 
+                  data: { turbo_confirm: "Are you sure you want to reject '#{document.uid}'?" } do %>
+            <i class="fa-regular fa-circle-xmark"></i>
+            <span>Reject</span>
+          <% end %>
+          <%= button_to send("approve_#{document.class.name.underscore}_path", document), 
+                  method: :patch, 
+                  class: "button flex items-center white", 
+                  id: "btn-approve", 
+                  data: { turbo_confirm: "Are you sure you want to approve '#{document.uid}'?" } do %>
+            <i class="fa-regular fa-circle-check"></i>
+            <span>Approve</span>
+          <% end %>
+        <% elsif document.approved? %>
+          <%= button_to send("pending_#{document.class.name.underscore}_path", document), 
+                  method: :patch, 
+                  class: "button flex items-center white", 
+                  id: "btn-reject", 
+                  data: { turbo_confirm: "Are you sure you want to unapprove '#{document.uid}'?" } do %>
+            <i class="fa-regular fa-circle-xmark"></i>
+            <span>Unapprove</span>
+          <% end %>
+        <% elsif document.rejected? %>
+          <%= button_to send("pending_#{document.class.name.underscore}_path", document), 
+                  method: :patch, 
+                  class: "button flex items-center white", 
+                  id: "btn-reject", 
+                  data: { turbo_confirm: "Are you sure you want to unreject '#{document.uid}'?" } do %>
+            <i class="fa-regular fa-circle-xmark"></i>
+            <span>Unreject</span>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>

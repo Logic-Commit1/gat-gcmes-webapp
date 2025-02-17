@@ -4,7 +4,7 @@ class RequestFormsController < ApplicationController
   
   layout 'pdf', only: :pdf_view
 
-  before_action :set_request_form, only: %i[ show edit update approve pending void pdf_view download_pdf print_pdf ]
+  before_action :set_request_form, only: %i[ show edit update approve pending reject void pdf_view download_pdf print_pdf ]
   before_action :check_user_has_signature, only: %i[ new create edit update ]
   before_action :set_resource_for_pdf, only: %i[ download_pdf print_pdf ]
 
@@ -120,6 +120,17 @@ class RequestFormsController < ApplicationController
       flash[:success] = "Request form pending successfully!"
     else
       flash[:error] = "Failed to pending request form."
+    end
+
+    redirect_to @request_form
+  end
+
+  def reject
+    if @request_form.rejected!
+      @request_form.update(rejected_at: Time.now, rejector: current_user)
+      flash[:success] = "Request form rejected successfully!"
+    else
+      flash[:error] = "Failed to reject request form."
     end
 
     redirect_to @request_form

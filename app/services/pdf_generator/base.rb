@@ -151,7 +151,11 @@ module PdfGenerator
         # Logo
         logo_y_position = 80 - ((80 - 68) / 2) 
         logo_path = @document.company.code.downcase == "gat" ? GAT_LOGO_PATH : GCMES_LOGO_PATH
-        @pdf.image logo_path, at: [27.5, logo_y_position], width: 66, height: 34
+        if @document.company.code.downcase == "gat"
+          @pdf.image logo_path, at: [27.5, logo_y_position], width: 66, height: 34
+        else
+          @pdf.image logo_path, at: [11.5, logo_y_position + 13], width: 95, height: 74
+        end
 
         # Company name
         @pdf.fill_color "f5db07"

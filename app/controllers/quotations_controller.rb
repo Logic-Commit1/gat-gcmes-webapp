@@ -146,6 +146,7 @@ class QuotationsController < ApplicationController
 
   def reject
     if @quotation.rejected!
+      @quotation.update(rejected_at: Time.now, rejector: current_user)
       flash[:success] = "Quotation rejected successfully!"
     else
       flash[:error] = "Failed to reject quotation."

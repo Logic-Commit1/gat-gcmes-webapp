@@ -4,7 +4,7 @@
   </header>
   <div class="flex space-between">
     <p>
-      <strong>Project:</strong> <%= @purchase_order.project.uid %>
+      <strong>Project:</strong> <%= @purchase_order.project&.uid %>
     </p>
     <p>
       <strong>Date:</strong> <%= @purchase_order.created_at.strftime("%B %d, %Y") %>

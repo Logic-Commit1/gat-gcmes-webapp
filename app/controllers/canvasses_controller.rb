@@ -4,7 +4,7 @@ class CanvassesController < ApplicationController
   
   layout 'pdf', only: :pdf_view
 
-  before_action :set_canvass, only: %i[ show edit update approve pending void pdf_view download_pdf print_pdf select_supplier ]
+  before_action :set_canvass, only: %i[ show edit update approve pending reject void pdf_view download_pdf print_pdf select_supplier ]
   before_action :check_user_has_signature, only: %i[ new create edit update ]
   before_action :set_resource_for_pdf, only: %i[ download_pdf print_pdf ]
   before_action :ensure_manager, only: [:select_supplier]
@@ -120,6 +120,17 @@ class CanvassesController < ApplicationController
       flash[:success] = "Canvass pending successfully!"
     else
       flash[:error] = "Failed to pending canvass."
+    end
+
+    redirect_to @canvass
+  end
+
+  def reject
+    if @canvass.rejected!
+      @canvass.update(rejected_at: Time.now, rejector: current_user)
+      flash[:success] = "Canvass rejected successfully!"
+    else
+      flash[:error] = "Failed to reject canvass."
     end
 
     redirect_to @canvass

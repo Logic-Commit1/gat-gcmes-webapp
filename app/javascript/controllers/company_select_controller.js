@@ -58,9 +58,9 @@ export default class extends Controller {
 
   selectCompanyForProjectsCanvassesQuotations(event) {
     this.selectCompanyForProjects(event)
-    if (this.hasCanvassSelectTarget && this.hasQuotationSelectTarget) {
+    if (this.hasCanvassSelectTarget) {
       this.selectCompanyForCanvasses(event)
-      this.selectCompanyForQuotations(event)
+      // this.selectCompanyForQuotations(event)
     }
     this.showHiddenDivs()
   }
@@ -138,9 +138,11 @@ export default class extends Controller {
         }
         return response.json()
       })
-      .then((items) =>
+      .then((items) => {
+        console.log(items)
         this.updateOptions(selectTarget, items, promptText, displayAttribute)
-      )
+      })
+
       .catch((error) => {
         console.error("Fetch error: ", error)
       })

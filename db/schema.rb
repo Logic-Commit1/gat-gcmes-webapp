@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_04_063127) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_17_023533) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,11 +60,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_04_063127) do
     t.bigint "approver_id"
     t.string "deleted_by"
     t.bigint "deleted_by_id"
+    t.string "rejector"
+    t.datetime "rejected_at"
+    t.bigint "rejector_id"
     t.index ["approver_id"], name: "index_canvasses_on_approver_id"
     t.index ["company_id"], name: "index_canvasses_on_company_id"
     t.index ["deleted_at"], name: "index_canvasses_on_deleted_at"
     t.index ["deleted_by_id"], name: "index_canvasses_on_deleted_by_id"
     t.index ["project_id"], name: "index_canvasses_on_project_id"
+    t.index ["rejector_id"], name: "index_canvasses_on_rejector_id"
     t.index ["user_id"], name: "index_canvasses_on_user_id"
   end
 
@@ -210,12 +214,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_04_063127) do
     t.bigint "approver_id"
     t.string "deleted_by"
     t.bigint "deleted_by_id"
+    t.string "rejector"
+    t.datetime "rejected_at"
+    t.bigint "rejector_id"
     t.index ["approver_id"], name: "index_purchase_orders_on_approver_id"
     t.index ["company_id"], name: "index_purchase_orders_on_company_id"
     t.index ["deleted_at"], name: "index_purchase_orders_on_deleted_at"
     t.index ["deleted_by_id"], name: "index_purchase_orders_on_deleted_by_id"
     t.index ["employee_id"], name: "index_purchase_orders_on_employee_id"
     t.index ["project_id"], name: "index_purchase_orders_on_project_id"
+    t.index ["rejector_id"], name: "index_purchase_orders_on_rejector_id"
     t.index ["request_form_id"], name: "index_purchase_orders_on_request_form_id"
     t.index ["supplier_id"], name: "index_purchase_orders_on_supplier_id"
     t.index ["user_id"], name: "index_purchase_orders_on_user_id"
@@ -252,12 +260,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_04_063127) do
     t.string "deleted_by"
     t.bigint "deleted_by_id"
     t.string "duration"
+    t.string "rejector"
+    t.datetime "rejected_at"
+    t.bigint "rejector_id"
     t.index ["approver_id"], name: "index_quotations_on_approver_id"
     t.index ["client_id"], name: "index_quotations_on_client_id"
     t.index ["company_id"], name: "index_quotations_on_company_id"
     t.index ["deleted_at"], name: "index_quotations_on_deleted_at"
     t.index ["deleted_by_id"], name: "index_quotations_on_deleted_by_id"
     t.index ["project_id"], name: "index_quotations_on_project_id"
+    t.index ["rejector_id"], name: "index_quotations_on_rejector_id"
     t.index ["user_id"], name: "index_quotations_on_user_id"
   end
 
@@ -299,6 +311,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_04_063127) do
     t.bigint "approver_id"
     t.string "deleted_by"
     t.bigint "deleted_by_id"
+    t.string "rejector"
+    t.datetime "rejected_at"
+    t.bigint "rejector_id"
     t.index ["approver_id"], name: "index_request_forms_on_approver_id"
     t.index ["canvass_id"], name: "index_request_forms_on_canvass_id"
     t.index ["company_id"], name: "index_request_forms_on_company_id"
@@ -306,6 +321,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_04_063127) do
     t.index ["deleted_by_id"], name: "index_request_forms_on_deleted_by_id"
     t.index ["project_id"], name: "index_request_forms_on_project_id"
     t.index ["quotation_id"], name: "index_request_forms_on_quotation_id"
+    t.index ["rejector_id"], name: "index_request_forms_on_rejector_id"
     t.index ["user_id"], name: "index_request_forms_on_user_id"
   end
 
@@ -366,6 +382,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_04_063127) do
   add_foreign_key "canvasses", "users"
   add_foreign_key "canvasses", "users", column: "approver_id"
   add_foreign_key "canvasses", "users", column: "deleted_by_id"
+  add_foreign_key "canvasses", "users", column: "rejector_id"
   add_foreign_key "clients", "companies"
   add_foreign_key "particulars", "request_forms"
   add_foreign_key "products", "canvasses"
@@ -384,12 +401,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_04_063127) do
   add_foreign_key "purchase_orders", "users"
   add_foreign_key "purchase_orders", "users", column: "approver_id"
   add_foreign_key "purchase_orders", "users", column: "deleted_by_id"
+  add_foreign_key "purchase_orders", "users", column: "rejector_id"
   add_foreign_key "quotations", "clients"
   add_foreign_key "quotations", "companies"
   add_foreign_key "quotations", "projects"
   add_foreign_key "quotations", "users"
   add_foreign_key "quotations", "users", column: "approver_id"
   add_foreign_key "quotations", "users", column: "deleted_by_id"
+  add_foreign_key "quotations", "users", column: "rejector_id"
   add_foreign_key "request_forms", "canvasses"
   add_foreign_key "request_forms", "companies"
   add_foreign_key "request_forms", "projects"
@@ -397,6 +416,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_04_063127) do
   add_foreign_key "request_forms", "users"
   add_foreign_key "request_forms", "users", column: "approver_id"
   add_foreign_key "request_forms", "users", column: "deleted_by_id"
+  add_foreign_key "request_forms", "users", column: "rejector_id"
   add_foreign_key "scopes", "products"
   add_foreign_key "specs", "products"
   add_foreign_key "suppliers", "companies"

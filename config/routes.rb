@@ -53,6 +53,7 @@ Rails.application.routes.draw do
     member do
       get :pdf_view
       patch :approve
+      patch :reject
       patch :pending
       delete :void
       patch :unvoid
