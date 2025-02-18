@@ -1,10 +1,14 @@
+Project.with_deleted.each do |project|
+  project.really_destroy!
+end
 # Get company and client records
 gat = Company.find_by(code: "GAT")
-gcmes = Company.find_by(code: "GCMES")
+
 
 client_asi = Client.find_by(code: "ASI")
 client_span = Client.find_by(code: "SPAN")
 client_lsc = Client.find_by(code: "LSC")
+client_fsc = Client.find_by(code: "FSC")
 
 user = User.find_by(email: "purchasing@goldenchain.ph")
 manager = User.find_by(email: "manager@goldenchain.ph")
@@ -22,7 +26,7 @@ def set_approval_details(quotation, created_at, manager)
   )
 end
 
-# First Project - Engine Overhaul Project
+# First Project - FABRICATE ANCHOR WINCH SPUR AND PINION GEAR
 quotations1 = Quotation.where(subject: ["SUPPLY OF LABOR AND MATERIALS TO FABRICATE ANCHOR WINCH SPUR AND PINION GEAR"])
 quotations1.each do |quotation|
   created_at = quotation.created_at
@@ -31,9 +35,10 @@ quotations1.each do |quotation|
 end
 project1 = Project.create!(
   company: gat,
-  client: client_asi,
+  client: quotations1.first.client,
   user: user,
-  status: "ongoing",
+  status: "served",
+  sales_invoice: "ASI-INV-2024-0123",
   payment: "50% downpayment",
   po_number: "ASI-PO-2024-0123",
   supervisor: "MICHAEL DUEÑAS",
@@ -42,7 +47,7 @@ project1 = Project.create!(
   amount: calculate_project_amount(quotations1)
 )
 
-# First Project - Engine Overhaul Project
+# Second Project - Engine Overhaul Project
 quotations2 = Quotation.where(subject: ["SUPPLY OF ENGINE SPARE PARTS", "MAIN ENGINE CYLINDER HEAD OVERHAUL"])
 quotations2.each do |quotation|
   created_at = quotation.created_at
@@ -51,7 +56,7 @@ quotations2.each do |quotation|
 end
 project2 = Project.create!(
   company: gat,
-  # client: client_span,
+  client: quotations2.first.client,
   user: user,
   status: "ongoing",
   payment: "50% downpayment",
@@ -62,16 +67,16 @@ project2 = Project.create!(
   amount: calculate_project_amount(quotations2)
 )
 
-# Second Project - Navigation and Safety Equipment Upgrade
-quotations3 = Quotation.where(subject: ["NAVIGATION EQUIPMENT UPGRADE", "SUPPLY OF SAFETY EQUIPMENT"])
+# Third Project - Navigation and Safety Equipment Upgrade
+quotations3 = Quotation.where(subject: ["SUPPLY OF SAFETY EQUIPMENT"])
 quotations3.each do |quotation|
   created_at = quotation.created_at
   set_approval_details(quotation, created_at, manager)
   quotation.update(status: "approved")
 end
 project3 = Project.create!(
-  company: gcmes,
-  # client: client_span,
+  company: gat,
+  client: quotations3.first.client,
   user: user,
   status: "ongoing",
   payment: "30 days",
@@ -82,8 +87,8 @@ project3 = Project.create!(
   amount: calculate_project_amount(quotations3)
 )
 
-# Third Project - Propulsion System Maintenance
-quotations4 = Quotation.where(subject: ["PROPELLER REPAIR AND BALANCING", "STEERING GEAR SYSTEM OVERHAUL"])
+# Fourth Project - Propulsion System Maintenance
+quotations4 = Quotation.where(subject: ["PROPELLER REPAIR AND BALANCING", "FUEL SYSTEM COMPONENTS REPLACEMENT"])
 quotations4.each do |quotation|
   created_at = quotation.created_at
   set_approval_details(quotation, created_at, manager)
@@ -91,13 +96,114 @@ quotations4.each do |quotation|
 end
 project4 = Project.create!(
   company: gat,
-  # client: client_lsc,
+  client: quotations4.first.client,
   user: user,
   status: "ongoing",
   payment: "50% downpayment",
-  po_number: "LSC-MNT-2024-0789",
+  po_number: "SPAN-MNT-2024-0789",
   supervisor: "EDUARDO GARCIA",
   technical_team: ["CARLO MENDOZA", "RYAN REYES", "BENJAMIN TAN"],
   quotations: quotations4,
   amount: calculate_project_amount(quotations4)
 )
+
+# Fifth Project - Main Engine Cooling and Fuel System Upgrade
+quotations5 = Quotation.where(subject: ["MAIN ENGINE COOLING SYSTEM MAINTENANCE"])
+quotations5.each do |quotation|
+  created_at = quotation.created_at
+  set_approval_details(quotation, created_at, manager)
+  quotation.update(status: "approved")
+end
+project5 = Project.create!(
+  company: gat,
+  client: quotations5.first.client,
+  user: user,
+  status: "ongoing",
+  payment: "50% downpayment",
+  po_number: "ASI-PO-2024-0789",
+  supervisor: "ALEXANDER CRUZ",
+  technical_team: ["RAYMOND SANTOS", "ERIC TAN", "MICHAEL REYES"],
+  quotations: quotations5,
+  amount: calculate_project_amount(quotations5)
+)
+
+# Sixth Project - Deck Equipment Overhaul
+quotations6 = Quotation.where(subject: ["DECK CRANE MAINTENANCE", "STEERING GEAR SYSTEM OVERHAUL"])
+quotations6.each do |quotation|
+  created_at = quotation.created_at
+  set_approval_details(quotation, created_at, manager)
+  quotation.update(status: "approved")
+end
+project6 = Project.create!(
+  company: gat,
+  client: quotations6.first.client,
+  user: user,
+  status: "ongoing",
+  payment: "30 days",
+  po_number: "LSC-DCK-2024-0234",
+  supervisor: "RICARDO MARTINEZ",
+  technical_team: ["JASON WONG", "PETER LIM", "ANDREW SANTOS"],
+  quotations: quotations6,
+  amount: calculate_project_amount(quotations6)
+)
+
+# Seventh Project - Engine Room Automation and Monitoring
+quotations7 = Quotation.where(subject: ["ENGINE ROOM AUTOMATION UPGRADE", "ELECTRICAL SYSTEM MAINTENANCE AND UPGRADE"])
+quotations7.each do |quotation|
+  created_at = quotation.created_at
+  set_approval_details(quotation, created_at, manager)
+  quotation.update(status: "approved")
+end
+project7 = Project.create!(
+  company: gat,
+  client: quotations7.first.client,
+  user: user,
+  status: "ongoing",
+  payment: "50% downpayment",
+  po_number: "FSC-AUT-2024-0567",
+  supervisor: "CHRISTOPHER LIM",
+  technical_team: ["DAVID CHEN", "ROBERT WONG", "MARK SANTOS"],
+  quotations: quotations7,
+  amount: calculate_project_amount(quotations7)
+)
+
+# Eighth Project - Water Management Systems
+quotations8 = Quotation.where(subject: ["BALLAST SYSTEM MAINTENANCE", "SEWAGE TREATMENT PLANT REPLACEMENT"])
+quotations8.each do |quotation|
+  created_at = quotation.created_at
+  set_approval_details(quotation, created_at, manager)
+  quotation.update(status: "approved")
+end
+project8 = Project.create!(
+  company: gat,
+  client: quotations8.first.client,
+  user: user,
+  status: "ongoing",
+  payment: "50% downpayment",
+  po_number: "SPAN-WMS-2024-0890",
+  supervisor: "JONATHAN TAN",
+  technical_team: ["WILLIAM CRUZ", "HENRY PARK", "STEVEN LEE"],
+  quotations: quotations8,
+  amount: calculate_project_amount(quotations8)
+)
+
+# Ninth Project - Auxiliary Systems Upgrade
+quotations9 = Quotation.where(subject: ["AUXILIARY BOILER COMPONENTS UPGRADE", "ANCHOR AND WINDLASS SYSTEM MAINTENANCE"])
+quotations9.each do |quotation|
+  created_at = quotation.created_at
+  set_approval_details(quotation, created_at, manager)
+  quotation.update(status: "approved")
+end
+project9 = Project.create!(
+  company: gat,
+  client: quotations9.first.client,
+  user: user,
+  status: "ongoing",
+  payment: "30 days",
+  po_number: "ASI-AUX-2024-0345",
+  supervisor: "KENNETH WONG",
+  technical_team: ["THOMAS LEE", "GARY SANTOS", "BRIAN CHEN"],
+  quotations: quotations9,
+  amount: calculate_project_amount(quotations9)
+)
+

@@ -35,7 +35,7 @@
       <% end %>
     <% else %>
       <% if document.user == current_user %>
-        <% if document.class.name != "Project" && !document.approved? %>
+        <% if document.class.name != "Project" %>
           <%= button_to send("edit_#{document.class.name.underscore}_path", document), 
                   method: :get, 
                 class: "button black flex items-center white-bg",
@@ -86,7 +86,7 @@
           <span>Edit</span>
         <% end %>
       <%end%>
-      <% if document.class.name == "Project" && !document.served? && (document.user == current_user || current_user.manager?) %>
+      <% if document.class.name == "Project" && !document.served? && (document.user == current_user || current_user.manager? || current_user.operation?) %>
         <div data-controller="dropdown" class="relative inline-block text-left">
           <button 
           type="button" 

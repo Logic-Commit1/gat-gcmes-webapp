@@ -32,16 +32,19 @@ class RequestForm < ApplicationRecord
     status_matches = statuses.keys.select { |k| k.include?(query) }
     request_type_matches = request_types.keys.select { |k| k.downcase.include?(query) }
 
-    where(
+    left_joins(:products)
+    .where(
       "uid ILIKE :query OR 
        destination ILIKE :query OR 
        vehicle ILIKE :query OR
+       products.name ILIKE :query OR
        status IN (:status_values) OR
        request_type IN (:request_type_values)", 
       query: "%#{query}%",
       status_values: status_matches.map { |k| statuses[k] },
       request_type_values: request_type_matches.map { |k| request_types[k] }
     )
+    .distinct
   }
 
   scope :created_on_date, ->(date) {

@@ -194,7 +194,7 @@ class RequestFormsController < ApplicationController
       :requester, :checker, :procurer, :pre_approver, :approver,
       :canvass_id, :quotation_id, :company_id, :project_id,
       particulars_attributes: [ :id, :name, :allowance, :quotation_id, :canvass_id, :request_form_id, :purchase_order_id, :_destroy, :remarks ],
-      products_attributes: [ :id, :name, :quantity, :unit, :price, :discount, :brand, :description, :specs, :terms, :remarks, :image, :quotation_id, :canvass_id, :request_form_id, :purchase_order_id, :_destroy ]
+      products_attributes: [ :id, :name, :quantity, :unit, :price, :discount, :brand, :specs, :terms, :remarks, :image, :quotation_id, :canvass_id, :request_form_id, :purchase_order_id, :_destroy ]
       )
     rescue
       {}

@@ -37,15 +37,18 @@ class Quotation < ApplicationRecord
     status_matches = statuses.keys.select { |k| k.include?(query) }
     payment_matches = payments.keys.select { |k| k.downcase.include?(query) }
 
-    where(
-      "uid ILIKE :query OR 
-       subject ILIKE :query OR
-       status IN (:status_values) OR
-       payment IN (:payment_values)", 
-      query: "%#{query}%",
-      status_values: status_matches.map { |k| statuses[k] },
-      payment_values: payment_matches.map { |k| payments[k] }
-    )
+    left_joins(:products)
+      .where(
+        "quotations.uid ILIKE :query OR 
+         quotations.subject ILIKE :query OR
+         products.name ILIKE :query OR
+         quotations.status IN (:status_values) OR
+         quotations.payment IN (:payment_values)", 
+        query: "%#{query}%",
+        status_values: status_matches.map { |k| statuses[k] },
+        payment_values: payment_matches.map { |k| payments[k] }
+      )
+      .distinct
   }
 
   scope :created_on_date, ->(date) {
@@ -66,7 +69,7 @@ class Quotation < ApplicationRecord
     client_code = self.client.code
     year_str = Time.now.year.to_s[2, 2]
     sequence = DocumentSequence.next_sequence('quotation', client.code)
-    self.uid = "#{client_code}#{year_str}-#{sequence.to_s.rjust(3, '0')}"
+    self.uid = "#{client_code}-#{year_str}-#{sequence.to_s.rjust(3, '0')}"
   end
 
   def pdf_path

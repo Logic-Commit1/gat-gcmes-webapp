@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_17_060605) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_18_131841) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -221,6 +221,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_17_060605) do
     t.string "rejector"
     t.datetime "rejected_at"
     t.bigint "rejector_id"
+    t.text "remarks"
     t.index ["approver_id"], name: "index_purchase_orders_on_approver_id"
     t.index ["company_id"], name: "index_purchase_orders_on_company_id"
     t.index ["deleted_at"], name: "index_purchase_orders_on_deleted_at"

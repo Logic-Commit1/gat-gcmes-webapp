@@ -104,7 +104,7 @@
   }
 
   #totals-table {
-    max-width: 200px;
+    max-width: 220px;
     float: right;
     margin-top: 0;
     margin-bottom: 1rem;
@@ -124,6 +124,10 @@
     tr td:first-child {
       text-align: left;
     }
+  }
+
+  .clear-fix {
+    clear: both;
   }
 
   #terms-container {

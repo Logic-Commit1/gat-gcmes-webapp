@@ -52,6 +52,30 @@ class CanvassesController < ApplicationController
 
   # GET /canvasses/1/edit
   def edit
+    # Convert suppliers data to products for the form
+    if @canvass.products.empty? && @canvass.suppliers.present?
+      @canvass.suppliers.each do |product_info|
+        product_info.each do |description, suppliers|
+          suppliers.each do |supplier_info|
+            supplier_info.each do |supplier_name, details|
+              supplier = Supplier.find_by(name: supplier_name)
+              next unless supplier
+              
+              @canvass.products.build(
+                supplier: supplier,
+                description: description,
+                price: details[0],
+                brand: details[1],
+                terms: details[2],
+                remarks: details[3],
+                quantity: @canvass.quantity,
+                unit: @canvass.unit
+              )
+            end
+          end
+        end
+      end
+    end
   end
 
   # POST /canvasses or /canvasses.json
@@ -72,8 +96,31 @@ class CanvassesController < ApplicationController
 
   # PATCH/PUT /canvasses/1 or /canvasses/1.json
   def update
+    # Set skip_suppliers_callback to true to prevent the model callback from overwriting our suppliers data
+    @canvass.skip_suppliers_callback = true
+    
     respond_to do |format|
       if @canvass.update(canvass_params)
+        # Convert products to suppliers format
+        suppliers_info = []
+        @canvass.products.group_by(&:description).each do |description, products|
+          suppliers_array = products.map do |product|
+            {
+              product.supplier.name => [
+                product.price.to_s,
+                product.brand,
+                product.terms,
+                product.remarks,
+                false # Default to false for selected status
+              ]
+            }
+          end
+          suppliers_info << { description => suppliers_array }
+        end
+        
+        # Update the suppliers column
+        @canvass.update_column(:suppliers, suppliers_info)
+        
         format.html { redirect_to canvass_url(@canvass), notice: "Canvass was successfully updated." }
         format.json { render :show, status: :ok, location: @canvass }
       else

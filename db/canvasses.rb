@@ -1,6 +1,8 @@
 # Get necessary records
+Canvass.with_deleted.each do |canvass|
+  canvass.really_destroy!
+end
 gat = Company.find_by(code: "GAT")
-gcmes = Company.find_by(code: "GCMES")
 
 supplier_ncs = Supplier.find_by(code: "NCS")
 supplier_fsc = Supplier.find_by(code: "FSC")
@@ -13,8 +15,16 @@ manager = User.find_by(email: "manager@goldenchain.ph")
 
 # Find projects by their PO numbers
 anchor_winch_project = Project.find_by(po_number: "ASI-PO-2024-0123")
-navigation_project = Project.find_by(po_number: "SPAN-2024-0456")
+# engine_overhaul_project = Project.find_by(po_number: "ASI-PO-2024-0123")
+engine_overhaul_project = Project.find_by(po_number: "SPAN-2024-0456")
 propulsion_project = Project.find_by(po_number: "LSC-MNT-2024-0789")
+cooling_system_project = Project.find_by(po_number: "SPAN-MNT-2024-0789")
+deck_equipment_project = Project.find_by(po_number: "LSC-DCK-2024-0234")
+automation_project = Project.find_by(po_number: "FSC-AUT-2024-0567")
+water_management_project = Project.find_by(po_number: "SPAN-WMS-2024-0890")
+auxiliary_systems_project = Project.find_by(po_number: "ASI-AUX-2024-0345")
+navigation_safety_project = Project.find_by(po_number: "FSC-NAV-2024-0678")
+safety_equipment_project = Project.find_by(po_number: "SPAN-2024-0473")
 
 def set_approval_details(canvass, created_at, manager)
   canvass.update_columns(
@@ -60,7 +70,7 @@ create_canvass(
 
 create_canvass(
   company: gat,
-  project: navigation_project,
+  project: engine_overhaul_project,
   user: user,
   description: "SUPPLY OF PISTON CROWN",
   quantity: 6,
@@ -76,7 +86,7 @@ create_canvass(
 
 create_canvass(
   company: gat,
-  project: navigation_project,
+  project: engine_overhaul_project,
   user: user,
   description: "SUPPLY OF CYLINDER LINER",
   quantity: 6,
@@ -92,40 +102,40 @@ create_canvass(
 
 # Second Project Canvasses - Navigation Equipment
 create_canvass(
-  company: gcmes,
-  project: navigation_project,
+  company: gat,
+  project: engine_overhaul_project,
   user: user,
-  description: "SUPPLY OF RADAR SYSTEM",
-  quantity: 1,
-  unit: "set",
-  item_name: "Radar System",
+  description: "SUPPLY OF TURBOCHARGER REPAIR KIT",
+  quantity: 2,
+  unit: "sets",
+  item_name: "Turbocharger Repair Kit",
   suppliers_data: [
-    { "PHILIPPINE SPAN ASIA CARRIER CORP." => ["645000.0", "Furuno FAR-2228, X-Band", "45 days", "", false] },
-    { "ASTRO SHIPMANAGEMENT INC." => ["650000.0", "Furuno FAR-2228, X-Band", "40 days", "", true] },
-    { "LORENZO SHIPPING CORPORATION" => ["655000.0", "Furuno FAR-2228, X-Band", "50 days", "", false] }
+    { "PHILIPPINE SPAN ASIA CARRIER CORP." => ["164000.0", "ABB VTR-354", "45 days", "", false] },
+    { "ASTRO SHIPMANAGEMENT INC." => ["165000.0", "ABB VTR-354", "40 days", "", true] },
+    { "LORENZO SHIPPING CORPORATION" => ["166000.0", "ABB VTR-354", "50 days", "", false] }
   ],
   manager: manager
 )
 
 create_canvass(
-  company: gcmes,
-  project: navigation_project,
+  company: gat,
+  project: navigation_safety_project,
   user: user,
-  description: "SUPPLY OF GYRO COMPASS",
-  quantity: 1,
-  unit: "set",
-  item_name: "Gyro Compass",
+  description: "MAIN ENGINE CYLINDER HEAD OVERHAUL",
+  quantity: 6,
+  unit: "sets",
+  item_name: "Cylinder Head",
   suppliers_data: [
-    { "ASTRO SHIPMANAGEMENT INC." => ["420000.0", "Sperry Marine NavigatTM X MK1", "30 days", "", false] },
-    { "FRABELLE SHIPYARD CORPORATION" => ["425000.0", "Sperry Marine NavigatTM X MK1", "35 days", "", true] },
-    { "PHILIPPINE SPAN ASIA CARRIER CORP." => ["428000.0", "Sperry Marine NavigatTM X MK1", "40 days", "", false] }
+    { "ASTRO SHIPMANAGEMENT INC." => ["120000.0", "MAN B&W 6S50MC", "30 days", "", false] },
+    { "FRABELLE SHIPYARD CORPORATION" => ["125000.0", "MAN B&W 6S50MC", "35 days", "", true] },
+    { "PHILIPPINE SPAN ASIA CARRIER CORP." => ["128000.0", "MAN B&W 6S50MC", "40 days", "", false] }
   ],
   manager: manager
 )
 
 create_canvass(
-  company: gcmes,
-  project: navigation_project,
+  company: gat,
+  project: safety_equipment_project,
   user: user,
   description: "SUPPLY OF BREATHING APPARATUS",
   quantity: 4,
@@ -140,8 +150,8 @@ create_canvass(
 )
 
 create_canvass(
-  company: gcmes,
-  project: navigation_project,
+  company: gat,
+  project: safety_equipment_project,
   user: user,
   description: "SUPPLY OF FIRE FIGHTING EQUIPMENT",
   quantity: 1,
@@ -200,6 +210,171 @@ create_canvass(
     { "NARRA CREWING AND SHIP MANAGEMENT CORPORATION" => ["175000.0", "Complete System Check", "10 days", "", false] },
     { "LORENZO SHIPPING CORPORATION" => ["180000.0", "Complete System Check", "12 days", "", true] },
     { "ASTRO SHIPMANAGEMENT INC." => ["185000.0", "Complete System Check", "14 days", "", false] }
+  ],
+  manager: manager
+)
+
+# Fifth Project Canvasses - Main Engine Cooling and Fuel System
+create_canvass(
+  company: gat,
+  project: cooling_system_project,
+  user: user,
+  description: "FRESH WATER COOLER RECONDITIONING",
+  quantity: 2,
+  unit: "units",
+  item_name: "Fresh Water Cooler",
+  suppliers_data: [
+    { "FRABELLE SHIPYARD CORPORATION" => ["172000.0", "Shell and Tube Type, 25m²", "15 days", "", false] },
+    { "LORENZO SHIPPING CORPORATION" => ["175000.0", "Shell and Tube Type, 25m²", "12 days", "", true] },
+    { "PHILIPPINE SPAN ASIA CARRIER CORP." => ["178000.0", "Shell and Tube Type, 25m²", "14 days", "", false] }
+  ],
+  manager: manager
+)
+
+create_canvass(
+  company: gat,
+  project: cooling_system_project,
+  user: user,
+  description: "SUPPLY OF FUEL INJECTION PUMP",
+  quantity: 6,
+  unit: "sets",
+  item_name: "Fuel Injection Pump",
+  suppliers_data: [
+    { "ASTRO SHIPMANAGEMENT INC." => ["280000.0", "MAN B&W, High Pressure", "45 days", "", false] },
+    { "NARRA CREWING AND SHIP MANAGEMENT CORPORATION" => ["285000.0", "MAN B&W, High Pressure", "40 days", "", true] },
+    { "LORENZO SHIPPING CORPORATION" => ["288000.0", "MAN B&W, High Pressure", "42 days", "", false] }
+  ],
+  manager: manager
+)
+
+# Sixth Project Canvasses - Deck Equipment
+create_canvass(
+  company: gat,
+  project: deck_equipment_project,
+  user: user,
+  description: "DECK CRANE OVERHAUL",
+  quantity: 2,
+  unit: "units",
+  item_name: "Deck Crane Overhaul",
+  suppliers_data: [
+    { "PHILIPPINE SPAN ASIA CARRIER CORP." => ["445000.0", "25 Tons Capacity, Complete Overhaul", "25 days", "", false] },
+    { "LORENZO SHIPPING CORPORATION" => ["450000.0", "25 Tons Capacity, Complete Overhaul", "22 days", "", true] },
+    { "FRABELLE SHIPYARD CORPORATION" => ["455000.0", "25 Tons Capacity, Complete Overhaul", "24 days", "", false] }
+  ],
+  manager: manager
+)
+
+create_canvass(
+  company: gat,
+  project: deck_equipment_project,
+  user: user,
+  description: "WINDLASS OVERHAUL",
+  quantity: 2,
+  unit: "sets",
+  item_name: "Windlass Overhaul",
+  suppliers_data: [
+    { "LORENZO SHIPPING CORPORATION" => ["270000.0", "20 Ton Capacity, Complete Service", "20 days", "", false] },
+    { "ASTRO SHIPMANAGEMENT INC." => ["275000.0", "20 Ton Capacity, Complete Service", "18 days", "", true] },
+    { "NARRA CREWING AND SHIP MANAGEMENT CORPORATION" => ["278000.0", "20 Ton Capacity, Complete Service", "22 days", "", false] }
+  ],
+  manager: manager
+)
+
+# Seventh Project Canvasses - Engine Room Automation
+create_canvass(
+  company: gat,
+  project: automation_project,
+  user: user,
+  description: "SUPPLY AND INSTALLATION OF ENGINE MONITORING SYSTEM",
+  quantity: 1,
+  unit: "set",
+  item_name: "Engine Monitoring System",
+  suppliers_data: [
+    { "NARRA CREWING AND SHIP MANAGEMENT CORPORATION" => ["745000.0", "Complete System with Sensors", "30 days", "", false] },
+    { "FRABELLE SHIPYARD CORPORATION" => ["750000.0", "Complete System with Sensors", "28 days", "", true] },
+    { "PHILIPPINE SPAN ASIA CARRIER CORP." => ["755000.0", "Complete System with Sensors", "32 days", "", false] }
+  ],
+  manager: manager
+)
+
+create_canvass(
+  company: gat,
+  project: automation_project,
+  user: user,
+  description: "SUPPLY OF ALARM MONITORING SYSTEM",
+  quantity: 1,
+  unit: "set",
+  item_name: "Alarm Monitoring System",
+  suppliers_data: [
+    { "ASTRO SHIPMANAGEMENT INC." => ["345000.0", "22-inch Touch Screen, 256 Digital Points", "25 days", "", false] },
+    { "LORENZO SHIPPING CORPORATION" => ["350000.0", "22-inch Touch Screen, 256 Digital Points", "22 days", "", true] },
+    { "FRABELLE SHIPYARD CORPORATION" => ["355000.0", "22-inch Touch Screen, 256 Digital Points", "24 days", "", false] }
+  ],
+  manager: manager
+)
+
+# Eighth Project Canvasses - Water Management Systems
+create_canvass(
+  company: gat,
+  project: water_management_project,
+  user: user,
+  description: "BALLAST PUMP OVERHAUL",
+  quantity: 2,
+  unit: "sets",
+  item_name: "Ballast Pump",
+  suppliers_data: [
+    { "FRABELLE SHIPYARD CORPORATION" => ["180000.0", "750 m³/hr Capacity", "18 days", "", false] },
+    { "PHILIPPINE SPAN ASIA CARRIER CORP." => ["185000.0", "750 m³/hr Capacity", "15 days", "", true] },
+    { "LORENZO SHIPPING CORPORATION" => ["188000.0", "750 m³/hr Capacity", "20 days", "", false] }
+  ],
+  manager: manager
+)
+
+create_canvass(
+  company: gat,
+  project: water_management_project,
+  user: user,
+  description: "SUPPLY AND INSTALLATION OF SEWAGE TREATMENT PLANT",
+  quantity: 1,
+  unit: "set",
+  item_name: "Sewage Treatment Plant",
+  suppliers_data: [
+    { "LORENZO SHIPPING CORPORATION" => ["645000.0", "5.0 m³/day, MEPC.227(64)", "25 days", "", false] },
+    { "ASTRO SHIPMANAGEMENT INC." => ["650000.0", "5.0 m³/day, MEPC.227(64)", "22 days", "", true] },
+    { "NARRA CREWING AND SHIP MANAGEMENT CORPORATION" => ["655000.0", "5.0 m³/day, MEPC.227(64)", "24 days", "", false] }
+  ],
+  manager: manager
+)
+
+# Ninth Project Canvasses - Auxiliary Systems
+create_canvass(
+  company: gat,
+  project: auxiliary_systems_project,
+  user: user,
+  description: "SUPPLY OF BOILER FEED PUMP",
+  quantity: 2,
+  unit: "sets",
+  item_name: "Boiler Feed Pump",
+  suppliers_data: [
+    { "PHILIPPINE SPAN ASIA CARRIER CORP." => ["162000.0", "Multistage Centrifugal, 5 m³/hr", "30 days", "", false] },
+    { "LORENZO SHIPPING CORPORATION" => ["165000.0", "Multistage Centrifugal, 5 m³/hr", "28 days", "", true] },
+    { "FRABELLE SHIPYARD CORPORATION" => ["168000.0", "Multistage Centrifugal, 5 m³/hr", "32 days", "", false] }
+  ],
+  manager: manager
+)
+
+create_canvass(
+  company: gat,
+  project: auxiliary_systems_project,
+  user: user,
+  description: "SUPPLY OF BOILER CONTROL PANEL",
+  quantity: 1,
+  unit: "set",
+  item_name: "Boiler Control Panel",
+  suppliers_data: [
+    { "ASTRO SHIPMANAGEMENT INC." => ["280000.0", "Complete Control System", "25 days", "", false] },
+    { "NARRA CREWING AND SHIP MANAGEMENT CORPORATION" => ["285000.0", "Complete Control System", "22 days", "", true] },
+    { "LORENZO SHIPPING CORPORATION" => ["288000.0", "Complete Control System", "24 days", "", false] }
   ],
   manager: manager
 )

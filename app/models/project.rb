@@ -28,16 +28,21 @@ class Project < ApplicationRecord
     status_matches = statuses.keys.select { |k| k.downcase.include?(query) }
     payment_matches = payments.keys.select { |k| k.downcase.include?(query) }
 
-    joins(:client).where(
-      "projects.uid ILIKE :query OR 
-       projects.po_number ILIKE :query OR 
-       clients.name ILIKE :query OR
-       status IN (:status_values) OR
-       payment IN (:payment_values)", 
+    left_joins(:quotations, :client)
+      .where(
+        "projects.uid ILIKE :query OR 
+         projects.po_number ILIKE :query OR 
+         projects.supervisor ILIKE :query OR
+         clients.name ILIKE :query OR
+         quotations.vessel ILIKE :query OR
+         projects.status IN (:status_values) OR
+         projects.sales_invoice ILIKE :query OR
+         projects.payment IN (:payment_values)", 
       query: "%#{query}%",
       status_values: status_matches.map { |k| statuses[k] },
       payment_values: payment_matches.map { |k| payments[k] }
     )
+    .distinct
   }
 
   scope :created_on_date, ->(date) {
@@ -57,7 +62,7 @@ class Project < ApplicationRecord
     company_code = self.company.code
     year_str = Time.now.year
     sequence = DocumentSequence.next_sequence('project', company_code)
-    self.uid = "#{company_code}_PROJ#{year_str}_#{sequence.to_s.rjust(4, '0')}"
+    self.uid = "#{company_code}-PROJ-#{year_str}-#{sequence.to_s.rjust(4, '0')}"
   end
    
   def gat?

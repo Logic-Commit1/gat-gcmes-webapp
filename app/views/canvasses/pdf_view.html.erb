@@ -58,14 +58,17 @@
   <%= form_with(url: select_supplier_canvass_path(@canvass), method: :patch, local: true) do |f| %>
     <% @canvass.suppliers.each do |product_info| %>
       <% product_info.each do |description, suppliers| %>
+        <% has_remarks = suppliers.any? { |supplier_info| supplier_info.values.first[3].present? } %>
         <table class="canvass-table" border="1" style="width: 100%; border-collapse: collapse;">
           <thead>
             <tr>
               <th>Supplier Name</th>
-              <th class="align-right">Price</th>
+              <th class="align-right">Unit Price</th>
               <th class="align-right">Brand</th>
               <th class="align-right">Terms</th>
-              <th>Remarks</th>
+              <% if has_remarks %>
+                <th>Remarks</th>
+              <% end %>
             </tr>
           </thead>
           <tbody>
@@ -78,7 +81,9 @@
                   <td class="align-right">PHP <%= number_with_precision(details[0].to_f, precision: 2, delimiter: ',') %></td>
                   <td class="align-right"><%= details[1] %></td>
                   <td class="align-right"><%= details[2] %></td>
-                  <td><%= details[3] %></td>
+                  <% if has_remarks %>
+                    <td><%= details[3] %></td>
+                  <% end %>
                 </tr>
               <% end %>
             <% end %>

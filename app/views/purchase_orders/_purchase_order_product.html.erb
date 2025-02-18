@@ -18,10 +18,10 @@
           <%= f.number_field :price, placeholder: "0.00", class: "align-right", data: { action: "input->total-calculator#calculate" }, onwheel: "return false" %>
         </td>
         <td style="width: 3%; text-align: center; vertical-align: middle;">
-          <% if f.object.purchase_order&.products&.first != f.object %>
-            <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#remove" } %>
-            <%= f.hidden_field :_destroy %>
-          <% end %>
+          <%# if f.object.purchase_order&.products&.first != f.object %>
+          <%= link_to "<i class='fas fa-trash'></i>".html_safe, "#", class: "remove-item-button", data: { action: "nested-form#remove" } %>
+          <%= f.hidden_field :_destroy %>
+          <%# end %>
         </td>
       </tr>
     </tbody>

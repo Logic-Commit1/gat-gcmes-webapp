@@ -47,6 +47,7 @@
             <div class="field">
               <%= form.label :description, "Item Description", style: "display: block" %>
               <%= form.text_field :description, 
+                value: canvass.description,
                 data: { 
                   shared_fields_target: "descriptionField",
                   form_validation_target: "descriptionInput"
@@ -59,6 +60,7 @@
             <div class="field">
               <%= form.label :quantity, style: "display: block" %>
               <%= form.number_field :quantity, 
+                value: canvass.quantity,
                 data: { 
                   shared_fields_target: "quantityField",
                   form_validation_target: "quantityInput"

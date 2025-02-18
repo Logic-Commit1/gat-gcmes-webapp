@@ -10,14 +10,14 @@ end
 Particular.with_deleted.each do |particular|
   particular.really_destroy!
 end
+PurchaseOrder.with_deleted.each do |purchase_order|
+  purchase_order.really_destroy!
+end
 RequestForm.with_deleted.each do |request_form|
   request_form.really_destroy!
 end
 Quotation.with_deleted.each do |quotation|
   quotation.really_destroy!
-end
-PurchaseOrder.with_deleted.each do |purchase_order|
-  purchase_order.really_destroy!
 end
 Canvass.with_deleted.each do |canvass|
   canvass.really_destroy!
@@ -25,7 +25,7 @@ end
 Project.destroy_all
 
 gat = Company.find_by(code: "GAT")
-gcmes = Company.find_by(code: "GCMES")
+# gcmes = Company.find_by(code: "GCMES")
 
 client_asi = Client.find_by(code: "ASI")
 client_span = Client.find_by(code: "SPAN")
@@ -93,9 +93,9 @@ Spec.create(
 )
 
 # Helper method to generate random dates within the last 3 months
-def random_date_within_last_3_months
+def random_date_within_last_2_months
   end_date = Time.current
-  start_date = 3.months.ago
+  start_date = 2.months.ago
   rand(start_date..end_date)
 end
 
@@ -108,7 +108,7 @@ def set_approval_details(quotation, created_at, manager)
 end
 
 # First quotation
-created_at = random_date_within_last_3_months
+created_at = random_date_within_last_2_months
 quotation = Quotation.create(
   company: gat,
   client: client_asi,
@@ -162,9 +162,9 @@ Spec.create(name: "Material", value: "White Metal", product: product5)
 Spec.create(name: "Standard", value: "ISO 9001", product: product5)
 
 # Second quotation
-created_at = random_date_within_last_3_months
+created_at = random_date_within_last_2_months
 quotation2 = Quotation.create(
-  company: gcmes,
+  company: gat,
   client: client_span,
   user: user,
   status: "pending",
@@ -202,7 +202,7 @@ product6 = Product.create(
 end
 
 # Third quotation
-created_at = random_date_within_last_3_months
+created_at = random_date_within_last_2_months
 quotation3 = Quotation.create(
   company: gat,
   client: client_fsc,
@@ -257,7 +257,7 @@ Spec.create(name: "Bore", value: "580mm", product: product9)
 Spec.create(name: "Treatment", value: "Phosphated", product: product9)
 
 # Fourth quotation
-created_at = random_date_within_last_3_months
+created_at = random_date_within_last_2_months
 quotation4 = Quotation.create(
   company: gat,
   client: client_span,
@@ -300,9 +300,9 @@ Spec.create(name: "Engine Type", value: "MAN B&W 6S50MC", product: product10)
 Spec.create(name: "Year", value: "2010", product: product10)
 
 # Fifth quotation
-created_at = random_date_within_last_3_months
+created_at = random_date_within_last_2_months
 quotation5 = Quotation.create(
-  company: gcmes,
+  company: gat,
   client: client_span,
   user: user,
   status: "approved",
@@ -340,7 +340,7 @@ product11 = Product.create(
 end
 
 # Sixth quotation
-created_at = random_date_within_last_3_months
+created_at = random_date_within_last_2_months
 quotation6 = Quotation.create(
   company: gat,
   client: client_span,
@@ -385,7 +385,7 @@ Spec.create(name: "Compression Rings", value: "3 per set", product: product13)
 Spec.create(name: "Oil Rings", value: "1 per set", product: product13)
 
 # Seventh quotation
-created_at = random_date_within_last_3_months
+created_at = random_date_within_last_2_months
 quotation7 = Quotation.create(
   company: gat,
   client: client_fsc,
@@ -427,9 +427,9 @@ Spec.create(name: "Boiler Type", value: "Aalborg Mission OL", product: product14
 Spec.create(name: "Capacity", value: "2.5 ton/hr", product: product14)
 
 # Eighth quotation
-created_at = random_date_within_last_3_months
+created_at = random_date_within_last_2_months
 quotation8 = Quotation.create(
-  company: gcmes,
+  company: gat,
   client: client_asi,
   user: user,
   status: "rejected",
@@ -466,7 +466,7 @@ product15 = Product.create(
 end
 
 # Ninth quotation
-created_at = random_date_within_last_3_months
+created_at = random_date_within_last_2_months
 quotation9 = Quotation.create(
   company: gat,
   client: client_lsc,
@@ -508,9 +508,9 @@ Spec.create(name: "Make", value: "Sperre HV2/200", product: product16)
 Spec.create(name: "Capacity", value: "30 m³/hr", product: product16)
 
 # Tenth quotation
-created_at = random_date_within_last_3_months
+created_at = random_date_within_last_2_months
 quotation10 = Quotation.create(
-  company: gcmes,
+  company: gat,
   client: client_span,
   user: user,
   status: "approved",
@@ -549,7 +549,7 @@ Spec.create(name: "Make", value: "Alfa Laval FOPX-613", product: product17)
 Spec.create(name: "Bowl Size", value: "613mm", product: product17)
 
 # Eleventh quotation
-created_at = random_date_within_last_3_months
+created_at = random_date_within_last_2_months
 quotation11 = Quotation.create(
   company: gat,
   client: client_asi,
@@ -593,9 +593,9 @@ Spec.create(name: "Input", value: "95-264VAC", product: product19)
 Spec.create(name: "Model", value: "DECS-150", product: product19)
 
 # Twelfth quotation
-created_at = random_date_within_last_3_months
+created_at = random_date_within_last_2_months
 quotation12 = Quotation.create(
-  company: gcmes,
+  company: gat,
   client: client_fsc,
   user: user,
   status: "approved",
@@ -635,7 +635,7 @@ Spec.create(name: "Type", value: "Centrifugal", product: product20)
 Spec.create(name: "Capacity", value: "500 m³/hr", product: product20)
 
 # Thirteenth quotation
-created_at = random_date_within_last_3_months
+created_at = random_date_within_last_2_months
 quotation13 = Quotation.create(
   company: gat,
   client: client_span,
@@ -675,9 +675,9 @@ Spec.create(name: "Make", value: "Alfa Laval M15", product: product21)
 Spec.create(name: "No. of Plates", value: "125", product: product21)
 
 # Fourteenth quotation
-created_at = random_date_within_last_3_months
+created_at = random_date_within_last_2_months
 quotation14 = Quotation.create(
-  company: gcmes,
+  company: gat,
   client: client_lsc,
   user: user,
   status: "approved",
@@ -724,7 +724,7 @@ Spec.create(name: "Breaking Capacity", value: "65kA", product: product23)
 Spec.create(name: "Make", value: "Schneider Masterpact", product: product23)
 
 # Fifteenth quotation
-created_at = random_date_within_last_3_months
+created_at = random_date_within_last_2_months
 quotation15 = Quotation.create(
   company: gat,
   client: client_fsc,
@@ -764,9 +764,9 @@ Spec.create(name: "Capacity", value: "15 Ton", product: product24)
 Spec.create(name: "Type", value: "Hydraulic", product: product24)
 
 # Sixteenth quotation
-created_at = random_date_within_last_3_months
+created_at = random_date_within_last_2_months
 quotation16 = Quotation.create(
-  company: gcmes,
+  company: gat,
   client: client_asi,
   user: user,
   status: "rejected",
@@ -815,27 +815,6 @@ Spec.create(name: "Make", value: "Sperry Marine", product: product26)
 Spec.create(name: "Model", value: "NavigatTM X MK1", product: product26)
 Spec.create(name: "Accuracy", value: "0.1 degree", product: product26)
 
-# Seventeenth quotation
-created_at = random_date_within_last_3_months
-quotation17 = Quotation.create(
-  company: gat,
-  client: client_lsc,
-  user: user,
-  status: "pending",
-  sub_total: 0,
-  total: 0,
-  vat: 0,
-  attention: "Mr. Robert Ng",
-  vessel: "MV EASTERN PRIDE",
-  subject: "NAVIGATION EQUIPMENT UPGRADE",
-  payment: "50% downpayment",
-  duration: "30 WORKING DAYS",
-  discount_rate: 2,
-  products: [product25, product26],
-  created_at: created_at,
-  updated_at: created_at
-)
-
 # Eighteenth Quotation - Safety Equipment
 product27 = Product.create(
   name: "SUPPLY OF BREATHING APPARATUS",
@@ -860,9 +839,9 @@ Spec.create(name: "Type", value: "Complete Set", product: product28)
 Spec.create(name: "Certification", value: "BV Approved", product: product28)
 
 # Eighteenth quotation
-created_at = random_date_within_last_3_months
+created_at = random_date_within_last_2_months
 quotation18 = Quotation.create(
-  company: gcmes,
+  company: gat,
   client: client_span,
   user: user,
   status: "approved",
@@ -904,7 +883,7 @@ Spec.create(name: "Capacity", value: "1.0 m³/hr", product: product29)
 Spec.create(name: "Oil Content", value: "< 15 ppm", product: product29)
 
 # Nineteenth quotation
-created_at = random_date_within_last_3_months
+created_at = random_date_within_last_2_months
 quotation19 = Quotation.create(
   company: gat,
   client: client_fsc,
@@ -923,3 +902,468 @@ quotation19 = Quotation.create(
   created_at: created_at,
   updated_at: created_at
 )
+
+# Twentieth Quotation - Main Engine Cooling System
+product30 = Product.create(
+  name: "FRESH WATER COOLER RECONDITIONING",
+  quantity: 2,
+  unit: "units",
+  price: 175000
+)
+
+["DISMANTLING AND INSPECTION",
+ "TUBE BUNDLE CLEANING",
+ "PRESSURE TESTING",
+ "ZINC ANODE REPLACEMENT",
+ "END COVER RECONDITIONING",
+ "ASSEMBLY AND TESTING"].each do |scope_name|
+  Scope.create(name: scope_name, product: product30)
+end
+
+Spec.create(name: "Type", value: "Shell and Tube", product: product30)
+Spec.create(name: "Heat Transfer Area", value: "25 m²", product: product30)
+
+# Twentieth quotation
+created_at = random_date_within_last_2_months
+quotation20 = Quotation.create(
+  company: gat,
+  client: client_asi,
+  user: user,
+  status: "pending",
+  sub_total: 0,
+  total: 0,
+  vat: 0,
+  attention: "Mr. Jason Lee",
+  vessel: "MV ASTRO WARRIOR",
+  subject: "MAIN ENGINE COOLING SYSTEM MAINTENANCE",
+  payment: "30 days",
+  duration: "15 WORKING DAYS",
+  discount_rate: 2,
+  products: [product30],
+  created_at: created_at,
+  updated_at: created_at
+)
+
+# Twenty-First Quotation - Fuel System Components
+product31 = Product.create(
+  name: "SUPPLY OF FUEL INJECTION PUMP",
+  quantity: 6,
+  unit: "sets",
+  price: 285000
+)
+
+Spec.create(name: "Make", value: "MAN B&W", product: product31)
+Spec.create(name: "Type", value: "High Pressure", product: product31)
+Spec.create(name: "Operating Pressure", value: "1000 bar", product: product31)
+
+product32 = Product.create(
+  name: "SUPPLY OF FUEL INJECTOR NOZZLES",
+  quantity: 12,
+  unit: "pcs",
+  price: 45000
+)
+
+Spec.create(name: "Nozzle Type", value: "Multi-hole", product: product32)
+Spec.create(name: "Hole Size", value: "0.35mm", product: product32)
+Spec.create(name: "Spray Pattern", value: "8 holes", product: product32)
+
+# Twenty-First quotation
+created_at = random_date_within_last_2_months
+quotation21 = Quotation.create(
+  company: gat,
+  client: client_span,
+  user: user,
+  status: "approved",
+  sub_total: 0,
+  total: 0,
+  vat: 0,
+  attention: "Ms. Emily Wong",
+  vessel: "MV SPAN PIONEER",
+  subject: "FUEL SYSTEM COMPONENTS REPLACEMENT",
+  payment: "50% downpayment",
+  duration: "45-60 DAYS",
+  discount_rate: 3,
+  products: [product31, product32],
+  created_at: created_at,
+  updated_at: created_at
+)
+set_approval_details(quotation21, created_at, manager)
+
+# Twenty-Second Quotation - Deck Crane
+product33 = Product.create(
+  name: "DECK CRANE OVERHAUL",
+  quantity: 2,
+  unit: "units",
+  price: 450000
+)
+
+["INSPECTION AND ASSESSMENT",
+ "WIRE ROPE REPLACEMENT",
+ "HYDRAULIC SYSTEM OVERHAUL",
+ "SLEWING BEARING INSPECTION",
+ "LIMIT SWITCH CALIBRATION",
+ "LOAD TESTING",
+ "CERTIFICATION"].each do |scope_name|
+  Scope.create(name: scope_name, product: product33)
+end
+
+Spec.create(name: "Capacity", value: "25 Tons", product: product33)
+Spec.create(name: "Reach", value: "22 meters", product: product33)
+
+# Twenty-Second quotation
+created_at = random_date_within_last_2_months
+quotation22 = Quotation.create(
+  company: gat,
+  client: client_lsc,
+  user: user,
+  status: "pending",
+  sub_total: 0,
+  total: 0,
+  vat: 0,
+  attention: "Mr. Kevin Tan",
+  vessel: "MV EASTERN QUEEN",
+  subject: "DECK CRANE MAINTENANCE",
+  payment: "30 days",
+  duration: "25 WORKING DAYS",
+  discount_rate: 0,
+  products: [product33],
+  created_at: created_at,
+  updated_at: created_at
+)
+
+# Twenty-Third Quotation - Engine Room Automation
+product34 = Product.create(
+  name: "SUPPLY AND INSTALLATION OF ENGINE MONITORING SYSTEM",
+  quantity: 1,
+  unit: "set",
+  price: 750000
+)
+
+["REMOVAL OF OLD SYSTEM",
+ "INSTALLATION OF NEW SENSORS",
+ "CABLE ROUTING AND TERMINATION",
+ "SOFTWARE CONFIGURATION",
+ "SYSTEM INTEGRATION",
+ "TESTING AND COMMISSIONING"].each do |scope_name|
+  Scope.create(name: scope_name, product: product34)
+end
+
+product35 = Product.create(
+  name: "SUPPLY OF ALARM MONITORING SYSTEM",
+  quantity: 1,
+  unit: "set",
+  price: 350000
+)
+
+Spec.create(name: "Display", value: "22-inch Touch Screen", product: product35)
+Spec.create(name: "Input Points", value: "256 Digital, 64 Analog", product: product35)
+Spec.create(name: "Communication", value: "Modbus TCP/IP", product: product35)
+
+product36 = Product.create(
+  name: "SUPPLY OF REMOTE SENSORS",
+  quantity: 25,
+  unit: "pcs",
+  price: 12000
+)
+
+Spec.create(name: "Type", value: "Temperature & Pressure", product: product36)
+Spec.create(name: "Range", value: "-50 to 200°C, 0-16 bar", product: product36)
+Spec.create(name: "Output", value: "4-20mA", product: product36)
+
+# Twenty-Third quotation
+created_at = random_date_within_last_2_months
+quotation23 = Quotation.create(
+  company: gat,
+  client: client_fsc,
+  user: user,
+  status: "pending",
+  sub_total: 0,
+  total: 0,
+  vat: 0,
+  attention: "Mr. Raymond Chen",
+  vessel: "MV GOLDEN EAGLE",
+  subject: "ENGINE ROOM AUTOMATION UPGRADE",
+  payment: "50% downpayment",
+  duration: "30 WORKING DAYS",
+  discount_rate: 5,
+  products: [product34, product35, product36],
+  created_at: created_at,
+  updated_at: created_at
+)
+
+# Twenty-Fourth Quotation - Ballast System
+product37 = Product.create(
+  name: "BALLAST PUMP OVERHAUL",
+  quantity: 2,
+  unit: "sets",
+  price: 185000
+)
+
+["DISMANTLING AND INSPECTION",
+ "SHAFT ALIGNMENT CHECK",
+ "BEARING REPLACEMENT",
+ "MECHANICAL SEAL REPLACEMENT",
+ "IMPELLER BALANCING",
+ "ASSEMBLY AND TESTING"].each do |scope_name|
+  Scope.create(name: scope_name, product: product37)
+end
+
+Spec.create(name: "Capacity", value: "750 m³/hr", product: product37)
+Spec.create(name: "Head", value: "25 meters", product: product37)
+
+# Twenty-Fourth quotation
+created_at = random_date_within_last_2_months
+quotation24 = Quotation.create(
+  company: gat,
+  client: client_span,
+  user: user,
+  status: "approved",
+  sub_total: 0,
+  total: 0,
+  vat: 0,
+  attention: "Ms. Rachel Santos",
+  vessel: "MV SPAN TRADER",
+  subject: "BALLAST SYSTEM MAINTENANCE",
+  payment: "30 days",
+  duration: "18 WORKING DAYS",
+  discount_rate: 2,
+  products: [product37],
+  created_at: created_at,
+  updated_at: created_at
+)
+set_approval_details(quotation24, created_at, manager)
+
+# Twenty-Fifth Quotation - Auxiliary Boiler Components
+product38 = Product.create(
+  name: "SUPPLY OF BOILER FEED PUMP",
+  quantity: 2,
+  unit: "sets",
+  price: 165000
+)
+
+Spec.create(name: "Type", value: "Multistage Centrifugal", product: product38)
+Spec.create(name: "Capacity", value: "5 m³/hr", product: product38)
+Spec.create(name: "Head", value: "120 meters", product: product38)
+
+product39 = Product.create(
+  name: "SUPPLY OF BOILER CONTROL PANEL",
+  quantity: 1,
+  unit: "set",
+  price: 285000
+)
+
+["REMOVAL OF OLD PANEL",
+ "INSTALLATION OF NEW PANEL",
+ "CABLE TERMINATION",
+ "PARAMETER SETTING",
+ "TESTING AND COMMISSIONING"].each do |scope_name|
+  Scope.create(name: scope_name, product: product39)
+end
+
+# Twenty-Fifth quotation
+created_at = random_date_within_last_2_months
+quotation25 = Quotation.create(
+  company: gat,
+  client: client_asi,
+  user: user,
+  status: "pending",
+  sub_total: 0,
+  total: 0,
+  vat: 0,
+  attention: "Mr. William Park",
+  vessel: "MV ASTRO LEADER",
+  subject: "AUXILIARY BOILER COMPONENTS UPGRADE",
+  payment: "50% downpayment",
+  duration: "25 WORKING DAYS",
+  discount_rate: 3,
+  products: [product38, product39],
+  created_at: created_at,
+  updated_at: created_at
+)
+
+# Twenty-Sixth Quotation - Main Engine Components
+product40 = Product.create(
+  name: "CYLINDER LINER HONING",
+  quantity: 6,
+  unit: "pcs",
+  price: 85000
+)
+
+["REMOVAL AND INSPECTION",
+ "SURFACE PREPARATION",
+ "HONING PROCESS",
+ "MEASUREMENT AND INSPECTION",
+ "PRESERVATION"].each do |scope_name|
+  Scope.create(name: scope_name, product: product40)
+end
+
+product41 = Product.create(
+  name: "SUPPLY OF CYLINDER HEAD VALVES",
+  quantity: 24,
+  unit: "sets",
+  price: 45000
+)
+
+Spec.create(name: "Material", value: "Nimonic 80A", product: product41)
+Spec.create(name: "Size", value: "250mm", product: product41)
+Spec.create(name: "Type", value: "Exhaust & Intake Set", product: product41)
+
+# Twenty-Sixth quotation
+created_at = random_date_within_last_2_months
+quotation26 = Quotation.create(
+  company: gat,
+  client: client_lsc,
+  user: user,
+  status: "approved",
+  sub_total: 0,
+  total: 0,
+  vat: 0,
+  attention: "Mr. George Wu",
+  vessel: "MV EASTERN STAR",
+  subject: "MAIN ENGINE MAINTENANCE",
+  payment: "30 days",
+  duration: "20 WORKING DAYS",
+  discount_rate: 0,
+  products: [product40, product41],
+  created_at: created_at,
+  updated_at: created_at
+)
+set_approval_details(quotation26, created_at, manager)
+
+# Twenty-Seventh Quotation - Navigation Equipment
+product42 = Product.create(
+  name: "SUPPLY OF ECDIS SYSTEM",
+  quantity: 1,
+  unit: "set",
+  price: 550000
+)
+
+["REMOVAL OF OLD SYSTEM",
+ "INSTALLATION OF NEW SYSTEM",
+ "SOFTWARE INSTALLATION",
+ "CHART LOADING",
+ "INTEGRATION WITH GPS",
+ "TESTING AND CERTIFICATION"].each do |scope_name|
+  Scope.create(name: scope_name, product: product42)
+end
+
+Spec.create(name: "Make", value: "Furuno FMD-3200", product: product42)
+Spec.create(name: "Display", value: "24-inch LCD", product: product42)
+Spec.create(name: "Type Approved", value: "IMO/SOLAS", product: product42)
+
+# Twenty-Seventh quotation
+created_at = random_date_within_last_2_months
+quotation27 = Quotation.create(
+  company: gat,
+  client: client_fsc,
+  user: user,
+  status: "pending",
+  sub_total: 0,
+  total: 0,
+  vat: 0,
+  attention: "Ms. Linda Kim",
+  vessel: "MV GOLDEN HORIZON",
+  subject: "NAVIGATION EQUIPMENT UPGRADE",
+  payment: "50% downpayment",
+  duration: "15 WORKING DAYS",
+  discount_rate: 2,
+  products: [product42],
+  created_at: created_at,
+  updated_at: created_at
+)
+
+# Twenty-Eighth Quotation - Engine Room Equipment
+product43 = Product.create(
+  name: "SUPPLY AND INSTALLATION OF SEWAGE TREATMENT PLANT",
+  quantity: 1,
+  unit: "set",
+  price: 650000
+)
+
+["REMOVAL OF OLD UNIT",
+ "FOUNDATION MODIFICATION",
+ "INSTALLATION OF NEW UNIT",
+ "PIPING MODIFICATION",
+ "ELECTRICAL INSTALLATION",
+ "TESTING AND COMMISSIONING",
+ "CLASS CERTIFICATION"].each do |scope_name|
+  Scope.create(name: scope_name, product: product43)
+end
+
+Spec.create(name: "Capacity", value: "5.0 m³/day", product: product43)
+Spec.create(name: "Type", value: "Biological Treatment", product: product43)
+Spec.create(name: "Certification", value: "MEPC.227(64)", product: product43)
+
+# Twenty-Eighth quotation
+created_at = random_date_within_last_2_months
+quotation28 = Quotation.create(
+  company: gat,
+  client: client_span,
+  user: user,
+  status: "pending",
+  sub_total: 0,
+  total: 0,
+  vat: 0,
+  attention: "Mr. Alex Tan",
+  vessel: "MV SPAN VOYAGER",
+  subject: "SEWAGE TREATMENT PLANT REPLACEMENT",
+  payment: "50% downpayment",
+  duration: "25 WORKING DAYS",
+  discount_rate: 0,
+  products: [product43],
+  created_at: created_at,
+  updated_at: created_at
+)
+
+# Twenty-Ninth Quotation - Deck Equipment
+product44 = Product.create(
+  name: "WINDLASS OVERHAUL",
+  quantity: 2,
+  unit: "sets",
+  price: 275000
+)
+
+["DISMANTLING AND INSPECTION",
+ "GYPSY WHEEL RECONDITIONING",
+ "BEARING REPLACEMENT",
+ "BRAKE SYSTEM OVERHAUL",
+ "HYDRAULIC MOTOR SERVICE",
+ "ASSEMBLY AND TESTING"].each do |scope_name|
+  Scope.create(name: scope_name, product: product44)
+end
+
+Spec.create(name: "Capacity", value: "20 Ton", product: product44)
+Spec.create(name: "Chain Size", value: "76mm", product: product44)
+
+product45 = Product.create(
+  name: "SUPPLY OF ANCHOR CHAIN",
+  quantity: 440,
+  unit: "meters",
+  price: 2200
+)
+
+Spec.create(name: "Grade", value: "U3", product: product45)
+Spec.create(name: "Diameter", value: "76mm", product: product45)
+Spec.create(name: "Standard", value: "IACS", product: product45)
+
+# Twenty-Ninth quotation
+created_at = random_date_within_last_2_months
+quotation29 = Quotation.create(
+  company: gat,
+  client: client_asi,
+  user: user,
+  status: "approved",
+  sub_total: 0,
+  total: 0,
+  vat: 0,
+  attention: "Mr. David Chen",
+  vessel: "MV ASTRO MARINER",
+  subject: "ANCHOR AND WINDLASS SYSTEM MAINTENANCE",
+  payment: "30 days",
+  duration: "30 WORKING DAYS",
+  discount_rate: 5,
+  products: [product44, product45],
+  created_at: created_at,
+  updated_at: created_at
+)
+set_approval_details(quotation29, created_at, manager)

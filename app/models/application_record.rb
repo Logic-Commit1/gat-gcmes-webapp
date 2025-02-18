@@ -1,7 +1,7 @@
 class ApplicationRecord < ActiveRecord::Base
   primary_abstract_class
 
-  UNIT_OF_MEASUREMENTS = %w[pcs unit cm m km in ft yd mi].freeze
+  UNIT_OF_MEASUREMENTS = %w[pcs unit cm m km in ft yd mi set].freeze
 
   def self.latest_first
     order(created_at: :desc)

@@ -22,7 +22,9 @@ end
 Canvass.with_deleted.each do |canvass|
   canvass.really_destroy!
 end
-Project.destroy_all
+Project.with_deleted.each do |project|
+  project.really_destroy!
+end
 Contact.destroy_all
 Client.destroy_all
 Supplier.destroy_all

@@ -77,17 +77,24 @@ module PdfGenerator
     private
 
     def draw_products_header
-      headers = [["Supplier Name", "Price", "Brand", "Terms", "Remarks"]]
+      has_remarks = @document.suppliers.any? do |product_info|
+        product_info.values.flatten(1).any? { |supplier| supplier.values.first[3].present? }
+      end
+
+      headers = if has_remarks
+        [["Supplier Name", "Unit Price", "Brand", "Terms", "Remarks"]]
+      else
+        [["Supplier Name", "Unit Price", "Brand", "Terms"]]
+      end
 
       @pdf.table(headers, width: @document_width) do |t|
         t.row(0).font_style = :bold
         t.row(0).background_color = "F3F9FF"
         t.cells.padding = 7
         t.cells.borders = [:bottom, :top, :left, :right]
-        apply_column_widths(t)
-        t.columns(1..4).align = :right
+        apply_column_widths(t, has_remarks)
+        t.columns(1..headers.first.length-1).align = :right
         t.cells.border_width = 0.5
-        # t.column(4).align = :left
       end
     end
 
@@ -132,13 +139,21 @@ module PdfGenerator
       end
     end
     
-    def apply_column_widths(table)
-      # Calculate widths as percentages of total document width
-      table.column(0).width = @document_width * 0.46 
-      table.column(1).width = @document_width * 0.17
-      table.column(2).width = @document_width * 0.13
-      table.column(3).width = @document_width * 0.12
-      table.column(4).width = @document_width * 0.12
+    def apply_column_widths(table, has_remarks)
+      if has_remarks
+        # Calculate widths as percentages of total document width with remarks
+        table.column(0).width = @document_width * 0.46 
+        table.column(1).width = @document_width * 0.17
+        table.column(2).width = @document_width * 0.13
+        table.column(3).width = @document_width * 0.12
+        table.column(4).width = @document_width * 0.12
+      else
+        # Calculate widths as percentages of total document width without remarks
+        table.column(0).width = @document_width * 0.50
+        table.column(1).width = @document_width * 0.20
+        table.column(2).width = @document_width * 0.15
+        table.column(3).width = @document_width * 0.15
+      end
     end
   end
 end
