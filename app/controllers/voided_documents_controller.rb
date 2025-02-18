@@ -8,13 +8,15 @@ class VoidedDocumentsController < ApplicationController
     voided_canvasses = Canvass.only_deleted.latest_first
     voided_request_forms = RequestForm.only_deleted.latest_first
     voided_purchase_orders = PurchaseOrder.only_deleted.latest_first
+    # voided_projects = Project.only_deleted.latest_first
 
     # Combine all voided documents into a single array
     @all_voided_documents = [
       voided_quotations,
       voided_canvasses,
       voided_request_forms,
-      voided_purchase_orders
+      voided_purchase_orders,
+      # voided_projects
     ].flatten.sort_by(&:deleted_at).reverse
 
     # Initialize pagy for pagination

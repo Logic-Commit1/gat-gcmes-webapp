@@ -260,7 +260,7 @@ Spec.create(name: "Treatment", value: "Phosphated", product: product9)
 created_at = random_date_within_last_3_months
 quotation4 = Quotation.create(
   company: gat,
-  client: client_asi,
+  client: client_span,
   user: user,
   status: "pending",
   sub_total: 0,
@@ -303,7 +303,7 @@ Spec.create(name: "Year", value: "2010", product: product10)
 created_at = random_date_within_last_3_months
 quotation5 = Quotation.create(
   company: gcmes,
-  client: client_lsc,
+  client: client_span,
   user: user,
   status: "approved",
   sub_total: 0,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_17_023533) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_17_060605) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -185,8 +185,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_17_023533) do
     t.datetime "start_date"
     t.datetime "end_date"
     t.datetime "served_at"
+    t.datetime "deleted_at"
+    t.bigint "deleted_by_id"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["company_id"], name: "index_projects_on_company_id"
+    t.index ["deleted_at"], name: "index_projects_on_deleted_at"
+    t.index ["deleted_by_id"], name: "index_projects_on_deleted_by_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -393,6 +397,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_17_023533) do
   add_foreign_key "projects", "clients"
   add_foreign_key "projects", "companies"
   add_foreign_key "projects", "users"
+  add_foreign_key "projects", "users", column: "deleted_by_id"
   add_foreign_key "purchase_orders", "companies"
   add_foreign_key "purchase_orders", "employees"
   add_foreign_key "purchase_orders", "projects"

@@ -1,7 +1,10 @@
 class Project < ApplicationRecord
+  acts_as_paranoid
+
   belongs_to :client
   belongs_to :company
   belongs_to :user
+  belongs_to :deleted_by, class_name: 'User', optional: true
 
   has_many :quotations
   has_many :request_forms

@@ -79,11 +79,14 @@ class ProjectsController < ApplicationController
 
   # DELETE /projects/1 or /projects/1.json
   def destroy
-    @project.destroy!
+    @project.update(deleted_by: current_user)
 
-    respond_to do |format|
-      format.html { redirect_to projects_url, notice: "Project was successfully destroyed." }
-      format.json { head :no_content }
+    if @project.destroy
+      flash[:success] = 'Project was successfully voided.'
+      redirect_to projects_path
+    else
+      flash[:error] = 'Failed to void project.'
+      redirect_to @project
     end
   end
 
@@ -103,7 +106,11 @@ class ProjectsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
-      @project = Project.find(params[:id])
+      if current_user.admin? || current_user.developer?
+        @project = Project.with_deleted.find(params[:id])
+      else
+        @project = Project.find(params[:id])
+      end
     end
 
     # Only allow a list of trusted parameters through.
