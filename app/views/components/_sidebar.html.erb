@@ -20,6 +20,15 @@
         </p>
       <% end %>
       -->
+      <% if current_user.manager? %>
+        <!-- Link to Projects -->
+        <%= link_to projects_path, class: 'in-text no-underline' do %>
+          <p class="nav-btn <%= 'active' if current_page?(projects_path) %>">
+            <span class="icon"><i class="fa-solid fa-building"></i></span>
+            Projects
+          </p>
+        <% end %>
+      <% end %>
       <!-- Link to Quotations -->
       <%= link_to quotations_path, class: 'in-text no-underline' do %>
         <p class="nav-btn <%= 'active' if current_page?(quotations_path) %>">
@@ -48,12 +57,14 @@
           Purchase Orders
         </p>
       <% end %>
-      <!-- Link to Projects -->
-      <%= link_to projects_path, class: 'in-text no-underline' do %>
-        <p class="nav-btn <%= 'active' if current_page?(projects_path) %>">
-          <span class="icon"><i class="fa-solid fa-building"></i></span>
-          Projects
-        </p>
+      <% unless current_user.manager? %>
+        <!-- Link to Projects -->
+        <%= link_to projects_path, class: 'in-text no-underline' do %>
+          <p class="nav-btn <%= 'active' if current_page?(projects_path) %>">
+            <span class="icon"><i class="fa-solid fa-building"></i></span>
+            Projects
+          </p>
+        <% end %>
       <% end %>
       <!-- Link to Clients -->
       <% if current_user.sales? || current_user.developer? %>

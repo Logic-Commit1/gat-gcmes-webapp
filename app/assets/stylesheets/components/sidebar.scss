@@ -37,13 +37,15 @@
       padding: 16px 0 16px 30px;
       font-size: 10pt;
       font-weight: 500;
-      border-top-right-radius: 12px;
-      border-bottom-right-radius: 12px;
-      // transition: background-color 0.3s ease;
+      // border-top-right-radius: 12px;
+      // border-bottom-right-radius: 12px;
+      border-radius: var(--border-radius);
+      // transition: background-color 0.2s ease;
 
       &:hover {
-        // background-color: #eeeeee;
+        background-color: #dbdee3;
         color: var(--black-color);
+        // color: #0c3c95;
       }
 
       &.active {
