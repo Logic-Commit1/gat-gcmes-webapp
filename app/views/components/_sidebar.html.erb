@@ -67,7 +67,7 @@
         <% end %>
       <% end %>
       <!-- Link to Clients -->
-      <% if current_user.sales? || current_user.developer? %>
+      <% if current_user.sales? || current_user.developer? || current_user.purchasing?%>
         <%= link_to clients_path, class: 'in-text no-underline' do %>
           <p class="nav-btn <%= 'active' if current_page?(clients_path) %>">
             <span class="icon"><i class="fa-solid fa-user"></i></span>
