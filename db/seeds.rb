@@ -72,12 +72,12 @@ gcmes.suppliers.create!(name: "LORENZO SHIPPING CORPORATION", code: "LSC", addre
 # Create employees
 
 [
-  { department: :operation, position: "Operation Officer", email: "operation@goldenchain.ph" },
-  { department: :accounting, position: "Auditor", email: "accounting@goldenchain.ph" },
-  { department: :purchasing, position: "Purchasing Officer", email: "purchasing@goldenchain.ph" },
-  { department: :sales, position: "Sales Officer", email: "sales@goldenchain.ph" },
-  { department: :warehouse, position: "Warehouse Officer", email: "warehouse@goldenchain.ph" },
-  { department: :operation, position: "General Manager", email: "manager@goldenchain.ph" }
+  { department: :operation, position: "Operation Officer", email: "operation@goldenchain.com.ph" },
+  { department: :accounting, position: "Auditor", email: "accounting@goldenchain.com.ph" },
+  { department: :purchasing, position: "Purchasing Officer", email: "purchasing@goldenchain.com.ph" },
+  { department: :sales, position: "Sales Officer", email: "sales@goldenchain.com.ph" },
+  { department: :warehouse, position: "Warehouse Officer", email: "warehouse@goldenchain.com.ph" },
+  { department: :operation, position: "General Manager", email: "manager@goldenchain.com.ph" }
 ].each do |employee_data|
   Employee.create!(employee_data)
 end
@@ -95,10 +95,10 @@ Employee.all.each do |employee|
   )
 end
 
-manager = User.find_by(email: "manager@goldenchain.ph")
+manager = User.find_by(email: "manager@goldenchain.com.ph")
 manager.manager!
 
-purchasing = User.find_by(email: "purchasing@goldenchain.ph")
+purchasing = User.find_by(email: "purchasing@goldenchain.com.ph")
 
 # Attach signature to manager
 manager.signature.attach(io: File.open(Rails.root.join("app/assets/images/sign-one.png")), filename: "sign-one.png", content_type: "image/png")
