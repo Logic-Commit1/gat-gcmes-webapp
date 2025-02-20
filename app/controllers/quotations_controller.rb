@@ -58,10 +58,6 @@ class QuotationsController < ApplicationController
 
     respond_to do |format|
       if @quotation.save
-        # Trigger project status check if project is linked
-        # @quotation.generate_prawn
-        @quotation.project.check_and_update_status if @quotation.project.present?
-
         format.html { redirect_to quotation_url(@quotation), notice: "Quotation was successfully created." }
         format.json { render :show, status: :created, location: @quotation }
       else

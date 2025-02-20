@@ -93,9 +93,9 @@ Spec.create(
 )
 
 # Helper method to generate random dates within the last 3 months
-def random_date_within_last_2_months
+def random_date_within_last_1_month
   end_date = Time.current
-  start_date = 2.months.ago
+  start_date = 1.month.ago
   rand(start_date..end_date)
 end
 
@@ -108,7 +108,7 @@ def set_approval_details(quotation, created_at, manager)
 end
 
 # First quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation = Quotation.create(
   company: gat,
   client: client_asi,
@@ -162,7 +162,7 @@ Spec.create(name: "Material", value: "White Metal", product: product5)
 Spec.create(name: "Standard", value: "ISO 9001", product: product5)
 
 # Second quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation2 = Quotation.create(
   company: gat,
   client: client_span,
@@ -202,7 +202,7 @@ product6 = Product.create(
 end
 
 # Third quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation3 = Quotation.create(
   company: gat,
   client: client_fsc,
@@ -257,7 +257,7 @@ Spec.create(name: "Bore", value: "580mm", product: product9)
 Spec.create(name: "Treatment", value: "Phosphated", product: product9)
 
 # Fourth quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation4 = Quotation.create(
   company: gat,
   client: client_span,
@@ -300,7 +300,7 @@ Spec.create(name: "Engine Type", value: "MAN B&W 6S50MC", product: product10)
 Spec.create(name: "Year", value: "2010", product: product10)
 
 # Fifth quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation5 = Quotation.create(
   company: gat,
   client: client_span,
@@ -340,7 +340,7 @@ product11 = Product.create(
 end
 
 # Sixth quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation6 = Quotation.create(
   company: gat,
   client: client_span,
@@ -385,7 +385,7 @@ Spec.create(name: "Compression Rings", value: "3 per set", product: product13)
 Spec.create(name: "Oil Rings", value: "1 per set", product: product13)
 
 # Seventh quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation7 = Quotation.create(
   company: gat,
   client: client_fsc,
@@ -427,7 +427,7 @@ Spec.create(name: "Boiler Type", value: "Aalborg Mission OL", product: product14
 Spec.create(name: "Capacity", value: "2.5 ton/hr", product: product14)
 
 # Eighth quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation8 = Quotation.create(
   company: gat,
   client: client_asi,
@@ -466,7 +466,7 @@ product15 = Product.create(
 end
 
 # Ninth quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation9 = Quotation.create(
   company: gat,
   client: client_lsc,
@@ -508,7 +508,7 @@ Spec.create(name: "Make", value: "Sperre HV2/200", product: product16)
 Spec.create(name: "Capacity", value: "30 m³/hr", product: product16)
 
 # Tenth quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation10 = Quotation.create(
   company: gat,
   client: client_span,
@@ -549,7 +549,7 @@ Spec.create(name: "Make", value: "Alfa Laval FOPX-613", product: product17)
 Spec.create(name: "Bowl Size", value: "613mm", product: product17)
 
 # Eleventh quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation11 = Quotation.create(
   company: gat,
   client: client_asi,
@@ -593,7 +593,7 @@ Spec.create(name: "Input", value: "95-264VAC", product: product19)
 Spec.create(name: "Model", value: "DECS-150", product: product19)
 
 # Twelfth quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation12 = Quotation.create(
   company: gat,
   client: client_fsc,
@@ -635,7 +635,7 @@ Spec.create(name: "Type", value: "Centrifugal", product: product20)
 Spec.create(name: "Capacity", value: "500 m³/hr", product: product20)
 
 # Thirteenth quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation13 = Quotation.create(
   company: gat,
   client: client_span,
@@ -675,7 +675,7 @@ Spec.create(name: "Make", value: "Alfa Laval M15", product: product21)
 Spec.create(name: "No. of Plates", value: "125", product: product21)
 
 # Fourteenth quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation14 = Quotation.create(
   company: gat,
   client: client_lsc,
@@ -724,7 +724,7 @@ Spec.create(name: "Breaking Capacity", value: "65kA", product: product23)
 Spec.create(name: "Make", value: "Schneider Masterpact", product: product23)
 
 # Fifteenth quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation15 = Quotation.create(
   company: gat,
   client: client_fsc,
@@ -764,7 +764,7 @@ Spec.create(name: "Capacity", value: "15 Ton", product: product24)
 Spec.create(name: "Type", value: "Hydraulic", product: product24)
 
 # Sixteenth quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation16 = Quotation.create(
   company: gat,
   client: client_asi,
@@ -839,7 +839,7 @@ Spec.create(name: "Type", value: "Complete Set", product: product28)
 Spec.create(name: "Certification", value: "BV Approved", product: product28)
 
 # Eighteenth quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation18 = Quotation.create(
   company: gat,
   client: client_span,
@@ -883,7 +883,7 @@ Spec.create(name: "Capacity", value: "1.0 m³/hr", product: product29)
 Spec.create(name: "Oil Content", value: "< 15 ppm", product: product29)
 
 # Nineteenth quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation19 = Quotation.create(
   company: gat,
   client: client_fsc,
@@ -924,7 +924,7 @@ Spec.create(name: "Type", value: "Shell and Tube", product: product30)
 Spec.create(name: "Heat Transfer Area", value: "25 m²", product: product30)
 
 # Twentieth quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation20 = Quotation.create(
   company: gat,
   client: client_asi,
@@ -968,7 +968,7 @@ Spec.create(name: "Hole Size", value: "0.35mm", product: product32)
 Spec.create(name: "Spray Pattern", value: "8 holes", product: product32)
 
 # Twenty-First quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation21 = Quotation.create(
   company: gat,
   client: client_span,
@@ -1011,7 +1011,7 @@ Spec.create(name: "Capacity", value: "25 Tons", product: product33)
 Spec.create(name: "Reach", value: "22 meters", product: product33)
 
 # Twenty-Second quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation22 = Quotation.create(
   company: gat,
   client: client_lsc,
@@ -1071,7 +1071,7 @@ Spec.create(name: "Range", value: "-50 to 200°C, 0-16 bar", product: product36)
 Spec.create(name: "Output", value: "4-20mA", product: product36)
 
 # Twenty-Third quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation23 = Quotation.create(
   company: gat,
   client: client_fsc,
@@ -1112,7 +1112,7 @@ Spec.create(name: "Capacity", value: "750 m³/hr", product: product37)
 Spec.create(name: "Head", value: "25 meters", product: product37)
 
 # Twenty-Fourth quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation24 = Quotation.create(
   company: gat,
   client: client_span,
@@ -1161,7 +1161,7 @@ product39 = Product.create(
 end
 
 # Twenty-Fifth quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation25 = Quotation.create(
   company: gat,
   client: client_asi,
@@ -1209,7 +1209,7 @@ Spec.create(name: "Size", value: "250mm", product: product41)
 Spec.create(name: "Type", value: "Exhaust & Intake Set", product: product41)
 
 # Twenty-Sixth quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation26 = Quotation.create(
   company: gat,
   client: client_lsc,
@@ -1252,7 +1252,7 @@ Spec.create(name: "Display", value: "24-inch LCD", product: product42)
 Spec.create(name: "Type Approved", value: "IMO/SOLAS", product: product42)
 
 # Twenty-Seventh quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation27 = Quotation.create(
   company: gat,
   client: client_fsc,
@@ -1295,7 +1295,7 @@ Spec.create(name: "Type", value: "Biological Treatment", product: product43)
 Spec.create(name: "Certification", value: "MEPC.227(64)", product: product43)
 
 # Twenty-Eighth quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation28 = Quotation.create(
   company: gat,
   client: client_span,
@@ -1347,7 +1347,7 @@ Spec.create(name: "Diameter", value: "76mm", product: product45)
 Spec.create(name: "Standard", value: "IACS", product: product45)
 
 # Twenty-Ninth quotation
-created_at = random_date_within_last_2_months
+created_at = random_date_within_last_1_month
 quotation29 = Quotation.create(
   company: gat,
   client: client_asi,
