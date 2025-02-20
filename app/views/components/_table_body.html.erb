@@ -81,7 +81,8 @@
         <% documents&.each do |form| %>
           <tr onclick="window.location='<%= request_form_path(form) %>'" style="cursor: pointer">
             <td style="width: 10%;"><%= form.uid %></td>
-            <td style="width: 20%;"><%= form.products.map(&:name).join(", ") %></td>
+            
+            <td style="width: 20%;"><%= (form.products.any? ? form.products.map(&:name).join(", ") : (form.particulars&.any? ? form.particulars.map(&:name).join(", ") : "")) %></td>
             <td style="width: 10%;"><%= number_to_currency(form.total, unit: "₱ ") %></td>
             <td style="width: 10%;"><%= form.created_at.strftime("%B %d, %Y") %></td>
             <td style="width: 7%; text-align: center;"><span class="status <%= form.status %>"><%= form.status.capitalize %></span></td>

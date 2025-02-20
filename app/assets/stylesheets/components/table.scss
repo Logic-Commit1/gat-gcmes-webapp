@@ -20,12 +20,44 @@
     .search-bar {
       margin-bottom: 20px;
       margin-right: var(--card-padding);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .relative {
+        position: relative;
+        display: inline-block;
+
+        input {
+          padding-right: 35px; // Make room for the calendar icon
+        }
+
+        .fa-calendar {
+          position: absolute;
+          right: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #666;
+          pointer-events: none;
+        }
+      }
 
       input {
         padding: 10px;
-        margin-right: 10px;
         border: 1px solid #ccc;
         border-radius: 4px;
+        width: 180px;
+        display: inline-block;
+
+        &::placeholder {
+          color: #999;
+        }
+
+        &:focus {
+          outline: none;
+          border-color: #22417b;
+          box-shadow: 0 0 0 2px rgba(34, 65, 123, 0.1);
+        }
       }
 
       button {

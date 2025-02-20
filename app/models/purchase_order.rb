@@ -28,16 +28,16 @@ class PurchaseOrder < ApplicationRecord
     query = query.downcase
     status_matches = statuses.keys.select { |k| k.include?(query) }
     terms_matches = terms.keys.select { |k| k.downcase.include?(query) }
-
-    joins(:supplier).where(
+    joins(:supplier, :products).where(
       "purchase_orders.uid ILIKE :query OR 
        suppliers.name ILIKE :query OR
-       status IN (:status_values) OR
-       terms IN (:terms_values)", 
+       products.name ILIKE :query OR
+       purchase_orders.status IN (:status_values) OR
+       purchase_orders.terms IN (:terms_values)", 
       query: "%#{query}%",
       status_values: status_matches.map { |k| statuses[k] },
       terms_values: terms_matches.map { |k| terms[k] }
-    )
+    ).distinct
   }
   scope :created_on_date, ->(date) {
     return all unless date.present?
