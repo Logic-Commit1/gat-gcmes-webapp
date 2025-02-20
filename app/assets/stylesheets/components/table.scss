@@ -40,6 +40,21 @@
           color: #666;
           pointer-events: none;
         }
+
+        .clear-date-btn {
+          position: absolute;
+          display: none;
+          left: 10px;
+          bottom: -25px;
+          color: #666;
+          cursor: pointer;
+          text-decoration: underline;
+          font-size: 14px;
+        }
+
+        .clear-date-btn:hover {
+          color: #000;
+        }
       }
 
       input {

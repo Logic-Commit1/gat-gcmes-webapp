@@ -8,12 +8,19 @@
       <%# unless title == "Employees" || title == "Suppliers" || title == "Clients" %>
       <div class="relative">
         <input type="text" 
-            class="flatpickr-input"
+            class="date-picker-input"
             placeholder="mm/dd/yy" 
             data-table-filter-target="dateInput"
             data-flatpickr-target="dateInput"
             data-action="change->table-filter#filter" />
-        <i class="fa-regular fa-calendar" style="float: right;"></i>
+        <%# <div class="date-input-icons"> %>
+        <i class="fa-regular fa-calendar"></i>
+        <%# </div> %>
+        <span class="clear-date-btn" 
+             data-action="click->table-filter#clearDate"
+          data-flatpickr-target="clearDateBtn"
+          data-table-filter-target="clearDateBtn"
+          title="Clear date">Clear Filter</span>
       </div>
       <%# end %>
       <input type="text" 
@@ -24,3 +31,29 @@
   </div>
   <%= render "components/table_body", documents: documents, title: title %>
 </div>
+<style>
+  .relative {
+    position: relative;
+    display: inline-block;
+  }
+
+  .date-input-icons {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  /* .clear-date-btn {
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+
+  .clear-date-btn:hover {
+    opacity: 1;
+  } */
+</style>

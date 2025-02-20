@@ -53,7 +53,7 @@ class Quotation < ApplicationRecord
 
   scope :created_on_date, ->(date) {
     return all unless date.present?
-    where("DATE(created_at) = ?", Date.parse(date))
+    where("DATE(quotations.created_at) = ?", Date.parse(date))
   }
 
   def compute_totals_quotation

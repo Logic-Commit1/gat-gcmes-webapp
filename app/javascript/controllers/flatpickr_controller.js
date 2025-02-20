@@ -3,7 +3,7 @@ import flatpickr from "flatpickr"
 
 // Connects to data-controller="flatpickr"
 export default class extends Controller {
-  static targets = ["dateInput"]
+  static targets = ["dateInput", "clearDateBtn"]
 
   connect() {
     // Initialize table date input if it exists
@@ -12,7 +12,12 @@ export default class extends Controller {
         dateFormat: "Y-m-d",
         enableTime: false,
         altInput: true,
-        altFormat: "F j, Y",
+        altFormat: "M j Y",
+        allowInput: false,
+        clickOpens: true,
+        onChange: () => {
+          this.clearDateBtnTarget.style.display = "block"
+        },
       })
     }
 

@@ -5,20 +5,9 @@ class ClientsController < ApplicationController
 
   # GET /clients or /clients.json
   def index
-    @clients = Client.order(created_at: :desc)
-
-    if params[:query].present?
-      # @clients = @clients.search_by_term(params[:query])
-      @clients = @clients.joins(:company).where(
-        "clients.code ILIKE :query OR clients.name ILIKE :query OR companies.code ILIKE :query", 
-        query: "%#{params[:query]}%"
-      )
-    end
-
-    if params[:date].present?
-      date = Date.parse(params[:date])
-      @clients = @clients.where("DATE(created_at) = ?", date)
-    end
+    @clients = Client.latest_first
+                      .search_by_term(params[:query])
+                      .created_on_date(params[:date])
 
     @pagy, @clients = pagy(@clients)
 

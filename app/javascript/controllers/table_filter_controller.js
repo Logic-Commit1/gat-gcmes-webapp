@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["searchInput", "dateInput", "table"]
+  static targets = ["searchInput", "dateInput", "table", "clearDateBtn"]
   static values = {
     url: String,
   }
@@ -30,7 +30,6 @@ export default class extends Controller {
     })
       .then((response) => response.text())
       .then((html) => {
-        console.log(html)
         Turbo.renderStreamMessage(html)
       })
   }
@@ -40,5 +39,16 @@ export default class extends Controller {
     this.timeout = setTimeout(() => {
       this.filter()
     }, 300)
+  }
+
+  clearDate() {
+    this.dateInputTarget.value = ""
+    // Clear the Flatpickr instance if it exists
+    if (this.dateInputTarget._flatpickr) {
+      this.dateInputTarget._flatpickr.clear()
+    }
+
+    this.clearDateBtnTarget.style.display = "none"
+    this.filter()
   }
 }

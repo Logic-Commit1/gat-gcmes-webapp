@@ -98,3 +98,31 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+/* Flatpickr styles */
+.date-picker-input {
+  background-color: white;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 150px;
+  cursor: pointer;
+}
+
+.flatpickr-input[readonly] {
+  background-color: white;
+  cursor: pointer;
+}
+
+.relative {
+  position: relative;
+}
+
+.relative .fa-calendar {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  pointer-events: none;
+}

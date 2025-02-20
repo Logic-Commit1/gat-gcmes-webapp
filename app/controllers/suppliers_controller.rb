@@ -6,18 +6,8 @@ class SuppliersController < ApplicationController
   # GET /suppliers or /suppliers.json
   def index
     @suppliers = Supplier.latest_first
-
-    if params[:query].present?
-      @suppliers = @suppliers.joins(:company).where(
-        "suppliers.code ILIKE :query OR suppliers.name ILIKE :query OR companies.code ILIKE :query", 
-        query: "%#{params[:query]}%"
-      )
-    end
-
-    if params[:date].present?
-      date = Date.parse(params[:date])
-      @suppliers = @suppliers.where("DATE(created_at) = ?", date)
-    end
+                          .search_by_term(params[:query])
+                          .created_on_date(params[:date])
 
     @pagy, @suppliers = pagy(@suppliers)
 

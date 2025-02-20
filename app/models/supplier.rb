@@ -10,6 +10,17 @@ class Supplier < ApplicationRecord
   validates :name, presence: true
 
   scope :latest_first, -> { order(created_at: :desc) }
+  scope :search_by_term, ->(term) { 
+    joins(:contacts).where(
+      "suppliers.name ILIKE :term OR suppliers.code ILIKE :term", 
+      term: "%#{term}%"
+    ) 
+  }
+
+  scope :created_on_date, ->(date) {
+    return all unless date.present?
+    where("DATE(suppliers.created_at) = ?", Date.parse(date))
+  }
 
   private
 

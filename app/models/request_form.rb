@@ -49,7 +49,7 @@ class RequestForm < ApplicationRecord
 
   scope :created_on_date, ->(date) {
     return all unless date.present?
-    where("DATE(created_at) = ?", Date.parse(date))
+    where("DATE(request_forms.created_at) = ?", Date.parse(date))
   }
 
   before_save :compute_totals_request_form

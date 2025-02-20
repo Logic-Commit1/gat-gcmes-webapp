@@ -15,6 +15,11 @@ class Client < ApplicationRecord
         ) 
       }
 
+    scope :created_on_date, ->(date) {
+      return all unless date.present?
+      where("DATE(clients.created_at) = ?", Date.parse(date))
+    }
+
     private
 
     def process_arrays
