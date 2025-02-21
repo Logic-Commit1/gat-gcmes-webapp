@@ -9,9 +9,9 @@ class Client < ApplicationRecord
 
     scope :latest_first, -> { order(created_at: :desc) }
     scope :search_by_term, ->(term) { 
-        joins(:contacts).where(
+        joins(:contacts, :company).where(
           "clients.name ILIKE :term OR clients.code ILIKE :term OR
-          clients.address ILIKE :term",
+          clients.address ILIKE :term OR companies.name ILIKE :term OR companies.code ILIKE :term",
           term: "%#{term}%"
         ) 
       }
