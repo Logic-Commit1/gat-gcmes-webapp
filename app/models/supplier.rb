@@ -12,7 +12,7 @@ class Supplier < ApplicationRecord
   scope :latest_first, -> { order(created_at: :desc) }
   scope :search_by_term, ->(term) { 
     joins(:contacts).where(
-      "suppliers.name ILIKE :term OR suppliers.code ILIKE :term", 
+      "suppliers.name ILIKE :term OR suppliers.code ILIKE :term OR suppliers.address ILIKE :term", 
       term: "%#{term}%"
     ) 
   }

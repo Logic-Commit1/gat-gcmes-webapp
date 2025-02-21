@@ -53,7 +53,7 @@ module PdfGenerator
         end
         
         draw_product_row(product, index)
-        @pdf.move_down 10
+        @pdf.move_down 20
       end
     end
 
@@ -84,7 +84,7 @@ module PdfGenerator
         end
       end
 
-      @pdf.move_down 10
+      @pdf.move_down 15
     end
 
     def terms_and_conditions
@@ -107,7 +107,7 @@ module PdfGenerator
         # t.column(0).align = :left
       end
 
-      @pdf.move_down 10
+      @pdf.move_down 20
     end
 
     def signatures_table
@@ -219,17 +219,17 @@ module PdfGenerator
 
       draw_product_image(product)
     end
-
     def draw_product_image(product)
       return unless product.image.attached?
         image_data = product.image.download
         image_path = "tmp/product_image_#{product.id}.jpg"
         File.binwrite(image_path, image_data)
         
-        @pdf.table([[nil, { image: image_path, position: :left, fit: [100, 100] }, 
+        @pdf.table([[nil, { image: image_path, position: :center, fit: [100, 100] }, 
                     "", "", "", "", ""]], width: @document_width) do |t|
           t.cells.padding = 7
           t.cells.borders = []
+          t.cells.border_width = 0.5
           t.column(1).borders = [:bottom, :left, :right]
           apply_column_widths(t)
         end
@@ -239,10 +239,10 @@ module PdfGenerator
 
     def apply_column_widths(table)
       table.column(0).width = 30
-      table.column(1).width = (@document_width) * 0.5
+      table.column(1).width = (@document_width) * 0.45
       table.column(2).width = 30
       table.column(3).width = 40
-      table.columns(4).width = (@document_width) * 0.16
+      table.columns(4).width = (@document_width) * 0.18
     end
 
     def build_specs_and_scopes_content(specs, scopes)

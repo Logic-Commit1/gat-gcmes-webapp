@@ -9,7 +9,7 @@
                   { include_blank: false },
                   { style: "text-align: right; border: none;" } %></td>
         <td style="width: 15%;"><%= f.number_field :price, value: f.object.price != 0.0 ? f.object.price : nil, style: "text-align: right", placeholder: "PHP 0.00", data: { action: "input->total-calculator#calculate" }, onwheel: "return false" %></td>
-        <td class="align-right" style="width: 15%;"><%= f.file_field :image %></td>
+        <td class="align-right" style="width: 15%;"><%= f.file_field :image, accept: "image/jpeg,image/jpg,image/png" %></td>
         <td style="width: 7%; text-align: center; vertical-align: middle;">
           <%= link_to "<i class='fas fa-copy'></i>".html_safe, "#", class: "duplicate-item-button", data: { action: "quotation-product-form#duplicate" } %>
           <%# unless f.object == f.object.quotation&.products&.first %>

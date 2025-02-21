@@ -82,7 +82,7 @@
             <td></td>
             <td style="text-align: center;" colspan="2">
               <% image_data = p.image.download %>
-              <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(image_data)}", style: "width: 100px; height: 100px;") %>
+              <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(image_data)}", style: "width: 150px; height: 100px;") %>
             </td>
           </tr>
         <% end %>
