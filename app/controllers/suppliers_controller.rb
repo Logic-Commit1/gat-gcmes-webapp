@@ -1,6 +1,6 @@
 class SuppliersController < ApplicationController
   include Authorizable
-  before_action :authorize_purchasing!
+  before_action :authorize_purchasing!, only: %i[ new create edit update destroy ]
   before_action :set_supplier, only: %i[ show edit update destroy ]
 
   # GET /suppliers or /suppliers.json

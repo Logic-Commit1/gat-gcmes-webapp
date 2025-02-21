@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
   include Authorizable
-  before_action :authorize_sales!
+  before_action :authorize_sales!, only: %i[ new create edit update destroy ]
   before_action :set_client, only: %i[ show edit update destroy ]
 
   # GET /clients or /clients.json

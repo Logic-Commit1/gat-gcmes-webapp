@@ -18,21 +18,39 @@
     <% end %>
   <% else %>
     <% if %w[client supplier].include?(document.class.name.underscore) %>
-      <%= button_to send("edit_#{document.class.name.underscore}_path", document), 
-                method: :get, 
-                class: "button black flex items-center white-bg",
-                style: "margin-right: 5px;" do %>
-        <i class="fa-regular fa-edit"></i>
-        <span>Edit</span>
-      <% end %>
-      <%= button_to send("#{document.class.name.underscore}_path", document), 
-                method: :delete, 
-                class: "button flex items-center white", 
-                style: "background-color: var(--danger-color);", 
-                data: { turbo_confirm: "Are you sure you want to delete '#{document.name}'?" } do %>
-        <i class="fa-regular fa-trash-can"></i>
-        <span class="white">Delete</span>
-      <% end %>
+      <% if document.class.name.underscore == 'client' && current_user.sales? %>
+        <%= button_to send("edit_#{document.class.name.underscore}_path", document), 
+                  method: :get, 
+                  class: "button black flex items-center white-bg",
+                  style: "margin-right: 5px;" do %>
+          <i class="fa-regular fa-edit"></i>
+          <span>Edit</span>
+        <% end %>
+        <%= button_to send("#{document.class.name.underscore}_path", document), 
+                  method: :delete, 
+                  class: "button flex items-center white", 
+                  style: "background-color: var(--danger-color);", 
+                  data: { turbo_confirm: "Are you sure you want to delete '#{document.name}'?" } do %>
+          <i class="fa-regular fa-trash-can"></i>
+          <span class="white">Delete</span>
+        <% end %>
+      <% elsif document.class.name.underscore == 'supplier' && current_user.purchasing? %>
+        <%= button_to send("edit_#{document.class.name.underscore}_path", document), 
+                  method: :get, 
+                  class: "button black flex items-center white-bg",
+                  style: "margin-right: 5px;" do %>
+          <i class="fa-regular fa-edit"></i>
+          <span>Edit</span>
+        <% end %>
+        <%= button_to send("#{document.class.name.underscore}_path", document), 
+                  method: :delete, 
+                  class: "button flex items-center white", 
+                  style: "background-color: var(--danger-color);", 
+                  data: { turbo_confirm: "Are you sure you want to delete '#{document.name}'?" } do %>
+          <i class="fa-regular fa-trash-can"></i>
+          <span class="white">Delete</span>
+        <% end %>
+      <%end%>
     <% else %>
       <% if document.user == current_user %>
         <% if document.class.name != "Project" %>
@@ -72,10 +90,6 @@
           </div>
         </div>
       <% end %>
-      <%# <button class="button flex items-center" style="background-color: white;">
-    <i class="fa-regular fa-comment"></i>
-    <span>Comments</span>
-  </button> %>
       <%# Project document %>
       <% if document.class.name == "Project" && (document.user == current_user || current_user.manager?) %>
         <%= button_to send("edit_#{document.class.name.underscore}_path", document), 
@@ -165,6 +179,5 @@
         <% end %>
       <% end %>
     <% end %>
-    <!-- Unvoid Button for Voided Documents -->
   <% end %>
 </div>
