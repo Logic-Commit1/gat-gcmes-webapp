@@ -9,10 +9,8 @@ export default class extends Controller {
     // Initialize table date input if it exists
     if (this.hasDateInputTarget) {
       flatpickr(this.dateInputTarget, {
-        dateFormat: "Y-m-d",
+        dateFormat: "M d Y",
         enableTime: false,
-        altInput: true,
-        altFormat: "M j Y",
         allowInput: false,
         clickOpens: true,
         onChange: () => {
