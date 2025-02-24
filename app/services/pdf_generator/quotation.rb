@@ -126,7 +126,7 @@ module PdfGenerator
       if @document.user&.signature&.attached?
         signature_from_object = @document.user.signature
         signature = StringIO.open(signature_from_object.download)
-        data[1][1] = { image: signature, position: :center, fit: [120, 30] }
+        data[1][1] = { image: signature, position: :center, fit: [100, 35] }
         data[2][1] = "#{@document.user&.first_name&.titleize} #{@document.user&.last_name&.titleize}"
       end
 
@@ -135,7 +135,7 @@ module PdfGenerator
         approver_signature_from_object = @document.approver.signature
         approver_signature = StringIO.open(approver_signature_from_object.download)
 
-        data[1][2] = { image: approver_signature, position: :center, fit: [120, 35] }
+        data[1][2] = { image: approver_signature, position: :center, fit: [100, 35] }
         data[2][2] = "#{@document.approver&.first_name&.titleize} #{@document.approver&.last_name&.titleize}"
       end
       

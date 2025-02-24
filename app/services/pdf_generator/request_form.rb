@@ -102,7 +102,7 @@ module PdfGenerator
       @pdf.move_down 10
       @pdf.table(headers + [[
         @document.remarks,
-        @document.fuel_gauge.present? ? "PHP #{number_with_precision(@document.fuel_gauge, precision: 2, delimiter: ',')}" : "",
+        @document.fuel_gauge.present? ? "PHP #{number_with_precision(@document.fuel_gauge.to_f, precision: 2, delimiter: ',')}" : "",
         @document.easy_trip_balance.present? ? "PHP #{number_with_precision(@document.easy_trip_balance, precision: 2, delimiter: ',')}" : "",
         @document.sweep_balance.present? ? "PHP #{number_with_precision(@document.sweep_balance, precision: 2, delimiter: ',')}" : ""
       ]], width: @document_width) do |t|
@@ -111,7 +111,7 @@ module PdfGenerator
         t.cells.padding = 7
         t.cells.border_width = 0.5
         t.cells.borders = [:bottom, :top, :left, :right]
-        t.columns(0..3).align = :center
+        t.columns(1..3).align = :right
       end
     end
 
@@ -132,7 +132,7 @@ module PdfGenerator
       @document.products.each_with_index do |p, index|
         data = [
           [index + 1,
-           p.description,
+           p.name,
            p.quantity,
            p.unit,
            "#{index == 0 ? 'PHP' : ''} #{number_with_precision(p.price, precision: 2, delimiter: ',')}",
@@ -170,13 +170,13 @@ module PdfGenerator
 
       if @document.user&.signature&.attached?
         signature = StringIO.open(@document.user.signature.download)
-        data[1][0] = { image: signature, position: :center, fit: [100, 40] }
+        data[1][0] = { image: signature, position: :center, fit: [100, 35] }
         data[2][0] = @document.created_by
       end
 
       if @document.approved? && @document.approver&.signature&.attached?
         approver_signature = StringIO.open(@document.approver.signature.download)
-        data[1][-1] = { image: approver_signature, position: :center, fit: [100, 40] }
+        data[1][-1] = { image: approver_signature, position: :center, fit: [100, 35] }
         data[2][-1] = @document.approver&.full_name
       end
 
@@ -187,9 +187,9 @@ module PdfGenerator
         t.cells.align = :center
         t.cells.padding = 7
         t.cells.border_width = 0.5
-        t.row(1).height = 55
-        t.row(1).padding = [3, 7, 0, 7]
-        t.row(2).padding = [-25, 7, 7, 7]
+        t.row(1).height = 40
+        t.row(1).padding = [1, 7, 0, 7]
+        t.row(2).padding = [-18, 7, 7, 7]
         apply_signatures_column_widths(t)
       end
     end

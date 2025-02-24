@@ -3,7 +3,7 @@
     <%= render 'components/pdf/header', document: @quotation %>
   </header>
   <p class="align-right">
-    Date Requested: <%= @quotation.created_at.strftime("%B %d, %Y") %>
+    <strong>Date Requested:</strong> <%= @quotation.created_at.strftime("%B %d, %Y") %>
   </p>
   <table id="customer-table">
     <thead>

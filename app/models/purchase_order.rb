@@ -64,7 +64,7 @@ class PurchaseOrder < ApplicationRecord
     return if self.uid.present?
 
     sequence = DocumentSequence.next_sequence('purchase_order', supplier.code)
-    self.uid = "PO-#{supplier.code}-#{sequence.to_s.rjust(5, '0')}"
+    self.uid = "PO-#{supplier.code}-#{sequence.to_s.rjust(4, '0')}"
   end
 
   def set_total

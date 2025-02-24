@@ -38,7 +38,7 @@ module PdfGenerator
         if @document.user&.signature&.attached?
           signature_from_object = @document.user.signature
           signature = StringIO.open(signature_from_object.download)
-          data[1][0] = { image: signature, position: :center, fit: [100, 40] }
+          data[1][0] = { image: signature, position: :center, fit: [100, 35] }
           data[2][0] = @document.user ? "#{@document.user.first_name&.titleize} #{@document.user.last_name&.titleize}" : ""
         end
       rescue ActiveStorage::FileNotFoundError => e
@@ -51,7 +51,7 @@ module PdfGenerator
         if @document.approved? && @document.approver&.signature&.attached?
           approver_signature_from_object = @document.approver.signature
           approver_signature = StringIO.open(approver_signature_from_object.download)
-          data[1][1] = { image: approver_signature, position: :center, fit: [100, 40] }
+          data[1][1] = { image: approver_signature, position: :center, fit: [100, 35] }
           data[2][1] = @document.approver ? "#{@document.approver.first_name&.titleize} #{@document.approver.last_name&.titleize}" : ""
         end
       rescue ActiveStorage::FileNotFoundError => e
@@ -64,10 +64,10 @@ module PdfGenerator
         t.row(0).background_color = "F3F9FF"
         t.row(0).align = :center
         t.row(0).borders = [:bottom, :top, :left, :right]
-        t.row(1).height = 55
+        t.row(1).height = 40
         t.row(1).borders = [:left, :right]
-        t.row(1).padding = [1, 8, 0, 8]
-        t.row(2).padding = [-20, 8, 8, 8]
+        t.row(1).padding = [1, 7, 0, 7]
+        t.row(2).padding = [-18, 7, 7, 7]
         t.row(0).padding = 8
         t.cells.align = :center
         t.cells.border_width = 0.5
@@ -81,11 +81,8 @@ module PdfGenerator
         product_info.values.flatten(1).any? { |supplier| supplier.values.first[3].present? }
       end
 
-      headers = if has_remarks
-        [["Supplier Name", "Unit Price", "Brand", "Terms", "Remarks"]]
-      else
-        [["Supplier Name", "Unit Price", "Brand", "Terms"]]
-      end
+      headers = has_remarks ? [["Supplier Name", "Unit Price", "Brand", "Terms", "Remarks"]]  
+                            : [["Supplier Name", "Unit Price", "Brand", "Terms"]]
 
       @pdf.table(headers, width: @document_width) do |t|
         t.row(0).font_style = :bold
@@ -99,14 +96,20 @@ module PdfGenerator
     end
 
     def draw_product_row(supplier_name, details)
-      data = [
+      has_remarks = @document.suppliers.any? do |product_info|
+        product_info.values.flatten(1).any? { |supplier| supplier.values.first[3].present? }
+      end
+
+      data = has_remarks ? [
         [supplier_name, "PHP #{number_with_precision(details[0].to_f, precision: 2, delimiter: ',')}", details[1], details[2], details[3]]
+      ] : [
+        [supplier_name, "PHP #{number_with_precision(details[0].to_f, precision: 2, delimiter: ',')}", details[1], details[2]]
       ]
       
       @pdf.table(data, width: @document_width) do |t|
         t.cells.padding = 7
         t.cells.borders = [:bottom, :top, :left, :right]
-        apply_column_widths(t)
+        apply_column_widths(t, has_remarks)
         t.column(0).align = :left
         t.columns(1..4).align = :right
         

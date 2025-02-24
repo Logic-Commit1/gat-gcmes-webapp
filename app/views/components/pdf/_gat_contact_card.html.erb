@@ -2,7 +2,7 @@
   <div class="contact-details">
     <p class="flex items-center"><i class="fa-solid fa-location-dot" style="margin-right: 8px;"></i><span><%= document.company.address %></span></p>
     <br>
-    <p class="flex items-center"><i class="fa-solid fa-phone" style="margin-right: 8px;"></i><span>(02) <%= document.company.contact_numbers.join(' | ') %></span></p>
+    <p class="flex items-center"><i class="fa-solid fa-phone" style="margin-right: 8px;"></i><span><%= document.company.contact_numbers.join(' | ') %></span></p>
     <br>
     <p class="flex items-center"><i class="fa-solid fa-envelope" style="margin-right: 8px;"></i><span><%= document.company.emails.join(', ') %></span></p>
   </div>
