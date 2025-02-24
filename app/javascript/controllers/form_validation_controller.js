@@ -618,37 +618,37 @@ export default class extends Controller {
     }
 
     // Validate contacts table
-    if (this.hasContactsTableTarget) {
-      const rows = this.contactsTableTarget.querySelectorAll(
-        'tr:not([data-nested-form-target="target"])'
-      )
+    // if (this.hasContactsTableTarget) {
+    //   const rows = this.contactsTableTarget.querySelectorAll(
+    //     'tr:not([data-nested-form-target="target"])'
+    //   )
 
-      if (rows.length === 0) {
-        event.preventDefault()
-        this.contactsErrorTarget.classList.remove("hidden")
-        isValid = false
-      } else {
-        let hasContactErrors = false
+    //   if (rows.length === 0) {
+    //     event.preventDefault()
+    //     this.contactsErrorTarget.classList.remove("hidden")
+    //     isValid = false
+    //   } else {
+    //     let hasContactErrors = false
 
-        rows.forEach((row) => {
-          const inputs = row.querySelectorAll("input")
-          inputs.forEach((input) => {
-            if (!input.value || input.value.trim() === "") {
-              input.classList.add("field-error")
-              hasContactErrors = true
-            } else {
-              input.classList.remove("field-error")
-            }
-          })
-        })
+    //     rows.forEach((row) => {
+    //       const inputs = row.querySelectorAll("input")
+    //       inputs.forEach((input) => {
+    //         if (!input.value || input.value.trim() === "") {
+    //           input.classList.add("field-error")
+    //           hasContactErrors = true
+    //         } else {
+    //           input.classList.remove("field-error")
+    //         }
+    //       })
+    //     })
 
-        if (hasContactErrors) {
-          event.preventDefault()
-          this.contactsErrorTarget.classList.remove("hidden")
-          isValid = false
-        }
-      }
-    }
+    //     if (hasContactErrors) {
+    //       event.preventDefault()
+    //       this.contactsErrorTarget.classList.remove("hidden")
+    //       isValid = false
+    //     }
+    //   }
+    // }
 
     return isValid
   }
