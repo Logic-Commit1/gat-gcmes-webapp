@@ -32,12 +32,14 @@ class RequestForm < ApplicationRecord
     status_matches = statuses.keys.select { |k| k.include?(query) }
     request_type_matches = request_types.keys.select { |k| k.downcase.include?(query) }
 
-    left_joins(:products)
+    left_joins(:products, :company, :particulars)
     .where(
-      "uid ILIKE :query OR 
-       destination ILIKE :query OR 
-       vehicle ILIKE :query OR
+      "request_forms.uid ILIKE :query OR 
+       request_forms.destination ILIKE :query OR 
+       request_forms.vehicle ILIKE :query OR
        products.name ILIKE :query OR
+       particulars.name ILIKE :query OR
+       companies.code ILIKE :query OR
        status IN (:status_values) OR
        request_type IN (:request_type_values)", 
       query: "%#{query}%",
@@ -53,7 +55,6 @@ class RequestForm < ApplicationRecord
   }
 
   before_save :compute_totals_request_form
-  before_save :set_sequence_id
   before_save :set_uid
 
   def compute_totals_request_form
@@ -67,7 +68,8 @@ class RequestForm < ApplicationRecord
   def set_uid 
     return if self.uid.present?
     form_type = self.Allowance? ? "A" : "O"
-    self.uid = "RFN-#{form_type}F-#{self.sequence_id.to_s.rjust(6, '0')}"
+    sequence = DocumentSequence.next_sequence("RFN-#{form_type}F", company.code)
+    self.uid = "RF-#{form_type}F-#{sequence.to_s.rjust(4, '0')}"
   end
 
   def pdf_path
@@ -80,11 +82,6 @@ class RequestForm < ApplicationRecord
   end
 
   private
-  def set_sequence_id
-    sequence_record = RequestFormSequence.find_or_create_by(request_type: request_type)
-    self.sequence_id = sequence_record.last_sequence.to_i + 1
-    sequence_record.update(last_sequence: self.sequence_id)
-  end
 
   def compute_total
     if products.present?

@@ -28,10 +28,11 @@ class PurchaseOrder < ApplicationRecord
     query = query.downcase
     status_matches = statuses.keys.select { |k| k.include?(query) }
     terms_matches = terms.keys.select { |k| k.downcase.include?(query) }
-    joins(:supplier, :products).where(
+    joins(:supplier, :products, :company).where(
       "purchase_orders.uid ILIKE :query OR 
        suppliers.name ILIKE :query OR
        products.name ILIKE :query OR
+       companies.code ILIKE :query OR
        purchase_orders.status IN (:status_values) OR
        purchase_orders.terms IN (:terms_values)", 
       query: "%#{query}%",
@@ -62,11 +63,8 @@ class PurchaseOrder < ApplicationRecord
   def set_uid
     return if self.uid.present?
 
-    company_code = self.company.code
-    supplier_code = self.supplier.code
-    sequence = DocumentSequence.next_sequence('purchase_order', supplier_code)
-    
-    self.uid = "#{company_code}-#{supplier_code}-#{sequence.to_s.rjust(5, '0')}"
+    sequence = DocumentSequence.next_sequence('purchase_order', supplier.code)
+    self.uid = "PO-#{supplier.code}-#{sequence.to_s.rjust(5, '0')}"
   end
 
   def set_total

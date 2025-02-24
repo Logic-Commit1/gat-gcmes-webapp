@@ -1,1 +1,1 @@
-ENV['MODERATOR_EMAILS'] = 'admin@goldenchain.ph'  unless Rails.env.production?
+# ENV['MODERATOR_EMAILS'] = 'admin@goldenchain.ph'  unless Rails.env.production?

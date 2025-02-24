@@ -53,7 +53,7 @@
       <%end%>
     <% else %>
       <% if document.user == current_user %>
-        <% if document.class.name != "Project" %>
+        <% if document.class.name != "Project" && document.pending? %>
           <%= button_to send("edit_#{document.class.name.underscore}_path", document), 
                   method: :get, 
                 class: "button black flex items-center white-bg",

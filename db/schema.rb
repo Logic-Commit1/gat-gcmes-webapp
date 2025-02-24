@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_18_131841) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_24_104812) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -278,13 +278,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_18_131841) do
     t.index ["user_id"], name: "index_quotations_on_user_id"
   end
 
-  create_table "request_form_sequences", force: :cascade do |t|
-    t.string "request_type"
-    t.integer "last_sequence"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "request_forms", force: :cascade do |t|
     t.string "uid"
     t.integer "request_type"
@@ -308,7 +301,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_18_131841) do
     t.datetime "updated_at", null: false
     t.datetime "start_travel_date"
     t.datetime "end_travel_date"
-    t.integer "sequence_id"
     t.datetime "deleted_at"
     t.integer "status", default: 0
     t.bigint "user_id"

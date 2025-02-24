@@ -15,11 +15,11 @@
     <% when "Employees" %>
       <%= link_to '<i class="fas fa-user-plus"></i> Whitelist Employee'.html_safe, new_employee_path, class: 'button' %>
     <% when "Clients" %>
-      <% if current_user.sales? %>
+      <% unless current_user.sales? %>
         <%= link_to '<i class="fas fa-plus"></i> Create New Client'.html_safe, new_client_path, class: 'button' %>
       <% end %>
     <% when "Suppliers" %>
-      <% if current_user.purchasing? %>
+      <% unless current_user.purchasing? %>
         <%= link_to '<i class="fas fa-plus"></i> Create New Supplier'.html_safe, new_supplier_path, class: 'button' %>
       <% end %>
     <% when "Quotations" %>

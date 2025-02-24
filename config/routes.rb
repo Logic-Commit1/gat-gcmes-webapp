@@ -64,7 +64,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :suppliers
+  resources :suppliers do
+    member do
+      delete :destroy
+    end
+    get 'check_code', on: :collection
+  end
   resources :products
   resources :specs
   resources :quotations do

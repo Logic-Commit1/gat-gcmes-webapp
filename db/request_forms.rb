@@ -6,10 +6,10 @@ end
 # Get necessary records
 gat = Company.find_by(code: "GAT")
 
-user = User.find_by(email: "purchasing@goldenchain.ph")
-manager = User.find_by(email: "manager@goldenchain.ph")
-checker = User.find_by(email: "checker@goldenchain.ph")
-procurer = User.find_by(email: "procurer@goldenchain.ph")
+user = User.find_by(email: "purchasing@goldenchain.com.ph")
+manager = User.find_by(email: "manager@goldenchain.com.ph")
+checker = User.find_by(email: "checker@goldenchain.com.ph")
+procurer = User.find_by(email: "procurer@goldenchain.com.ph")
 
 def set_approval_details(request_form, created_at, manager)
   request_form.update_columns(

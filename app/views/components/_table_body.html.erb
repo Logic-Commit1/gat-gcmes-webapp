@@ -6,32 +6,36 @@
     <thead>
       <tr>
         <% if title == "Quotations" %>
+          <th style="width: 6%;">Company</th>
           <th style="width: 10%;">Reference Number</th>
           <th style="width: 20%;">Subject</th>
           <th style="width: 10%;">Amount</th>
           <th style="width: 10%;">Date</th>
           <th style="width: 7%;">Status</th>
         <% elsif title == "Canvasses" %>
+          <th style="width: 6%;">Company</th>
           <th style="width: 10%;">Reference Number</th>
-          <%# <th style="width: 10%;">Project</th> %>
           <th style="width: 30%;">Item</th>
           <th style="width: 10%;">Date</th>
           <th style="width: 7%;">Status</th>
         <% elsif title == "Request Forms" %>
+          <th style="width: 6%;">Company</th>
           <th style="width: 10%;">Reference Number</th>
           <th style="width: 20%;">Item</th>
           <th style="width: 10%;">Amount</th>
           <th style="width: 10%;">Date</th>
           <th style="width: 7%;">Status</th>
         <% elsif title == "Purchase Orders" %>
+          <th style="width: 6%;">Company</th>
           <th style="width: 10%;">Reference Number</th>
           <th style="width: 20%;">Item</th>
           <th style="width: 10%;">Amount</th>
-          <th style="width: 10%;">Date</th>
+          <th style="width: 10%;">Date</th> 
           <th style="width: 7%;">Status</th>
         <% elsif title == "Projects" %>
+          <th style="width: 6%;">Company</th>
           <th style="width: 10%;">Reference Number</th>
-          <th style="width: 20%;">Client</th>
+          <th style="width: 20%;">P.O. Number</th>
           <th style="width: 10%;">Amount</th>
           <th style="width: 10%;">Date</th>
           <th style="width: 7%;">Status</th>
@@ -47,20 +51,21 @@
           <th>Department</th>
           <th>Creation Date</th>
         <% elsif title == "Suppliers" %>
+          <th style="width: 10%;">Company</th>
           <th style="width: 25%;">Name</th>
           <th style="width: 10%;">Code</th>
           <th style="width: 35%;">Address</th>
-          <%# <th style="width: 10%;">Creation Date</th> %>
         <% elsif title == "Clients" %>
+          <th style="width: 10%;">Company</th>
           <th style="width: 25%;">Name</th>
           <th style="width: 10%;">Code</th>
           <th style="width: 35%;">Address</th>
-          <%# <th style="width: 10%;">Creation Date</th> %>
         <% elsif title == "Voided Documents" %>
-          <th>Document Type</th>
-          <th>Reference Number</th>
-          <th>Deleted At</th>
-          <th>Deleted By</th>
+          <th style="width: 10%;">Company</th>
+          <th style="width: 20%;">Document Type</th>
+          <th style="width: 20%;">Reference Number</th>
+          <th style="width: 20%;">Deleted At</th>
+          <th style="width: 20%;">Deleted By</th>
         <% end %>
       </tr>
     </thead>
@@ -70,18 +75,19 @@
       <% if title == "Quotations" %>
         <% documents&.each do |quotation| %>
           <tr onclick="window.location='<%= quotation_path(quotation) %>'" style="cursor: pointer">
+            <td style="width: 6%;"><%= quotation.company.code %></td>
             <td style="width: 10%;"><%= quotation.uid %></td>
             <td style="width: 20%;"><%= quotation.subject %></td>
             <td style="width: 10%;"><%= number_to_currency(quotation.total, unit: "₱ ") %></td>
-            <td style="width: 10%;"><%= quotation.created_at.strftime("%B %d, %Y") %></td>
+            <td style="width: 10%;"><%= quotation.created_at.strftime("%d %b %Y") %></td>
             <td style="width: 7%; text-align: center;"><span class="status <%= quotation.status %>"><%= quotation.status.capitalize %></span></td>
           </tr>
         <% end %>
       <% elsif title == "Request Forms" %>
         <% documents&.each do |form| %>
           <tr onclick="window.location='<%= request_form_path(form) %>'" style="cursor: pointer">
+            <td style="width: 6%;"><%= form.company.code %></td>
             <td style="width: 10%;"><%= form.uid %></td>
-            
             <td style="width: 20%;"><%= (form.products.any? ? form.products.map(&:name).join(", ") : (form.particulars&.any? ? form.particulars.map(&:name).join(", ") : "")) %></td>
             <td style="width: 10%;"><%= number_to_currency(form.total, unit: "₱ ") %></td>
             <td style="width: 10%;"><%= form.created_at.strftime("%B %d, %Y") %></td>
@@ -91,8 +97,8 @@
       <% elsif title == "Canvasses" %>
         <% documents&.each do |canvass| %>
           <tr onclick="window.location='<%= canvass_path(canvass) %>'" style="cursor: pointer">
+            <td style="width: 6%;"><%= canvass.company.code %></td>
             <td style="width: 10%;"><%= canvass.uid %></td>
-            <%# <td style="width: 10%;"><%= canvass.project&.uid %>
             <td style="width: 30%;"><%= canvass.description %></td>
             <td style="width: 10%;"><%= canvass.created_at.strftime("%B %d, %Y") %></td>
             <td style="width: 7%; text-align: center;"><span class="status <%= canvass.status %>"><%= canvass.status.capitalize %></span></td>
@@ -101,7 +107,8 @@
       <% elsif title == "Purchase Orders" %>
         <% documents&.each do |po| %>
           <tr onclick="window.location='<%= purchase_order_path(po) %>'" style="cursor: pointer">
-            <td style="width: 10%;"><%= po&.uid %></td>
+            <td style="width: 6%;"><%= po.company.code %></td>
+            <td style="width: 10%;"><%= po.uid %></td>
             <td style="width: 20%;"><%= po.products.map(&:name).join(", ") %></td>
             <td style="width: 10%;"><%= number_to_currency(po.total, unit: "₱ ") %></td>
             <td style="width: 10%;"><%= po.created_at.strftime("%B %d, %Y") %></td>
@@ -111,8 +118,9 @@
       <% elsif title == "Projects" %>
         <% documents&.each do |project| %>
           <tr onclick="window.location='<%= project_path(project) %>'" style="cursor: pointer">
-            <td style="width: 10%;"><%= project&.uid %></td>
-            <td style="width: 20%;"><%= project&.client&.name %></td>
+            <td style="width: 6%;"><%= project.company.code %></td>
+            <td style="width: 10%;"><%= project.uid %></td>
+            <td style="width: 20%;"><%= project.po_number %></td>
             <td style="width: 10%;"><%= number_to_currency(project&.amount, unit: "₱ ") %></td>
             <td style="width: 10%;"><%= project&.created_at&.strftime("%B %d, %Y") %></td>
             <td style="width: 7%; text-align: center;"><span class="status <%= project.status&.downcase %>"><%= project.status&.capitalize %></span></td>
@@ -157,28 +165,29 @@
       <% elsif title == "Suppliers" %>
         <% documents&.each do |supplier| %>
           <tr onclick="window.location='<%= supplier_path(supplier) %>'" style="cursor: pointer">
+            <td style="width: 10%;"><%= supplier.company.code %></td>
             <td style="width: 25%;"><%= supplier.name %></td>
             <td style="width: 10%;"><%= supplier.code %></td>
             <td style="width: 35%;"><%= supplier.address %></td>
-            <%# <td style="width: 10%;"><%= supplier.created_at.strftime("%B %d, %Y") %>
           </tr>
         <% end %>
       <% elsif title == "Clients" %>
         <% documents&.each do |client| %>
           <tr onclick="window.location='<%= client_path(client) %>'" style="cursor: pointer">
+            <td style="width: 10%;"><%= client.company.code %></td>
             <td style="width: 25%;"><%= client.name %></td>
             <td style="width: 10%;"><%= client.code %></td>
             <td style="width: 35%;"><%= client.address %></td>
-            <%# <td style="width: 10%;"><%= client.created_at.strftime("%B %d, %Y") %>
           </tr>
         <% end %>
       <% elsif title == "Voided Documents" %>
         <% documents&.each do |document| %>
           <tr onclick="window.location='<%= polymorphic_path(document) %>'" style="cursor: pointer">
-            <td><%= document.class.name.underscore.titleize %></td>
-            <td><%= document.uid %></td>
-            <td><%= document.deleted_at.strftime("%b %d, %Y - %I:%M %p") %></td>
-            <td><%= document.deleted_by&.full_name %></td>
+            <td style="width: 10%;"><%= document.company.code %></td>
+            <td style="width: 20%;"><%= document.class.name.underscore.titleize %></td>
+            <td style="width: 20%;"><%= document.uid %></td>
+            <td style="width: 20%;"><%= document.deleted_at.strftime("%b %d, %Y - %I:%M %p") %></td>
+            <td style="width: 20%;"><%= document.deleted_by&.full_name %></td>
           </tr>
         <% end %>
       <% end %>

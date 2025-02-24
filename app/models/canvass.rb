@@ -27,13 +27,15 @@ class Canvass < ApplicationRecord
     query = query.downcase
     status_matches = statuses.keys.select { |k| k.include?(query) }
 
-    where(
-      "uid ILIKE :query OR 
-       description ILIKE :query OR
-       status IN (:status_values)", 
-      query: "%#{query}%",
-      status_values: status_matches.map { |k| statuses[k] }
-    )
+    left_joins(:company)
+      .where(
+        "canvasses.uid ILIKE :query OR 
+         canvasses.description ILIKE :query OR
+         canvasses.status IN (:status_values) OR
+         companies.code ILIKE :query", 
+        query: "%#{query}%",
+        status_values: status_matches.map { |k| statuses[k] }
+      )
   }
 
   scope :created_on_date, ->(date) {
@@ -47,10 +49,9 @@ class Canvass < ApplicationRecord
 
   def set_uid 
     return if self.uid.present?
-    company_code = self.company.code
     year_str = Time.now.year.to_s[2, 2]
-    sequence = DocumentSequence.next_sequence('canvass', company_code)
-    self.uid = "#{company_code}-CAN-#{year_str}-#{sequence.to_s.rjust(3, '0')}"
+    sequence = DocumentSequence.next_sequence('canvass', company.code)
+    self.uid = "CAN-#{year_str}-#{sequence.to_s.rjust(3, '0')}"
   end
 
   def should_update_suppliers?

@@ -10,8 +10,8 @@ client_span = Client.find_by(code: "SPAN")
 client_lsc = Client.find_by(code: "LSC")
 client_fsc = Client.find_by(code: "FSC")
 
-user = User.find_by(email: "purchasing@goldenchain.ph")
-manager = User.find_by(email: "manager@goldenchain.ph")
+user = User.find_by(email: "purchasing@goldenchain.com.ph")
+manager = User.find_by(email: "manager@goldenchain.com.ph")
 
 
 # Helper method to calculate total amount from quotations

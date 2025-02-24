@@ -45,7 +45,8 @@ class VoidedDocumentsController < ApplicationController
       filtered = filtered.select do |doc|
         doc.uid.downcase.include?(search_term) ||
         doc.class.name.downcase.include?(search_term) ||
-        doc.deleted_by&.full_name&.downcase.include?(search_term)
+        doc.deleted_by&.full_name&.downcase.include?(search_term) ||
+        (doc.respond_to?(:company) && doc.company.code.downcase.include?(search_term))
       end
     end
 

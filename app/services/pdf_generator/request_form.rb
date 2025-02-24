@@ -11,7 +11,7 @@ module PdfGenerator
     def specific_sub_header
       @pdf.table([
         [
-          { content: "<b>Project:</b> #{@document.project.uid}", borders: [], inline_format: true, padding: 0 },
+          { content: "<b>Project:</b> #{@document.project&.uid}", borders: [], inline_format: true, padding: 0 },
           { content: "<b>Date Requested:</b> #{@document.created_at.strftime("%B %d, %Y")}", borders: [], inline_format: true, align: :right, padding: 0 }
         ]
       ], width: @document_width)
@@ -21,8 +21,7 @@ module PdfGenerator
 
     def travel_details
 
-      if @document.start_travel_date.present? && @document.end_travel_date.present?
-        travel_date = "#{@document.start_travel_date.strftime("%B %d")} to #{@document.end_travel_date.strftime("%B %d")}"
+      travel_date = "#{@document.start_travel_date.strftime("%B %d")} to #{@document.end_travel_date.strftime("%B %d")}" if @document.start_travel_date.present? && @document.end_travel_date.present?
         
 
         # @pdf.table([
@@ -37,7 +36,6 @@ module PdfGenerator
         @pdf.text "<b>Destination:</b> #{@document.destination}", align: :left, inline_format: true
         @pdf.move_down 5
         @pdf.text "<b>Vehicle:</b> #{@document.vehicle}", align: :left, inline_format: true
-      end
 
       if @document.Allowance?
         balance_table
@@ -104,16 +102,16 @@ module PdfGenerator
       @pdf.move_down 10
       @pdf.table(headers + [[
         @document.remarks,
-        @document.fuel_gauge ? "PHP #{number_with_precision(@document.fuel_gauge, precision: 2, delimiter: ',')}" : "",
-        @document.easy_trip_balance ? "PHP #{number_with_precision(@document.easy_trip_balance, precision: 2, delimiter: ',')}" : "",
-        @document.sweep_balance ? "PHP #{number_with_precision(@document.sweep_balance, precision: 2, delimiter: ',')}" : ""
+        @document.fuel_gauge.present? ? "PHP #{number_with_precision(@document.fuel_gauge, precision: 2, delimiter: ',')}" : "",
+        @document.easy_trip_balance.present? ? "PHP #{number_with_precision(@document.easy_trip_balance, precision: 2, delimiter: ',')}" : "",
+        @document.sweep_balance.present? ? "PHP #{number_with_precision(@document.sweep_balance, precision: 2, delimiter: ',')}" : ""
       ]], width: @document_width) do |t|
         t.row(0).font_style = :bold
         t.row(0).background_color = "F3F9FF"
         t.cells.padding = 7
         t.cells.border_width = 0.5
         t.cells.borders = [:bottom, :top, :left, :right]
-        t.columns(1..3).align = :right
+        t.columns(0..3).align = :center
       end
     end
 
@@ -190,8 +188,8 @@ module PdfGenerator
         t.cells.padding = 7
         t.cells.border_width = 0.5
         t.row(1).height = 55
-        t.row(1).padding = [1, 7, 0, 7]
-        t.row(2).padding = [-20, 7, 7, 7]
+        t.row(1).padding = [3, 7, 0, 7]
+        t.row(2).padding = [-25, 7, 7, 7]
         apply_signatures_column_widths(t)
       end
     end

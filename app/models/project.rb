@@ -28,13 +28,14 @@ class Project < ApplicationRecord
     status_matches = statuses.keys.select { |k| k.downcase.include?(query) }
     payment_matches = payments.keys.select { |k| k.downcase.include?(query) }
 
-    left_joins(:quotations, :client)
+    left_joins(:quotations, :client, :company)
       .where(
         "projects.uid ILIKE :query OR 
          projects.po_number ILIKE :query OR 
          projects.supervisor ILIKE :query OR
          clients.name ILIKE :query OR
          quotations.vessel ILIKE :query OR
+         companies.code ILIKE :query OR
          projects.status IN (:status_values) OR
          projects.sales_invoice ILIKE :query OR
          projects.payment IN (:payment_values)", 
@@ -60,9 +61,9 @@ class Project < ApplicationRecord
     return if self.uid.present?
 
     company_code = self.company.code
-    year_str = Time.now.year
+    year_str = Time.now.year.to_s[2, 2]
     sequence = DocumentSequence.next_sequence('project', company_code)
-    self.uid = "#{company_code}-PROJ-#{year_str}-#{sequence.to_s.rjust(4, '0')}"
+    self.uid = "PROJ-#{year_str}-#{sequence.to_s.rjust(4, '0')}"
   end
    
   def gat?

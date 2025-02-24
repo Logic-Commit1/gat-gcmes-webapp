@@ -1,7 +1,8 @@
-<p style="display: inline-block;"><strong>Project:</strong> <%= request_form.project&.uid %></p>
-<p style="display: inline-block; margin-left: 30px;"><strong>Vehicle:</strong> <%= request_form.vehicle %></p>
-</p>
-<table style="margin-bottom: 20px;">
+<div class="flex space-between items-center">
+  <p><strong>Project:</strong> <%= request_form.project&.uid %></p>
+  <p><strong>Date Requested:</strong> <%= request_form.created_at.strftime("%B %d, %Y") %></p>
+</div>
+<table style="margin-bottom: 10px;">
   <thead>
     <tr>
       <th style="width: 5%">SN</th>
@@ -21,21 +22,25 @@
     </tbody>
   <% end %>
   <tr>
-    <td class="no-border"></td>
+    <td class=""></td>
     <td>Total</td>
     <td class="align-right">PHP <%= number_with_precision(request_form.total, precision: 2, delimiter: ',') %></td>
     <td class="no-border"></td>
   </tr>
 </table>
-<p style="display: inline-block;">
+<p style="margin-bottom: 5px;">
   <strong>Travel Date:</strong>
   <% if request_form.start_travel_date.present? && request_form.end_travel_date.present? %>
     <%= request_form.start_travel_date&.strftime("%B %d") %> to <%= request_form.end_travel_date&.strftime("%B %d") %>
   <% end %>
 </p>
-<p style="display: inline-block; margin-left: 30px;">
+<p style="margin-bottom: 5px;">
   <strong>Destination:</strong>
   <%= request_form.destination %>
+</p>
+<p style="margin-bottom: 5px;">
+  <strong>Vehicle:</strong>
+  <%= request_form.vehicle %>
 </p>
 <table class="balance-table">
   <thead>

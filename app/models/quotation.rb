@@ -37,13 +37,14 @@ class Quotation < ApplicationRecord
     status_matches = statuses.keys.select { |k| k.include?(query) }
     payment_matches = payments.keys.select { |k| k.downcase.include?(query) }
 
-    left_joins(:products)
+    left_joins(:products, :company)
       .where(
         "quotations.uid ILIKE :query OR 
          quotations.subject ILIKE :query OR
          products.name ILIKE :query OR
          quotations.status IN (:status_values) OR
-         quotations.payment IN (:payment_values)", 
+         quotations.payment IN (:payment_values) OR
+         companies.code ILIKE :query", 
         query: "%#{query}%",
         status_values: status_matches.map { |k| statuses[k] },
         payment_values: payment_matches.map { |k| payments[k] }

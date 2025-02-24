@@ -35,6 +35,14 @@ class SuppliersController < ApplicationController
   def edit
   end
 
+  # Check if code exists
+  def check_code
+    exists = Supplier.where.not(id: params[:id])
+                  .where("LOWER(code) = LOWER(?)", params[:code])
+                  .exists?
+    render json: { exists: exists }
+  end
+
   # POST /suppliers or /suppliers.json
   def create
     @supplier = Supplier.new(supplier_params)

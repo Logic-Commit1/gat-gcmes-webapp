@@ -13,8 +13,8 @@ supplier_asi = Supplier.find_by(code: "ASI")
 supplier_span = Supplier.find_by(code: "SPAN")
 supplier_lsc = Supplier.find_by(code: "LSC")
 
-user = User.find_by(email: "purchasing@goldenchain.ph")
-manager = User.find_by(email: "manager@goldenchain.ph")
+user = User.find_by(email: "purchasing@goldenchain.com.ph")
+manager = User.find_by(email: "manager@goldenchain.com.ph")
 
 def set_approval_details(purchase_order, created_at, manager)
   purchase_order.update_columns(

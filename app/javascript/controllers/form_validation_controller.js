@@ -570,4 +570,86 @@ export default class extends Controller {
 
     return isValid
   }
+
+  validateSupplierForm(event) {
+    this.clearErrors()
+    let isValid = true
+
+    // Check inline validation state first
+    if (!this.inlineValidationValid) {
+      event.preventDefault()
+      isValid = false
+    }
+
+    // Validate company selection
+    if (this.hasCompanySelectTarget) {
+      const selectedCompany = this.element.querySelector(
+        'input[name="supplier[company_id]"]:checked'
+      )
+      if (!selectedCompany) {
+        event.preventDefault()
+        this.companyErrorTarget.classList.remove("hidden")
+        isValid = false
+      }
+    }
+
+    // Validate name
+    if (this.hasNameInputTarget && !this.nameInputTarget.value.trim()) {
+      event.preventDefault()
+      this.nameInputTarget.classList.add("field-error")
+      this.nameErrorTarget.classList.remove("hidden")
+      isValid = false
+    }
+
+    // Validate code
+    if (this.hasCodeInputTarget && !this.codeInputTarget.value.trim()) {
+      event.preventDefault()
+      this.codeInputTarget.classList.add("field-error")
+      this.codeErrorTarget.classList.remove("hidden")
+      isValid = false
+    }
+
+    // Validate address
+    if (this.hasAddressInputTarget && !this.addressInputTarget.value.trim()) {
+      event.preventDefault()
+      this.addressInputTarget.classList.add("field-error")
+      this.addressErrorTarget.classList.remove("hidden")
+      isValid = false
+    }
+
+    // Validate contacts table
+    if (this.hasContactsTableTarget) {
+      const rows = this.contactsTableTarget.querySelectorAll(
+        'tr:not([data-nested-form-target="target"])'
+      )
+
+      if (rows.length === 0) {
+        event.preventDefault()
+        this.contactsErrorTarget.classList.remove("hidden")
+        isValid = false
+      } else {
+        let hasContactErrors = false
+
+        rows.forEach((row) => {
+          const inputs = row.querySelectorAll("input")
+          inputs.forEach((input) => {
+            if (!input.value || input.value.trim() === "") {
+              input.classList.add("field-error")
+              hasContactErrors = true
+            } else {
+              input.classList.remove("field-error")
+            }
+          })
+        })
+
+        if (hasContactErrors) {
+          event.preventDefault()
+          this.contactsErrorTarget.classList.remove("hidden")
+          isValid = false
+        }
+      }
+    }
+
+    return isValid
+  }
 }
