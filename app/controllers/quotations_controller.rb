@@ -5,7 +5,7 @@ class QuotationsController < ApplicationController
 
   layout 'pdf', only: :pdf_view
   before_action :set_quotation, only: %i[ show edit update void approve pending reject pdf_view download_pdf print_pdf ]
-  before_action :check_user_has_signature, only: %i[ new create edit update ]
+  before_action :check_user_has_signature, only: %i[ show pdf_view new create edit update ]
   before_action :set_resource_for_pdf, only: %i[ download_pdf print_pdf ]
 
   # GET /quotations or /quotations.json

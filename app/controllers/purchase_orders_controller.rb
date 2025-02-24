@@ -5,7 +5,7 @@ class PurchaseOrdersController < ApplicationController
   
   layout 'pdf', only: :pdf_view
   before_action :set_purchase_order, only: %i[ show edit update approve pending reject void pdf_view download_pdf print_pdf ]
-  before_action :check_user_has_signature, only: %i[ new create edit update ]
+  before_action :check_user_has_signature, only: %i[ show pdf_view new create edit update ]
   before_action :set_resource_for_pdf, only: %i[ download_pdf print_pdf ]
 
   # GET /purchase_orders or /purchase_orders.json
