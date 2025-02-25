@@ -1,6 +1,36 @@
 <!-- Landing Page -->
-<div class="page">
-  <p class="title"><%= title unless title == "Voided Documents" %></p>
+<div class="index-page page">
+  <div class="page-header flex space-between">
+    <div>
+      <p class="title"><%= title unless title == "Voided Documents" %></p>
+    </div>
+    <div class="flex space-between baseline">
+      <div class="button-container">
+        <% case title %>
+        <% when "Employees" %>
+          <%= link_to '<i class="fas fa-user-plus"></i> Whitelist Employee'.html_safe, new_employee_path, class: 'button' %>
+        <% when "Clients" %>
+          <% if current_user.sales? || current_user.developer? %>
+            <%= link_to '<i class="fas fa-plus"></i> Create New Client'.html_safe, new_client_path, class: 'button' %>
+          <% end %>
+        <% when "Suppliers" %>
+          <% if current_user.purchasing? || current_user.developer? %>
+            <%= link_to '<i class="fas fa-plus"></i> Create New Supplier'.html_safe, new_supplier_path, class: 'button' %>
+          <% end %>
+        <% when "Quotations" %>
+          <%= link_to '<i class="fas fa-plus"></i> Create New Quotation'.html_safe, new_quotation_path, class: 'button' %>
+        <% when "Purchase Orders" %>
+          <%= link_to '<i class="fas fa-plus"></i> Create New Purchase Order'.html_safe, new_purchase_order_path, class: 'button' %>
+        <% when "Projects" %>
+          <%= link_to '<i class="fas fa-plus"></i> Create New Project'.html_safe, new_project_path, class: 'button' %>
+        <% when "Canvasses" %>
+          <%= link_to '<i class="fas fa-plus"></i> Create New Canvass'.html_safe, new_canvass_path, class: 'button' %>
+        <% when "Request Forms" %>
+          <%= link_to '<i class="fas fa-plus"></i> Create New Request Form'.html_safe, new_request_form_path, class: 'button' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
   <!-- Dashboard Cards -->
   <%# if ["Employees", "Clients", "Suppliers"].include?(title) %>
   <%# <div id="counts" class="row"> %>
@@ -10,30 +40,6 @@
   <%#= render "components/count", type: "quotations", value: "64,723", percentage: "+2.5%" %>
   <%# </div> %>
   <%# end %>
-  <div class="button-container">
-    <% case title %>
-    <% when "Employees" %>
-      <%= link_to '<i class="fas fa-user-plus"></i> Whitelist Employee'.html_safe, new_employee_path, class: 'button' %>
-    <% when "Clients" %>
-      <% if current_user.sales? || current_user.developer? %>
-        <%= link_to '<i class="fas fa-plus"></i> Create New Client'.html_safe, new_client_path, class: 'button' %>
-      <% end %>
-    <% when "Suppliers" %>
-      <% if current_user.purchasing? || current_user.developer? %>
-        <%= link_to '<i class="fas fa-plus"></i> Create New Supplier'.html_safe, new_supplier_path, class: 'button' %>
-      <% end %>
-    <% when "Quotations" %>
-      <%= link_to '<i class="fas fa-plus"></i> Create New Quotation'.html_safe, new_quotation_path, class: 'button' %>
-    <% when "Purchase Orders" %>
-      <%= link_to '<i class="fas fa-plus"></i> Create New Purchase Order'.html_safe, new_purchase_order_path, class: 'button' %>
-    <% when "Projects" %>
-      <%= link_to '<i class="fas fa-plus"></i> Create New Project'.html_safe, new_project_path, class: 'button' %>
-    <% when "Canvasses" %>
-      <%= link_to '<i class="fas fa-plus"></i> Create New Canvass'.html_safe, new_canvass_path, class: 'button' %>
-    <% when "Request Forms" %>
-      <%= link_to '<i class="fas fa-plus"></i> Create New Request Form'.html_safe, new_request_form_path, class: 'button' %>
-    <% end %>
-  </div>
   <!-- Request Forms Table -->
   <%= render "components/table", title: title, documents: documents %>
 </div>

@@ -1,32 +1,30 @@
 <!-- Table Container -->
-<div class="document-container" 
-  data-controller="table-filter flatpickr"
-  data-table-filter-url-value="<%= request.path %>">
+<div class="document-container" >
   <div class="header">
-    <p id="title"><%= title %></p>
-    <div class="search-bar">
-      <%# unless title == "Employees" || title == "Suppliers" || title == "Clients" %>
-      <div class="relative">
-        <input type="text" 
+    <div class="flex space-between flex-end" style="margin-bottom: 12px;"  data-controller="table-filter flatpickr" data-table-filter-url-value="<%= request.path %>">
+      <div class="pagination">
+        <%== pagy_nav(@pagy) if @pagy.present? && @pagy.pages > 1 %>
+      </div>
+      <div class="search-bar">
+        <div class="relative">
+          <input type="text" 
             class="date-picker-input"
             placeholder="mm/dd/yy" 
             data-table-filter-target="dateInput"
             data-flatpickr-target="dateInput"
             data-action="change->table-filter#filter" />
-        <%# <div class="date-input-icons"> %>
-        <i class="fa-regular fa-calendar"></i>
-        <%# </div> %>
-        <span class="clear-date-btn" 
+          <i class="fa-regular fa-calendar"></i>
+          <span class="clear-date-btn" 
              data-action="click->table-filter#clearDate"
-          data-flatpickr-target="clearDateBtn"
-          data-table-filter-target="clearDateBtn"
-          title="Clear date">Clear Filter</span>
-      </div>
-      <%# end %>
-      <input type="text" 
+            data-flatpickr-target="clearDateBtn"
+            data-table-filter-target="clearDateBtn"
+            title="Clear date">Clear Filter</span>
+        </div>
+        <input type="text" 
         placeholder="Search..." 
         data-table-filter-target="searchInput"
         data-action="input->table-filter#search" />
+      </div>
     </div>
   </div>
   <%= render "components/table_body", documents: documents, title: title %>

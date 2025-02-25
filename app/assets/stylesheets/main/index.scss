@@ -1,0 +1,78 @@
+.index-page {
+  .page-header {
+    // margin-bottom: 24px;
+  }
+
+  .search-bar {
+    // margin-bottom: 12px;
+    // margin-right: var(--card-padding);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .relative {
+      position: relative;
+      display: inline-block;
+
+      input {
+        padding-right: 35px; // Make room for the calendar icon
+      }
+
+      .fa-calendar {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+        pointer-events: none;
+      }
+
+      .clear-date-btn {
+        position: absolute;
+        display: none;
+        left: 10px;
+        bottom: -25px;
+        color: #666;
+        cursor: pointer;
+        text-decoration: underline;
+        font-size: 14px;
+      }
+
+      .clear-date-btn:hover {
+        color: #000;
+      }
+    }
+
+    input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      max-width: 160px;
+      display: inline-block;
+      font-size: 13px;
+
+      &::placeholder {
+        color: #999;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: #22417b;
+        box-shadow: 0 0 0 2px rgba(34, 65, 123, 0.1);
+      }
+    }
+
+    button {
+      padding: 10px 15px;
+      background-color: #22417b;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken(#22417b, 10%);
+      }
+    }
+  }
+}
