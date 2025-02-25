@@ -4,38 +4,35 @@
   }
 
   .search-bar {
-    // margin-bottom: 12px;
-    // margin-right: var(--card-padding);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
     .relative {
       position: relative;
-      display: inline-block;
+      display: flex;
+      align-items: center;
+      gap: 12px;
 
-      input {
-        padding-right: 35px; // Make room for the calendar icon
-      }
+      // input {
+      //   padding-right: 35px; // Make room for the calendar icon
+      // }
 
       .fa-calendar {
+        font-size: 13px;
         position: absolute;
         right: 10px;
         top: 50%;
         transform: translateY(-50%);
-        color: #666;
+        color: #b3b3b3;
         pointer-events: none;
       }
 
       .clear-date-btn {
         position: absolute;
         display: none;
-        left: 10px;
-        bottom: -25px;
+        left: -70px;
+        bottom: 12px;
         color: #666;
         cursor: pointer;
         text-decoration: underline;
-        font-size: 14px;
+        font-size: 12px;
       }
 
       .clear-date-btn:hover {
