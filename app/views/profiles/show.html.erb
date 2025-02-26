@@ -1,71 +1,73 @@
-<div class="profile-container">
-  <div class="profile-header">
-    <h1>My Profile</h1>
-  </div>
-  <div class="profile-content">
-    <div>
-      <!-- Personal Information Section -->
-      <div class="profile-section">
-        <div class="profile-field">
-          <label>Name:</label>
-          <p><%= current_user.first_name.titleize %> <%= current_user.last_name.titleize %></p>
+<div class="page">
+  <div class="profile-container">
+    <div class="profile-header">
+      <h1>My Profile</h1>
+    </div>
+    <div class="profile-content">
+      <div>
+        <!-- Personal Information Section -->
+        <div class="profile-section">
+          <div class="profile-field">
+            <label>Name:</label>
+            <p><%= current_user.first_name.titleize %> <%= current_user.last_name.titleize %></p>
+          </div>
+          <div class="profile-field">
+            <label>Email:</label>
+            <p><%= current_user.email %></p>
+          </div>
+          <div class="profile-field">
+            <label>Mobile Number:</label>
+            <p><%= current_user.mobile_number&.gsub(/(\d{4})(\d{3})(\d{4})/, '\1 \2 \3') %></p>
+          </div>
         </div>
-        <div class="profile-field">
-          <label>Email:</label>
-          <p><%= current_user.email %></p>
+        <!-- Employment Details Section -->
+        <div class="profile-section">
+          <div class="profile-field">
+            <label>Position:</label>
+            <p><%= current_user.position&.titleize || 'n/a' %></p>
+          </div>
+          <div class="profile-field">
+            <label>Department:</label>
+            <p><%= current_user.department&.humanize&.titleize || 'n/a' %></p>
+          </div>
+          <div class="profile-field">
+            <label>Member Since:</label>
+            <p><%= current_user.created_at.strftime("%B %d, %Y") %></p>
+          </div>
         </div>
-        <div class="profile-field">
-          <label>Mobile Number:</label>
-          <p><%= current_user.mobile_number&.gsub(/(\d{4})(\d{3})(\d{4})/, '\1 \2 \3') %></p>
-        </div>
-      </div>
-      <!-- Employment Details Section -->
-      <div class="profile-section">
-        <div class="profile-field">
-          <label>Position:</label>
-          <p><%= current_user.position&.titleize || 'n/a' %></p>
-        </div>
-        <div class="profile-field">
-          <label>Department:</label>
-          <p><%= current_user.department&.humanize&.titleize || 'n/a' %></p>
-        </div>
-        <div class="profile-field">
-          <label>Member Since:</label>
-          <p><%= current_user.created_at.strftime("%B %d, %Y") %></p>
-        </div>
-      </div>
-      <!-- E-Signature Section -->
-      <div class="profile-section">
-        <div class="profile-field">
-          <label>E-Signature</label>
-          <div class="signature-container">
-            <% if current_user.signature.attached? %>
-              <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(current_user.signature.download)}", 
+        <!-- E-Signature Section -->
+        <div class="profile-section">
+          <div class="profile-field">
+            <label>E-Signature</label>
+            <div class="signature-container">
+              <% if current_user.signature.attached? %>
+                <%= image_tag("data:image/jpg;base64,#{Base64.strict_encode64(current_user.signature.download)}", 
                     class: "signature-preview", 
                     id: "existing-signature",
                     )%>
-              <%= link_to "Remove Signature", remove_signature_path, 'data-turbo-method': :delete, class: "remove-file-link", style: "margin-top: 1rem;" %>
-            <% else %>
-              <%= form_for(current_user, url: '/profile', method: :patch, as: :user, class: "signature-form", data: { controller: "file-upload" }) do |f| %>
-                <div class="file-upload">
-                  <%= f.file_field :signature, 
+                <%= link_to "Remove Signature", remove_signature_path, 'data-turbo-method': :delete, class: "remove-file-link", style: "margin-top: 1rem;" %>
+              <% else %>
+                <%= form_for(current_user, url: '/profile', method: :patch, as: :user, class: "signature-form", data: { controller: "file-upload" }) do |f| %>
+                  <div class="file-upload">
+                    <%= f.file_field :signature, 
                     accept: "image/png,image/jpg,image/jpeg",
                     data: { 
                       file_upload_target: "input",
                       action: "change->file-upload#toggleButton"
                     } %>
-                  <%= button_tag type: 'submit', class: "signature-submit hidden", data: { file_upload_target: "button" } do %>
-                    <span>Upload</span>
-                  <% end %>
-                </div>
+                    <%= button_tag type: 'submit', class: "signature-submit hidden", data: { file_upload_target: "button" } do %>
+                      <span>Upload</span>
+                    <% end %>
+                  </div>
+                <% end %>
               <% end %>
-            <% end %>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="profile-actions">
-    <%= link_to "Edit Profile", edit_user_registration_path %>
+    <div class="profile-actions">
+      <%= link_to "Edit Profile", edit_user_registration_path %>
+    </div>
   </div>
 </div>
