@@ -40,6 +40,7 @@ supplier_fsc = Supplier.find_by(code: "FSC")
 supplier_asi = Supplier.find_by(code: "ASI")
 
 user = User.find_by(email: "purchasing@goldenchain.com.ph")
+# user = User.find_by(email: "dev@goldenchain.ph")
 manager = User.find_by(email: "manager@goldenchain.com.ph")
 
 # First product with scopes

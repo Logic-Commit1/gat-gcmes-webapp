@@ -96,6 +96,10 @@ class User < ApplicationRecord
       self.department = :information_technology
       self.position = "Developer"
       self.role = :developer
+    elsif email == "dev2@goldenchain.ph"
+      self.department = :information_technology
+      self.position = "Developer"
+      self.role = :developer
     elsif email == "admin@goldenchain.com.ph"
       self.role = :admin
       self.position = "Admin"
