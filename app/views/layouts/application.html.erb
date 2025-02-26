@@ -20,11 +20,13 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
-    <%#= render "components/navbar" %>
-    <%= render "components/sidebar" %>
-    <%= render 'components/alerts' %>
-    <main>
-      <%= yield %>
-    </main>
+    <div class="">
+      <%#= render "components/navbar" %>
+      <%= render "components/sidebar" %>
+      <%#= render 'components/alerts' %>
+      <main>
+        <%= yield %>
+      </main>
+    </div>
   </body>
 </html>

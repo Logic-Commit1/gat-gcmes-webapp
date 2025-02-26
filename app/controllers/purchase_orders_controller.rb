@@ -30,6 +30,7 @@ class PurchaseOrdersController < ApplicationController
 
   # GET /purchase_orders/1 or /purchase_orders/1.json
   def show
+    @purchase_orders = PurchaseOrder.latest_first
   end
 
   def pdf_view

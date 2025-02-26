@@ -1,3 +1,5 @@
 <%#= render 'pages/components/show_header', document: @quotation %>
-<%#= render "components/document_sidebar" %>
-<%= render @quotation %>
+<div class="flex">
+  <%= render "components/document_sidebar", document: @quotation, documents: @quotations %>
+  <%= render @quotation %>
+</div>

@@ -28,6 +28,7 @@ class QuotationsController < ApplicationController
 
   # GET /quotations/1 or /quotations/1.json
   def show
+    @quotations = Quotation.latest_first
   end
 
   def pdf_view

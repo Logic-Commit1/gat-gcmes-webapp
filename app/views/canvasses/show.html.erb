@@ -1,1 +1,4 @@
-<%= render @canvass %>
+<div class="flex">
+  <%= render "components/document_sidebar", document: @canvass, documents: @canvasses %>
+  <%= render @canvass %>
+</div>

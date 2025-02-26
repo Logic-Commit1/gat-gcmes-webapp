@@ -1,1 +1,4 @@
-<%= render @request_form %>
+<div class="flex">
+  <%= render 'components/document_sidebar', document: @request_form, documents: @request_forms %>
+  <%= render @request_form %>
+</div>

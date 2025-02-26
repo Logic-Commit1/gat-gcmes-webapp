@@ -31,6 +31,7 @@ class CanvassesController < ApplicationController
 
   # GET /canvasses/1 or /canvasses/1.json
   def show
+    @canvasses = Canvass.latest_first
   end
 
   def pdf_view

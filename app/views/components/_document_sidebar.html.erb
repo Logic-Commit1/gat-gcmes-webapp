@@ -1,5 +1,27 @@
 <div id="document-sidebar" class="document-sidebar">
   <div class="document-sidebar-header">
-    <h2>Documents</h2>
+    <p style="font-size: 1.25rem; font-weight: 500; border-bottom: 1px solid #e0e0e0; padding: 1rem;"><%= document.class.name.pluralize %></p>
+  </div>
+  <div class="document-sidebar-body">
+    <div class="document-list">
+      <% documents.each do |d| %>
+
+        <%= link_to send("#{d.class.name.underscore}_path", d), class: "document-item #{d == document ? 'selected' : ''}" do %>
+          <div class="document-details">
+            <div class="document-header">
+            <div class="uid-status">
+              <p class="document-uid"><%= d.uid %><p style="margin-left: 6px;" class=" status-dot <%= d.status.downcase %>"></p></p>
+            </div>
+              <% if d.class.name.underscore == 'canvass' %>
+                <p></p>
+              <% else %>
+                <p class="document-total"><%= number_to_currency(d.total, unit: "₱ ") %></p>
+              <% end %>
+            </div>
+            <p class="document-date"><%= d.created_at.strftime("%d %b %Y") %></p>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 </div>

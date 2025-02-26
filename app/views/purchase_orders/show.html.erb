@@ -1,1 +1,4 @@
-<%= render @purchase_order %>
+<div class="flex">
+  <%= render 'components/document_sidebar', document: @purchase_order, documents: @purchase_orders %>
+  <%= render @purchase_order %>
+</div>

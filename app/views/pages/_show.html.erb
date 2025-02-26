@@ -1,15 +1,13 @@
 <div class="show-page">
-  <%= render 'pages/components/show_header', document: document %>
+  <%#= render 'pages/components/show_header', document: document %>
   <div class="">
     <p style="display:inline-block;" id="document-uid"><%= document.uid %></p>
     <div style="margin: 0 0 6px 10px;" class="status-dot <%= document.status.downcase %>"></div>
-  </div>  
+  </div>
   <%= render 'pages/components/action_buttons', document: document %>
-  <!--
-  -->
-  <div class="flex column-gap-50">
-  <%#binding.pry%>
-    <iframe 
+  <div class="flex flex-col gap-60 auto">
+    <div class="auto">
+      <iframe 
       src="<%= case document.class.name.underscore
                 when 'quotation' then pdf_view_quotation_path(document)
                 when 'canvass' then pdf_view_canvass_path(document)
@@ -17,45 +15,14 @@
                 when 'purchase_order' then pdf_view_purchase_order_path(document)
                 else '#' # Fallback or default case
               end %>"
-      width="750px" 
-      height="1000px"
+      width="700px" 
+      height="800px"
       style="border: 3px solid #e2e8f0; 
-             border-radius: 8px;
+             border-radius: 0px;
              box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
              padding: 4px;"
       >
-    </iframe>
-    <% if document.project.present? %>
-      <div class="linked-documents">
-        <%= link_to project_path(document.project), class: "project-card" do %>
-          <header>
-            <%= document.project.uid %>
-          </header>
-          <hr>
-          <div class="project-details">
-            <div class="flex space-between">
-              <div class="project-client">
-                <p>Client</p>
-                <p><%= document.project.client.name %></p>
-              </div>
-              <div class="project-amount">
-                <p>Amount</p>
-                <p><%= number_to_currency(document.project.amount, unit: "₱") %></p>
-              </div>
-            </div>
-            <div class="flex space-between">
-              <div class="project-po-number">
-                <p>PO Number</p>
-                <p><%= document.project.po_number.presence || "—" %></p>
-              </div>
-              <div class="project-payment">
-                <p>Payment Term</p>
-                <p><%= document.project.payment %></p>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
+      </iframe>
+    </div>
   </div>
 </div>

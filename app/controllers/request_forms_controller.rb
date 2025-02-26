@@ -30,6 +30,7 @@ class RequestFormsController < ApplicationController
 
   # GET /request_forms/1 or /request_forms/1.json
   def show
+    @request_forms = RequestForm.latest_first
   end
 
   def pdf_view

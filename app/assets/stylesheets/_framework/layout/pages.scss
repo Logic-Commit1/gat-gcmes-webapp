@@ -15,14 +15,27 @@
   // min-height: 100vh;
   margin: 0 30px auto;
   min-width: 80%;
+  padding-top: 30px;
+
+  .title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  .button-container {
+    // text-align: right;
+    // margin-bottom: 12px;
+    margin-bottom: 68px;
+  }
 }
 
 main {
   // background: var(--background-color);
 
   background: #fff;
-  max-width: 1440px;
-  padding-top: 30px;
+  max-width: 1840px;
+  // padding-top: 30px;
   margin-left: 234px;
   max-height: 100%;
 }

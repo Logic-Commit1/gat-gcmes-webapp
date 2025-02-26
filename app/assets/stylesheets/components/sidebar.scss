@@ -1,10 +1,9 @@
 #moderators-sidebar {
+  position: absolute;
   width: 234px;
-  // height: calc(100vh - 48px);
   height: 100%;
   padding: 16px;
   background-color: #eceff3;
-  position: absolute;
   border-right: 1px solid #e0e0e0;
 
   #brand {
