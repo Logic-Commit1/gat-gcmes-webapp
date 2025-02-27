@@ -10,6 +10,12 @@
     <div class="separator"></div>
     <div class="project-details">
       <p>
+        <span class="semibold">Subject Description:</span>
+        <%= project.quotations.map(&:subject).join(', ') %>
+      </p>
+    </div>
+    <div class="project-details">
+      <p>
         <span class="semibold">PO Number:</span>
         <% if project.client_po.attached? %>
           <%= link_to project.po_number, rails_blob_path(project.client_po, disposition: 'inline'), target: '_blank', style: 'color: var(--button-color);' %>
