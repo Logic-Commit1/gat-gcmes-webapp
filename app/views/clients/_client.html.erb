@@ -30,7 +30,7 @@
   <% if client.projects.any? %>
     <div class="projects-with-client-card">
       <div class="document-container" >
-        <div class="header">
+        <div class="header" style="margin-bottom: 0;">
           <p class="document-title">Projects</p>
           <div class="flex space-between flex-end" style="margin-bottom: 16px;"  data-controller="table-filter flatpickr" data-table-filter-url-value="<%= request.path %>">
             <div class="pagination">
