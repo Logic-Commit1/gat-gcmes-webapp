@@ -90,18 +90,20 @@
           <div class="separator"></div>
           <div id="item-table-section" data-controller="total-calculator">
             <p class="semibold" style="margin-bottom: 16px;">Item Table</p>
-            <table class="quotation-product-table">
-              <thead>
-                <tr id="table-header">
-                  <th style="width: 35%;">ITEM DESCRIPTION</th>
-                  <th class="align-right" style="width: 10%;">QUANTITY</th>
-                  <th style="width: 10%;">U/M</th>
-                  <th style="width: 15%;">UNIT PRICE</th>
-                  <th style="width: 15%;">IMAGE</th>
-                  <th style="width: 7%;"></th>
-                </tr>
-              </thead>
-            </table>
+            <div style="overflow-x: auto; width: 100%;">
+              <table class="quotation-product-table" style="min-width: 800px;">
+                <thead>
+                  <tr id="table-header">
+                    <th style="width: 35%;">ITEM DESCRIPTION</th>
+                    <th class="align-right" style="width: 10%;">QUANTITY</th>
+                    <th style="width: 10%;">U/M</th>
+                    <th style="width: 15%;">UNIT PRICE</th>
+                    <th style="width: 15%;">IMAGE</th>
+                    <th style="width: 7%;"></th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
             <template data-nested-form-target="template">
               <%= form.fields_for :products, Product.new, child_index: 'NEW_RECORD' do |product_fields| %>
                 <%= render "quotations/quotation_product_form", f: product_fields %>

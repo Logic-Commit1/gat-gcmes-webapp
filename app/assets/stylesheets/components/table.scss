@@ -9,8 +9,10 @@
   // border: 1px solid #d0d0d0;
 
   .header {
-    // display: flex;
-    // justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
     #title {
       font-size: 1.5rem;
       font-weight: 600;
@@ -118,6 +120,16 @@
     span {
       font-weight: 500;
       color: #374151;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .document-container {
+    .header {
+      flex-direction: column-reverse;
+      align-items: end;
+      gap: 10px;
     }
   }
 }

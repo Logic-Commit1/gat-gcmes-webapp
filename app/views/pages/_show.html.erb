@@ -5,7 +5,7 @@
     <div style="margin: 0 0 6px 10px;" class="status-dot <%= document.status.downcase %>"></div>
   </div>
   <%= render 'pages/components/action_buttons', document: document %>
-  <div class="flex flex-col gap-60 auto">
+  <div style="margin-bottom: 20px;" class="flex flex-col gap-60 auto">
     <div class="auto">
       <iframe 
       src="<%= case document.class.name.underscore

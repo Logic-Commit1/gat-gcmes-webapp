@@ -151,6 +151,20 @@
         }
       }
     }
+
+    .projects-with-client-card {
+      .document-container {
+        .header {
+          border: 1px solid #ccc;
+          border-radius: 5px 5px 0 0;
+          padding: 1.5rem;
+          .document-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+          }
+        }
+      }
+    }
   }
 
   .linked-documents {

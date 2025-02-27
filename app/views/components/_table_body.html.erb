@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "#{title.downcase.gsub(' ', '_')}_table", class: "document-table" do %>
-  <table class="document-table">
+  <table class="document-table" style="min-width: 800px;">
     <thead>
       <tr>
         <% if title == "Quotations" %>
@@ -67,7 +67,7 @@
       </tr>
     </thead>
   </table>
-  <table class="document-table" data-table-filter-target="table" style="margin-bottom: 20px;">
+  <table class="document-table" data-table-filter-target="table" style="margin-bottom: 50px; min-width: 800px;">
     <tbody>
       <% if title == "Quotations" %>
         <% documents&.each do |quotation| %>

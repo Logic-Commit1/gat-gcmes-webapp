@@ -1,10 +1,12 @@
 #moderators-sidebar {
-  position: absolute;
+  position: fixed;
   width: 234px;
   height: 100%;
   padding: 16px;
   background-color: #eceff3;
   border-right: 1px solid #e0e0e0;
+  // transition: transform 0.3s ease-in-out;
+  z-index: 1000;
 
   #brand {
     text-align: center;
@@ -80,6 +82,66 @@
       i {
         margin-right: 5px;
       }
+    }
+  }
+}
+
+.hamburger-menu {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1001;
+  // background-color: #fff;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 12pt;
+  background: #fff;
+  // border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  background: var(--button-color);
+
+  .bar {
+    width: 20px;
+    height: 2px;
+    background-color: #000a52;
+    margin: 4px 0;
+    // transition: 0.3s;
+  }
+}
+
+/* Extra Small (Phones) */
+@media (max-width: 575px) {
+  /* Styles */
+}
+
+/* Small devices (Tablets, 576px and up) */
+@media (max-width: 576px) {
+  /* Styles */
+}
+
+/* Medium devices (Tablets, 768px and up) */
+@media (max-width: 768px) {
+  /* Styles */
+}
+
+/* Large devices (Laptops, 992px and up) */
+@media (max-width: 992px) {
+  #moderators-sidebar {
+    transform: translateX(-100%);
+
+    &.active {
+      transform: translateX(0);
+    }
+  }
+
+  .hamburger-menu {
+    display: block;
+  }
+
+  body.sidebar-active {
+    .hamburger-menu {
+      left: 234px;
     }
   }
 }

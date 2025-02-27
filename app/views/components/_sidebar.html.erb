@@ -1,16 +1,22 @@
-<aside id="moderators-sidebar">
-  <!-- Header -->
-  <%# <header id="brand"> %>
-  <%#= link_to moderators_dashboard_path, class: 'no-underline' do %>
-    <%# <div class="logos"> %>
-    <%# <img class="" src="/assets/gat-logo.png" alt="logo"/> %>
-    <%# <img class="" src="/assets/gcmes-logo.png" alt="logo"/> %>
-    <%# </div> %>
-    <%# end %>
-    <%# </header> %>
-    <!-- Main: Navigation -->
-    <nav id="navigation">
-      <!-- Link to Dashboard 
+<div data-controller="sidebar">
+  <div class="hamburger-menu" data-sidebar-target="hamburger">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+  <aside id="moderators-sidebar" data-sidebar-target="sidebar">
+    <!-- Header -->
+    <%# <header id="brand"> %>
+    <%#= link_to moderators_dashboard_path, class: 'no-underline' do %>
+      <%# <div class="logos"> %>
+      <%# <img class="" src="/assets/gat-logo.png" alt="logo"/> %>
+      <%# <img class="" src="/assets/gcmes-logo.png" alt="logo"/> %>
+      <%# </div> %>
+      <%# end %>
+      <%# </header> %>
+      <!-- Main: Navigation -->
+      <nav id="navigation">
+        <!-- Link to Dashboard 
       <%= link_to root_path, class: 'in-text no-underline' do %>
         <p class="nav-btn <%= 'active' if current_page?(root_path) %>">
           <span class="icon"><i class="fa-solid fa-home"></i></span>
@@ -18,88 +24,89 @@
         </p>
       <% end %>
       -->
-      <% if current_user.manager? %>
-        <%= link_to projects_path, class: 'in-text no-underline' do %>
-          <p class="nav-btn <%= 'active' if current_page?(projects_path) %>">
-            <span class="icon"><i class="fa-solid fa-building"></i></span>
-            Projects
+        <% if current_user.manager? %>
+          <%= link_to projects_path, class: 'in-text no-underline' do %>
+            <p class="nav-btn <%= 'active' if current_page?(projects_path) %>">
+              <span class="icon"><i class="fa-solid fa-building"></i></span>
+              Projects
+            </p>
+          <% end %>
+        <% end %>
+        <%= link_to quotations_path, class: 'in-text no-underline' do %>
+          <p class="nav-btn <%= 'active' if current_page?(quotations_path) %>">
+            <span class="icon"><i class="fa-solid fa-calculator"></i></span>
+            Quotations
           </p>
         <% end %>
-      <% end %>
-      <%= link_to quotations_path, class: 'in-text no-underline' do %>
-        <p class="nav-btn <%= 'active' if current_page?(quotations_path) %>">
-          <span class="icon"><i class="fa-solid fa-calculator"></i></span>
-          Quotations
-        </p>
-      <% end %>
-      <!-- Link to Canvasses -->
-      <%= link_to canvasses_path, class: 'in-text no-underline' do %>
-        <p class="nav-btn <%= 'active' if current_page?(canvasses_path) %>">
-          <span class="icon"><i class="fa-solid fa-file-contract"></i></span>
-          Canvasses
-        </p>
-      <% end %>
-      <%= link_to request_forms_path, class: 'in-text no-underline' do %>
-        <p class="nav-btn <%= 'active' if current_page?(request_forms_path) %>">
-          <span class="icon"><i class="fa-solid fa-file"></i></span>
-          Request Forms
-        </p>
-      <% end %>
-      <%= link_to purchase_orders_path, class: 'in-text no-underline' do %>
-        <p class="nav-btn <%= 'active' if current_page?(purchase_orders_path) %>">
-          <span class="icon"><i class="fa-solid fa-file-invoice"></i></span>
-          Purchase Orders
-        </p>
-      <% end %>
-      <% unless current_user.manager? %>
-        <%= link_to projects_path, class: 'in-text no-underline' do %>
-          <p class="nav-btn <%= 'active' if current_page?(projects_path) %>">
-            <span class="icon"><i class="fa-solid fa-building"></i></span>
-            Projects
+        <!-- Link to Canvasses -->
+        <%= link_to canvasses_path, class: 'in-text no-underline' do %>
+          <p class="nav-btn <%= 'active' if current_page?(canvasses_path) %>">
+            <span class="icon"><i class="fa-solid fa-file-contract"></i></span>
+            Canvasses
           </p>
         <% end %>
-      <% end %>
-      <%# if current_user.sales? || current_user.developer? %>
-      <%= link_to clients_path, class: 'in-text no-underline' do %>
-        <p class="nav-btn <%= 'active' if current_page?(clients_path) %>">
-          <span class="icon"><i class="fa-solid fa-user"></i></span>
-          Clients
-        </p>
-      <% end %>
-      <%# end %>
-      <%# if current_user.purchasing? || current_user.developer? %>
-      <%= link_to suppliers_path, class: 'in-text no-underline' do %>
-        <p class="nav-btn <%= 'active' if current_page?(suppliers_path) %>">
-          <span class="icon"><i class="fa-solid fa-truck"></i></span>
-          Suppliers
-        </p>
-      <% end %>
-      <%# end %>
-      <% if current_user.admin? || current_user.developer? %>
-        <%= link_to employees_path, class: 'in-text no-underline' do %>
-          <p class="nav-btn <%= 'active' if current_page?(employees_path) %>">
-            <span class="icon"><i class="fa-solid fa-user-group"></i></span>
-            Employees
+        <%= link_to request_forms_path, class: 'in-text no-underline' do %>
+          <p class="nav-btn <%= 'active' if current_page?(request_forms_path) %>">
+            <span class="icon"><i class="fa-solid fa-file"></i></span>
+            Request Forms
           </p>
         <% end %>
-      <% end %>
-      <% if current_user.admin? || current_user.developer? %>
-        <%= link_to voided_documents_path, class: 'in-text no-underline' do %>
-          <p class="nav-btn <%= 'active' if current_page?(voided_documents_path) %>">
-            <span class="icon"><i class="fa-solid fa-trash"></i></span>
-            Voided Documents
+        <%= link_to purchase_orders_path, class: 'in-text no-underline' do %>
+          <p class="nav-btn <%= 'active' if current_page?(purchase_orders_path) %>">
+            <span class="icon"><i class="fa-solid fa-file-invoice"></i></span>
+            Purchase Orders
           </p>
         <% end %>
-      <% end %>
-    </nav>
-    <!-- Footer -->
-    <footer id="actions">
-      <%= link_to profile_path, class: 'in-text no-underline' do %>
-        <p class="nav-btn <%= 'active' if current_page?(profile_path) %>">
-          <span class="icon"><i class="fa-solid fa-user-circle"></i></span>
-          My Profile
-        </p>
-      <% end %>
-      <%= link_to "Sign Out", destroy_user_session_path, 'data-turbo-method': :delete, class: 'sub-cta', id: 'signout-btn' %>
-    </footer>
-  </aside>
+        <% unless current_user.manager? %>
+          <%= link_to projects_path, class: 'in-text no-underline' do %>
+            <p class="nav-btn <%= 'active' if current_page?(projects_path) %>">
+              <span class="icon"><i class="fa-solid fa-building"></i></span>
+              Projects
+            </p>
+          <% end %>
+        <% end %>
+        <%# if current_user.sales? || current_user.developer? %>
+        <%= link_to clients_path, class: 'in-text no-underline' do %>
+          <p class="nav-btn <%= 'active' if current_page?(clients_path) %>">
+            <span class="icon"><i class="fa-solid fa-user"></i></span>
+            Clients
+          </p>
+        <% end %>
+        <%# end %>
+        <%# if current_user.purchasing? || current_user.developer? %>
+        <%= link_to suppliers_path, class: 'in-text no-underline' do %>
+          <p class="nav-btn <%= 'active' if current_page?(suppliers_path) %>">
+            <span class="icon"><i class="fa-solid fa-truck"></i></span>
+            Suppliers
+          </p>
+        <% end %>
+        <%# end %>
+        <% if current_user.admin? || current_user.developer? %>
+          <%= link_to employees_path, class: 'in-text no-underline' do %>
+            <p class="nav-btn <%= 'active' if current_page?(employees_path) %>">
+              <span class="icon"><i class="fa-solid fa-user-group"></i></span>
+              Employees
+            </p>
+          <% end %>
+        <% end %>
+        <% if current_user.admin? || current_user.developer? %>
+          <%= link_to voided_documents_path, class: 'in-text no-underline' do %>
+            <p class="nav-btn <%= 'active' if current_page?(voided_documents_path) %>">
+              <span class="icon"><i class="fa-solid fa-trash"></i></span>
+              Voided Documents
+            </p>
+          <% end %>
+        <% end %>
+      </nav>
+      <!-- Footer -->
+      <footer id="actions">
+        <%= link_to profile_path, class: 'in-text no-underline' do %>
+          <p class="nav-btn <%= 'active' if current_page?(profile_path) %>">
+            <span class="icon"><i class="fa-solid fa-user-circle"></i></span>
+            My Profile
+          </p>
+        <% end %>
+        <%= link_to "Sign Out", destroy_user_session_path, 'data-turbo-method': :delete, class: 'sub-cta', id: 'signout-btn' %>
+      </footer>
+    </aside>
+  </div>
